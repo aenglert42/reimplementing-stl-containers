@@ -1,8 +1,14 @@
 #include "ft_vector.hpp"
+#include <iostream>
+
+#define BLUE "\033[34m"
+#define RESET "\033[0m"
 
 void my_leaks(void)
 {
-	system("leaks test");
+	std::cerr << BLUE;
+	system("leaks containers_ft");
+	std::cerr << RESET;
 }
 
 int main(void)
