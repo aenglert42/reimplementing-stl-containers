@@ -1,143 +1,187 @@
 #pragma once
 
-class MyClassA
+#include <iostream>
+#include <memory> //allocator
+
+namespace ft
 {
-	public:
-		void my_function(void);
-};
 
-//MEMBER FUNCTIONS
+	// template < class T, class Alloc = allocator<T> > class vector; // generic template
 
-	////constructor///////////////////////////////////////////////////////
-		// default (1)	
-		// explicit vector (const allocator_type& alloc = allocator_type());
+	template <typename T> class vector
+	// template < class T, class Alloc = allocator<T> >class vector
+	{
+		private:
+			T* array;
+			int capacity;
+			int current;
+		public:
+			vector()
+			{
+				array = new T[1];
+				capacity = 1;
+				current = 0;
+			}
 
-		// fill (2)	
-		// explicit vector (size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type());
+			~vector()
+			{
+				delete array;
+			}
+			
+			void print(void)
+			{
+				std::cout << "test" << std::endl;
+			}
+	};
 
-		// range (3)	
-		// template <class InputIterator> vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type());
+	//MEMBER TYPES
+		// value_type	The first template parameter (T)	
+		// allocator_type	The second template parameter (Alloc)	defaults to: allocator<value_type>
+		// reference	allocator_type::reference	for the default allocator: value_type&
+		// const_reference	allocator_type::const_reference	for the default allocator: const value_type&
+		// pointer	allocator_type::pointer	for the default allocator: value_type*
+		// const_pointer	allocator_type::const_pointer	for the default allocator: const value_type*
+		// iterator	a random access iterator to value_type	convertible to const_iterator
+		// const_iterator	a random access iterator to const value_type	
+		// reverse_iterator	reverse_iterator<iterator>	
+		// const_reverse_iterator	reverse_iterator<const_iterator>	
+		// difference_type	a signed integral type, identical to: iterator_traits<iterator>::difference_type	usually the same as ptrdiff_t
+		// size_type	an unsigned integral type that can represent any non-negative value of difference_type	usually the same as size_t
 
-		// copy (4)	
-		// vector (const vector& x);
+	//MEMBER FUNCTIONS
 
-	////destructor///////////////////////////////////////////////////////
-		// ~vector();
+		////constructor///////////////////////////////////////////////////////
+			// default (1)	
+			// explicit vector (const allocator_type& alloc = allocator_type());
 
-	////operator=///////////////////////////////////////////////////////
-		// copy (1)	
-		// vector& operator= (const vector& x);
+			// fill (2)	
+			// explicit vector (size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type());
 
-//Iterators---------------------------------------------------------------
-	////begin///////////////////////////////////////////////////////
-		// iterator begin();
-		// const_iterator begin() const;
+			// range (3)	
+			// template <class InputIterator> vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type());
 
-	////end///////////////////////////////////////////////////////
-		// iterator end();
-		// const_iterator end() const;
+			// copy (4)	
+			// vector (const vector& x);
 
-	////rbegin///////////////////////////////////////////////////////
-		// reverse_iterator rbegin();
-		// const_reverse_iterator rbegin() const;
+		////destructor///////////////////////////////////////////////////////
+			// ~vector();
 
-	////rend///////////////////////////////////////////////////////
-		// reverse_iterator rend();
-		// const_reverse_iterator rend() const;
+		////operator=///////////////////////////////////////////////////////
+			// copy (1)	
+			// vector& operator= (const vector& x);
 
-//Capacity---------------------------------------------------------------
-	////size///////////////////////////////////////////////////////
-		// size_type size() const;
+	//Iterators---------------------------------------------------------------
+		////begin///////////////////////////////////////////////////////
+			// iterator begin();
+			// const_iterator begin() const;
 
-	////max_size///////////////////////////////////////////////////////
-		// size_type max_size() const;
+		////end///////////////////////////////////////////////////////
+			// iterator end();
+			// const_iterator end() const;
 
-	////resize///////////////////////////////////////////////////////
-		// void resize (size_type n, value_type val = value_type());
+		////rbegin///////////////////////////////////////////////////////
+			// reverse_iterator rbegin();
+			// const_reverse_iterator rbegin() const;
 
-	////capacity///////////////////////////////////////////////////////
-		// size_type capacity() const;
+		////rend///////////////////////////////////////////////////////
+			// reverse_iterator rend();
+			// const_reverse_iterator rend() const;
 
-	////empty///////////////////////////////////////////////////////
-		// bool empty() const;
+	//Capacity---------------------------------------------------------------
+		////size///////////////////////////////////////////////////////
+			// size_type size() const;
 
-	////reserve///////////////////////////////////////////////////////
-		// void reserve (size_type n);
+		////max_size///////////////////////////////////////////////////////
+			// size_type max_size() const;
 
-//Element access---------------------------------------------------------------
-	////operator[]///////////////////////////////////////////////////////
-		// reference operator[] (size_type n);
-		// const_reference operator[] (size_type n) const;
+		////resize///////////////////////////////////////////////////////
+			// void resize (size_type n, value_type val = value_type());
 
-	////at///////////////////////////////////////////////////////
-		// reference at (size_type n);
-		// const_reference at (size_type n) const;
+		////capacity///////////////////////////////////////////////////////
+			// size_type capacity() const;
 
-	////front///////////////////////////////////////////////////////
-		// reference front();
-		// const_reference front() const;
+		////empty///////////////////////////////////////////////////////
+			// bool empty() const;
 
-	////back///////////////////////////////////////////////////////
-		// reference back();
-		// const_reference back() const;
+		////reserve///////////////////////////////////////////////////////
+			// void reserve (size_type n);
 
-//Modifiers---------------------------------------------------------------
-	////assign///////////////////////////////////////////////////////
-		// range (1)	
-		// template <class InputIterator> void assign (InputIterator first, InputIterator last);
+	//Element access---------------------------------------------------------------
+		////operator[]///////////////////////////////////////////////////////
+			// reference operator[] (size_type n);
+			// const_reference operator[] (size_type n) const;
 
-		// fill (2)	
-		// void assign (size_type n, const value_type& val);
+		////at///////////////////////////////////////////////////////
+			// reference at (size_type n);
+			// const_reference at (size_type n) const;
 
-	////puch_back///////////////////////////////////////////////////////
-		// void push_back (const value_type& val);
+		////front///////////////////////////////////////////////////////
+			// reference front();
+			// const_reference front() const;
 
-	////pop_back///////////////////////////////////////////////////////
-		// void pop_back();
+		////back///////////////////////////////////////////////////////
+			// reference back();
+			// const_reference back() const;
 
-	////insert///////////////////////////////////////////////////////
-		// single element (1)	
-		// iterator insert (iterator position, const value_type& val);
+	//Modifiers---------------------------------------------------------------
+		////assign///////////////////////////////////////////////////////
+			// range (1)	
+			// template <class InputIterator> void assign (InputIterator first, InputIterator last);
 
-		// fill (2)	
-		// void insert (iterator position, size_type n, const value_type& val);
+			// fill (2)	
+			// void assign (size_type n, const value_type& val);
 
-		// range (3)	
-		// template <class InputIterator> void insert (iterator position, InputIterator first, InputIterator last);
+		////puch_back///////////////////////////////////////////////////////
+			// void push_back (const value_type& val);
 
-	////erase///////////////////////////////////////////////////////
-		// iterator erase (iterator position);
-		// iterator erase (iterator first, iterator last);
+		////pop_back///////////////////////////////////////////////////////
+			// void pop_back();
 
-	////swap///////////////////////////////////////////////////////
-		// void swap (vector& x);
+		////insert///////////////////////////////////////////////////////
+			// single element (1)	
+			// iterator insert (iterator position, const value_type& val);
 
-	////clear///////////////////////////////////////////////////////
-		// void clear();
+			// fill (2)	
+			// void insert (iterator position, size_type n, const value_type& val);
 
-//Allocator---------------------------------------------------------------
-	////get_allocator///////////////////////////////////////////////////////
-		// allocator_type get_allocator() const;
+			// range (3)	
+			// template <class InputIterator> void insert (iterator position, InputIterator first, InputIterator last);
 
-//NON-MEMBER FUNCTION OVERLOADS
-	////relational operators///////////////////////////////////////////////////////
-		// (1)
-		// template <class T, class Alloc> bool operator== (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs);
+		////erase///////////////////////////////////////////////////////
+			// iterator erase (iterator position);
+			// iterator erase (iterator first, iterator last);
 
-		// (2)
-		// template <class T, class Alloc> bool operator!= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs);
+		////swap///////////////////////////////////////////////////////
+			// void swap (vector& x);
 
-		// (3)
-		// template <class T, class Alloc> bool operator<  (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs);
+		////clear///////////////////////////////////////////////////////
+			// void clear();
 
-		// (4)
-		// template <class T, class Alloc> bool operator<= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs);
+	//Allocator---------------------------------------------------------------
+		////get_allocator///////////////////////////////////////////////////////
+			// allocator_type get_allocator() const;
 
-		// (5)
-		// template <class T, class Alloc> bool operator>  (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs);
+	//NON-MEMBER FUNCTION OVERLOADS
+		////relational operators///////////////////////////////////////////////////////
+			// (1)
+			// template <class T, class Alloc> bool operator== (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs);
 
-		// (6)
-		// template <class T, class Alloc> bool operator>= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs);
+			// (2)
+			// template <class T, class Alloc> bool operator!= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs);
 
-	////swap///////////////////////////////////////////////////////
-		// template <class T, class Alloc> void swap (vector<T,Alloc>& x, vector<T,Alloc>& y);
+			// (3)
+			// template <class T, class Alloc> bool operator<  (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs);
+
+			// (4)
+			// template <class T, class Alloc> bool operator<= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs);
+
+			// (5)
+			// template <class T, class Alloc> bool operator>  (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs);
+
+			// (6)
+			// template <class T, class Alloc> bool operator>= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs);
+
+		////swap///////////////////////////////////////////////////////
+			// template <class T, class Alloc> void swap (vector<T,Alloc>& x, vector<T,Alloc>& y);
+
+}

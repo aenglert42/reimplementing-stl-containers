@@ -2,8 +2,7 @@ NAME := test
 SRC_DIR := ./src/
 OBJ_DIR := ./obj/
 HEADER_DIR := ./inc/
-SRCS :=	my_main.cpp \
-		test.cpp
+SRCS :=	my_main.cpp
 CC := c++
 CFLAGS := -Wall -Werror -Wextra -std=c++98
 OBJS := $(patsubst %.cpp,$(OBJ_DIR)%.o,$(SRCS))

@@ -1,7 +1,13 @@
 #include "ft_vector.hpp"
 
+void my_leaks(void)
+{
+	system("leaks test");
+}
+
 int main(void)
 {
-	MyClassA object;
-	object.my_function();
+	atexit(my_leaks);
+	ft::vector<int> v;
+	v.print();
 }
