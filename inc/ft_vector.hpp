@@ -1,3 +1,11 @@
+#pragma once
+
+class MyClassA
+{
+	public:
+		void my_function(void);
+};
+
 //MEMBER FUNCTIONS
 
 	////constructor///////////////////////////////////////////////////////
