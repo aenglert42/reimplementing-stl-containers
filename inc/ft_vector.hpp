@@ -36,7 +36,7 @@ namespace ft
 		// typedef difference_type			= /* implementation-defined */; //a signed integral type, identical to: iterator_traits<iterator>::difference_type	usually the same as ptrdiff_t
 		// typedef size_type					= /* implementation-defined */; //an unsigned integral type that can represent any non-negative value of difference_type	usually the same as size_t
 		private:
-			T* array;
+			pointer array;
 			int capacity;
 			int current;
 		public:
@@ -49,7 +49,7 @@ namespace ft
 		////constructor///////////////////////////////////////////////////////
 			// default (1)	
 			// explicit vector (const allocator_type& alloc = allocator_type())
-			vector()
+			vector(void)
 			{
 				array = new T[1];
 				capacity = 1;
@@ -67,7 +67,7 @@ namespace ft
 
 		////destructor///////////////////////////////////////////////////////
 			// ~vector()
-			~vector()
+			~vector(void)
 			{
 				delete array;
 			}
@@ -137,7 +137,7 @@ namespace ft
 			// fill (2)	
 			// void assign (size_type n, const value_type& val)
 
-		////puch_back///////////////////////////////////////////////////////
+		////push_back///////////////////////////////////////////////////////
 			// void push_back (const value_type& val)
 
 		////pop_back///////////////////////////////////////////////////////
