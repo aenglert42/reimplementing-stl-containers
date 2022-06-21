@@ -10,35 +10,37 @@ namespace ft
 	{
 		public:
 	//MEMBER TYPES
-		// using value_type				= T; //The first template parameter (T)	
-		// using allocator_type			= Allocator; //The second template parameter (Alloc)	defaults to: allocator<value_type>
-		// using reference					= value_type&; //allocator_type::reference	for the default allocator: value_type&
-		// using const_reference			= const value_type&; //allocator_type::const_reference	for the default allocator: const value_type&
-		// using pointer					= typename allocator_traits<Allocator>::pointer; //allocator_type::pointer	for the default allocator: value_type*
-		// using const_pointer				= typename allocator_traits<Allocator>::const_pointer; //allocator_type::const_pointer	for the default allocator: const value_type*
-		// using iterator					= /* implementation-defined */; //a random access iterator to value_type	convertible to const_iterator
-		// using const_iterator			= /* implementation-defined */; //a random access iterator to const value_type	
-		// using reverse_iterator			= std::reverse_iterator<iterator>; //reverse_iterator<iterator>	
-		// using const_reverse_iterator	= std::reverse_iterator<const_iterator>; //reverse_iterator<const_iterator>	
-		// using difference_type			= /* implementation-defined */; //a signed integral type, identical to: iterator_traits<iterator>::difference_type	usually the same as ptrdiff_t
-		// using size_type					= /* implementation-defined */; //an unsigned integral type that can represent any non-negative value of difference_type	usually the same as size_t
+			// using value_type				= T; //The first template parameter (T)	
+			// using allocator_type			= Allocator; //The second template parameter (Alloc)	defaults to: allocator<value_type>
+			// using reference					= value_type&; //allocator_type::reference	for the default allocator: value_type&
+			// using const_reference			= const value_type&; //allocator_type::const_reference	for the default allocator: const value_type&
+			// using pointer					= typename allocator_traits<Allocator>::pointer; //allocator_type::pointer	for the default allocator: value_type*
+			// using const_pointer				= typename allocator_traits<Allocator>::const_pointer; //allocator_type::const_pointer	for the default allocator: const value_type*
+			// using iterator					= /* implementation-defined */; //a random access iterator to value_type	convertible to const_iterator
+			// using const_iterator			= /* implementation-defined */; //a random access iterator to const value_type	
+			// using reverse_iterator			= std::reverse_iterator<iterator>; //reverse_iterator<iterator>	
+			// using const_reverse_iterator	= std::reverse_iterator<const_iterator>; //reverse_iterator<const_iterator>	
+			// using difference_type			= /* implementation-defined */; //a signed integral type, identical to: iterator_traits<iterator>::difference_type	usually the same as ptrdiff_t
+			// using size_type					= /* implementation-defined */; //an unsigned integral type that can represent any non-negative value of difference_type	usually the same as size_t
 
-		typedef T											value_type; //The first template parameter (T)	
-		typedef Alloc										allocator_type; //The second template parameter (Alloc)	defaults to: allocator<value_type>
-		typedef typename allocator_type::reference			reference; //allocator_type::reference	for the default allocator: value_type&
-		typedef typename allocator_type::const_reference	const_reference; //allocator_type::const_reference	for the default allocator: const value_type&
-		typedef typename allocator_type::pointer			pointer; //allocator_type::pointer	for the default allocator: value_type*
-		typedef typename allocator_type::const_pointer		const_pointer; //allocator_type::const_pointer	for the default allocator: const value_type*
-		// typedef iterator					= /* implementation-defined */; //a random access iterator to value_type	convertible to const_iterator
-		// typedef const_iterator			= /* implementation-defined */; //a random access iterator to const value_type	
-		// typedef ft::reverse_iterator<iterator>				reverse_iterator; //reverse_iterator<iterator>	
-		// typedef ft::reverse_iterator<const_iterator>		const_reverse_iterator; //reverse_iterator<const_iterator>	
-		// typedef difference_type			= /* implementation-defined */; //a signed integral type, identical to: iterator_traits<iterator>::difference_type	usually the same as ptrdiff_t
-		// typedef size_type					= /* implementation-defined */; //an unsigned integral type that can represent any non-negative value of difference_type	usually the same as size_t
+			typedef T											value_type; //The first template parameter (T)	
+			typedef Alloc										allocator_type; //The second template parameter (Alloc)	defaults to: allocator<value_type>
+			typedef typename allocator_type::reference			reference; //allocator_type::reference	for the default allocator: value_type&
+			typedef typename allocator_type::const_reference	const_reference; //allocator_type::const_reference	for the default allocator: const value_type&
+			typedef typename allocator_type::pointer			pointer; //allocator_type::pointer	for the default allocator: value_type*
+			typedef typename allocator_type::const_pointer		const_pointer; //allocator_type::const_pointer	for the default allocator: const value_type*
+			// typedef iterator					= /* implementation-defined */; //a random access iterator to value_type	convertible to const_iterator
+			// typedef const_iterator			= /* implementation-defined */; //a random access iterator to const value_type	
+			// typedef ft::reverse_iterator<iterator>				reverse_iterator; //reverse_iterator<iterator>	
+			// typedef ft::reverse_iterator<const_iterator>		const_reverse_iterator; //reverse_iterator<const_iterator>	
+			// typedef difference_type			= /* implementation-defined */; //a signed integral type, identical to: iterator_traits<iterator>::difference_type	usually the same as ptrdiff_t
+			typedef std::size_t									size_type; //					= /* implementation-defined */; //an unsigned integral type that can represent any non-negative value of difference_type	usually the same as size_t
+			//why not typedef typename allocator_type::size_type size_type (wayback)? -> cplusplus.com
 		private:
+			size_type _size;
+			size_type _capacity;
+			allocator_type alloc;
 			pointer array;
-			int capacity;
-			int current;
 		public:
 	//MEMBER FUNCTIONS
 
@@ -47,17 +49,31 @@ namespace ft
 				std::cout << "test" << std::endl;
 			}
 		////constructor///////////////////////////////////////////////////////
+			// vector(void)
+			// {
+			// 	array = new T[1];
+			// 	_capacity = 1;
+			// 	current = 0;
+			// }
 			// default (1)	
-			// explicit vector (const allocator_type& alloc = allocator_type())
-			vector(void)
+			explicit vector (const allocator_type& alloc = allocator_type())
 			{
-				array = new T[1];
-				capacity = 1;
-				current = 0;
+				this->_size = 0;
+				this->_capacity = 0;
+				this->alloc = alloc;
+				this->array = nullptr;
 			}
 
 			// fill (2)	
-			// explicit vector (size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type())
+			explicit vector (size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type())
+			{
+				this->_size = n;
+				this->_capacity = this->_size;
+				this->alloc = alloc;
+				this->array = this->_alloc.allocate(n);
+				for (size_type i = 0; i < n; i++)
+					this->array[i] = val;
+			}
 
 			// range (3)	
 			// template <class InputIterator> vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type())
@@ -69,7 +85,12 @@ namespace ft
 			// ~vector()
 			~vector(void)
 			{
-				delete array;
+				if (this->array != nullptr)
+				{
+					for(size_type i = 0; i < this->_size; i++)
+						this->alloc.destroy(this->array + i);
+					this->alloc.deallocate(this->array, this->_capacity);
+				}
 			}
 
 		////operator=///////////////////////////////////////////////////////
@@ -95,39 +116,85 @@ namespace ft
 
 	//Capacity---------------------------------------------------------------
 		////size///////////////////////////////////////////////////////
-			// size_type size() const
+			size_type size() const
+			{
+				return (this->_size);
+			}
 
 		////max_size///////////////////////////////////////////////////////
-			// size_type max_size() const
+			size_type max_size() const
+			{
+				return (this->alloc.max_size());
+			}
 
 		////resize///////////////////////////////////////////////////////
 			// void resize (size_type n, value_type val = value_type())
 
 		////capacity///////////////////////////////////////////////////////
-			// size_type capacity() const
+			size_type capacity() const
+			{
+				return (this->_capacity);
+			}
 
 		////empty///////////////////////////////////////////////////////
-			// bool empty() const
+			bool empty() const
+			{
+				if (this->_size == 0)
+					return (true);
+				return (false);
+			}
 
 		////reserve///////////////////////////////////////////////////////
 			// void reserve (size_type n)
 
 	//Element access---------------------------------------------------------------
 		////operator[]///////////////////////////////////////////////////////
-			// reference operator[] (size_type n)
-			// const_reference operator[] (size_type n) const
+			reference operator[] (size_type n)
+			{
+				return (this->array[n]); //remove make function fo that
+			}
+
+			const_reference operator[] (size_type n) const
+			{
+				return (this->array[n]); //remove make function fo that
+			}
 
 		////at///////////////////////////////////////////////////////
-			// reference at (size_type n)
-			// const_reference at (size_type n) const
+			reference at (size_type n)
+			{
+				if (n > this->_size - 1)
+					throw std::out_of_range("Catch out_of_range exception!");  //remove make function fo that
+				return (this->array[n]);
+			}
+
+			const_reference at (size_type n) const
+			{
+				if (n > this->_size - 1)
+					throw std::out_of_range("Catch out_of_range exception!");  //remove make function fo that
+				return (this->array[n]);
+			}
 
 		////front///////////////////////////////////////////////////////
-			// reference front()
-			// const_reference front() const
+			reference front()
+			{
+				return (this->array[0]); //remove make function fo that
+			}
+
+			const_reference front() const
+			{
+				return (this->array[0]); //remove make function fo that
+			}
 
 		////back///////////////////////////////////////////////////////
-			// reference back()
-			// const_reference back() const
+			reference back()
+			{
+				return (this->array[this->_size - 1]); //remove make function fo that
+			}
+
+			const_reference back() const
+			{
+				return (this->array[this->_size - 1]); //remove make function fo that
+			}
 
 	//Modifiers---------------------------------------------------------------
 		////assign///////////////////////////////////////////////////////
