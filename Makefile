@@ -4,7 +4,7 @@ OBJ_DIR := ./obj/
 HEADER_DIR := ./inc/
 SRCS :=	my_main.cpp
 CC := c++
-CFLAGS := -Wall -Werror -Wextra -std=c++98
+CFLAGS := -g -Wall -Werror -Wextra -std=c++98
 OBJS := $(patsubst %.cpp,$(OBJ_DIR)%.o,$(SRCS))
 HEADERS := $(wildcard $(HEADER_DIR)*.hpp)
 INCLUDES := -I $(HEADER_DIR)
