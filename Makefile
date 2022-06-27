@@ -2,9 +2,16 @@ NAME := containers_ft
 SRC_DIR := ./src/
 OBJ_DIR := ./obj/
 HEADER_DIR := ./inc/
-SRCS :=	my_main.cpp
+SRCS :=	testkram.cpp
+# SRCS :=	my_main.cpp
 CC := c++
-CFLAGS := -g -Wall -Werror -Wextra -std=c++98
+ifeq ($(DEBUG),1)
+CFLAGS := -g -Wall -Werror -Wextra
+else ifeq ($(DEBUG),2)
+CFLAGS := -g
+else
+CFLAGS := -Wall -Werror -Wextra -std=c++98
+endif
 OBJS := $(patsubst %.cpp,$(OBJ_DIR)%.o,$(SRCS))
 HEADERS := $(wildcard $(HEADER_DIR)*.hpp)
 INCLUDES := -I $(HEADER_DIR)
