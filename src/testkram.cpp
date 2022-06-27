@@ -210,7 +210,7 @@
 // // is_integral example
 // #include <iostream>
 
-// #include "inc/utils/type_traits.hpp"
+// #include "ft_type_traits.hpp"
 
 // int main()
 // {
