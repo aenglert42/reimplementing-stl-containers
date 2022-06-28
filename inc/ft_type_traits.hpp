@@ -4,16 +4,15 @@
 
 namespace ft
 {
-//is_integral///////////
-	struct false_type
+//is_integral/////////// https://cplusplus.com/reference/type_traits/is_integral/
+	template <typename T, T v>
+	struct integral_constant
 	{
-		static const bool value = false;
+		static const T value = v;
 	};
 
-	struct true_type
-	{
-		static const bool value = true;
-	};
+	typedef integral_constant<bool, true>  true_type;
+	typedef integral_constant<bool, false> false_type;
 
 	template <class T>
 	struct is_integral : public ft::false_type
@@ -112,7 +111,7 @@ namespace ft
 	};
 	
 
-//enable_if///////////
+//enable_if/////////// https://cplusplus.com/reference/type_traits/enable_if/
 	template <bool Cond, class T = void>
 	struct enable_if
 	{

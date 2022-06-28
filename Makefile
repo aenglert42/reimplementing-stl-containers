@@ -10,7 +10,7 @@ CFLAGS := -g -Wall -Werror -Wextra
 else ifeq ($(DEBUG),2)
 CFLAGS := -g
 else
-CFLAGS := -Wall -Werror -Wextra -std=c++98
+CFLAGS := -Wall -Werror -Wextra -std=c++98 -DNDEBUG
 endif
 OBJS := $(patsubst %.cpp,$(OBJ_DIR)%.o,$(SRCS))
 HEADERS := $(wildcard $(HEADER_DIR)*.hpp)

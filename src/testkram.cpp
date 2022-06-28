@@ -340,8 +340,9 @@
 // // iterator_traits example
 // #include <iostream>     // std::cout
 // #include <typeinfo>     // typeid
+// // #include <iterator>     // std::iterator_traits
 
-// #include "inc/utils/iterator.hpp"
+// #include "ft_iterator.hpp"
 // int main() {
 //   typedef ft::iterator_traits<int*> traits;
 //   if (typeid(traits::iterator_category)==typeid(std::random_access_iterator_tag))
