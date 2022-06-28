@@ -267,7 +267,7 @@
 // #include <iostream>     // std::cout
 // #include <vector>       // std::vector
 
-// #include "inc/algorithm.hpp"    // ft::equal
+// #include "ft_algorithm.hpp"    // ft::equal
 
 // bool mypredicate (int i, int j) {
 //   return (i==j);
@@ -305,7 +305,7 @@
 // #include <iostream>     // std::cout, std::boolalpha
 // #include <cctype>       // std::tolower
 
-// #include "inc/algorithm.hpp"    // ft::equal
+// #include "ft_algorithm.hpp"    // ft::equal
 
 // // a case-insensitive comparison function:
 // bool mycomp (char c1, char c2)

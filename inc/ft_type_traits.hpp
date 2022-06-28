@@ -4,7 +4,7 @@
 
 namespace ft
 {
-	//is_integral///////////
+//is_integral///////////
 	struct false_type
 	{
 		static const bool value = false;
@@ -112,7 +112,7 @@ namespace ft
 	};
 	
 
-	//enable_if///////////
+//enable_if///////////
 	template <bool Cond, class T = void>
 	struct enable_if
 	{
