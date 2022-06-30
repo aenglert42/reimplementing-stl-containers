@@ -2,8 +2,7 @@ NAME := containers_ft
 SRC_DIR := ./src/
 OBJ_DIR := ./obj/
 HEADER_DIR := ./inc/
-SRCS :=	testkram.cpp
-# SRCS :=	my_main.cpp
+SRCS :=	my_main.cpp
 CC := c++
 ifeq ($(DEBUG),1)
 CFLAGS := -g -Wall -Werror -Wextra
@@ -44,11 +43,13 @@ ofilemessage:
 
 clean:
 	@rm -rf $(OBJS) *.dSYM
+	@$(MAKE) clean -C ./unit_tester/
 	@echo "$(RED)$(NAME)-object-files deleted$(RESET)"
 	@echo "$(RED)$(NAME)-dSYM-files deleted$(RESET)"
 
 fclean: clean
 	@rm -f $(NAME)
+	@$(MAKE) fclean -C ./unit_tester/
 	@echo "$(RED)$(NAME) deleted$(RESET)"
 
 re: fclean all
@@ -70,5 +71,8 @@ peace:
 	@echo "       |      |\n"
 
 .INTERMEDIATE: ofilemessage
+
+test:
+	@$(MAKE) -C ./unit_tester/
 
 .PHONY: clean fclean all re

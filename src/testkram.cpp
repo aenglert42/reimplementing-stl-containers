@@ -1,3 +1,4 @@
+#include "tests.hpp"
 #include <iostream>
 #include <sstream>		// std::stringstream
 #include <type_traits> //remove
@@ -41,7 +42,7 @@
 
 // #include "utils.hpp"      // ft::pair, ft::make_pair
 
-// int main () {
+// int pair_example () {
 // 	std::stringstream stream;
 // 	ft::pair <std::string,double> product1;                     // default constructor
 // 	ft::pair <std::string,double> product2 ("tomatoes",2.30);   // value init
@@ -72,14 +73,13 @@
 // 	std::cout << stream.str();
 // 	if (stream.str() == "The price of tomatoes is $2.3")
 // 		std::cout << "\t\t OK";
-// 	std::cout << std::endl;
 // 	return 0;
 // }
 
-// // Output: ***********************
-// // The price of lightbulbs is $0.99
-// // The price of shoes is $39.9
-// // The price of tomatoes is $2.3
+// // // Output: ***********************
+// // // The price of lightbulbs is $0.99
+// // // The price of shoes is $39.9
+// // // The price of tomatoes is $2.3
 
 /* ---------------------------------------------------------------------------------- */
 // // pair::operator= example
