@@ -343,6 +343,10 @@ void pair_delete_old_pointer(TestContainer& container)
 	std::cout << *(paerle.second) << std::endl;
 	std::cout << paerle.first << std::endl;
 
+	delete(one);
+	delete(two);
+	delete(three);
+
 //////////////////////////////////
 	EXPECTED_OUTPUT(1\na\n2\nb\n1\n3\nc\n);
 }

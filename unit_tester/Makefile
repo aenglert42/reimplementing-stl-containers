@@ -1,14 +1,15 @@
-NAME := ../unit_test
+TITLE := unit_test
+NAME := ../$(TITLE)
 SRC_DIR := ./
 OBJ_DIR := ./obj/
 HEADER_DIR := ./
 SRCS :=	main.cpp \
 		TesterClass.cpp
 CC := c++
-CFLAGS := -Wall -Werror -Wextra -std=c++11
+CFLAGS :=  -std=c++11 -Wall -Wextra -Werror -Wno-deprecated-copy
 OBJS := $(patsubst %.cpp,$(OBJ_DIR)%.o,$(SRCS))
 HEADERS := $(wildcard $(HEADER_DIR)*.hpp)
-DEPS := $(HEADERS)
+DEPS := $(HEADERS) Makefile
 #TEXT FORMAT
 RED := \033[31m
 GREEN := \033[32m
@@ -18,17 +19,14 @@ BOLD := \033[1m
 UNDERLINED := \033[4m
 RESET := \033[0m
 
-all: $(MAKE) re
+all: $(NAME)
 
-$(NAME): $(OBJ_DIR) $(OBJS) $(DEPS)
+$(NAME): $(OBJS)
 	@$(CC) $(CFLAGS) $(INCLUDES) $(OBJS) -o $@
-	@echo "$(GREEN)unit_test created$(RESET)"
-	@echo "$(HEADERS)"
+	@echo "$(GREEN)$(TITLE) created$(RESET)"
+#	@echo "$(HEADERS)"
 
-$(OBJ_DIR):
-	@mkdir $(OBJ_DIR)
-
-$(OBJ_DIR)%.o: $(SRC_DIR)%.cpp
+$(OBJ_DIR)%.o: $(SRC_DIR)%.cpp $(DEPS)
 	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 clean:
@@ -36,6 +34,6 @@ clean:
 
 fclean: clean
 	@rm -f $(NAME)
-	@echo "$(RED)$(NAME) deleted$(RESET)"
+	@echo "$(RED)$(TITLE) deleted$(RESET)"
 
 re: fclean $(NAME)

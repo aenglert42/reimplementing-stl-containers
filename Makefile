@@ -1,7 +1,7 @@
 NAME := containers_ft
-SRC_DIR := ./src/
-OBJ_DIR := ./obj/
-HEADER_DIR := ./inc/
+SRC_DIR := src/
+OBJ_DIR := obj/
+HEADER_DIR := inc/
 SRCS :=	my_main.cpp
 CC := c++
 ifeq ($(DEBUG),1)
@@ -14,8 +14,9 @@ endif
 OBJS := $(patsubst %.cpp,$(OBJ_DIR)%.o,$(SRCS))
 HEADERS := $(wildcard $(HEADER_DIR)*.hpp)
 INCLUDES := -I $(HEADER_DIR)
-DEPS := $(HEADERS) 
+DEPS := $(HEADERS) Makefile
 MAKE += --no-print-directory
+UNIT_TESTER_DIR := unit_tester/
 #TEXT FORMAT
 RED := \033[31m
 GREEN := \033[32m
@@ -27,7 +28,16 @@ RESET := \033[0m
 
 all: $(NAME)
 
-$(NAME): $(OBJ_DIR) $(OBJS) $(DEPS)
+unit:
+	@make -C $(UNIT_TESTER_DIR)
+
+unitre:
+	@make re -C $(UNIT_TESTER_DIR)
+
+test: all unit
+	./unit_test
+
+$(NAME): $(OBJ_DIR) $(OBJS)
 	@$(CC) $(CFLAGS) $(INCLUDES) $(OBJS) -o $@
 	@echo "\n$(GREEN)$(NAME) created$(RESET)"
 
@@ -46,11 +56,13 @@ clean:
 	@$(MAKE) clean -C ./unit_tester/
 	@echo "$(RED)$(NAME)-object-files deleted$(RESET)"
 	@echo "$(RED)$(NAME)-dSYM-files deleted$(RESET)"
+	@make clean -C $(UNIT_TESTER_DIR)
 
 fclean: clean
 	@rm -f $(NAME)
 	@$(MAKE) fclean -C ./unit_tester/
 	@echo "$(RED)$(NAME) deleted$(RESET)"
+	@make fclean -C $(UNIT_TESTER_DIR)
 
 re: fclean all
 
@@ -71,8 +83,5 @@ peace:
 	@echo "       |      |\n"
 
 .INTERMEDIATE: ofilemessage
-
-test:
-	@$(MAKE) -C ./unit_tester/
 
 .PHONY: clean fclean all re
