@@ -165,49 +165,49 @@ namespace ft
 		////operator[]///////////////////////////////////////////////////////
 			reference operator[] (size_type n)
 			{
-				return (this->array[n]); //remove make function fo that
+				return (this->array[n]); // AE remove make function for that
 			}
 
 			const_reference operator[] (size_type n) const
 			{
-				return (this->array[n]); //remove make function fo that
+				return (this->array[n]); // AE remove make function for that
 			}
 
 		////at///////////////////////////////////////////////////////
 			reference at (size_type n)
 			{
 				if (n > this->_size - 1)
-					throw std::out_of_range("Catch out_of_range exception!");  //remove make function fo that
+					throw std::out_of_range("Catch out_of_range exception!");  // AE remove make function for that
 				return (this->array[n]);
 			}
 
 			const_reference at (size_type n) const
 			{
 				if (n > this->_size - 1)
-					throw std::out_of_range("Catch out_of_range exception!");  //remove make function fo that
+					throw std::out_of_range("Catch out_of_range exception!");  // AE remove make function for that
 				return (this->array[n]);
 			}
 
 		////front///////////////////////////////////////////////////////
 			reference front()
 			{
-				return (this->array[0]); //remove make function fo that
+				return (this->array[0]); // AE remove make function for that
 			}
 
 			const_reference front() const
 			{
-				return (this->array[0]); //remove make function fo that
+				return (this->array[0]); // AE remove make function for that
 			}
 
 		////back///////////////////////////////////////////////////////
 			reference back()
 			{
-				return (this->array[this->_size - 1]); //remove make function fo that
+				return (this->array[this->_size - 1]); // AE remove make function for that
 			}
 
 			const_reference back() const
 			{
-				return (this->array[this->_size - 1]); //remove make function fo that
+				return (this->array[this->_size - 1]); // AE remove make function for that
 			}
 
 	//Modifiers---------------------------------------------------------------

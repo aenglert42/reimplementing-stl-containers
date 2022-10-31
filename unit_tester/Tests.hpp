@@ -2,7 +2,7 @@
 
 #include <cassert>		// assert
 #include <iostream>		// std::cout
-#include <iterator>		// std::reverse_iterator
+// #include <iterator>		// std::reverse_iterator
 #include <map>			// std::map
 #include <sstream>		// std::stringstream
 #include <string>		// std::string
@@ -284,9 +284,9 @@ void reverse_iterator_operator_plus_equal(TestContainer& container)
 void reverse_iterator_operator_pointer(TestContainer& container)
 {
 	std::map<int,std::string> numbers;
-	numbers.insert (std::make_pair(1,"one"));
-	numbers.insert (std::make_pair(2,"two"));
-	numbers.insert (std::make_pair(3,"three"));
+	numbers.insert (std::make_pair(1,"one")); // AE change to ft::make_pair
+	numbers.insert (std::make_pair(2,"two")); // AE change to ft::make_pair
+	numbers.insert (std::make_pair(3,"three")); // AE change to ft::make_pair
 
 	typedef std::map<int,std::string>::iterator map_iter;
 
@@ -325,11 +325,11 @@ void pair_delete_old_pointer(TestContainer& container)
 	int *one = new int(1);
 	int *two = new int(2);
 	int *three = new int(3);
-	std::pair<char, int *>  paerle;
-	std::pair<char, int *>  paerle2;
+	ft::pair<char, int *>  paerle;
+	ft::pair<char, int *>  paerle2;
 
-	paerle = std::make_pair('a', one);
-	paerle2 = std::make_pair('b', two);
+	paerle = ft::make_pair('a', one);
+	paerle2 = ft::make_pair('b', two);
 	std::cout << *(paerle.second) << std::endl;
 	std::cout << paerle.first << std::endl;
 
@@ -339,7 +339,7 @@ void pair_delete_old_pointer(TestContainer& container)
 	std::cout << paerle.first << std::endl;
 	std::cout << *one << std::endl;
 
-	paerle = std::make_pair('c', three);
+	paerle = ft::make_pair('c', three);
 	std::cout << *(paerle.second) << std::endl;
 	std::cout << paerle.first << std::endl;
 
@@ -430,4 +430,25 @@ void sfinae(TestContainer& container)
 
 //////////////////////////////////
 	EXPECTED_OUTPUT(a a\n1\n1\n1\n0\n1\n);
+}
+
+void vector_costructors(TestContainer& container)
+{
+	// constructors used in the same order as described above:
+	std::vector<int> first;                                // empty vector of ints
+	std::vector<int> second (4,100);                       // four ints with value 100
+	std::vector<int> third (second.begin(),second.end());  // iterating through second
+	std::vector<int> fourth (third);                       // a copy of third
+
+	// the iterator constructor can also be used to construct from arrays:
+	int myints[] = {16,2,77,29};
+	std::vector<int> fifth (myints, myints + sizeof(myints) / sizeof(int) );
+
+	std::cout << "The contents of fifth are:";
+	for (std::vector<int>::iterator it = fifth.begin(); it != fifth.end(); ++it)
+		std::cout << ' ' << *it;
+	std::cout << '\n';
+
+//////////////////////////////////
+	EXPECTED_OUTPUT(The contents of fifth are: 16 2 77 29\n);
 }

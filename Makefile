@@ -28,6 +28,9 @@ RESET := \033[0m
 
 all: $(NAME)
 
+run: all
+	./$(NAME)
+
 unit:
 	@make -C $(UNIT_TESTER_DIR)
 
