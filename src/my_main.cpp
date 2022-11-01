@@ -22,8 +22,23 @@ int main(void)
 	#endif
 	//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> vector
 	// constructor
-	ft::vector<int> v;
-	
+	ft::Vector<int> v;
+	v.push_back(5);
+	v.push_back(5);
+	v.push_back(8);
+	v.push_back(4);
 	v.print();
+
+	ft::Vector<std::string> v2;
+	v2.push_back("A");
+	v2.push_back("B");
+	v2.push_back("C");
+	v2.print();
+
+	ft::Vector<int> v3;
+	v3.push_back(8);
+	v3.push_back(8);
+	v3.push_back(5);
+	v3.print();
 
 }

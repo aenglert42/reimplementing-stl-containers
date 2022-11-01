@@ -7,7 +7,7 @@
 namespace ft
 {
 	template < class T, class Alloc = std::allocator<T> >
-	class vector
+	class Vector
 	{
 		public:
 	//MEMBER TYPES
@@ -42,22 +42,48 @@ namespace ft
 			size_type _capacity;
 			allocator_type alloc;
 			pointer array;
+
+			pointer myAlloc(size_type newCapacity)
+			{
+				return (this->alloc.allocate(newCapacity));
+			}
+
+			void myDealloc(void)
+			{
+				for(size_type i = 0; i < this->_size; i++)
+					this->alloc.destroy(&this->array[i]);
+				this->alloc.deallocate(this->array, this->_capacity);
+			}
+
+			void myRealloc(size_type newCapacity)
+			{
+				if (newCapacity < this->_size)
+					return ;
+				pointer newArray = myAlloc(newCapacity);
+				for (size_type i = 0; i < this->_size; i++)
+					newArray[i] = this->array[i];
+				myDealloc();
+				this->array = newArray;
+				this->_capacity = newCapacity;
+			}
+
 		public:
 	//MEMBER FUNCTIONS
 
 			void print(void) //remove
 			{
-				std::cout << "test" << std::endl;
+				for (size_type i = 0; i < this->size(); i++)
+					std::cout << array[i] << std::endl;
 			}
 		////constructor///////////////////////////////////////////////////////
 			// default (1)	
-			explicit vector (const allocator_type& alloc = allocator_type()) : _size(0), _capacity(0), alloc(alloc), array(ft_nullptr)
+			explicit Vector (const allocator_type& alloc = allocator_type()) : _size(0), _capacity(0), alloc(alloc), array(ft_nullptr)
 			{
-				
+
 			}
 
 			// fill (2)	
-			explicit vector (size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type())// : _size(n), _capacity(_size), alloc(alloc)
+			explicit Vector (size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type())// : _size(n), _capacity(_size), alloc(alloc)
 			{
 				this->_size = n;
 				this->_capacity = this->_size;
@@ -69,10 +95,10 @@ namespace ft
 
 			// range (3)	
 			// template <class InputIterator>
-			// vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type())
+			// Vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type())
 
 			// copy (4)	
-			vector (const vector& x)// :_size(0), _capacity(0), alloc(allocator_type()), array(ft_nullptr)
+			Vector (const Vector& x)// :_size(0), _capacity(0), alloc(allocator_type()), array(ft_nullptr)
 			{
 				this->_size = 0;
 				this->_capacity = 0;
@@ -82,20 +108,21 @@ namespace ft
 			}
 
 		////destructor///////////////////////////////////////////////////////
-			// ~vector()
-			~vector(void)
+			// ~Vector()
+			~Vector(void)
 			{
 				if (this->array != ft_nullptr)
 				{
-					for(size_type i = 0; i < this->_size; i++)
-						this->alloc.destroy(&this->array[i]);
-					this->alloc.deallocate(this->array, this->_capacity);
+					// for(size_type i = 0; i < this->_size; i++)
+					// 	this->alloc.destroy(&this->array[i]);
+					// this->alloc.deallocate(this->array, this->_capacity);
+					myDealloc();
 				}
 			}
 
 		////operator=///////////////////////////////////////////////////////
 			// copy (1)	
-			vector& operator= (const vector& x)
+			Vector& operator= (const Vector& x)
 			{
 				if (*this == x)
 					return (*this);
@@ -165,11 +192,15 @@ namespace ft
 		////operator[]///////////////////////////////////////////////////////
 			reference operator[] (size_type n)
 			{
+				// if n >= size
+				// errorhandling
 				return (this->array[n]); // AE remove make function for that
 			}
 
 			const_reference operator[] (size_type n) const
 			{
+				// if n >= size
+				// errorhandling
 				return (this->array[n]); // AE remove make function for that
 			}
 
@@ -220,7 +251,19 @@ namespace ft
 			// void assign (size_type n, const value_type& val)
 
 		////push_back///////////////////////////////////////////////////////
-			// void push_back (const value_type& val)
+			void push_back (const value_type& val)
+			{
+				if (this->_size >= this->_capacity)
+				{
+					if (this->_capacity == 0)
+						this->myRealloc(1);
+					else
+						this->myRealloc(this->_capacity * 2);
+				}
+				
+				this->array[this->_size] = val;
+				this->_size++;
+			}
 
 		////pop_back///////////////////////////////////////////////////////
 			// void pop_back()
@@ -241,7 +284,7 @@ namespace ft
 			// iterator erase (iterator first, iterator last)
 
 		////swap///////////////////////////////////////////////////////
-			// void swap (vector& x)
+			// void swap (Vector& x)
 
 		////clear///////////////////////////////////////////////////////
 			// void clear()
@@ -254,31 +297,31 @@ namespace ft
 		////relational operators///////////////////////////////////////////////////////
 			// (1)
 			// template <class T, class Alloc>
-			// bool operator== (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
+			// bool operator== (const Vector<T,Alloc>& lhs, const Vector<T,Alloc>& rhs)
 
 			// (2)
 			// template <class T, class Alloc>
-			// bool operator!= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
+			// bool operator!= (const Vector<T,Alloc>& lhs, const Vector<T,Alloc>& rhs)
 
 			// (3)
 			// template <class T, class Alloc>
-			// bool operator<  (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
+			// bool operator<  (const Vector<T,Alloc>& lhs, const Vector<T,Alloc>& rhs)
 
 			// (4)
 			// template <class T, class Alloc>
-			// bool operator<= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
+			// bool operator<= (const Vector<T,Alloc>& lhs, const Vector<T,Alloc>& rhs)
 
 			// (5)
 			// template <class T, class Alloc>
-			// bool operator>  (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
+			// bool operator>  (const Vector<T,Alloc>& lhs, const Vector<T,Alloc>& rhs)
 
 			// (6)
 			// template <class T, class Alloc>
-			// bool operator>= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
+			// bool operator>= (const Vector<T,Alloc>& lhs, const Vector<T,Alloc>& rhs)
 
 		////swap///////////////////////////////////////////////////////
 			// template <class T, class Alloc>
-			// void swap (vector<T,Alloc>& x, vector<T,Alloc>& y)
+			// void swap (Vector<T,Alloc>& x, Vector<T,Alloc>& y)
 
 			
 	};
