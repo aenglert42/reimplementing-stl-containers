@@ -48,10 +48,15 @@ namespace ft
 				return (this->alloc.allocate(newCapacity));
 			}
 
-			void myDealloc(void)
+			void myDestroy(void)
 			{
 				for(size_type i = 0; i < this->_size; i++)
 					this->alloc.destroy(&this->array[i]);
+			}
+
+			void myDealloc(void)
+			{
+				myDestroy();
 				this->alloc.deallocate(this->array, this->_capacity);
 			}
 
@@ -61,7 +66,7 @@ namespace ft
 					return ;
 				pointer newArray = myAlloc(newCapacity);
 				for (size_type i = 0; i < this->_size; i++)
-					newArray[i] = this->array[i];
+					this->alloc.construct(&newArray[i], this->array[i]);
 				myDealloc();
 				this->array = newArray;
 				this->_capacity = newCapacity;
@@ -72,6 +77,7 @@ namespace ft
 
 			void print(void) //remove
 			{
+				std::cout << "size: " << this->size() << std::endl;
 				for (size_type i = 0; i < this->size(); i++)
 					std::cout << array[i] << std::endl;
 			}
@@ -260,13 +266,19 @@ namespace ft
 					else
 						this->myRealloc(this->_capacity * 2);
 				}
-				
-				this->array[this->_size] = val;
+				this->alloc.construct(&this->array[this->_size], val);
 				this->_size++;
 			}
 
 		////pop_back///////////////////////////////////////////////////////
-			// void pop_back()
+			void pop_back()
+			{
+				if (this->_size > 0)
+				{
+					this->alloc.destroy(&this->array[this->_size]);
+					this->_size--;
+				}
+			}
 
 		////insert///////////////////////////////////////////////////////
 			// single element (1)	
@@ -287,7 +299,11 @@ namespace ft
 			// void swap (Vector& x)
 
 		////clear///////////////////////////////////////////////////////
-			// void clear()
+			void clear()
+			{
+				myDestroy();
+				this->_size = 0;
+			}
 
 	//Allocator---------------------------------------------------------------
 		////get_allocator///////////////////////////////////////////////////////
