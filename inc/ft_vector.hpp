@@ -3,9 +3,107 @@
 #include <iostream>
 #include <memory> // std::allocator
 #include "ft_nullptr.hpp" // ft_nullptr
+#include "ft_iterator.hpp"
 
 namespace ft
 {
+////////////////VectorIterator
+	template <typename T> //AE can I change T to iterator?
+	class VectorIterator
+	{
+		public:
+			typedef iterator<random_access_iterator_tag, T>							iterator_type;
+			typedef typename iterator_traits<iterator_type>::difference_type		difference_type;
+			typedef typename iterator_traits<iterator_type>::value_type				value_type;
+			typedef typename iterator_traits<iterator_type>::pointer				pointer;
+			typedef typename iterator_traits<iterator_type>::reference				reference;
+			typedef typename iterator_traits<iterator_type>::iterator_category		iterator_category;
+
+			VectorIterator(void) : _ptr(ft_nullptr)
+			{
+
+			}
+
+			VectorIterator(pointer ptr) : _ptr(ptr)
+			{
+
+			}
+
+			VectorIterator(const VectorIterator& other) : _ptr(other._ptr) // AE base()?
+			{
+
+			}
+
+			~VectorIterator(void)
+			{
+
+			}
+
+			VectorIterator& operator++()
+			{
+				this->_ptr++;
+				return *this;
+			}
+
+			VectorIterator& operator++(int)
+			{
+				VectorIterator tmp(*this);
+				++this->_ptr;
+				return tmp;
+			}
+
+			VectorIterator& operator--()
+			{
+				this->_ptr--;
+				return *this;
+			}
+
+			VectorIterator& operator--(int)
+			{
+				VectorIterator tmp(*this);
+				--this->_ptr;
+				return tmp;
+			}
+
+			reference operator[] (difference_type n) const
+			{
+				return (*(this->_ptr + n));
+			}
+
+			pointer operator->() const
+			{
+				return (this->_ptr);
+			}
+		
+			reference operator*() const
+			{
+				return (*this->_ptr);
+			}
+
+			// pointer base(void) const
+			// {
+
+			// }
+
+		private:
+			pointer _ptr;
+	};
+
+	template <class Iterator>
+	bool operator==(const VectorIterator<Iterator>& lhs,
+					const VectorIterator<Iterator>& rhs)
+	{
+		return (*lhs == *rhs);
+	}
+
+	template <class Iterator>
+	bool operator!=(const VectorIterator<Iterator>& lhs,
+					const VectorIterator<Iterator>& rhs)
+	{
+		return (*lhs != *rhs);
+	}
+
+////////////////Vector
 	template < class T, class Alloc = std::allocator<T> >
 	class Vector
 	{
@@ -30,7 +128,7 @@ namespace ft
 			typedef typename allocator_type::const_reference	const_reference; //allocator_type::const_reference	for the default allocator: const value_type&
 			typedef typename allocator_type::pointer			pointer; //allocator_type::pointer	for the default allocator: value_type*
 			typedef typename allocator_type::const_pointer		const_pointer; //allocator_type::const_pointer	for the default allocator: const value_type*
-			// typedef iterator					= /* implementation-defined */; //a random access iterator to value_type	convertible to const_iterator
+			typedef VectorIterator<value_type>					iterator; //a random access iterator to value_type	convertible to const_iterator
 			// typedef const_iterator			= /* implementation-defined */; //a random access iterator to const value_type	
 			// typedef ft::reverse_iterator<iterator>				reverse_iterator; //reverse_iterator<iterator>	
 			// typedef ft::reverse_iterator<const_iterator>		const_reverse_iterator; //reverse_iterator<const_iterator>	
@@ -146,11 +244,17 @@ namespace ft
 
 	//Iterators---------------------------------------------------------------
 		////begin///////////////////////////////////////////////////////
-			// iterator begin()
+			iterator begin()
+			{
+				return (iterator(this->array));
+			}
 			// const_iterator begin() const
 
 		////end///////////////////////////////////////////////////////
-			// iterator end()
+			iterator end()
+			{
+				return (iterator(this->array + this->_size));
+			}
 			// const_iterator end() const
 
 		////rbegin///////////////////////////////////////////////////////

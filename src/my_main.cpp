@@ -128,5 +128,8 @@ int main(void)
 	v3.push_back(Vector3(5, 7, 1));
 	v3.push_back(Vector3(8, 0, 2));
 	v3.print();
+	std::cout << std::endl;
 
+	for (ft::Vector<int>::iterator it = v.begin(); it != v.end(); ++it)
+		std::cout << *it << std::endl;
 }
