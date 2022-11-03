@@ -1,7 +1,8 @@
 #pragma once
 
 #include <iostream> //remove
-#include <iterator>
+// #include <iterator>
+#include <cstddef> // ptrdiff_t
 
 namespace ft
 {
@@ -54,7 +55,7 @@ namespace ft
 	class iterator_traits<T*>
 	{
 		public:
-			typedef ptrdiff_t								difference_type;
+			typedef std::ptrdiff_t								difference_type;
 			typedef T										value_type;
 			typedef T*										pointer;
 			typedef T&										reference;
@@ -65,7 +66,7 @@ namespace ft
 	class iterator_traits<const T*>
 	{
 		public:
-			typedef ptrdiff_t								difference_type;
+			typedef std::ptrdiff_t								difference_type;
 			typedef T										value_type;
 			typedef const T*								pointer;
 			typedef const T&								reference;
@@ -73,7 +74,7 @@ namespace ft
 	};
 
 // iterator https://cplusplus.com/reference/iterator/iterator/
-	template <class Category, class T, class Distance = ptrdiff_t,
+	template <class Category, class T, class Distance = std::ptrdiff_t,
 			class Pointer = T*, class Reference = T&>
 	struct iterator
 	{
@@ -179,18 +180,20 @@ namespace ft
 			}
 			
 			////operator--///////////////////////////////////////////////////////
-			reverse_iterator& operator--()
-			{
-				++current;
-				return (*this);
-			}
+				// (1)	
+				reverse_iterator& operator--()
+				{
+					++current;
+					return (*this);
+				}
 
-			reverse_iterator  operator--(int)
-			{
-				reverse_iterator tmp(*this);
-				++current;
-				return (tmp);
-			}
+				// (2)	
+				reverse_iterator  operator--(int)
+				{
+					reverse_iterator tmp(*this);
+					++current;
+					return (tmp);
+				}
 			
 			////operator-=///////////////////////////////////////////////////////
 			reverse_iterator& operator-=(difference_type n)
@@ -211,6 +214,7 @@ namespace ft
 				return (*(*this + n));
 			}
 	};
+	
 	//NON-MEMBER FUNCTION OVERLOADS
 			////relational operators///////////////////////////////////////////////////////
 				// (1)
