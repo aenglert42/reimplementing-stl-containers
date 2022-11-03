@@ -53,13 +53,12 @@ struct Vector3
 		block[0] = other.block[0];
 		block[1] = other.block[1];
 		block[2] = other.block[2];
-		// copy block content
-		std::cout << "Copy\n";
+		// std::cout << "Copy\n";
 	};
 
 	~Vector3()
 	{
-		std::cout << "Destroy\n";
+		// std::cout << "Destroy\n";
 		delete[] block;
 	};
 
@@ -72,7 +71,7 @@ struct Vector3
 
 	Vector3& operator=(const Vector3& other)
 	{
-		std::cout << "Assign\n";
+		// std::cout << "Assign\n";
 		block[0] = other.block[0];
 		block[1] = other.block[1];
 		block[2] = other.block[2];
@@ -132,4 +131,9 @@ int main(void)
 
 	for (ft::Vector<int>::iterator it = v.begin(); it != v.end(); ++it)
 		std::cout << *it << std::endl;
+	std::cout << std::endl;
+
+	for (ft::Vector<int>::reverse_iterator it = v.rbegin(); it != v.rend(); ++it)
+		std::cout << *it << std::endl;
+	std::cout << std::endl;
 }

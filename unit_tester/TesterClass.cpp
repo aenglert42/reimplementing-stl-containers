@@ -16,7 +16,7 @@ void TesterClass::display_result(void)
 	else
 	{
 		std::cout << RED << "KO" << std::endl;
-		std::cerr << YELLOW << "in line: " << container.line << "\n\nexpected:\n" << container.expected_output << std::endl;
+		std::cerr << YELLOW << "in: " << container.test_name << " " << TEST_FILE << ":" << container.line << "\n\nexpected:\n" << container.expected_output << std::endl;
 		std::cerr << "recieved:\n" << container.real_output << RESET << std::endl;
 	}
 	std::cout << std::endl;

@@ -16,6 +16,7 @@
 #include "../inc/ft_iterator.hpp"
 #include "../inc/ft_type_traits.hpp"
 #include "../inc/utils.hpp"
+#include "../inc/ft_vector.hpp"
 
 // TEMPLATE FOR TEST FUNCTIONS (remove <> and edit text within)
 // void <test_function_name>(TestContainer& container)
@@ -121,6 +122,19 @@ void make_pair(TestContainer& container)
 //////////////////////////////////
 	EXPECTED_OUTPUT(foo: 10 20\nbar: 10 65\n);
 }
+
+// void iterator(TestContainer& container)
+// {
+// 	int numbers[]={10,20,30,40,50};
+// 	ft::iterator from(numbers);
+// 	ft::iterator until(numbers+5);
+// 	for (ft::iterator it=from; it!=until; it++)
+// 		std::cout << *it << ' ';
+// 	std::cout << '\n';
+
+// //////////////////////////////////
+// 	EXPECTED_OUTPUT(10 20 30 40 50\n);
+// }
 
 void reverse_iterator(TestContainer& container)
 {
@@ -435,20 +449,69 @@ void sfinae(TestContainer& container)
 void vector_costructors(TestContainer& container)
 {
 	// constructors used in the same order as described above:
-	std::vector<int> first;                                // empty vector of ints
-	std::vector<int> second (4,100);                       // four ints with value 100
-	std::vector<int> third (second.begin(),second.end());  // iterating through second
-	std::vector<int> fourth (third);                       // a copy of third
+	ft::Vector<int> first;                                // empty vector of ints
+	ft::Vector<int> second (4,100);                       // four ints with value 100
+	ft::Vector<int> third (second.begin(),second.end());  // iterating through second
+	ft::Vector<int> fourth (third);                       // a copy of third
 
 	// the iterator constructor can also be used to construct from arrays:
 	int myints[] = {16,2,77,29};
-	std::vector<int> fifth (myints, myints + sizeof(myints) / sizeof(int) );
+	ft::Vector<int> fifth (myints, myints + sizeof(myints) / sizeof(int) );
 
 	std::cout << "The contents of fifth are:";
-	for (std::vector<int>::iterator it = fifth.begin(); it != fifth.end(); ++it)
+	for (ft::Vector<int>::iterator it = fifth.begin(); it != fifth.end(); ++it)
 		std::cout << ' ' << *it;
 	std::cout << '\n';
 
 //////////////////////////////////
 	EXPECTED_OUTPUT(The contents of fifth are: 16 2 77 29\n);
+}
+
+void vector_operator_equal(TestContainer& container)
+{
+	ft::Vector<int> foo (3,0);
+	ft::Vector<int> bar (5,0);
+
+	bar = foo;
+	foo = ft::Vector<int>();
+
+	std::cout << "Size of foo: " << int(foo.size()) << '\n';
+	std::cout << "Size of bar: " << int(bar.size()) << '\n';
+
+//////////////////////////////////
+	EXPECTED_OUTPUT(Size of foo: 0\nSize of bar: 3\n);
+}
+
+void my_vector_iterator(TestContainer& container)
+{
+	ft::Vector<int> v;
+	v.push_back(5);
+	v.push_back(5);
+	v.push_back(8);
+	v.push_back(4);
+
+	for (ft::Vector<int>::iterator it = v.begin(); it != v.end(); ++it)
+		std::cout << *it << std::endl;
+	std::cout << std::endl;
+
+	for (ft::Vector<int>::reverse_iterator it = v.rbegin(); it != v.rend(); ++it)
+		std::cout << *it << std::endl;
+	std::cout << std::endl;
+
+	// ft::Vector<const int> vec; // AE https://stackoverflow.com/questions/47794223/getting-const-iterator-from-begin-instead-of-cbegin
+	// vec.push_back(5);
+	// vec.push_back(5);
+	// vec.push_back(8);
+	// vec.push_back(4);
+
+	// for (ft::Vector<const int>::const_iterator it = vec.begin(); it != vec.end(); ++it)
+	// 	std::cout << *it << std::endl;
+	// std::cout << std::endl;
+
+	// for (ft::Vector<const int>::const_reverse_iterator it = vec.rbegin(); it != vec.rend(); ++it)
+	// 	std::cout << *it << std::endl;
+	// std::cout << std::endl;
+
+//////////////////////////////////
+	EXPECTED_OUTPUT(5\n5\n8\n4\n\n4\n8\n5\n5\n\n);
 }

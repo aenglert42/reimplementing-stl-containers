@@ -4,6 +4,8 @@
 #include <sstream>			// std::stringstream
 #include <initializer_list>	// std::initializer_list
 
+#define TEST_FILE "Tests.hpp"
+
 // text formating
 #define RED "\033[31m"
 #define GREEN "\033[32m"

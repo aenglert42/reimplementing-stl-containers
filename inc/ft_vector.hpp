@@ -3,107 +3,12 @@
 #include <iostream>
 #include <memory> // std::allocator
 #include "ft_nullptr.hpp" // ft_nullptr
-#include "ft_iterator.hpp"
+#include "ft_vector_iterator.hpp"
+#include "ft_algorithm.hpp"
+#include "ft_type_traits.hpp"
 
 namespace ft
 {
-////////////////VectorIterator
-	template <typename T> //AE can I change T to iterator?
-	class VectorIterator
-	{
-		public:
-			typedef iterator<random_access_iterator_tag, T>							iterator_type;
-			typedef typename iterator_traits<iterator_type>::difference_type		difference_type;
-			typedef typename iterator_traits<iterator_type>::value_type				value_type;
-			typedef typename iterator_traits<iterator_type>::pointer				pointer;
-			typedef typename iterator_traits<iterator_type>::reference				reference;
-			typedef typename iterator_traits<iterator_type>::iterator_category		iterator_category;
-
-			VectorIterator(void) : _ptr(ft_nullptr)
-			{
-
-			}
-
-			VectorIterator(pointer ptr) : _ptr(ptr)
-			{
-
-			}
-
-			VectorIterator(const VectorIterator& other) : _ptr(other._ptr) // AE base()?
-			{
-
-			}
-
-			~VectorIterator(void)
-			{
-
-			}
-
-			VectorIterator& operator++()
-			{
-				this->_ptr++;
-				return *this;
-			}
-
-			VectorIterator& operator++(int)
-			{
-				VectorIterator tmp(*this);
-				++this->_ptr;
-				return tmp;
-			}
-
-			VectorIterator& operator--()
-			{
-				this->_ptr--;
-				return *this;
-			}
-
-			VectorIterator& operator--(int)
-			{
-				VectorIterator tmp(*this);
-				--this->_ptr;
-				return tmp;
-			}
-
-			reference operator[] (difference_type n) const
-			{
-				return (*(this->_ptr + n));
-			}
-
-			pointer operator->() const
-			{
-				return (this->_ptr);
-			}
-		
-			reference operator*() const
-			{
-				return (*this->_ptr);
-			}
-
-			// pointer base(void) const
-			// {
-
-			// }
-
-		private:
-			pointer _ptr;
-	};
-
-	template <class Iterator>
-	bool operator==(const VectorIterator<Iterator>& lhs,
-					const VectorIterator<Iterator>& rhs)
-	{
-		return (*lhs == *rhs);
-	}
-
-	template <class Iterator>
-	bool operator!=(const VectorIterator<Iterator>& lhs,
-					const VectorIterator<Iterator>& rhs)
-	{
-		return (*lhs != *rhs);
-	}
-
-////////////////Vector
 	template < class T, class Alloc = std::allocator<T> >
 	class Vector
 	{
@@ -129,10 +34,10 @@ namespace ft
 			typedef typename allocator_type::pointer			pointer; //allocator_type::pointer	for the default allocator: value_type*
 			typedef typename allocator_type::const_pointer		const_pointer; //allocator_type::const_pointer	for the default allocator: const value_type*
 			typedef VectorIterator<value_type>					iterator; //a random access iterator to value_type	convertible to const_iterator
-			// typedef const_iterator			= /* implementation-defined */; //a random access iterator to const value_type	
-			// typedef ft::reverse_iterator<iterator>				reverse_iterator; //reverse_iterator<iterator>	
-			// typedef ft::reverse_iterator<const_iterator>		const_reverse_iterator; //reverse_iterator<const_iterator>	
-			// typedef difference_type			= /* implementation-defined */; //a signed integral type, identical to: iterator_traits<iterator>::difference_type	usually the same as ptrdiff_t
+			typedef VectorIterator<const value_type>			const_iterator; //a random access iterator to const value_type	
+			typedef ft::reverse_iterator<iterator>				reverse_iterator; //reverse_iterator<iterator>	
+			typedef ft::reverse_iterator<const_iterator>		const_reverse_iterator; //reverse_iterator<const_iterator>	
+			typedef std::ptrdiff_t								difference_type; //a signed integral type, identical to: iterator_traits<iterator>::difference_type	usually the same as ptrdiff_t
 			typedef std::size_t									size_type; //					= /* implementation-defined */; //an unsigned integral type that can represent any non-negative value of difference_type	usually the same as size_t
 			//why not typedef typename allocator_type::size_type size_type (wayback)? -> cplusplus.com
 		private:
@@ -192,14 +97,24 @@ namespace ft
 				this->_size = n;
 				this->_capacity = this->_size;
 				this->alloc = alloc;
-				this->array = this->_alloc.allocate(n);
+				this->array = this->alloc.allocate(n);
 				for (size_type i = 0; i < n; i++)
 					this->array[i] = val;
 			}
 
 			// range (3)	
-			// template <class InputIterator>
-			// Vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type())
+			template <class InputIterator>
+			Vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type(),
+				typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type = InputIterator())
+			{
+				difference_type dist = std::distance(first, last);
+				this->_size = dist;
+				this->_capacity = this->_size;
+				this->alloc = alloc;
+				this->array = this->alloc.allocate(this->_size);
+				for (difference_type i = 0; i < dist; ++i)
+					this->alloc.construct(array + i, *first++);
+			}
 
 			// copy (4)	
 			Vector (const Vector& x)// :_size(0), _capacity(0), alloc(allocator_type()), array(ft_nullptr)
@@ -248,22 +163,44 @@ namespace ft
 			{
 				return (iterator(this->array));
 			}
-			// const_iterator begin() const
+
+			const_iterator begin() const
+			{
+				return (const_iterator(this->array));
+			}
 
 		////end///////////////////////////////////////////////////////
 			iterator end()
 			{
 				return (iterator(this->array + this->_size));
 			}
-			// const_iterator end() const
+
+			const_iterator end() const
+			{
+				return (const_iterator(this->array + this->_size));
+			}
 
 		////rbegin///////////////////////////////////////////////////////
-			// reverse_iterator rbegin()
-			// const_reverse_iterator rbegin() const
+			reverse_iterator rbegin()
+			{
+				return (reverse_iterator(this->array + this->_size));
+			}
+
+			const_reverse_iterator rbegin() const
+			{
+				return (const_reverse_iterator(this->array + this->_size));
+			}
 
 		////rend///////////////////////////////////////////////////////
-			// reverse_iterator rend()
-			// const_reverse_iterator rend() const
+			reverse_iterator rend()
+			{
+				return (reverse_iterator(this->array));
+			}
+
+			const_reverse_iterator rend() const
+			{
+				return (const_reverse_iterator(this->array));
+			}
 
 	//Capacity---------------------------------------------------------------
 		////size///////////////////////////////////////////////////////
@@ -412,12 +349,16 @@ namespace ft
 	//Allocator---------------------------------------------------------------
 		////get_allocator///////////////////////////////////////////////////////
 			// allocator_type get_allocator() const
+	};
 
 	//NON-MEMBER FUNCTION OVERLOADS
 		////relational operators///////////////////////////////////////////////////////
 			// (1)
-			// template <class T, class Alloc>
-			// bool operator== (const Vector<T,Alloc>& lhs, const Vector<T,Alloc>& rhs)
+			template <class T, class Alloc>
+			bool operator==(const Vector<T,Alloc>& lhs, const Vector<T,Alloc>& rhs)
+			{
+				return (lhs.size() == rhs.size() && ft::equal(lhs.begin(), lhs.end(), rhs.begin()));
+			}
 
 			// (2)
 			// template <class T, class Alloc>
@@ -444,7 +385,6 @@ namespace ft
 			// void swap (Vector<T,Alloc>& x, Vector<T,Alloc>& y)
 
 			
-	};
 
 
 }

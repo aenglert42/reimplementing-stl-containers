@@ -21,8 +21,12 @@ pair, \
 pair_delete_old_pointer, \
 pair_operator_equal, \
 pair_relational_operators, \
-sfinae, \
-vector_costructors
+my_vector_iterator, \
+vector_operator_equal, \
+vector_costructors, \
+sfinae/*, \
+iterator, \
+*/
 
 int main()
 {

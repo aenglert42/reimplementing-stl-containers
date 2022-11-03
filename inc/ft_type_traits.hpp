@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream> //remove
+// #include <uchar.h> // char16_t, char32_t
 
 namespace ft
 {
@@ -32,17 +33,17 @@ namespace ft
 		
 	};
 	
-	template <>
-	struct is_integral<char16_t> : public ft::true_type
-	{
+	// template <>
+	// struct is_integral<char16_t> : public ft::true_type
+	// {
 		
-	};
+	// };
 	
-	template <>
-	struct is_integral<char32_t> : public ft::true_type
-	{
+	// template <>
+	// struct is_integral<char32_t> : public ft::true_type
+	// {
 		
-	};
+	// };
 
 	template <>
 	struct is_integral<wchar_t> : public ft::true_type
