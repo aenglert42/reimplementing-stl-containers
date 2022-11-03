@@ -1,5 +1,5 @@
 # WORK IN PROGRESS
-This project is about reimplementing some container types of the C++ standard template library to practice generic programming using templates. Inspired by the "42 Coding School" exercise "ft_containers" (November 2022).
+This project is about reimplementing some container types of the C++ standard template library to practice generic programming with templates. Inspired by the "42 Coding School" exercise "ft_containers" (November 2022).
 </br>
 
 ## Table of contents
