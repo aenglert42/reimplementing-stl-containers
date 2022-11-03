@@ -25,7 +25,16 @@ my_vector_iterator, \
 vector_operator_equal, \
 vector_costructors, \
 sfinae/*, \
-iterator, \
+vector_iterator, \
+vector_iterator_base, \
+vector_iterator_traits, \
+vector_iterator_operator_access_element, \
+vector_iterator_operator_minus, \
+vector_iterator_operator_minus_minus_1, \
+vector_iterator_operator_minus_minus_2, \
+vector_iterator_operator_plus, \
+vector_iterator_operator_plus_equal, \
+vector_iterator_operator_pointer, \
 */
 
 int main()

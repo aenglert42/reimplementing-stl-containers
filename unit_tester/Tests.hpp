@@ -123,19 +123,6 @@ void make_pair(TestContainer& container)
 	EXPECTED_OUTPUT(foo: 10 20\nbar: 10 65\n);
 }
 
-// void iterator(TestContainer& container)
-// {
-// 	int numbers[]={10,20,30,40,50};
-// 	ft::iterator from(numbers);
-// 	ft::iterator until(numbers+5);
-// 	for (ft::iterator it=from; it!=until; it++)
-// 		std::cout << *it << ' ';
-// 	std::cout << '\n';
-
-// //////////////////////////////////
-// 	EXPECTED_OUTPUT(10 20 30 40 50\n);
-// }
-
 void reverse_iterator(TestContainer& container)
 {
 	std::vector<int> myvector;
@@ -314,6 +301,185 @@ void reverse_iterator_operator_pointer(TestContainer& container)
 //////////////////////////////////
 	EXPECTED_OUTPUT(3 three\n2 two\n1 one\n);
 }
+
+// void vector_iterator(TestContainer& container)
+// {
+// 	std::vector<int> myvector;
+// 	for (int i=0; i<10; i++) myvector.push_back(i);
+
+// 	typedef std::vector<int>::iterator iter_type;
+// 															// ? 0 1 2 3 4 5 6 7 8 9 ?
+// 	iter_type from (myvector.begin());                     //   ^
+// 															//         ------>
+// 	iter_type until (myvector.end());                      //                       ^
+// 															//
+// 	std::iterator<iter_type> rev_until (from);     // ^
+// 															//         <------
+// 	std::iterator<iter_type> rev_from (until);     //                     ^
+
+// 	std::cout << "myvector:";
+// 	while (rev_from != rev_until)
+// 		std::cout << ' ' << *rev_from++;
+// 	std::cout << '\n';
+
+// //////////////////////////////////
+// 	EXPECTED_OUTPUT(myvector: 9 8 7 6 5 4 3 2 1 0\n);
+// }
+
+// void vector_iterator_base(TestContainer& container)
+// {
+// 	std::vector<int> myvector;
+// 	for (int i=0; i<10; i++) myvector.push_back(i);
+
+// 	typedef std::vector<int>::iterator iter_type;
+
+// 	std::iterator<iter_type> rev_end (myvector.begin());
+// 	std::iterator<iter_type> rev_begin (myvector.end());
+
+// 	std::cout << "myvector:";
+// 	for (iter_type it = rev_end.base(); it != rev_begin.base(); ++it)
+// 		std::cout << ' ' << *it;
+// 	std::cout << '\n';
+
+// //////////////////////////////////
+// 	EXPECTED_OUTPUT(myvector: 0 1 2 3 4 5 6 7 8 9\n);
+// }
+
+// void vector_iterator_traits(TestContainer& container)
+// {
+// 	typedef ft::iterator_traits<int*> traits;
+// 	if (typeid(traits::iterator_category)==typeid(std::random_access_iterator_tag))
+// 		std::cout << "int* is a random-access iterator" << std::endl;
+
+// //////////////////////////////////
+// 	EXPECTED_OUTPUT(int* is a random-access iterator\n);
+// }
+
+// void vector_iterator_operator_access_element(TestContainer& container)
+// {
+// 	std::vector<int> myvector;
+// 	for (int i=0; i<10; i++) myvector.push_back(i);  // myvector: 0 1 2 3 4 5 6 7 8 9
+
+// 	typedef std::vector<int>::iterator iter_type;
+
+// 	std::reverse_iterator<iter_type> rev_iterator = myvector.rbegin();
+
+// 	std::cout << "The fourth element from the end is: " << rev_iterator[3] << '\n';
+
+// //////////////////////////////////
+// 	EXPECTED_OUTPUT(The fourth element from the end is: 6\n);
+// }
+
+// void vector_iterator_operator_minus(TestContainer& container)
+// {
+// 	std::vector<int> myvector;
+// 	for (int i=0; i<10; i++) myvector.push_back(i);	// myvector: 0 1 2 3 4 5 6 7 8 9
+
+// 	typedef std::vector<int>::iterator iter_type;
+
+// 	std::reverse_iterator<iter_type> rev_iterator;
+
+// 	rev_iterator = myvector.rend() - 3;
+
+// 	std::cout << "myvector.rend()-3 points to: " << *rev_iterator << '\n';
+
+// //////////////////////////////////
+// 	EXPECTED_OUTPUT(myvector.rend()-3 points to: 2\n);
+// }
+
+// void vector_iterator_operator_minus_minus_1(TestContainer& container)
+// {
+// 	std::vector<int> myvector;
+// 	for (int i=0; i<10; i++) myvector.push_back(i);	// myvector: 0 1 2 3 4 5 6 7 8 9
+
+// 	typedef std::vector<int>::iterator iter_type;
+
+// 	std::reverse_iterator<iter_type> rev_iterator = myvector.rend();
+
+// 	rev_iterator -= 4;
+
+// 	std::cout << "rev_iterator now points to: " << *rev_iterator << '\n';
+
+// //////////////////////////////////
+// 	EXPECTED_OUTPUT(rev_iterator now points to: 3\n);
+// }
+
+// void vector_iterator_operator_minus_minus_2(TestContainer& container)
+// {
+// 	std::vector<int> myvector;
+// 	for (int i=0; i<10; i++) myvector.push_back(i);
+
+// 	typedef std::vector<int>::iterator iter_type;
+
+// 	std::reverse_iterator<iter_type> rev_begin (myvector.end());
+// 	std::reverse_iterator<iter_type> rev_end (myvector.begin());
+
+// 	std::reverse_iterator<iter_type> rev_iterator = rev_begin;
+// 	while ( rev_iterator != rev_end )
+// 		std::cout << *rev_iterator++ << ' ';
+// 	std::cout << '\n';
+
+// 	while ( rev_iterator != rev_begin )
+// 		std::cout << *(--rev_iterator) << ' ';
+// 	std::cout << '\n';
+
+// //////////////////////////////////
+// 	EXPECTED_OUTPUT(9 8 7 6 5 4 3 2 1 0 \n0 1 2 3 4 5 6 7 8 9 \n);
+// }
+
+// void vector_iterator_operator_plus(TestContainer& container)
+// {
+// 	std::vector<int> myvector;
+// 	for (int i=0; i<10; i++) myvector.push_back(i);	// myvector: 0 1 2 3 4 5 6 7 8 9
+
+// 	typedef std::vector<int>::iterator iter_type;
+
+// 	std::reverse_iterator<iter_type> rev_it;
+
+// 	rev_it = myvector.rbegin() +3;
+
+// 	std::cout << "The fourth element from the end is: " << *rev_it << '\n';
+
+// //////////////////////////////////
+// 	EXPECTED_OUTPUT(The fourth element from the end is: 6\n);
+// }
+
+// void vector_iterator_operator_plus_equal(TestContainer& container)
+// {
+// 	std::vector<int> myvector;
+// 	for (int i=0; i<10; i++) myvector.push_back(i);	// myvector: 0 1 2 3 4 5 6 7 8 9
+
+// 	typedef std::vector<int>::iterator iter_type;
+
+// 	std::reverse_iterator<iter_type> rev_iterator = myvector.rbegin();
+
+// 	rev_iterator += 2;
+
+// 	std::cout << "The third element from the end is: " << *rev_iterator << '\n';
+
+// //////////////////////////////////
+// 	EXPECTED_OUTPUT(The third element from the end is: 7\n);
+// }
+
+// void vector_iterator_operator_pointer(TestContainer& container)
+// {
+// 	std::map<int,std::string> numbers;
+// 	numbers.insert (std::make_pair(1,"one")); // AE change to ft::make_pair
+// 	numbers.insert (std::make_pair(2,"two")); // AE change to ft::make_pair
+// 	numbers.insert (std::make_pair(3,"three")); // AE change to ft::make_pair
+
+// 	typedef std::map<int,std::string>::iterator map_iter;
+
+// 	std::reverse_iterator<map_iter> rev_end (numbers.begin());
+
+// 	std::reverse_iterator<map_iter> rev_iterator (numbers.end());
+
+// 	for ( ; rev_iterator != rev_end ; ++rev_iterator )
+// 		std::cout << rev_iterator->first << ' ' << rev_iterator->second << '\n';
+
+// //////////////////////////////////
+// 	EXPECTED_OUTPUT(3 three\n2 two\n1 one\n);
+// }
 
 void pair(TestContainer& container)
 {
