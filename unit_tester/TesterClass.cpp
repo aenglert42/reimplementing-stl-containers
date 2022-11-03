@@ -40,8 +40,8 @@ void TesterClass::executeTests(void)
 
 void TestContainer::fill_container(std::string name, int line, std::string real, std::string expected)
 {
-	this->test_name = name;
-	this->line = line;
-	this->real_output = real;
-	this->expected_output = expected;
+	test_name = name;
+	line = line;
+	real_output = real;
+	expected_output = expected;
 }

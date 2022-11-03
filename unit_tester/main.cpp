@@ -24,6 +24,7 @@ pair_relational_operators, \
 my_vector_iterator, \
 vector_operator_equal, \
 vector_costructors, \
+vector_resize, \
 sfinae/*, \
 vector_iterator, \
 vector_iterator_base, \

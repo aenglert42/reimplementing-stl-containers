@@ -46,13 +46,13 @@ namespace ft
 			////base///////////////////////////////////////////////////////
 				pointer base(void) const
 				{
-					return (this->_ptr);
+					return (_ptr);
 				}
 
 			////operator*///////////////////////////////////////////////////////
 				reference operator*() const
 				{
-					return (*this->_ptr);
+					return (*_ptr);
 				}
 
 			////operator+///////////////////////////////////////////////////////
@@ -62,7 +62,7 @@ namespace ft
 				// (1)
 					VectorIterator& operator++()
 					{
-						this->_ptr++;
+						_ptr++;
 						return *this;
 					}
 
@@ -70,7 +70,7 @@ namespace ft
 					VectorIterator operator++(int)
 					{
 						VectorIterator tmp(*this);
-						++this->_ptr;
+						++_ptr;
 						return tmp;
 					}
 			
@@ -81,20 +81,20 @@ namespace ft
 				// (1)
 					difference_type operator-(const VectorIterator& other) const
 					{
-						return (this->_ptr - other._ptr);
+						return (_ptr - other._ptr);
 					}
 
 				// (2)
 					VectorIterator operator-(difference_type n) const
 					{
-						return (VectorIterator(this->_ptr - n));
+						return (VectorIterator(_ptr - n));
 					}
 
 			////operator--///////////////////////////////////////////////////////
 				// (1)
 					VectorIterator& operator--()
 					{
-						this->_ptr--;
+						_ptr--;
 						return *this;
 					}
 
@@ -102,7 +102,7 @@ namespace ft
 					VectorIterator& operator--(int)
 					{
 						VectorIterator tmp(*this);
-						--this->_ptr;
+						--_ptr;
 						return tmp;
 					}
 			
@@ -112,13 +112,13 @@ namespace ft
 			////operator->///////////////////////////////////////////////////////
 				pointer operator->() const
 				{
-					return (this->_ptr);
+					return (_ptr);
 				}
 
 			////operator[]///////////////////////////////////////////////////////
 				reference operator[] (difference_type n) const
 				{
-					return (*(this->_ptr + n));
+					return (*(_ptr + n));
 				}
 
 		private:
