@@ -215,7 +215,10 @@ namespace ft
 		////resize///////////////////////////////////////////////////////
 			void resize (size_type n, value_type val = value_type())
 			{
-				// if (n > size())
+				while (n > size())
+					push_back(val);
+				while (n < size())
+					pop_back();
 			}
 
 		////capacity///////////////////////////////////////////////////////
