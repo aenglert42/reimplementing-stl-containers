@@ -43,6 +43,8 @@ vector_push_back, \
 vector_pop_back, \
 vector_insert, \
 vector_erase, \
+vector_swap, \
+vector_no_member_swap, \
 vector_rational_operators, \
 sfinae/*, \
 vector_iterator, \

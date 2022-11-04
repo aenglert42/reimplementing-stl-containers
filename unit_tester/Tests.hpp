@@ -1085,3 +1085,45 @@ void vector_erase(TestContainer& container)
 //////////////////////////////////
 	EXPECTED_OUTPUT(myvector contains: 4 5 7 8 9 10\n);
 }
+
+void vector_swap(TestContainer& container)
+{
+	ft::Vector<int> foo (3,100);   // three ints with a value of 100
+	ft::Vector<int> bar (5,200);   // five ints with a value of 200
+
+	foo.swap(bar);
+
+	std::cout << "foo contains:";
+	for (unsigned i=0; i<foo.size(); i++)
+		std::cout << ' ' << foo[i];
+	std::cout << '\n';
+
+	std::cout << "bar contains:";
+	for (unsigned i=0; i<bar.size(); i++)
+		std::cout << ' ' << bar[i];
+	std::cout << '\n';
+
+//////////////////////////////////
+	EXPECTED_OUTPUT(foo contains: 200 200 200 200 200\nbar contains: 100 100 100\n);
+}
+
+void vector_no_member_swap(TestContainer& container)
+{
+	ft::Vector<int> foo (3,100);   // three ints with a value of 100
+	ft::Vector<int> bar (5,200);   // five ints with a value of 200
+
+	foo.swap(bar);
+
+	std::cout << "foo contains:";
+	for (ft::Vector<int>::iterator it = foo.begin(); it!=foo.end(); ++it)
+		std::cout << ' ' << *it;
+	std::cout << '\n';
+
+	std::cout << "bar contains:";
+	for (ft::Vector<int>::iterator it = bar.begin(); it!=bar.end(); ++it)
+		std::cout << ' ' << *it;
+	std::cout << '\n';
+
+//////////////////////////////////
+	EXPECTED_OUTPUT(foo contains: 200 200 200 200 200\nbar contains: 100 100 100\n);
+}

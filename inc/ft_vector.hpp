@@ -479,7 +479,23 @@ namespace ft
 			}
 
 		////swap///////////////////////////////////////////////////////
-			// void swap (Vector& x)
+			void swap (Vector& x)
+			{
+				size_type tmp_size = _size;
+				size_type tmp_capacity = _capacity;
+				allocator_type tmp_alloc = _alloc;
+				pointer tmp_array = _array;
+
+				_size = x._size;
+				_capacity = x._capacity;
+				_alloc = x._alloc;
+				_array = x._array;
+
+				x._size = tmp_size;
+				x._capacity = tmp_capacity;
+				x._alloc = tmp_alloc;
+				x._array = tmp_array;
+			}
 
 		////clear///////////////////////////////////////////////////////
 			void clear()
@@ -539,9 +555,11 @@ namespace ft
 			}
 
 		////swap///////////////////////////////////////////////////////
-			// template <class T, class Alloc>
-			// void swap (Vector<T,Alloc>& x, Vector<T,Alloc>& y)
-
+			template <class T, class Alloc>
+			void swap (Vector<T,Alloc>& lhs, Vector<T,Alloc>& rhs)
+			{
+				lhs.swap(rhs);
+			}
 			
 
 
