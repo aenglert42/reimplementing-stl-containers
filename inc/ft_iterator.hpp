@@ -147,7 +147,7 @@ namespace ft
 			////operator+///////////////////////////////////////////////////////
 			reverse_iterator operator+(difference_type n) const
 			{
-				return (reverse_iterator(current + n));
+				return (reverse_iterator(current - n));
 			}
 			
 			////operator++///////////////////////////////////////////////////////
@@ -274,7 +274,7 @@ namespace ft
 					return (reverse_iterator<Iterator>(rev_it.base() - n));
 				}
 
-			////operator (reverse_iterator)///////////////////////////////////////////////////////
+			////operator- (reverse_iterator)///////////////////////////////////////////////////////
 				template <class Iterator>
 				typename reverse_iterator<Iterator>::difference_type operator-(
 					const reverse_iterator<Iterator>& lhs,

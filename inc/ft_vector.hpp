@@ -7,6 +7,15 @@
 #include "ft_algorithm.hpp"
 #include "ft_type_traits.hpp"
 
+// Colors and Printing
+#define RESET "\033[0m"
+#define GREEN "\033[32m"
+#define YELLOW "\033[33m"
+#define BLUE "\033[34m"
+#define RED "\033[31m"
+#define BOLD "\033[1m"
+#define UNDERLINED "\033[4m"
+
 namespace ft
 {
 	template < class T, class Alloc = std::allocator<T> >
@@ -63,6 +72,22 @@ namespace ft
 				_alloc.deallocate(_array, _capacity);
 			}
 
+			void my_realloc(void)
+			{
+				size_type newCapacity;
+				
+				if (_capacity == 0)
+					newCapacity = 1;
+				else
+					newCapacity = _capacity * 2;
+				pointer newArray = my_alloc(newCapacity);
+				for (size_type i = 0; i < _size; i++)
+					_alloc.construct(&newArray[i], _array[i]);
+				my_dealloc();
+				_array = newArray;
+				_capacity = newCapacity;
+			}
+
 			void my_realloc(size_type newCapacity)
 			{
 				if (newCapacity < _size)
@@ -75,14 +100,31 @@ namespace ft
 				_capacity = newCapacity;
 			}
 
+			// void my_shift(difference_type offset, size_type n)
+			// {
+			// 	reverse_iterator it(end().base() - n + 2);
+			// 	std::cerr << RED << "it-: " << *(it - 1) << RESET << std::endl;
+			// 	std::cerr << RED << "it: " << *it << RESET << std::endl;
+			// 	std::cerr << RED << "it+: " << *(it + 1) << RESET << std::endl;
+			// 	(void)n;
+			// 	(void)offset;
+			// 	for (size_type i = 0; i < n; ++i)
+			// 	{
+			// 	std::cerr << BLUE << "it + offset: " << *(it + offset) << RESET << std::endl;
+			// 		_alloc.construct(&(*it), *(it + offset));
+			// 		++it;
+			// 	}
+			// 	_size += n;
+			// }
+
 		public:
 	//MEMBER FUNCTIONS
 
 			void print(void) // AE remove
 			{
-				std::cout << "size: " << size() << std::endl;
-				for (size_type i = 0; i < size(); i++)
-					std::cout << _array[i] << std::endl;
+				std::cerr << "size: " << _size << std::endl;
+				for (size_type i = 0; i < _size; i++)
+					std::cerr << _array[i] << std::endl;
 			}
 		////constructor///////////////////////////////////////////////////////
 			// default (1)	
@@ -236,7 +278,11 @@ namespace ft
 			}
 
 		////reserve///////////////////////////////////////////////////////
-			// void reserve (size_type n)
+			void reserve (size_type n)
+			{
+				if (n > _capacity)
+					my_realloc(n);
+			}
 
 	//Element access---------------------------------------------------------------
 		////operator[]///////////////////////////////////////////////////////
@@ -305,10 +351,7 @@ namespace ft
 			{
 				if (_size >= _capacity)
 				{
-					if (_capacity == 0)
-						my_realloc(1);
-					else
-						my_realloc(_capacity * 2);
+					my_realloc();
 				}
 				_alloc.construct(&_array[_size], val);
 				_size++;
@@ -326,14 +369,61 @@ namespace ft
 
 		////insert///////////////////////////////////////////////////////
 			// single element (1)	
-			// iterator insert (iterator position, const value_type& val)
+			iterator insert (iterator position, const value_type& val)
+			{
+				difference_type pos = position - begin();
+				insert (position, 1, val);
+				return (begin() + pos);
+			}
 
 			// fill (2)	
-			// void insert (iterator position, size_type n, const value_type& val)
+			void insert (iterator position, size_type n, const value_type& val)
+			{
+				size_type old_size = _size;
+				difference_type offset = end() - position;
+
+				if (_size + n >= _capacity)
+					my_realloc(_size + n);
+				for (size_type i = 0; i < n; ++i)
+				{
+					_alloc.construct(&_array[_size], val); // AE change this to something that doesnt need val
+					_size++;
+				}	
+				for (difference_type i = 0; i < offset; ++i)
+				{
+					_array[_size - 1 - i] = _array[old_size - 1 - i];
+				}
+				for (size_type i = 0; i < n; ++i)
+				{
+					_array[old_size - offset + i] = val;
+				}
+			}
 
 			// range (3)	
-			// template <class InputIterator>
-			// void insert (iterator position, InputIterator first, InputIterator last)
+			template <class InputIterator>
+			void insert (iterator position, InputIterator first, InputIterator last,
+				typename ft::enable_if< !ft::is_integral<InputIterator>::value, InputIterator >::type = InputIterator())
+			{
+				size_type n = last - first;
+				size_type old_size = _size;
+				difference_type offset = end() - position;
+
+				if (_size + n >= _capacity)
+					my_realloc(_size + n);
+				for (size_type i = 0; i < n; ++i)
+				{
+					_alloc.construct(&_array[_size], *(first)); // AE change this to something that doesnt need val
+					_size++;
+				}	
+				for (difference_type i = 0; i < offset; ++i)
+				{
+					_array[_size - 1 - i] = _array[old_size - 1 - i];
+				}
+				for (size_type i = 0; i < n; ++i)
+				{
+					_array[old_size - offset + i] = *(first + i);
+				}
+			}
 
 		////erase///////////////////////////////////////////////////////
 			// iterator erase (iterator position)

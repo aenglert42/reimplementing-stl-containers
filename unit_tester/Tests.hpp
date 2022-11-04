@@ -125,10 +125,10 @@ void make_pair(TestContainer& container)
 
 void reverse_iterator(TestContainer& container)
 {
-	std::vector<int> myvector;
+	ft::Vector<int> myvector;
 	for (int i=0; i<10; i++) myvector.push_back(i);
 
-	typedef std::vector<int>::iterator iter_type;
+	typedef ft::Vector<int>::iterator iter_type;
 															// ? 0 1 2 3 4 5 6 7 8 9 ?
 	iter_type from (myvector.begin());                     //   ^
 															//         ------>
@@ -149,10 +149,10 @@ void reverse_iterator(TestContainer& container)
 
 void reverse_iterator_base(TestContainer& container)
 {
-	std::vector<int> myvector;
+	ft::Vector<int> myvector;
 	for (int i=0; i<10; i++) myvector.push_back(i);
 
-	typedef std::vector<int>::iterator iter_type;
+	typedef ft::Vector<int>::iterator iter_type;
 
 	ft::reverse_iterator<iter_type> rev_end (myvector.begin());
 	ft::reverse_iterator<iter_type> rev_begin (myvector.end());
@@ -178,12 +178,12 @@ void reverse_iterator_traits(TestContainer& container)
 
 void reverse_iterator_operator_access_element(TestContainer& container)
 {
-	std::vector<int> myvector;
+	ft::Vector<int> myvector;
 	for (int i=0; i<10; i++) myvector.push_back(i);  // myvector: 0 1 2 3 4 5 6 7 8 9
 
-	typedef std::vector<int>::iterator iter_type;
+	typedef ft::Vector<int>::iterator iter_type;
 
-	std::reverse_iterator<iter_type> rev_iterator = myvector.rbegin();
+	ft::reverse_iterator<iter_type> rev_iterator = myvector.rbegin();
 
 	std::cout << "The fourth element from the end is: " << rev_iterator[3] << '\n';
 
@@ -193,12 +193,12 @@ void reverse_iterator_operator_access_element(TestContainer& container)
 
 void reverse_iterator_operator_minus(TestContainer& container)
 {
-	std::vector<int> myvector;
+	ft::Vector<int> myvector;
 	for (int i=0; i<10; i++) myvector.push_back(i);	// myvector: 0 1 2 3 4 5 6 7 8 9
 
-	typedef std::vector<int>::iterator iter_type;
+	typedef ft::Vector<int>::iterator iter_type;
 
-	std::reverse_iterator<iter_type> rev_iterator;
+	ft::reverse_iterator<iter_type> rev_iterator;
 
 	rev_iterator = myvector.rend() - 3;
 
@@ -210,12 +210,12 @@ void reverse_iterator_operator_minus(TestContainer& container)
 
 void reverse_iterator_operator_minus_minus_1(TestContainer& container)
 {
-	std::vector<int> myvector;
+	ft::Vector<int> myvector;
 	for (int i=0; i<10; i++) myvector.push_back(i);	// myvector: 0 1 2 3 4 5 6 7 8 9
 
-	typedef std::vector<int>::iterator iter_type;
+	typedef ft::Vector<int>::iterator iter_type;
 
-	std::reverse_iterator<iter_type> rev_iterator = myvector.rend();
+	ft::reverse_iterator<iter_type> rev_iterator = myvector.rend();
 
 	rev_iterator -= 4;
 
@@ -227,10 +227,10 @@ void reverse_iterator_operator_minus_minus_1(TestContainer& container)
 
 void reverse_iterator_operator_minus_minus_2(TestContainer& container)
 {
-	std::vector<int> myvector;
+	ft::Vector<int> myvector;
 	for (int i=0; i<10; i++) myvector.push_back(i);
 
-	typedef std::vector<int>::iterator iter_type;
+	typedef ft::Vector<int>::iterator iter_type;
 
 	std::reverse_iterator<iter_type> rev_begin (myvector.end());
 	std::reverse_iterator<iter_type> rev_end (myvector.begin());
@@ -250,12 +250,12 @@ void reverse_iterator_operator_minus_minus_2(TestContainer& container)
 
 void reverse_iterator_operator_plus(TestContainer& container)
 {
-	std::vector<int> myvector;
+	ft::Vector<int> myvector;
 	for (int i=0; i<10; i++) myvector.push_back(i);	// myvector: 0 1 2 3 4 5 6 7 8 9
 
-	typedef std::vector<int>::iterator iter_type;
+	typedef ft::Vector<int>::iterator iter_type;
 
-	std::reverse_iterator<iter_type> rev_it;
+	ft::reverse_iterator<iter_type> rev_it;
 
 	rev_it = myvector.rbegin() +3;
 
@@ -267,12 +267,12 @@ void reverse_iterator_operator_plus(TestContainer& container)
 
 void reverse_iterator_operator_plus_equal(TestContainer& container)
 {
-	std::vector<int> myvector;
+	ft::Vector<int> myvector;
 	for (int i=0; i<10; i++) myvector.push_back(i);	// myvector: 0 1 2 3 4 5 6 7 8 9
 
-	typedef std::vector<int>::iterator iter_type;
+	typedef ft::Vector<int>::iterator iter_type;
 
-	std::reverse_iterator<iter_type> rev_iterator = myvector.rbegin();
+	ft::reverse_iterator<iter_type> rev_iterator = myvector.rbegin();
 
 	rev_iterator += 2;
 
@@ -700,4 +700,154 @@ void vector_resize(TestContainer& container)
 
 //////////////////////////////////
 	EXPECTED_OUTPUT(myvector contains: 1 2 3 4 5 100 100 100 0 0 0 0\n);
+}
+
+void vector_reserve(TestContainer& container)
+{
+	ft::Vector<int>::size_type sz;
+
+	ft::Vector<int> foo;
+	sz = foo.capacity();
+	std::cout << "making foo grow:\n";
+	for (int i=0; i<100; ++i) {
+		foo.push_back(i);
+		if (sz!=foo.capacity()) {
+		sz = foo.capacity();
+		std::cout << "capacity changed: " << sz << '\n';
+		}
+	}
+
+	ft::Vector<int> bar;
+	sz = bar.capacity();
+	bar.reserve(100);   // this is the only difference with foo above
+	std::cout << "making bar grow:\n";
+	for (int i=0; i<100; ++i) {
+		bar.push_back(i);
+		if (sz!=bar.capacity()) {
+		sz = bar.capacity();
+		std::cout << "capacity changed: " << sz << '\n';
+		}
+	}
+
+//////////////////////////////////
+	EXPECTED_OUTPUT(making foo grow:\ncapacity changed: 1\ncapacity changed: 2\ncapacity changed: 4\ncapacity changed: 8\ncapacity changed: 16\ncapacity changed: 32\ncapacity changed: 64\ncapacity changed: 128\nmaking bar grow:\ncapacity changed: 100\n);
+}
+
+void vector_begin(TestContainer& container)
+{
+	ft::Vector<int> myvector;
+	for (int i=1; i<=5; i++) myvector.push_back(i);
+
+	std::cout << "myvector contains:";
+	for (ft::Vector<int>::iterator it = myvector.begin() ; it != myvector.end(); ++it)
+		std::cout << ' ' << *it;
+	std::cout << '\n';
+
+//////////////////////////////////
+	EXPECTED_OUTPUT(myvector contains: 1 2 3 4 5\n);
+}
+
+void vector_end(TestContainer& container)
+{
+	ft::Vector<int> myvector;
+	for (int i=1; i<=5; i++) myvector.push_back(i);
+
+	std::cout << "myvector contains:";
+	for (ft::Vector<int>::iterator it = myvector.begin() ; it != myvector.end(); ++it)
+		std::cout << ' ' << *it;
+	std::cout << '\n';
+
+//////////////////////////////////
+	EXPECTED_OUTPUT(myvector contains: 1 2 3 4 5\n);
+}
+
+void vector_rbegin(TestContainer& container)
+{
+	ft::Vector<int> myvector (5);  // 5 default-constructed ints
+
+	int i=0;
+
+	ft::Vector<int>::reverse_iterator rit = myvector.rbegin();
+	for (; rit!= myvector.rend(); ++rit)
+		*rit = ++i;
+
+	std::cout << "myvector contains:";
+	for (ft::Vector<int>::iterator it = myvector.begin(); it != myvector.end(); ++it)
+		std::cout << ' ' << *it;
+	std::cout << '\n';
+
+//////////////////////////////////
+	EXPECTED_OUTPUT(myvector contains: 5 4 3 2 1\n);
+}
+
+void vector_rend(TestContainer& container)
+{
+	ft::Vector<int> myvector (5);  // 5 default-constructed ints
+
+	ft::Vector<int>::reverse_iterator rit = myvector.rbegin();
+
+	int i=0;
+	for (rit = myvector.rbegin(); rit!= myvector.rend(); ++rit)
+		*rit = ++i;
+
+	std::cout << "myvector contains:";
+	for (ft::Vector<int>::iterator it = myvector.begin(); it != myvector.end(); ++it)
+		std::cout << ' ' << *it;
+	std::cout << '\n';
+
+//////////////////////////////////
+	EXPECTED_OUTPUT(myvector contains: 5 4 3 2 1\n);
+}
+
+void vector_size(TestContainer& container)
+{
+	ft::Vector<int> myints;
+	std::cout << "0. size: " << myints.size() << '\n';
+
+	for (int i=0; i<10; i++) myints.push_back(i);
+	std::cout << "1. size: " << myints.size() << '\n';
+
+	myints.insert (myints.end(),10,100);
+	std::cout << "2. size: " << myints.size() << '\n';
+
+	myints.pop_back();
+	std::cout << "3. size: " << myints.size() << '\n';
+
+//////////////////////////////////
+	EXPECTED_OUTPUT(0. size: 0\n1. size: 10\n2. size: 20\n3. size: 19\n);
+}
+
+void vector_insert(TestContainer& container)
+{
+	ft::Vector<int> myvector (3,100);
+	ft::Vector<int>::iterator it;
+
+// myvector.print();
+
+	it = myvector.begin();
+	it = myvector.insert ( it , 200 );
+// myvector.print();
+
+	myvector.insert (it,2,300);
+// myvector.print();
+
+	// "it" no longer valid, get a new one:
+	it = myvector.begin();
+
+	ft::Vector<int> anothervector (2,400);
+// anothervector.print();
+	myvector.insert (it+2,anothervector.begin(),anothervector.end());
+// myvector.print();
+
+	int myarray [] = { 501,502,503 };
+	myvector.insert (myvector.begin(), myarray, myarray+3);
+// myvector.print();
+
+	std::cout << "myvector contains:";
+	for (it=myvector.begin(); it<myvector.end(); it++)
+		std::cout << ' ' << *it;
+	std::cout << '\n';
+
+//////////////////////////////////
+	EXPECTED_OUTPUT(myvector contains: 501 502 503 300 300 400 400 200 100 100 100\n);
 }

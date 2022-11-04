@@ -25,6 +25,13 @@ my_vector_iterator, \
 vector_operator_equal, \
 vector_costructors, \
 vector_resize, \
+vector_reserve, \
+vector_begin, \
+vector_end, \
+vector_rbegin, \
+vector_rend, \
+vector_size, \
+vector_insert, \
 sfinae/*, \
 vector_iterator, \
 vector_iterator_base, \
