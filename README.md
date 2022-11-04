@@ -14,15 +14,16 @@ This project is about reimplementing some container types of the C++ standard te
 ## Introduction
 ###### <p align="right">Next: [Approach](#approach)&emsp;&emsp;[[Contents](#table-of-contents)]</p>
 Reimplement the following:
-* std::vector (with iterator)
-* std::map (with iterator)
+* vector (with iterator)
+* map (with iterator)
 * iterator_traits
 * reverse_iterator
 * enable_if
 * is_integral
-* equal / lexicographical_compare
-* std::pair
-* std::make_pair
+* equal
+* lexicographical_compare
+* pair
+* make_pair
 </br></br></br>
 
 ### Requirements
