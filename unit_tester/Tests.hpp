@@ -930,7 +930,7 @@ void vector_operator_access_element(TestContainer& container)
 	EXPECTED_OUTPUT(myvector contains: 9 8 7 6 5 4 3 2 1 0\n);
 }
 
-void vector_operator_at(TestContainer& container)
+void vector_at(TestContainer& container)
 {
 	ft::Vector<int> myvector (10);   // 10 zero-initialized ints
 
@@ -947,7 +947,7 @@ void vector_operator_at(TestContainer& container)
 	EXPECTED_OUTPUT(myvector contains: 0 1 2 3 4 5 6 7 8 9\n);
 }
 
-void vector_operator_front(TestContainer& container)
+void vector_front(TestContainer& container)
 {
 	ft::Vector<int> myvector;
 
@@ -964,7 +964,7 @@ void vector_operator_front(TestContainer& container)
 	EXPECTED_OUTPUT(myvector.front() is now 62\n);
 }
 
-void vector_operator_back(TestContainer& container)
+void vector_back(TestContainer& container)
 {
 	ft::Vector<int> myvector;
 
@@ -984,7 +984,7 @@ void vector_operator_back(TestContainer& container)
 	EXPECTED_OUTPUT(myvector contains: 10 9 8 7 6 5 4 3 2 1 0\n);
 }
 
-void vector_operator_data(TestContainer& container)
+void vector_data(TestContainer& container)
 {
 	ft::Vector<int> myvector (5);
 
@@ -1002,4 +1002,28 @@ void vector_operator_data(TestContainer& container)
 
 //////////////////////////////////
 	EXPECTED_OUTPUT(myvector contains: 10 20 0 100 0\n);
+}
+
+void vector_assign(TestContainer& container)
+{
+	ft::Vector<int> first;
+	ft::Vector<int> second;
+	ft::Vector<int> third;
+
+	first.assign (7,100);             // 7 ints with a value of 100
+
+	ft::Vector<int>::iterator it;
+	it=first.begin()+1;
+
+	second.assign (it,first.end()-1); // the 5 central values of first
+
+	int myints[] = {1776,7,4};
+	third.assign (myints,myints+3);   // assigning from array.
+
+	std::cout << "Size of first: " << int (first.size()) << '\n';
+	std::cout << "Size of second: " << int (second.size()) << '\n';
+	std::cout << "Size of third: " << int (third.size()) << '\n';
+
+//////////////////////////////////
+	EXPECTED_OUTPUT(Size of first: 7\nSize of second: 5\nSize of third: 3\n);
 }

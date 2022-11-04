@@ -34,10 +34,11 @@ vector_capacity, \
 vector_empty, \
 vector_reserve, \
 vector_operator_access_element, \
-vector_operator_at, \
-vector_operator_front, \
-vector_operator_back, \
-vector_operator_data, \
+vector_at, \
+vector_front, \
+vector_back, \
+vector_data, \
+vector_assign, \
 vector_insert, \
 vector_rational_operators, \
 sfinae/*, \

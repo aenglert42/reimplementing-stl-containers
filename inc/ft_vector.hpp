@@ -351,11 +351,27 @@ namespace ft
 	//Modifiers---------------------------------------------------------------
 		////assign///////////////////////////////////////////////////////
 			// range (1)	
-			// template <class InputIterator>
-			// void assign (InputIterator first, InputIterator last)
+			template <class InputIterator>
+			void assign (InputIterator first, InputIterator last,
+				typename ft::enable_if< !ft::is_integral<InputIterator>::value, InputIterator >::type = InputIterator())
+			{
+				my_destroy();
+				size_type n = last - first;
+				if (n > _capacity)
+					my_realloc(n);
+				for (size_type i = 0; i < n; ++i)
+					push_back(*(first + i));
+			}
 
 			// fill (2)	
-			// void assign (size_type n, const value_type& val)
+			void assign (size_type n, const value_type& val)
+			{
+				my_destroy();
+				if (n > _capacity)
+					my_realloc(_size + n);
+				for (size_type i = 0; i < n; ++i)
+					push_back(val);
+			}
 
 		////push_back///////////////////////////////////////////////////////
 			void push_back (const value_type& val)
