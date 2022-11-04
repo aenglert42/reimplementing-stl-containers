@@ -21,7 +21,7 @@ class TestContainer
 	public:
 		std::stringstream stream;
 		std::string test_name;
-		int line;
+		int _line;
 		std::string expected_output;
 		std::string real_output;
 		void fill_container(std::string, int, std::string, std::string);

@@ -16,7 +16,7 @@ void TesterClass::display_result(void)
 	else
 	{
 		std::cout << RED << "KO" << std::endl;
-		std::cerr << YELLOW << "in: " << container.test_name << " " << TEST_FILE << ":" << container.line << "\n\nexpected:\n" << container.expected_output << std::endl;
+		std::cerr << YELLOW << "in: " << container.test_name << " " << TEST_FILE << ":" << container._line << "\n\nexpected:\n" << container.expected_output << std::endl;
 		std::cerr << "recieved:\n" << container.real_output << RESET << std::endl;
 		_ko_counter++;
 	}
@@ -51,7 +51,7 @@ void TesterClass::executeTests(void)
 void TestContainer::fill_container(std::string name, int line, std::string real, std::string expected)
 {
 	test_name = name;
-	line = line;
+	_line = line;
 	real_output = real;
 	expected_output = expected;
 }

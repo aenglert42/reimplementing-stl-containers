@@ -276,16 +276,16 @@ namespace ft
 					return (lhs.base() - rhs.base());
 				}
 
-		////distance///////////////////////////////////////////////////////
-			template <class InputIterator>
-			typename iterator_traits<InputIterator>::difference_type distance(InputIterator first, InputIterator last)
-			{
-				typename iterator_traits<InputIterator>::difference_type result = 0;
-				while (first != last)
+			////distance///////////////////////////////////////////////////////
+				template <class InputIterator>
+				typename iterator_traits<InputIterator>::difference_type distance(InputIterator first, InputIterator last)
 				{
-					++first;
-					++result;
+					typename iterator_traits<InputIterator>::difference_type result = 0;
+					while (first != last)
+					{
+						++first;
+						++result;
+					}
+					return (result);
 				}
-				return (result);
-			}
 }
