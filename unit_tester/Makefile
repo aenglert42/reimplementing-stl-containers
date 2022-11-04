@@ -6,7 +6,7 @@ HEADER_DIR := ./
 SRCS :=	main.cpp \
 		TesterClass.cpp
 CC := c++
-CFLAGS := -std=c++11 -Wall -Wextra -Werror -Wno-deprecated-copy
+CFLAGS := -g -std=c++11 -Wall -Wextra -Werror -Wno-deprecated-copy
 OBJS := $(patsubst %.cpp,$(OBJ_DIR)%.o,$(SRCS))
 HEADERS := $(wildcard $(HEADER_DIR)*.hpp)
 DEPS := $(HEADERS) Makefile

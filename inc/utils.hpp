@@ -47,8 +47,8 @@ namespace ft
 			// copy (1)	
 			pair& operator=(const pair& pr)
 			{
-				alloc_first.construct(&this->first, pr.first);
-				alloc_second.construct(&this->second, pr.second);
+				alloc_first.construct(&first, pr.first);
+				alloc_second.construct(&second, pr.second);
 				return (*this);
 			}
 	};

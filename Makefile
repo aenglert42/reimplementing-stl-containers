@@ -9,7 +9,7 @@ CFLAGS := -g -Wall -Werror -Wextra
 else ifeq ($(DEBUG),2)
 CFLAGS := -g
 else
-CFLAGS := -Wall -Werror -Wextra -std=c++98 -DNDEBUG
+CFLAGS := -g -Wall -Werror -Wextra -std=c++98 -DNDEBUG
 endif
 OBJS := $(patsubst %.cpp,$(OBJ_DIR)%.o,$(SRCS))
 HEADERS := $(wildcard $(HEADER_DIR)*.hpp)
@@ -40,7 +40,7 @@ unitre:
 test: all unit
 	./unit_test
 
-$(NAME): $(OBJ_DIR) $(OBJS)
+$(NAME): $(OBJ_DIR) $(OBJS) $(DEPS)
 	@$(CC) $(CFLAGS) $(INCLUDES) $(OBJS) -o $@
 	@echo "\n$(GREEN)$(NAME) created$(RESET)"
 

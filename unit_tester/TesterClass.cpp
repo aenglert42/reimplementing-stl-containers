@@ -16,8 +16,9 @@ void TesterClass::display_result(void)
 	else
 	{
 		std::cout << RED << "KO" << std::endl;
-		std::cerr << YELLOW << "in: " << container.test_name << " " << TEST_FILE << ":" << container.line << "\n\nexpected:\n" << container.expected_output << std::endl;
+		std::cerr << YELLOW << "in: " << container.test_name << " " << TEST_FILE << ":" << container._line << "\n\nexpected:\n" << container.expected_output << std::endl;
 		std::cerr << "recieved:\n" << container.real_output << RESET << std::endl;
+		_ko_counter++;
 	}
 	std::cout << std::endl;
 }
@@ -35,13 +36,22 @@ void TesterClass::executeTests(void)
 		std::cout.rdbuf(tmp);
 		display_result();
 	}
-	std::cout << BOLD << "DONE\n" << RESET << std::endl;
+	if (_ko_counter == 0)
+		std::cout << GREEN;
+	else
+		std::cout << RED;
+	std::cout << "DONE ";
+	if (_ko_counter != 0)
+		std::cout << _ko_counter << " KO";
+	if (_ko_counter > 1)
+		std::cout << "s";
+	std::cout << RESET << std::endl << std::endl;
 }
 
 void TestContainer::fill_container(std::string name, int line, std::string real, std::string expected)
 {
-	this->test_name = name;
-	this->line = line;
-	this->real_output = real;
-	this->expected_output = expected;
+	test_name = name;
+	_line = line;
+	real_output = real;
+	expected_output = expected;
 }

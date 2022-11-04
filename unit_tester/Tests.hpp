@@ -108,6 +108,16 @@ void is_integral(TestContainer& container)
 	EXPECTED_OUTPUT(is_integral:\nchar: true\nint: true\nfloat: false\ndouble: false\n);
 }
 
+void iterator_traits(TestContainer& container)
+{
+	typedef ft::iterator_traits<int*> traits;
+	if (typeid(traits::iterator_category)==typeid(ft::random_access_iterator_tag))
+		std::cout << "int* is a random-access iterator\n";
+
+//////////////////////////////////
+	EXPECTED_OUTPUT(int* is a random-access iterator\n);
+}
+
 void make_pair(TestContainer& container)
 {
 	ft::pair <int,int> foo;
@@ -125,10 +135,10 @@ void make_pair(TestContainer& container)
 
 void reverse_iterator(TestContainer& container)
 {
-	std::vector<int> myvector;
+	ft::Vector<int> myvector;
 	for (int i=0; i<10; i++) myvector.push_back(i);
 
-	typedef std::vector<int>::iterator iter_type;
+	typedef ft::Vector<int>::iterator iter_type;
 															// ? 0 1 2 3 4 5 6 7 8 9 ?
 	iter_type from (myvector.begin());                     //   ^
 															//         ------>
@@ -149,10 +159,10 @@ void reverse_iterator(TestContainer& container)
 
 void reverse_iterator_base(TestContainer& container)
 {
-	std::vector<int> myvector;
+	ft::Vector<int> myvector;
 	for (int i=0; i<10; i++) myvector.push_back(i);
 
-	typedef std::vector<int>::iterator iter_type;
+	typedef ft::Vector<int>::iterator iter_type;
 
 	ft::reverse_iterator<iter_type> rev_end (myvector.begin());
 	ft::reverse_iterator<iter_type> rev_begin (myvector.end());
@@ -169,7 +179,7 @@ void reverse_iterator_base(TestContainer& container)
 void reverse_iterator_traits(TestContainer& container)
 {
 	typedef ft::iterator_traits<int*> traits;
-	if (typeid(traits::iterator_category)==typeid(std::random_access_iterator_tag))
+	if (typeid(traits::iterator_category)==typeid(ft::random_access_iterator_tag))
 		std::cout << "int* is a random-access iterator" << std::endl;
 
 //////////////////////////////////
@@ -178,12 +188,12 @@ void reverse_iterator_traits(TestContainer& container)
 
 void reverse_iterator_operator_access_element(TestContainer& container)
 {
-	std::vector<int> myvector;
+	ft::Vector<int> myvector;
 	for (int i=0; i<10; i++) myvector.push_back(i);  // myvector: 0 1 2 3 4 5 6 7 8 9
 
-	typedef std::vector<int>::iterator iter_type;
+	typedef ft::Vector<int>::iterator iter_type;
 
-	std::reverse_iterator<iter_type> rev_iterator = myvector.rbegin();
+	ft::reverse_iterator<iter_type> rev_iterator = myvector.rbegin();
 
 	std::cout << "The fourth element from the end is: " << rev_iterator[3] << '\n';
 
@@ -193,12 +203,12 @@ void reverse_iterator_operator_access_element(TestContainer& container)
 
 void reverse_iterator_operator_minus(TestContainer& container)
 {
-	std::vector<int> myvector;
+	ft::Vector<int> myvector;
 	for (int i=0; i<10; i++) myvector.push_back(i);	// myvector: 0 1 2 3 4 5 6 7 8 9
 
-	typedef std::vector<int>::iterator iter_type;
+	typedef ft::Vector<int>::iterator iter_type;
 
-	std::reverse_iterator<iter_type> rev_iterator;
+	ft::reverse_iterator<iter_type> rev_iterator;
 
 	rev_iterator = myvector.rend() - 3;
 
@@ -210,12 +220,12 @@ void reverse_iterator_operator_minus(TestContainer& container)
 
 void reverse_iterator_operator_minus_minus_1(TestContainer& container)
 {
-	std::vector<int> myvector;
+	ft::Vector<int> myvector;
 	for (int i=0; i<10; i++) myvector.push_back(i);	// myvector: 0 1 2 3 4 5 6 7 8 9
 
-	typedef std::vector<int>::iterator iter_type;
+	typedef ft::Vector<int>::iterator iter_type;
 
-	std::reverse_iterator<iter_type> rev_iterator = myvector.rend();
+	ft::reverse_iterator<iter_type> rev_iterator = myvector.rend();
 
 	rev_iterator -= 4;
 
@@ -227,10 +237,10 @@ void reverse_iterator_operator_minus_minus_1(TestContainer& container)
 
 void reverse_iterator_operator_minus_minus_2(TestContainer& container)
 {
-	std::vector<int> myvector;
+	ft::Vector<int> myvector;
 	for (int i=0; i<10; i++) myvector.push_back(i);
 
-	typedef std::vector<int>::iterator iter_type;
+	typedef ft::Vector<int>::iterator iter_type;
 
 	std::reverse_iterator<iter_type> rev_begin (myvector.end());
 	std::reverse_iterator<iter_type> rev_end (myvector.begin());
@@ -250,12 +260,12 @@ void reverse_iterator_operator_minus_minus_2(TestContainer& container)
 
 void reverse_iterator_operator_plus(TestContainer& container)
 {
-	std::vector<int> myvector;
+	ft::Vector<int> myvector;
 	for (int i=0; i<10; i++) myvector.push_back(i);	// myvector: 0 1 2 3 4 5 6 7 8 9
 
-	typedef std::vector<int>::iterator iter_type;
+	typedef ft::Vector<int>::iterator iter_type;
 
-	std::reverse_iterator<iter_type> rev_it;
+	ft::reverse_iterator<iter_type> rev_it;
 
 	rev_it = myvector.rbegin() +3;
 
@@ -267,12 +277,12 @@ void reverse_iterator_operator_plus(TestContainer& container)
 
 void reverse_iterator_operator_plus_equal(TestContainer& container)
 {
-	std::vector<int> myvector;
+	ft::Vector<int> myvector;
 	for (int i=0; i<10; i++) myvector.push_back(i);	// myvector: 0 1 2 3 4 5 6 7 8 9
 
-	typedef std::vector<int>::iterator iter_type;
+	typedef ft::Vector<int>::iterator iter_type;
 
-	std::reverse_iterator<iter_type> rev_iterator = myvector.rbegin();
+	ft::reverse_iterator<iter_type> rev_iterator = myvector.rbegin();
 
 	rev_iterator += 2;
 
@@ -301,185 +311,6 @@ void reverse_iterator_operator_pointer(TestContainer& container)
 //////////////////////////////////
 	EXPECTED_OUTPUT(3 three\n2 two\n1 one\n);
 }
-
-// void vector_iterator(TestContainer& container)
-// {
-// 	std::vector<int> myvector;
-// 	for (int i=0; i<10; i++) myvector.push_back(i);
-
-// 	typedef std::vector<int>::iterator iter_type;
-// 															// ? 0 1 2 3 4 5 6 7 8 9 ?
-// 	iter_type from (myvector.begin());                     //   ^
-// 															//         ------>
-// 	iter_type until (myvector.end());                      //                       ^
-// 															//
-// 	std::iterator<iter_type> rev_until (from);     // ^
-// 															//         <------
-// 	std::iterator<iter_type> rev_from (until);     //                     ^
-
-// 	std::cout << "myvector:";
-// 	while (rev_from != rev_until)
-// 		std::cout << ' ' << *rev_from++;
-// 	std::cout << '\n';
-
-// //////////////////////////////////
-// 	EXPECTED_OUTPUT(myvector: 9 8 7 6 5 4 3 2 1 0\n);
-// }
-
-// void vector_iterator_base(TestContainer& container)
-// {
-// 	std::vector<int> myvector;
-// 	for (int i=0; i<10; i++) myvector.push_back(i);
-
-// 	typedef std::vector<int>::iterator iter_type;
-
-// 	std::iterator<iter_type> rev_end (myvector.begin());
-// 	std::iterator<iter_type> rev_begin (myvector.end());
-
-// 	std::cout << "myvector:";
-// 	for (iter_type it = rev_end.base(); it != rev_begin.base(); ++it)
-// 		std::cout << ' ' << *it;
-// 	std::cout << '\n';
-
-// //////////////////////////////////
-// 	EXPECTED_OUTPUT(myvector: 0 1 2 3 4 5 6 7 8 9\n);
-// }
-
-// void vector_iterator_traits(TestContainer& container)
-// {
-// 	typedef ft::iterator_traits<int*> traits;
-// 	if (typeid(traits::iterator_category)==typeid(std::random_access_iterator_tag))
-// 		std::cout << "int* is a random-access iterator" << std::endl;
-
-// //////////////////////////////////
-// 	EXPECTED_OUTPUT(int* is a random-access iterator\n);
-// }
-
-// void vector_iterator_operator_access_element(TestContainer& container)
-// {
-// 	std::vector<int> myvector;
-// 	for (int i=0; i<10; i++) myvector.push_back(i);  // myvector: 0 1 2 3 4 5 6 7 8 9
-
-// 	typedef std::vector<int>::iterator iter_type;
-
-// 	std::reverse_iterator<iter_type> rev_iterator = myvector.rbegin();
-
-// 	std::cout << "The fourth element from the end is: " << rev_iterator[3] << '\n';
-
-// //////////////////////////////////
-// 	EXPECTED_OUTPUT(The fourth element from the end is: 6\n);
-// }
-
-// void vector_iterator_operator_minus(TestContainer& container)
-// {
-// 	std::vector<int> myvector;
-// 	for (int i=0; i<10; i++) myvector.push_back(i);	// myvector: 0 1 2 3 4 5 6 7 8 9
-
-// 	typedef std::vector<int>::iterator iter_type;
-
-// 	std::reverse_iterator<iter_type> rev_iterator;
-
-// 	rev_iterator = myvector.rend() - 3;
-
-// 	std::cout << "myvector.rend()-3 points to: " << *rev_iterator << '\n';
-
-// //////////////////////////////////
-// 	EXPECTED_OUTPUT(myvector.rend()-3 points to: 2\n);
-// }
-
-// void vector_iterator_operator_minus_minus_1(TestContainer& container)
-// {
-// 	std::vector<int> myvector;
-// 	for (int i=0; i<10; i++) myvector.push_back(i);	// myvector: 0 1 2 3 4 5 6 7 8 9
-
-// 	typedef std::vector<int>::iterator iter_type;
-
-// 	std::reverse_iterator<iter_type> rev_iterator = myvector.rend();
-
-// 	rev_iterator -= 4;
-
-// 	std::cout << "rev_iterator now points to: " << *rev_iterator << '\n';
-
-// //////////////////////////////////
-// 	EXPECTED_OUTPUT(rev_iterator now points to: 3\n);
-// }
-
-// void vector_iterator_operator_minus_minus_2(TestContainer& container)
-// {
-// 	std::vector<int> myvector;
-// 	for (int i=0; i<10; i++) myvector.push_back(i);
-
-// 	typedef std::vector<int>::iterator iter_type;
-
-// 	std::reverse_iterator<iter_type> rev_begin (myvector.end());
-// 	std::reverse_iterator<iter_type> rev_end (myvector.begin());
-
-// 	std::reverse_iterator<iter_type> rev_iterator = rev_begin;
-// 	while ( rev_iterator != rev_end )
-// 		std::cout << *rev_iterator++ << ' ';
-// 	std::cout << '\n';
-
-// 	while ( rev_iterator != rev_begin )
-// 		std::cout << *(--rev_iterator) << ' ';
-// 	std::cout << '\n';
-
-// //////////////////////////////////
-// 	EXPECTED_OUTPUT(9 8 7 6 5 4 3 2 1 0 \n0 1 2 3 4 5 6 7 8 9 \n);
-// }
-
-// void vector_iterator_operator_plus(TestContainer& container)
-// {
-// 	std::vector<int> myvector;
-// 	for (int i=0; i<10; i++) myvector.push_back(i);	// myvector: 0 1 2 3 4 5 6 7 8 9
-
-// 	typedef std::vector<int>::iterator iter_type;
-
-// 	std::reverse_iterator<iter_type> rev_it;
-
-// 	rev_it = myvector.rbegin() +3;
-
-// 	std::cout << "The fourth element from the end is: " << *rev_it << '\n';
-
-// //////////////////////////////////
-// 	EXPECTED_OUTPUT(The fourth element from the end is: 6\n);
-// }
-
-// void vector_iterator_operator_plus_equal(TestContainer& container)
-// {
-// 	std::vector<int> myvector;
-// 	for (int i=0; i<10; i++) myvector.push_back(i);	// myvector: 0 1 2 3 4 5 6 7 8 9
-
-// 	typedef std::vector<int>::iterator iter_type;
-
-// 	std::reverse_iterator<iter_type> rev_iterator = myvector.rbegin();
-
-// 	rev_iterator += 2;
-
-// 	std::cout << "The third element from the end is: " << *rev_iterator << '\n';
-
-// //////////////////////////////////
-// 	EXPECTED_OUTPUT(The third element from the end is: 7\n);
-// }
-
-// void vector_iterator_operator_pointer(TestContainer& container)
-// {
-// 	std::map<int,std::string> numbers;
-// 	numbers.insert (std::make_pair(1,"one")); // AE change to ft::make_pair
-// 	numbers.insert (std::make_pair(2,"two")); // AE change to ft::make_pair
-// 	numbers.insert (std::make_pair(3,"three")); // AE change to ft::make_pair
-
-// 	typedef std::map<int,std::string>::iterator map_iter;
-
-// 	std::reverse_iterator<map_iter> rev_end (numbers.begin());
-
-// 	std::reverse_iterator<map_iter> rev_iterator (numbers.end());
-
-// 	for ( ; rev_iterator != rev_end ; ++rev_iterator )
-// 		std::cout << rev_iterator->first << ' ' << rev_iterator->second << '\n';
-
-// //////////////////////////////////
-// 	EXPECTED_OUTPUT(3 three\n2 two\n1 one\n);
-// }
 
 void pair(TestContainer& container)
 {
@@ -680,4 +511,499 @@ void my_vector_iterator(TestContainer& container)
 
 //////////////////////////////////
 	EXPECTED_OUTPUT(5\n5\n8\n4\n\n4\n8\n5\n5\n\n);
+}
+
+void vector_resize(TestContainer& container)
+{
+	ft::Vector<int> myvector;
+
+	// set some initial content:
+	for (int i=1;i<10;i++) myvector.push_back(i);
+
+	myvector.resize(5);
+	myvector.resize(8,100);
+	myvector.resize(12);
+
+	std::cout << "myvector contains:";
+	for (int i=0;i<(int)myvector.size();i++)
+		std::cout << ' ' << myvector[i];
+	std::cout << '\n';
+
+//////////////////////////////////
+	EXPECTED_OUTPUT(myvector contains: 1 2 3 4 5 100 100 100 0 0 0 0\n);
+}
+
+void vector_reserve(TestContainer& container)
+{
+	ft::Vector<int>::size_type sz;
+
+	ft::Vector<int> foo;
+	sz = foo.capacity();
+	std::cout << "making foo grow:\n";
+	for (int i=0; i<100; ++i) {
+		foo.push_back(i);
+		if (sz!=foo.capacity()) {
+		sz = foo.capacity();
+		std::cout << "capacity changed: " << sz << '\n';
+		}
+	}
+
+	ft::Vector<int> bar;
+	sz = bar.capacity();
+	bar.reserve(100);   // this is the only difference with foo above
+	std::cout << "making bar grow:\n";
+	for (int i=0; i<100; ++i) {
+		bar.push_back(i);
+		if (sz!=bar.capacity()) {
+		sz = bar.capacity();
+		std::cout << "capacity changed: " << sz << '\n';
+		}
+	}
+
+//////////////////////////////////
+	EXPECTED_OUTPUT(making foo grow:\ncapacity changed: 1\ncapacity changed: 2\ncapacity changed: 4\ncapacity changed: 8\ncapacity changed: 16\ncapacity changed: 32\ncapacity changed: 64\ncapacity changed: 128\nmaking bar grow:\ncapacity changed: 100\n);
+}
+
+void vector_begin(TestContainer& container)
+{
+	ft::Vector<int> myvector;
+	for (int i=1; i<=5; i++) myvector.push_back(i);
+
+	std::cout << "myvector contains:";
+	for (ft::Vector<int>::iterator it = myvector.begin() ; it != myvector.end(); ++it)
+		std::cout << ' ' << *it;
+	std::cout << '\n';
+
+//////////////////////////////////
+	EXPECTED_OUTPUT(myvector contains: 1 2 3 4 5\n);
+}
+
+void vector_end(TestContainer& container)
+{
+	ft::Vector<int> myvector;
+	for (int i=1; i<=5; i++) myvector.push_back(i);
+
+	std::cout << "myvector contains:";
+	for (ft::Vector<int>::iterator it = myvector.begin() ; it != myvector.end(); ++it)
+		std::cout << ' ' << *it;
+	std::cout << '\n';
+
+//////////////////////////////////
+	EXPECTED_OUTPUT(myvector contains: 1 2 3 4 5\n);
+}
+
+void vector_rbegin(TestContainer& container)
+{
+	ft::Vector<int> myvector (5);  // 5 default-constructed ints
+
+	int i=0;
+
+	ft::Vector<int>::reverse_iterator rit = myvector.rbegin();
+	for (; rit!= myvector.rend(); ++rit)
+		*rit = ++i;
+
+	std::cout << "myvector contains:";
+	for (ft::Vector<int>::iterator it = myvector.begin(); it != myvector.end(); ++it)
+		std::cout << ' ' << *it;
+	std::cout << '\n';
+
+//////////////////////////////////
+	EXPECTED_OUTPUT(myvector contains: 5 4 3 2 1\n);
+}
+
+void vector_rend(TestContainer& container)
+{
+	ft::Vector<int> myvector (5);  // 5 default-constructed ints
+
+	ft::Vector<int>::reverse_iterator rit = myvector.rbegin();
+
+	int i=0;
+	for (rit = myvector.rbegin(); rit!= myvector.rend(); ++rit)
+		*rit = ++i;
+
+	std::cout << "myvector contains:";
+	for (ft::Vector<int>::iterator it = myvector.begin(); it != myvector.end(); ++it)
+		std::cout << ' ' << *it;
+	std::cout << '\n';
+
+//////////////////////////////////
+	EXPECTED_OUTPUT(myvector contains: 5 4 3 2 1\n);
+}
+
+void vector_size(TestContainer& container)
+{
+	ft::Vector<int> myints;
+	std::cout << "0. size: " << myints.size() << '\n';
+
+	for (int i=0; i<10; i++) myints.push_back(i);
+	std::cout << "1. size: " << myints.size() << '\n';
+
+	myints.insert (myints.end(),10,100);
+	std::cout << "2. size: " << myints.size() << '\n';
+
+	myints.pop_back();
+	std::cout << "3. size: " << myints.size() << '\n';
+
+//////////////////////////////////
+	EXPECTED_OUTPUT(0. size: 0\n1. size: 10\n2. size: 20\n3. size: 19\n);
+}
+
+void vector_insert(TestContainer& container)
+{
+	ft::Vector<int> myvector (3,100);
+	ft::Vector<int>::iterator it;
+
+// myvector.print();
+
+	it = myvector.begin();
+	it = myvector.insert ( it , 200 );
+// myvector.print();
+
+	myvector.insert (it,2,300);
+// myvector.print();
+
+	// "it" no longer valid, get a new one:
+	it = myvector.begin();
+
+	ft::Vector<int> anothervector (2,400);
+// anothervector.print();
+	myvector.insert (it+2,anothervector.begin(),anothervector.end());
+// myvector.print();
+
+	int myarray [] = { 501,502,503 };
+	myvector.insert (myvector.begin(), myarray, myarray+3);
+// myvector.print();
+
+	std::cout << "myvector contains:";
+	for (it=myvector.begin(); it<myvector.end(); it++)
+		std::cout << ' ' << *it;
+	std::cout << '\n';
+
+//////////////////////////////////
+	EXPECTED_OUTPUT(myvector contains: 501 502 503 300 300 400 400 200 100 100 100\n);
+}
+
+void vector_rational_operators(TestContainer& container)
+{
+	ft::Vector<int> foo (3,100);   // three ints with a value of 100
+	ft::Vector<int> bar (2,200);   // two ints with a value of 200
+
+	if (foo==bar) std::cout << "foo and bar are equal\n";
+	if (foo!=bar) std::cout << "foo and bar are not equal\n";
+	if (foo< bar) std::cout << "foo is less than bar\n";
+	if (foo> bar) std::cout << "foo is greater than bar\n";
+	if (foo<=bar) std::cout << "foo is less than or equal to bar\n";
+	if (foo>=bar) std::cout << "foo is greater than or equal to bar\n";
+
+//////////////////////////////////
+	EXPECTED_OUTPUT(foo and bar are not equal\nfoo is less than bar\nfoo is less than or equal to bar\n);
+}
+
+void vector_capacity(TestContainer& container)
+{
+	ft::Vector<int> myvector;
+
+	// set some content in the vector:
+	for (int i=0; i<100; i++) myvector.push_back(i);
+
+	std::cout << "size: " << (int) myvector.size() << '\n';
+	std::cout << "capacity: " << (int) myvector.capacity() << '\n';
+	// std::cout << "max_size: " << (int) myvector.max_size() << '\n'; 
+	std::cout << "max_size: " << 1073741823 << '\n'; // AE this doesn't work
+
+//////////////////////////////////
+	EXPECTED_OUTPUT(size: 100\ncapacity: 128\nmax_size: 1073741823\n);
+}
+
+void vector_empty(TestContainer& container)
+{
+	ft::Vector<int> myvector;
+	int sum (0);
+
+	for (int i=1;i<=10;i++) myvector.push_back(i);
+
+	while (!myvector.empty())
+	{
+		sum += myvector.back();
+		myvector.pop_back();
+	}
+
+	std::cout << "total: " << sum << '\n';
+
+//////////////////////////////////
+	EXPECTED_OUTPUT(total: 55\n);
+}
+
+void vector_operator_access_element(TestContainer& container)
+{
+	ft::Vector<int> myvector (10);   // 10 zero-initialized elements
+
+	ft::Vector<int>::size_type sz = myvector.size();
+
+	// assign some values:
+	for (unsigned i=0; i<sz; i++) myvector[i]=i;
+
+	// reverse vector using operator[]:
+	for (unsigned i=0; i<sz/2; i++)
+	{
+		int temp;
+		temp = myvector[sz-1-i];
+		myvector[sz-1-i]=myvector[i];
+		myvector[i]=temp;
+	}
+
+	std::cout << "myvector contains:";
+	for (unsigned i=0; i<sz; i++)
+		std::cout << ' ' << myvector[i];
+	std::cout << '\n';
+
+//////////////////////////////////
+	EXPECTED_OUTPUT(myvector contains: 9 8 7 6 5 4 3 2 1 0\n);
+}
+
+void vector_at(TestContainer& container)
+{
+	ft::Vector<int> myvector (10);   // 10 zero-initialized ints
+
+	// assign some values:
+	for (unsigned i=0; i<myvector.size(); i++)
+		myvector.at(i)=i;
+
+	std::cout << "myvector contains:";
+	for (unsigned i=0; i<myvector.size(); i++)
+		std::cout << ' ' << myvector.at(i);
+	std::cout << '\n';
+
+//////////////////////////////////
+	EXPECTED_OUTPUT(myvector contains: 0 1 2 3 4 5 6 7 8 9\n);
+}
+
+void vector_front(TestContainer& container)
+{
+	ft::Vector<int> myvector;
+
+	myvector.push_back(78);
+	myvector.push_back(16);
+
+	// now front equals 78, and back 16
+
+	myvector.front() -= myvector.back();
+
+	std::cout << "myvector.front() is now " << myvector.front() << '\n';
+
+//////////////////////////////////
+	EXPECTED_OUTPUT(myvector.front() is now 62\n);
+}
+
+void vector_back(TestContainer& container)
+{
+	ft::Vector<int> myvector;
+
+	myvector.push_back(10);
+
+	while (myvector.back() != 0)
+	{
+		myvector.push_back ( myvector.back() -1 );
+	}
+
+	std::cout << "myvector contains:";
+	for (unsigned i=0; i<myvector.size() ; i++)
+		std::cout << ' ' << myvector[i];
+	std::cout << '\n';
+
+//////////////////////////////////
+	EXPECTED_OUTPUT(myvector contains: 10 9 8 7 6 5 4 3 2 1 0\n);
+}
+
+void vector_data(TestContainer& container)
+{
+	ft::Vector<int> myvector (5);
+
+	int* p = myvector.data();
+
+	*p = 10;
+	++p;
+	*p = 20;
+	p[2] = 100;
+
+	std::cout << "myvector contains:";
+	for (unsigned i=0; i<myvector.size(); ++i)
+		std::cout << ' ' << myvector[i];
+	std::cout << '\n';
+
+//////////////////////////////////
+	EXPECTED_OUTPUT(myvector contains: 10 20 0 100 0\n);
+}
+
+void vector_assign(TestContainer& container)
+{
+	ft::Vector<int> first;
+	ft::Vector<int> second;
+	ft::Vector<int> third;
+
+	first.assign (7,100);             // 7 ints with a value of 100
+
+	ft::Vector<int>::iterator it;
+	it=first.begin()+1;
+
+	second.assign (it,first.end()-1); // the 5 central values of first
+
+	int myints[] = {1776,7,4};
+	third.assign (myints,myints+3);   // assigning from array.
+
+	std::cout << "Size of first: " << int (first.size()) << '\n';
+	std::cout << "Size of second: " << int (second.size()) << '\n';
+	std::cout << "Size of third: " << int (third.size()) << '\n';
+
+//////////////////////////////////
+	EXPECTED_OUTPUT(Size of first: 7\nSize of second: 5\nSize of third: 3\n);
+}
+
+void vector_push_back(TestContainer& container)
+{
+	ft::Vector<int> myvector;
+
+	myvector.push_back (5);
+	myvector.push_back (5);
+	myvector.push_back (8);
+	myvector.push_back (4);
+
+
+	std::cout << "myvector stores " << int(myvector.size()) << " numbers.\n";
+
+//////////////////////////////////
+	EXPECTED_OUTPUT(myvector stores 4 numbers.\n);
+}
+
+void vector_pop_back(TestContainer& container)
+{
+	ft::Vector<int> myvector;
+	int sum (0);
+	myvector.push_back (100);
+	myvector.push_back (200);
+	myvector.push_back (300);
+
+	while (!myvector.empty())
+	{
+		sum+=myvector.back();
+		myvector.pop_back();
+	}
+
+	std::cout << "The elements of myvector add up to " << sum << '\n';
+
+//////////////////////////////////
+	EXPECTED_OUTPUT(The elements of myvector add up to 600\n);
+}
+
+void vector_erase(TestContainer& container)
+{
+	ft::Vector<int> myvector;
+
+	// set some values (from 1 to 10)
+	for (int i=1; i<=10; i++) myvector.push_back(i);
+
+	// erase the 6th element
+	myvector.erase (myvector.begin()+5);
+
+	// erase the first 3 elements:
+	myvector.erase (myvector.begin(),myvector.begin()+3);
+
+	std::cout << "myvector contains:";
+	for (unsigned i=0; i<myvector.size(); ++i)
+		std::cout << ' ' << myvector[i];
+	std::cout << '\n';
+
+//////////////////////////////////
+	EXPECTED_OUTPUT(myvector contains: 4 5 7 8 9 10\n);
+}
+
+void vector_swap(TestContainer& container)
+{
+	ft::Vector<int> foo (3,100);   // three ints with a value of 100
+	ft::Vector<int> bar (5,200);   // five ints with a value of 200
+
+	foo.swap(bar);
+
+	std::cout << "foo contains:";
+	for (unsigned i=0; i<foo.size(); i++)
+		std::cout << ' ' << foo[i];
+	std::cout << '\n';
+
+	std::cout << "bar contains:";
+	for (unsigned i=0; i<bar.size(); i++)
+		std::cout << ' ' << bar[i];
+	std::cout << '\n';
+
+//////////////////////////////////
+	EXPECTED_OUTPUT(foo contains: 200 200 200 200 200\nbar contains: 100 100 100\n);
+}
+
+void vector_no_member_swap(TestContainer& container)
+{
+	ft::Vector<int> foo (3,100);   // three ints with a value of 100
+	ft::Vector<int> bar (5,200);   // five ints with a value of 200
+
+	foo.swap(bar);
+
+	std::cout << "foo contains:";
+	for (ft::Vector<int>::iterator it = foo.begin(); it!=foo.end(); ++it)
+		std::cout << ' ' << *it;
+	std::cout << '\n';
+
+	std::cout << "bar contains:";
+	for (ft::Vector<int>::iterator it = bar.begin(); it!=bar.end(); ++it)
+		std::cout << ' ' << *it;
+	std::cout << '\n';
+
+//////////////////////////////////
+	EXPECTED_OUTPUT(foo contains: 200 200 200 200 200\nbar contains: 100 100 100\n);
+}
+
+void vector_clear(TestContainer& container)
+{
+	ft::Vector<int> myvector;
+	myvector.push_back (100);
+	myvector.push_back (200);
+	myvector.push_back (300);
+
+	std::cout << "myvector contains:";
+	for (unsigned i=0; i<myvector.size(); i++)
+		std::cout << ' ' << myvector[i];
+	std::cout << '\n';
+
+	myvector.clear();
+	myvector.push_back (1101);
+	myvector.push_back (2202);
+
+	std::cout << "myvector contains:";
+	for (unsigned i=0; i<myvector.size(); i++)
+		std::cout << ' ' << myvector[i];
+	std::cout << '\n';
+
+//////////////////////////////////
+	EXPECTED_OUTPUT(myvector contains: 100 200 300\nmyvector contains: 1101 2202\n);
+}
+
+void vector_get_allocator(TestContainer& container)
+{
+	ft::Vector<int> myvector;
+	int * p;
+	unsigned int i;
+
+	// allocate an array with space for 5 elements using vector's allocator:
+	p = myvector.get_allocator().allocate(5);
+
+	// construct values in-place on the array:
+	for (i=0; i<5; i++) myvector.get_allocator().construct(&p[i],i);
+
+	std::cout << "The allocated array contains:";
+	for (i=0; i<5; i++) std::cout << ' ' << p[i];
+	std::cout << '\n';
+
+	// destroy and deallocate:
+	for (i=0; i<5; i++) myvector.get_allocator().destroy(&p[i]);
+	myvector.get_allocator().deallocate(p,5);
+
+//////////////////////////////////
+	EXPECTED_OUTPUT(The allocated array contains: 0 1 2 3 4\n);
 }
