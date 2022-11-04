@@ -31,7 +31,10 @@ vector_end, \
 vector_rbegin, \
 vector_rend, \
 vector_size, \
+vector_capacity, \
+vector_empty, \
 vector_insert, \
+vector_rational_operators, \
 sfinae/*, \
 vector_iterator, \
 vector_iterator_base, \

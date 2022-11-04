@@ -35,6 +35,7 @@ class TesterClass
 		TestContainer container;
 		std::vector<function_ptr> vector_of_tests;
 		TesterClass(std::initializer_list<function_ptr> init);
+		int _ko_counter = 0;
 	private:
 		TesterClass(void);
 		void executeTests(void);
