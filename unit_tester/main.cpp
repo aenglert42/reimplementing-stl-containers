@@ -25,7 +25,6 @@ my_vector_iterator, \
 vector_operator_equal, \
 vector_costructors, \
 vector_resize, \
-vector_reserve, \
 vector_begin, \
 vector_end, \
 vector_rbegin, \
@@ -33,6 +32,12 @@ vector_rend, \
 vector_size, \
 vector_capacity, \
 vector_empty, \
+vector_reserve, \
+vector_operator_access_element, \
+vector_operator_at, \
+vector_operator_front, \
+vector_operator_back, \
+vector_operator_data, \
 vector_insert, \
 vector_rational_operators, \
 sfinae/*, \

@@ -337,6 +337,17 @@ namespace ft
 				return (_array[_size - 1]); // AE remove make function for that
 			}
 
+		////data///////////////////////////////////////////////////////
+			value_type* data()
+			{
+				return (_array);
+			}
+
+			const value_type* data() const
+			{
+				return (_array);
+			}
+
 	//Modifiers---------------------------------------------------------------
 		////assign///////////////////////////////////////////////////////
 			// range (1)	

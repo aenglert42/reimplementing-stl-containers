@@ -902,3 +902,104 @@ void vector_empty(TestContainer& container)
 //////////////////////////////////
 	EXPECTED_OUTPUT(total: 55\n);
 }
+
+void vector_operator_access_element(TestContainer& container)
+{
+	ft::Vector<int> myvector (10);   // 10 zero-initialized elements
+
+	ft::Vector<int>::size_type sz = myvector.size();
+
+	// assign some values:
+	for (unsigned i=0; i<sz; i++) myvector[i]=i;
+
+	// reverse vector using operator[]:
+	for (unsigned i=0; i<sz/2; i++)
+	{
+		int temp;
+		temp = myvector[sz-1-i];
+		myvector[sz-1-i]=myvector[i];
+		myvector[i]=temp;
+	}
+
+	std::cout << "myvector contains:";
+	for (unsigned i=0; i<sz; i++)
+		std::cout << ' ' << myvector[i];
+	std::cout << '\n';
+
+//////////////////////////////////
+	EXPECTED_OUTPUT(myvector contains: 9 8 7 6 5 4 3 2 1 0\n);
+}
+
+void vector_operator_at(TestContainer& container)
+{
+	ft::Vector<int> myvector (10);   // 10 zero-initialized ints
+
+	// assign some values:
+	for (unsigned i=0; i<myvector.size(); i++)
+		myvector.at(i)=i;
+
+	std::cout << "myvector contains:";
+	for (unsigned i=0; i<myvector.size(); i++)
+		std::cout << ' ' << myvector.at(i);
+	std::cout << '\n';
+
+//////////////////////////////////
+	EXPECTED_OUTPUT(myvector contains: 0 1 2 3 4 5 6 7 8 9\n);
+}
+
+void vector_operator_front(TestContainer& container)
+{
+	ft::Vector<int> myvector;
+
+	myvector.push_back(78);
+	myvector.push_back(16);
+
+	// now front equals 78, and back 16
+
+	myvector.front() -= myvector.back();
+
+	std::cout << "myvector.front() is now " << myvector.front() << '\n';
+
+//////////////////////////////////
+	EXPECTED_OUTPUT(myvector.front() is now 62\n);
+}
+
+void vector_operator_back(TestContainer& container)
+{
+	ft::Vector<int> myvector;
+
+	myvector.push_back(10);
+
+	while (myvector.back() != 0)
+	{
+		myvector.push_back ( myvector.back() -1 );
+	}
+
+	std::cout << "myvector contains:";
+	for (unsigned i=0; i<myvector.size() ; i++)
+		std::cout << ' ' << myvector[i];
+	std::cout << '\n';
+
+//////////////////////////////////
+	EXPECTED_OUTPUT(myvector contains: 10 9 8 7 6 5 4 3 2 1 0\n);
+}
+
+void vector_operator_data(TestContainer& container)
+{
+	ft::Vector<int> myvector (5);
+
+	int* p = myvector.data();
+
+	*p = 10;
+	++p;
+	*p = 20;
+	p[2] = 100;
+
+	std::cout << "myvector contains:";
+	for (unsigned i=0; i<myvector.size(); ++i)
+		std::cout << ' ' << myvector[i];
+	std::cout << '\n';
+
+//////////////////////////////////
+	EXPECTED_OUTPUT(myvector contains: 10 20 0 100 0\n);
+}
