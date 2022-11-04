@@ -132,7 +132,7 @@ namespace ft
 			Vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type(),
 				typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type = InputIterator())
 			{
-				difference_type dist = std::distance(first, last);
+				difference_type dist = ft::distance(first, last);
 				_size = dist;
 				_capacity = _size;
 				_alloc = alloc;

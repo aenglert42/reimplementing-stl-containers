@@ -8,37 +8,30 @@ namespace ft
 {
 // iterator_traits https://cplusplus.com/reference/iterator/iterator_traits/
 
-	// struct input_iterator_tag
-	// {
+	struct input_iterator_tag
+	{
 
-	// };
+	};
 
-	// struct output_iterator_tag
-	// {
+	struct output_iterator_tag
+	{
 
-	// };
+	};
 
-	// struct forward_iterator_tag : public input_iterator_tag
-	// {
+	struct forward_iterator_tag : public input_iterator_tag
+	{
 
-	// };
+	};
 
-	// struct bidirectional_iterator_tag : public forward_iterator_tag
-	// {
+	struct bidirectional_iterator_tag : public forward_iterator_tag
+	{
 
-	// };
+	};
 
-	// struct random_access_iterator_tag : public bidirectional_iterator_tag
-	// {
+	struct random_access_iterator_tag : public bidirectional_iterator_tag
+	{
 
-	// };
-
-	//try to use structs instead of typedefs once ft::iterator is working
-	typedef std::input_iterator_tag input_iterator_tag;
-	typedef std::output_iterator_tag output_iterator_tag;
-	typedef std::forward_iterator_tag forward_iterator_tag;
-	typedef std::bidirectional_iterator_tag bidirectional_iterator_tag;
-	typedef std::random_access_iterator_tag random_access_iterator_tag;
+	};
 
 	template <class Iterator>
 	class iterator_traits
@@ -282,4 +275,17 @@ namespace ft
 				{
 					return (lhs.base() - rhs.base());
 				}
+
+		////distance///////////////////////////////////////////////////////
+			template <class InputIterator>
+			typename iterator_traits<InputIterator>::difference_type distance(InputIterator first, InputIterator last)
+			{
+				typename iterator_traits<InputIterator>::difference_type result = 0;
+				while (first != last)
+				{
+					++first;
+					++result;
+				}
+				return (result);
+			}
 }
