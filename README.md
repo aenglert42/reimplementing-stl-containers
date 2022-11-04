@@ -27,7 +27,7 @@ Reimplement the following:
 </br></br></br>
 
 ### Requirements
-* implement all member functions, non-member functions and overloads
+* reimplement all member functions, non-member functions and overloads
 * follow the original naming
 * comply with C++98 standard
 * use std::allocator
