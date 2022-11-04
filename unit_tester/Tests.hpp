@@ -1127,3 +1127,52 @@ void vector_no_member_swap(TestContainer& container)
 //////////////////////////////////
 	EXPECTED_OUTPUT(foo contains: 200 200 200 200 200\nbar contains: 100 100 100\n);
 }
+
+void vector_clear(TestContainer& container)
+{
+	ft::Vector<int> myvector;
+	myvector.push_back (100);
+	myvector.push_back (200);
+	myvector.push_back (300);
+
+	std::cout << "myvector contains:";
+	for (unsigned i=0; i<myvector.size(); i++)
+		std::cout << ' ' << myvector[i];
+	std::cout << '\n';
+
+	myvector.clear();
+	myvector.push_back (1101);
+	myvector.push_back (2202);
+
+	std::cout << "myvector contains:";
+	for (unsigned i=0; i<myvector.size(); i++)
+		std::cout << ' ' << myvector[i];
+	std::cout << '\n';
+
+//////////////////////////////////
+	EXPECTED_OUTPUT(myvector contains: 100 200 300\nmyvector contains: 1101 2202\n);
+}
+
+void vector_get_allocator(TestContainer& container)
+{
+	ft::Vector<int> myvector;
+	int * p;
+	unsigned int i;
+
+	// allocate an array with space for 5 elements using vector's allocator:
+	p = myvector.get_allocator().allocate(5);
+
+	// construct values in-place on the array:
+	for (i=0; i<5; i++) myvector.get_allocator().construct(&p[i],i);
+
+	std::cout << "The allocated array contains:";
+	for (i=0; i<5; i++) std::cout << ' ' << p[i];
+	std::cout << '\n';
+
+	// destroy and deallocate:
+	for (i=0; i<5; i++) myvector.get_allocator().destroy(&p[i]);
+	myvector.get_allocator().deallocate(p,5);
+
+//////////////////////////////////
+	EXPECTED_OUTPUT(The allocated array contains: 0 1 2 3 4\n);
+}

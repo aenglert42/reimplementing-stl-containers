@@ -100,23 +100,6 @@ namespace ft
 				_capacity = newCapacity;
 			}
 
-			// void my_shift(difference_type offset, size_type n)
-			// {
-			// 	reverse_iterator it(end().base() - n + 2);
-			// 	std::cerr << RED << "it-: " << *(it - 1) << RESET << std::endl;
-			// 	std::cerr << RED << "it: " << *it << RESET << std::endl;
-			// 	std::cerr << RED << "it+: " << *(it + 1) << RESET << std::endl;
-			// 	(void)n;
-			// 	(void)offset;
-			// 	for (size_type i = 0; i < n; ++i)
-			// 	{
-			// 	std::cerr << BLUE << "it + offset: " << *(it + offset) << RESET << std::endl;
-			// 		_alloc.construct(&(*it), *(it + offset));
-			// 		++it;
-			// 	}
-			// 	_size += n;
-			// }
-
 		public:
 	//MEMBER FUNCTIONS
 
@@ -506,7 +489,10 @@ namespace ft
 
 	//Allocator---------------------------------------------------------------
 		////get_allocator///////////////////////////////////////////////////////
-			// allocator_type get_allocator() const
+			allocator_type get_allocator() const
+			{
+				return (_alloc);
+			}
 	};
 
 	//NON-MEMBER FUNCTION OVERLOADS
@@ -560,7 +546,4 @@ namespace ft
 			{
 				lhs.swap(rhs);
 			}
-			
-
-
 }

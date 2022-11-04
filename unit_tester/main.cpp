@@ -44,6 +44,8 @@ vector_pop_back, \
 vector_insert, \
 vector_erase, \
 vector_swap, \
+vector_clear, \
+vector_get_allocator, \
 vector_no_member_swap, \
 vector_rational_operators, \
 sfinae/*, \
