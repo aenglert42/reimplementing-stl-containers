@@ -39,7 +39,10 @@ vector_front, \
 vector_back, \
 vector_data, \
 vector_assign, \
+vector_push_back, \
+vector_pop_back, \
 vector_insert, \
+vector_erase, \
 vector_rational_operators, \
 sfinae/*, \
 vector_iterator, \

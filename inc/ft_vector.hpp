@@ -453,8 +453,30 @@ namespace ft
 			}
 
 		////erase///////////////////////////////////////////////////////
-			// iterator erase (iterator position)
-			// iterator erase (iterator first, iterator last)
+			iterator erase(iterator position)
+			{
+				return (erase(position, position + 1));
+			}
+
+			iterator erase(iterator first, iterator last)
+			{
+				size_type n = last - first;
+				for (iterator it = first; it != end() - n; ++it)
+				{
+					*(it) = *(it + n);
+				}
+				// for (size_type i = 0; i < n; ++i)
+				// {
+				// 	*(first + i) = *(first + n + i);
+				// }
+				for (size_type i = 0; i < n; ++i)
+				{
+					_alloc.destroy(&_array[_size - 1 - i]); // AE what if size == 0
+					// _array[_size - 1 - i] = _array[0];
+				}
+				_size -= n;
+				return (last + 1);
+			}
 
 		////swap///////////////////////////////////////////////////////
 			// void swap (Vector& x)

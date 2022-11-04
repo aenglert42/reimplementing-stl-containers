@@ -1027,3 +1027,61 @@ void vector_assign(TestContainer& container)
 //////////////////////////////////
 	EXPECTED_OUTPUT(Size of first: 7\nSize of second: 5\nSize of third: 3\n);
 }
+
+void vector_push_back(TestContainer& container)
+{
+	ft::Vector<int> myvector;
+
+	myvector.push_back (5);
+	myvector.push_back (5);
+	myvector.push_back (8);
+	myvector.push_back (4);
+
+
+	std::cout << "myvector stores " << int(myvector.size()) << " numbers.\n";
+
+//////////////////////////////////
+	EXPECTED_OUTPUT(myvector stores 4 numbers.\n);
+}
+
+void vector_pop_back(TestContainer& container)
+{
+	ft::Vector<int> myvector;
+	int sum (0);
+	myvector.push_back (100);
+	myvector.push_back (200);
+	myvector.push_back (300);
+
+	while (!myvector.empty())
+	{
+		sum+=myvector.back();
+		myvector.pop_back();
+	}
+
+	std::cout << "The elements of myvector add up to " << sum << '\n';
+
+//////////////////////////////////
+	EXPECTED_OUTPUT(The elements of myvector add up to 600\n);
+}
+
+void vector_erase(TestContainer& container)
+{
+	ft::Vector<int> myvector;
+
+	// set some values (from 1 to 10)
+	for (int i=1; i<=10; i++) myvector.push_back(i);
+
+	// erase the 6th element
+	myvector.erase (myvector.begin()+5);
+
+	// erase the first 3 elements:
+	myvector.erase (myvector.begin(),myvector.begin()+3);
+
+	std::cout << "myvector contains:";
+	for (unsigned i=0; i<myvector.size(); ++i)
+		std::cout << ' ' << myvector[i];
+	std::cout << '\n';
+
+//////////////////////////////////
+	EXPECTED_OUTPUT(myvector contains: 4 5 7 8 9 10\n);
+}
