@@ -1,4 +1,5 @@
 #include "ft_vector.hpp"
+#include "ft_tree.hpp"
 #include "utils.hpp"
 #include <iostream>
 #include <string>
@@ -136,4 +137,21 @@ int main(void)
 	for (ft::Vector<int>::reverse_iterator it = v.rbegin(); it != v.rend(); ++it)
 		std::cout << *it << std::endl;
 	std::cout << std::endl;
+	//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> tree
+
+	ft::Tree<int> tree(5);
+	tree.insert(3);
+	tree.insert(7);
+	tree.insert(2);
+	tree.insert(4);
+	tree.insert(8);
+	tree.insert(6);
+	tree.insert(9);
+
+	// ft::Tree<int> tree(10);
+
+	// for (size_t i = 1; i <= 15; ++i)
+	// 	tree.insert(i);
+
+	tree.print2D();
 }

@@ -4,6 +4,8 @@
 #include <memory> // std::allocator
 #include "ft_nullptr.hpp" // ft_nullptr
 // #include "ft_vector_iterator.hpp"
+#include "ft_functional.hpp" // less
+#include "ft_utils.hpp" // pair
 #include "ft_algorithm.hpp"
 #include "ft_type_traits.hpp"
 
