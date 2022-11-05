@@ -23,19 +23,6 @@ namespace ft
 	{
 		public:
 	//MEMBER TYPES
-			// using value_type				= T; //The first template parameter (T)	
-			// using allocator_type			= Allocator; //The second template parameter (Alloc)	defaults to: allocator<value_type>
-			// using reference					= value_type&; //allocator_type::reference	for the default allocator: value_type&
-			// using const_reference			= const value_type&; //allocator_type::const_reference	for the default allocator: const value_type&
-			// using pointer					= typename allocator_traits<Allocator>::pointer; //allocator_type::pointer	for the default allocator: value_type*
-			// using const_pointer				= typename allocator_traits<Allocator>::const_pointer; //allocator_type::const_pointer	for the default allocator: const value_type*
-			// using iterator					= /* implementation-defined */; //a random access iterator to value_type	convertible to const_iterator
-			// using const_iterator			= /* implementation-defined */; //a random access iterator to const value_type	
-			// using reverse_iterator			= std::reverse_iterator<iterator>; //reverse_iterator<iterator>	
-			// using const_reverse_iterator	= std::reverse_iterator<const_iterator>; //reverse_iterator<const_iterator>	
-			// using difference_type			= /* implementation-defined */; //a signed integral type, identical to: iterator_traits<iterator>::difference_type	usually the same as ptrdiff_t
-			// using size_type					= /* implementation-defined */; //an unsigned integral type that can represent any non-negative value of difference_type	usually the same as size_t
-
 			typedef T											value_type; //The first template parameter (T)	
 			typedef Alloc										allocator_type; //The second template parameter (Alloc)	defaults to: allocator<value_type>
 			typedef typename allocator_type::reference			reference; //allocator_type::reference	for the default allocator: value_type&
@@ -49,12 +36,14 @@ namespace ft
 			typedef std::ptrdiff_t								difference_type; //a signed integral type, identical to: iterator_traits<iterator>::difference_type	usually the same as ptrdiff_t
 			typedef std::size_t									size_type; //					= /* implementation-defined */; //an unsigned integral type that can represent any non-negative value of difference_type	usually the same as size_t
 			//why not typedef typename allocator_type::size_type size_type (wayback)? -> cplusplus.com
+	//PRIVATE MEMBER VARIABLES
 		private:
 			size_type _size;
 			size_type _capacity;
 			allocator_type _alloc;
 			pointer _array;
 
+	//PRIVATE MEMBER FUNCTIONS
 			pointer my_alloc(size_type newCapacity)
 			{
 				return (_alloc.allocate(newCapacity));
@@ -101,7 +90,7 @@ namespace ft
 			}
 
 		public:
-	//MEMBER FUNCTIONS
+	//PUBLIC MEMBER FUNCTIONS
 
 			void print(void) // AE remove
 			{
@@ -269,14 +258,14 @@ namespace ft
 
 	//Element access---------------------------------------------------------------
 		////operator[]///////////////////////////////////////////////////////
-			reference operator[] (size_type n)
+			reference operator[](size_type n)
 			{
 				// if n >= size
 				// errorhandling
 				return (_array[n]); // AE remove make function for that
 			}
 
-			const_reference operator[] (size_type n) const
+			const_reference operator[](size_type n) const
 			{
 				// if n >= size
 				// errorhandling
