@@ -1,5 +1,5 @@
-#include "ft_vector.hpp"
-#include "ft_tree.hpp"
+#include "vector.hpp"
+#include "tree.hpp"
 #include "utils.hpp"
 #include <iostream>
 #include <string>
@@ -98,7 +98,7 @@ int main(void)
 	#endif
 	//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> vector
 	// constructor
-	ft::Vector<int> v;
+	ft::vector<int> v;
 	v.push_back(5);
 	v.push_back(5);
 	v.push_back(8);
@@ -106,14 +106,14 @@ int main(void)
 	v.print();
 	std::cout << std::endl;
 
-	ft::Vector<std::string> v2;
+	ft::vector<std::string> v2;
 	v2.push_back("A");
 	v2.push_back("B");
 	v2.push_back("C");
 	v2.print();
 	std::cout << std::endl;
 
-	ft::Vector<Vector3> v3;
+	ft::vector<Vector3> v3;
 	Vector3* vec = new Vector3(2.0f);
 	vec->setBlock(6, 6, 6);
 	Vector3 vex;
@@ -130,11 +130,11 @@ int main(void)
 	v3.print();
 	std::cout << std::endl;
 
-	for (ft::Vector<int>::iterator it = v.begin(); it != v.end(); ++it)
+	for (ft::vector<int>::iterator it = v.begin(); it != v.end(); ++it)
 		std::cout << *it << std::endl;
 	std::cout << std::endl;
 
-	for (ft::Vector<int>::reverse_iterator it = v.rbegin(); it != v.rend(); ++it)
+	for (ft::vector<int>::reverse_iterator it = v.rbegin(); it != v.rend(); ++it)
 		std::cout << *it << std::endl;
 	std::cout << std::endl;
 	//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> tree

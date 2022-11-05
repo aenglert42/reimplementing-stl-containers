@@ -13,12 +13,12 @@
 //https://en.cppreference.com/w/cpp/preprocessor/replace checkout to abilitate use of ','
 #define EXPECTED_OUTPUT(TEXT) container.fill_container(__func__, __LINE__, container.stream.str(), #TEXT)
 
-#include "../inc/ft_algorithm.hpp"
-#include "../inc/ft_iterator.hpp"
-#include "../inc/ft_type_traits.hpp"
+#include "../inc/algorithm.hpp"
+#include "../inc/iterator.hpp"
+#include "../inc/type_traits.hpp"
 #include "../inc/utils.hpp"
-#include "../inc/ft_vector.hpp"
-#include "../inc/ft_functional.hpp"
+#include "../inc/vector.hpp"
+#include "../inc/functional.hpp"
 
 // TEMPLATE FOR TEST FUNCTIONS (remove <> and edit text within)
 // void <test_function_name>(TestContainer& container)
@@ -150,10 +150,10 @@ void make_pair(TestContainer& container)
 
 void reverse_iterator(TestContainer& container)
 {
-	ft::Vector<int> myvector;
+	ft::vector<int> myvector;
 	for (int i=0; i<10; i++) myvector.push_back(i);
 
-	typedef ft::Vector<int>::iterator iter_type;
+	typedef ft::vector<int>::iterator iter_type;
 															// ? 0 1 2 3 4 5 6 7 8 9 ?
 	iter_type from (myvector.begin());                     //   ^
 															//         ------>
@@ -174,10 +174,10 @@ void reverse_iterator(TestContainer& container)
 
 void reverse_iterator_base(TestContainer& container)
 {
-	ft::Vector<int> myvector;
+	ft::vector<int> myvector;
 	for (int i=0; i<10; i++) myvector.push_back(i);
 
-	typedef ft::Vector<int>::iterator iter_type;
+	typedef ft::vector<int>::iterator iter_type;
 
 	ft::reverse_iterator<iter_type> rev_end (myvector.begin());
 	ft::reverse_iterator<iter_type> rev_begin (myvector.end());
@@ -203,10 +203,10 @@ void reverse_iterator_traits(TestContainer& container)
 
 void reverse_iterator_operator_access_element(TestContainer& container)
 {
-	ft::Vector<int> myvector;
+	ft::vector<int> myvector;
 	for (int i=0; i<10; i++) myvector.push_back(i);  // myvector: 0 1 2 3 4 5 6 7 8 9
 
-	typedef ft::Vector<int>::iterator iter_type;
+	typedef ft::vector<int>::iterator iter_type;
 
 	ft::reverse_iterator<iter_type> rev_iterator = myvector.rbegin();
 
@@ -218,10 +218,10 @@ void reverse_iterator_operator_access_element(TestContainer& container)
 
 void reverse_iterator_operator_minus(TestContainer& container)
 {
-	ft::Vector<int> myvector;
+	ft::vector<int> myvector;
 	for (int i=0; i<10; i++) myvector.push_back(i);	// myvector: 0 1 2 3 4 5 6 7 8 9
 
-	typedef ft::Vector<int>::iterator iter_type;
+	typedef ft::vector<int>::iterator iter_type;
 
 	ft::reverse_iterator<iter_type> rev_iterator;
 
@@ -235,10 +235,10 @@ void reverse_iterator_operator_minus(TestContainer& container)
 
 void reverse_iterator_operator_minus_minus_1(TestContainer& container)
 {
-	ft::Vector<int> myvector;
+	ft::vector<int> myvector;
 	for (int i=0; i<10; i++) myvector.push_back(i);	// myvector: 0 1 2 3 4 5 6 7 8 9
 
-	typedef ft::Vector<int>::iterator iter_type;
+	typedef ft::vector<int>::iterator iter_type;
 
 	ft::reverse_iterator<iter_type> rev_iterator = myvector.rend();
 
@@ -252,10 +252,10 @@ void reverse_iterator_operator_minus_minus_1(TestContainer& container)
 
 void reverse_iterator_operator_minus_minus_2(TestContainer& container)
 {
-	ft::Vector<int> myvector;
+	ft::vector<int> myvector;
 	for (int i=0; i<10; i++) myvector.push_back(i);
 
-	typedef ft::Vector<int>::iterator iter_type;
+	typedef ft::vector<int>::iterator iter_type;
 
 	std::reverse_iterator<iter_type> rev_begin (myvector.end());
 	std::reverse_iterator<iter_type> rev_end (myvector.begin());
@@ -275,10 +275,10 @@ void reverse_iterator_operator_minus_minus_2(TestContainer& container)
 
 void reverse_iterator_operator_plus(TestContainer& container)
 {
-	ft::Vector<int> myvector;
+	ft::vector<int> myvector;
 	for (int i=0; i<10; i++) myvector.push_back(i);	// myvector: 0 1 2 3 4 5 6 7 8 9
 
-	typedef ft::Vector<int>::iterator iter_type;
+	typedef ft::vector<int>::iterator iter_type;
 
 	ft::reverse_iterator<iter_type> rev_it;
 
@@ -292,10 +292,10 @@ void reverse_iterator_operator_plus(TestContainer& container)
 
 void reverse_iterator_operator_plus_equal(TestContainer& container)
 {
-	ft::Vector<int> myvector;
+	ft::vector<int> myvector;
 	for (int i=0; i<10; i++) myvector.push_back(i);	// myvector: 0 1 2 3 4 5 6 7 8 9
 
-	typedef ft::Vector<int>::iterator iter_type;
+	typedef ft::vector<int>::iterator iter_type;
 
 	ft::reverse_iterator<iter_type> rev_iterator = myvector.rbegin();
 
@@ -461,17 +461,17 @@ void sfinae(TestContainer& container)
 void vector_costructors(TestContainer& container)
 {
 	// constructors used in the same order as described above:
-	ft::Vector<int> first;                                // empty vector of ints
-	ft::Vector<int> second (4,100);                       // four ints with value 100
-	ft::Vector<int> third (second.begin(),second.end());  // iterating through second
-	ft::Vector<int> fourth (third);                       // a copy of third
+	ft::vector<int> first;                                // empty vector of ints
+	ft::vector<int> second (4,100);                       // four ints with value 100
+	ft::vector<int> third (second.begin(),second.end());  // iterating through second
+	ft::vector<int> fourth (third);                       // a copy of third
 
 	// the iterator constructor can also be used to construct from arrays:
 	int myints[] = {16,2,77,29};
-	ft::Vector<int> fifth (myints, myints + sizeof(myints) / sizeof(int) );
+	ft::vector<int> fifth (myints, myints + sizeof(myints) / sizeof(int) );
 
 	std::cout << "The contents of fifth are:";
-	for (ft::Vector<int>::iterator it = fifth.begin(); it != fifth.end(); ++it)
+	for (ft::vector<int>::iterator it = fifth.begin(); it != fifth.end(); ++it)
 		std::cout << ' ' << *it;
 	std::cout << '\n';
 
@@ -481,11 +481,11 @@ void vector_costructors(TestContainer& container)
 
 void vector_operator_equal(TestContainer& container)
 {
-	ft::Vector<int> foo (3,0);
-	ft::Vector<int> bar (5,0);
+	ft::vector<int> foo (3,0);
+	ft::vector<int> bar (5,0);
 
 	bar = foo;
-	foo = ft::Vector<int>();
+	foo = ft::vector<int>();
 
 	std::cout << "Size of foo: " << int(foo.size()) << '\n';
 	std::cout << "Size of bar: " << int(bar.size()) << '\n';
@@ -496,31 +496,31 @@ void vector_operator_equal(TestContainer& container)
 
 void my_vector_iterator(TestContainer& container)
 {
-	ft::Vector<int> v;
+	ft::vector<int> v;
 	v.push_back(5);
 	v.push_back(5);
 	v.push_back(8);
 	v.push_back(4);
 
-	for (ft::Vector<int>::iterator it = v.begin(); it != v.end(); ++it)
+	for (ft::vector<int>::iterator it = v.begin(); it != v.end(); ++it)
 		std::cout << *it << std::endl;
 	std::cout << std::endl;
 
-	for (ft::Vector<int>::reverse_iterator it = v.rbegin(); it != v.rend(); ++it)
+	for (ft::vector<int>::reverse_iterator it = v.rbegin(); it != v.rend(); ++it)
 		std::cout << *it << std::endl;
 	std::cout << std::endl;
 
-	// ft::Vector<const int> vec; // AE https://stackoverflow.com/questions/47794223/getting-const-iterator-from-begin-instead-of-cbegin
+	// ft::vector<const int> vec; // AE https://stackoverflow.com/questions/47794223/getting-const-iterator-from-begin-instead-of-cbegin
 	// vec.push_back(5);
 	// vec.push_back(5);
 	// vec.push_back(8);
 	// vec.push_back(4);
 
-	// for (ft::Vector<const int>::const_iterator it = vec.begin(); it != vec.end(); ++it)
+	// for (ft::vector<const int>::const_iterator it = vec.begin(); it != vec.end(); ++it)
 	// 	std::cout << *it << std::endl;
 	// std::cout << std::endl;
 
-	// for (ft::Vector<const int>::const_reverse_iterator it = vec.rbegin(); it != vec.rend(); ++it)
+	// for (ft::vector<const int>::const_reverse_iterator it = vec.rbegin(); it != vec.rend(); ++it)
 	// 	std::cout << *it << std::endl;
 	// std::cout << std::endl;
 
@@ -530,7 +530,7 @@ void my_vector_iterator(TestContainer& container)
 
 void vector_resize(TestContainer& container)
 {
-	ft::Vector<int> myvector;
+	ft::vector<int> myvector;
 
 	// set some initial content:
 	for (int i=1;i<10;i++) myvector.push_back(i);
@@ -550,9 +550,9 @@ void vector_resize(TestContainer& container)
 
 void vector_reserve(TestContainer& container)
 {
-	ft::Vector<int>::size_type sz;
+	ft::vector<int>::size_type sz;
 
-	ft::Vector<int> foo;
+	ft::vector<int> foo;
 	sz = foo.capacity();
 	std::cout << "making foo grow:\n";
 	for (int i=0; i<100; ++i) {
@@ -563,7 +563,7 @@ void vector_reserve(TestContainer& container)
 		}
 	}
 
-	ft::Vector<int> bar;
+	ft::vector<int> bar;
 	sz = bar.capacity();
 	bar.reserve(100);   // this is the only difference with foo above
 	std::cout << "making bar grow:\n";
@@ -581,11 +581,11 @@ void vector_reserve(TestContainer& container)
 
 void vector_begin(TestContainer& container)
 {
-	ft::Vector<int> myvector;
+	ft::vector<int> myvector;
 	for (int i=1; i<=5; i++) myvector.push_back(i);
 
 	std::cout << "myvector contains:";
-	for (ft::Vector<int>::iterator it = myvector.begin() ; it != myvector.end(); ++it)
+	for (ft::vector<int>::iterator it = myvector.begin() ; it != myvector.end(); ++it)
 		std::cout << ' ' << *it;
 	std::cout << '\n';
 
@@ -595,11 +595,11 @@ void vector_begin(TestContainer& container)
 
 void vector_end(TestContainer& container)
 {
-	ft::Vector<int> myvector;
+	ft::vector<int> myvector;
 	for (int i=1; i<=5; i++) myvector.push_back(i);
 
 	std::cout << "myvector contains:";
-	for (ft::Vector<int>::iterator it = myvector.begin() ; it != myvector.end(); ++it)
+	for (ft::vector<int>::iterator it = myvector.begin() ; it != myvector.end(); ++it)
 		std::cout << ' ' << *it;
 	std::cout << '\n';
 
@@ -609,16 +609,16 @@ void vector_end(TestContainer& container)
 
 void vector_rbegin(TestContainer& container)
 {
-	ft::Vector<int> myvector (5);  // 5 default-constructed ints
+	ft::vector<int> myvector (5);  // 5 default-constructed ints
 
 	int i=0;
 
-	ft::Vector<int>::reverse_iterator rit = myvector.rbegin();
+	ft::vector<int>::reverse_iterator rit = myvector.rbegin();
 	for (; rit!= myvector.rend(); ++rit)
 		*rit = ++i;
 
 	std::cout << "myvector contains:";
-	for (ft::Vector<int>::iterator it = myvector.begin(); it != myvector.end(); ++it)
+	for (ft::vector<int>::iterator it = myvector.begin(); it != myvector.end(); ++it)
 		std::cout << ' ' << *it;
 	std::cout << '\n';
 
@@ -628,16 +628,16 @@ void vector_rbegin(TestContainer& container)
 
 void vector_rend(TestContainer& container)
 {
-	ft::Vector<int> myvector (5);  // 5 default-constructed ints
+	ft::vector<int> myvector (5);  // 5 default-constructed ints
 
-	ft::Vector<int>::reverse_iterator rit = myvector.rbegin();
+	ft::vector<int>::reverse_iterator rit = myvector.rbegin();
 
 	int i=0;
 	for (rit = myvector.rbegin(); rit!= myvector.rend(); ++rit)
 		*rit = ++i;
 
 	std::cout << "myvector contains:";
-	for (ft::Vector<int>::iterator it = myvector.begin(); it != myvector.end(); ++it)
+	for (ft::vector<int>::iterator it = myvector.begin(); it != myvector.end(); ++it)
 		std::cout << ' ' << *it;
 	std::cout << '\n';
 
@@ -647,7 +647,7 @@ void vector_rend(TestContainer& container)
 
 void vector_size(TestContainer& container)
 {
-	ft::Vector<int> myints;
+	ft::vector<int> myints;
 	std::cout << "0. size: " << myints.size() << '\n';
 
 	for (int i=0; i<10; i++) myints.push_back(i);
@@ -665,8 +665,8 @@ void vector_size(TestContainer& container)
 
 void vector_insert(TestContainer& container)
 {
-	ft::Vector<int> myvector (3,100);
-	ft::Vector<int>::iterator it;
+	ft::vector<int> myvector (3,100);
+	ft::vector<int>::iterator it;
 
 // myvector.print();
 
@@ -680,7 +680,7 @@ void vector_insert(TestContainer& container)
 	// "it" no longer valid, get a new one:
 	it = myvector.begin();
 
-	ft::Vector<int> anothervector (2,400);
+	ft::vector<int> anothervector (2,400);
 // anothervector.print();
 	myvector.insert (it+2,anothervector.begin(),anothervector.end());
 // myvector.print();
@@ -700,8 +700,8 @@ void vector_insert(TestContainer& container)
 
 void vector_rational_operators(TestContainer& container)
 {
-	ft::Vector<int> foo (3,100);   // three ints with a value of 100
-	ft::Vector<int> bar (2,200);   // two ints with a value of 200
+	ft::vector<int> foo (3,100);   // three ints with a value of 100
+	ft::vector<int> bar (2,200);   // two ints with a value of 200
 
 	if (foo==bar) std::cout << "foo and bar are equal\n";
 	if (foo!=bar) std::cout << "foo and bar are not equal\n";
@@ -716,7 +716,7 @@ void vector_rational_operators(TestContainer& container)
 
 void vector_capacity(TestContainer& container)
 {
-	ft::Vector<int> myvector;
+	ft::vector<int> myvector;
 
 	// set some content in the vector:
 	for (int i=0; i<100; i++) myvector.push_back(i);
@@ -732,7 +732,7 @@ void vector_capacity(TestContainer& container)
 
 void vector_empty(TestContainer& container)
 {
-	ft::Vector<int> myvector;
+	ft::vector<int> myvector;
 	int sum (0);
 
 	for (int i=1;i<=10;i++) myvector.push_back(i);
@@ -751,9 +751,9 @@ void vector_empty(TestContainer& container)
 
 void vector_operator_access_element(TestContainer& container)
 {
-	ft::Vector<int> myvector (10);   // 10 zero-initialized elements
+	ft::vector<int> myvector (10);   // 10 zero-initialized elements
 
-	ft::Vector<int>::size_type sz = myvector.size();
+	ft::vector<int>::size_type sz = myvector.size();
 
 	// assign some values:
 	for (unsigned i=0; i<sz; i++) myvector[i]=i;
@@ -778,7 +778,7 @@ void vector_operator_access_element(TestContainer& container)
 
 void vector_at(TestContainer& container)
 {
-	ft::Vector<int> myvector (10);   // 10 zero-initialized ints
+	ft::vector<int> myvector (10);   // 10 zero-initialized ints
 
 	// assign some values:
 	for (unsigned i=0; i<myvector.size(); i++)
@@ -795,7 +795,7 @@ void vector_at(TestContainer& container)
 
 void vector_front(TestContainer& container)
 {
-	ft::Vector<int> myvector;
+	ft::vector<int> myvector;
 
 	myvector.push_back(78);
 	myvector.push_back(16);
@@ -812,7 +812,7 @@ void vector_front(TestContainer& container)
 
 void vector_back(TestContainer& container)
 {
-	ft::Vector<int> myvector;
+	ft::vector<int> myvector;
 
 	myvector.push_back(10);
 
@@ -832,7 +832,7 @@ void vector_back(TestContainer& container)
 
 void vector_data(TestContainer& container)
 {
-	ft::Vector<int> myvector (5);
+	ft::vector<int> myvector (5);
 
 	int* p = myvector.data();
 
@@ -852,13 +852,13 @@ void vector_data(TestContainer& container)
 
 void vector_assign(TestContainer& container)
 {
-	ft::Vector<int> first;
-	ft::Vector<int> second;
-	ft::Vector<int> third;
+	ft::vector<int> first;
+	ft::vector<int> second;
+	ft::vector<int> third;
 
 	first.assign (7,100);             // 7 ints with a value of 100
 
-	ft::Vector<int>::iterator it;
+	ft::vector<int>::iterator it;
 	it=first.begin()+1;
 
 	second.assign (it,first.end()-1); // the 5 central values of first
@@ -876,7 +876,7 @@ void vector_assign(TestContainer& container)
 
 void vector_push_back(TestContainer& container)
 {
-	ft::Vector<int> myvector;
+	ft::vector<int> myvector;
 
 	myvector.push_back (5);
 	myvector.push_back (5);
@@ -892,7 +892,7 @@ void vector_push_back(TestContainer& container)
 
 void vector_pop_back(TestContainer& container)
 {
-	ft::Vector<int> myvector;
+	ft::vector<int> myvector;
 	int sum (0);
 	myvector.push_back (100);
 	myvector.push_back (200);
@@ -912,7 +912,7 @@ void vector_pop_back(TestContainer& container)
 
 void vector_erase(TestContainer& container)
 {
-	ft::Vector<int> myvector;
+	ft::vector<int> myvector;
 
 	// set some values (from 1 to 10)
 	for (int i=1; i<=10; i++) myvector.push_back(i);
@@ -934,8 +934,8 @@ void vector_erase(TestContainer& container)
 
 void vector_swap(TestContainer& container)
 {
-	ft::Vector<int> foo (3,100);   // three ints with a value of 100
-	ft::Vector<int> bar (5,200);   // five ints with a value of 200
+	ft::vector<int> foo (3,100);   // three ints with a value of 100
+	ft::vector<int> bar (5,200);   // five ints with a value of 200
 
 	foo.swap(bar);
 
@@ -955,18 +955,18 @@ void vector_swap(TestContainer& container)
 
 void vector_no_member_swap(TestContainer& container)
 {
-	ft::Vector<int> foo (3,100);   // three ints with a value of 100
-	ft::Vector<int> bar (5,200);   // five ints with a value of 200
+	ft::vector<int> foo (3,100);   // three ints with a value of 100
+	ft::vector<int> bar (5,200);   // five ints with a value of 200
 
 	foo.swap(bar);
 
 	std::cout << "foo contains:";
-	for (ft::Vector<int>::iterator it = foo.begin(); it!=foo.end(); ++it)
+	for (ft::vector<int>::iterator it = foo.begin(); it!=foo.end(); ++it)
 		std::cout << ' ' << *it;
 	std::cout << '\n';
 
 	std::cout << "bar contains:";
-	for (ft::Vector<int>::iterator it = bar.begin(); it!=bar.end(); ++it)
+	for (ft::vector<int>::iterator it = bar.begin(); it!=bar.end(); ++it)
 		std::cout << ' ' << *it;
 	std::cout << '\n';
 
@@ -976,7 +976,7 @@ void vector_no_member_swap(TestContainer& container)
 
 void vector_clear(TestContainer& container)
 {
-	ft::Vector<int> myvector;
+	ft::vector<int> myvector;
 	myvector.push_back (100);
 	myvector.push_back (200);
 	myvector.push_back (300);
@@ -1001,7 +1001,7 @@ void vector_clear(TestContainer& container)
 
 void vector_get_allocator(TestContainer& container)
 {
-	ft::Vector<int> myvector;
+	ft::vector<int> myvector;
 	int * p;
 	unsigned int i;
 

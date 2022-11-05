@@ -3,11 +3,11 @@
 #include <iostream>
 #include <memory> // std::allocator
 #include "ft_nullptr.hpp" // ft_nullptr
-// #include "ft_vector_iterator.hpp"
-#include "ft_functional.hpp" // less
-#include "ft_utils.hpp" // pair
-#include "ft_algorithm.hpp"
-#include "ft_type_traits.hpp"
+// #include "vector_iterator.hpp"
+#include "functional.hpp" // less
+#include "utils.hpp" // pair
+#include "algorithm.hpp"
+#include "type_traits.hpp"
 
 // Colors and Printing
 #define RESET "\033[0m"

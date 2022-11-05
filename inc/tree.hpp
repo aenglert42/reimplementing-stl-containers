@@ -3,8 +3,8 @@
 #include <iostream>
 #include <memory> // std::allocator
 #include "ft_nullptr.hpp" // ft_nullptr
-// #include "ft_algorithm.hpp"
-// #include "ft_type_traits.hpp"
+// #include "algorithm.hpp"
+// #include "type_traits.hpp"
 
 // Colors and Printing
 #define RESET "\033[0m"
