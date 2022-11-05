@@ -37,6 +37,12 @@ namespace ft
 
 				}
 
+			////non-const to const///////////////////////////////////////////////////////
+				operator VectorIterator<const T>() const
+				{
+					return (VectorIterator<const T>(base()));
+				}
+
 			////destructor///////////////////////////////////////////////////////
 				~VectorIterator(void)
 				{
@@ -139,49 +145,49 @@ namespace ft
 	//NON-MEMBER FUNCTION OVERLOADS
 			////relational operators///////////////////////////////////////////////////////
 				// (1)
-					template <class Iterator>
-					bool operator==(const VectorIterator<Iterator>& lhs,
-									const VectorIterator<Iterator>& rhs)
+					template <class Iterator1, class Iterator2>
+					bool operator==(const VectorIterator<Iterator1>& lhs,
+									const VectorIterator<Iterator2>& rhs)
 					{
 						return (lhs.base() == rhs.base());
 					}
 
 				// (2)
-					template <class Iterator>
-					bool operator!=(const VectorIterator<Iterator>& lhs,
-									const VectorIterator<Iterator>& rhs)
+					template <class Iterator1, class Iterator2>
+					bool operator!=(const VectorIterator<Iterator1>& lhs,
+									const VectorIterator<Iterator2>& rhs)
 					{
 						return (lhs.base() != rhs.base());
 					}
 					
 				// (3)
-					template <class Iterator>
-					bool operator<(const VectorIterator<Iterator>& lhs,
-									const VectorIterator<Iterator>& rhs)
+					template <class Iterator1, class Iterator2>
+					bool operator<(const VectorIterator<Iterator1>& lhs,
+									const VectorIterator<Iterator2>& rhs)
 					{
 						return (lhs.base() < rhs.base());
 					}
 
 				// (4)
-					template <class Iterator>
-					bool operator<=(const VectorIterator<Iterator>& lhs,
-									const VectorIterator<Iterator>& rhs)
+					template <class Iterator1, class Iterator2>
+					bool operator<=(const VectorIterator<Iterator1>& lhs,
+									const VectorIterator<Iterator2>& rhs)
 					{
 						return (lhs.base() <= rhs.base());
 					}
 
 				// (5)
-					template <class Iterator>
-					bool operator>(const VectorIterator<Iterator>& lhs,
-									const VectorIterator<Iterator>& rhs)
+					template <class Iterator1, class Iterator2>
+					bool operator>(const VectorIterator<Iterator1>& lhs,
+									const VectorIterator<Iterator2>& rhs)
 					{
 						return (lhs.base() > rhs.base());
 					}
 
 				// (6)
-					template <class Iterator>
-					bool operator>=(const VectorIterator<Iterator>& lhs,
-									const VectorIterator<Iterator>& rhs)
+					template <class Iterator1, class Iterator2>
+					bool operator>=(const VectorIterator<Iterator1>& lhs,
+									const VectorIterator<Iterator2>& rhs)
 					{
 						return (lhs.base() >= rhs.base());
 					}
@@ -189,8 +195,8 @@ namespace ft
 			////operator+///////////////////////////////////////////////////////
 				template <class Iterator>
 				VectorIterator<Iterator> operator+(
-							typename VectorIterator<Iterator>::difference_type n,
-							const VectorIterator<Iterator>& rev_it)
+					typename VectorIterator<Iterator>::difference_type n,
+					const VectorIterator<Iterator>& rev_it)
 				{
 					return (VectorIterator<Iterator>(rev_it.base() + n));
 				}
