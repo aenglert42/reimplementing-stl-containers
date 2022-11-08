@@ -138,7 +138,7 @@ int main(void)
 		std::cout << *it << std::endl;
 	std::cout << std::endl;
 	//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> tree
-
+	// int
 	ft::Tree<int> tree(5);
 	tree.insert(3);
 	tree.insert(7);
@@ -154,4 +154,11 @@ int main(void)
 	// 	tree.insert(i);
 
 	tree.print2D();
+	// pair
+	ft::Tree<ft::pair<int, std::string> > pair_tree(ft::make_pair<int, std::string>(5, "five"));
+	pair_tree.insert(ft::make_pair<int, std::string>(3, "three"));
+	pair_tree.insert(ft::make_pair<int, std::string>(7, "seven"));
+	pair_tree.insert(ft::make_pair<int, std::string>(2, "two"));
+	pair_tree.print2D();
+
 }
