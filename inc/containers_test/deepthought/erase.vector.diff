@@ -1,0 +1,28 @@
+17c17
+< [0] erase: 2
+---
+> [0] erase: 4
+33c33
+< [1] erase: 0
+---
+> [1] erase: 2
+48c48
+< [2] erase: 7
+---
+> [2] erase: 9
+62c62
+< [3] erase: 0
+---
+> [3] erase: 4
+73c73
+< [4] erase: 1
+---
+> [4] erase: 4
+92c92
+< [5] erase: 1
+---
+> [5] erase: 5
+111c111
+< [6] erase: 0
+---
+> [6] erase: 6
