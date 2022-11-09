@@ -80,9 +80,9 @@ void algorithm_lexicographical_compare(TestContainer& container)
 }
 
 template <class T>
-typename ft::enable_if<std::is_integral<T>::value,bool>::type is_odd (T i) {return bool(i%2);}
+typename ft::enable_if<ft::is_integral<T>::value,bool>::type is_odd (T i) {return bool(i%2);}
 
-template < class T, class = typename ft::enable_if<std::is_integral<T>::value>::type>
+template < class T, class = typename ft::enable_if<ft::is_integral<T>::value>::type>
 bool is_even (T i) {return !bool(i%2);}
 
 void enable_if(TestContainer& container)
@@ -124,9 +124,9 @@ void less(TestContainer& container)
 {
 	int foo[]={10,20,5,15,25};
 	int bar[]={15,10,20};
-	std::sort (foo, foo+5, std::less<int>());  // 5 10 15 20 25
-	std::sort (bar, bar+3, std::less<int>());  //   10 15 20
-	if (std::includes (foo, foo+5, bar, bar+3, std::less<int>()))
+	std::sort (foo, foo+5, ft::less<int>());  // 5 10 15 20 25
+	std::sort (bar, bar+3, ft::less<int>());  //   10 15 20
+	if (std::includes (foo, foo+5, bar, bar+3, ft::less<int>()))
 		std::cout << "foo includes bar.\n";
 
 //////////////////////////////////
@@ -257,10 +257,10 @@ void reverse_iterator_operator_minus_minus_2(TestContainer& container)
 
 	typedef ft::vector<int>::iterator iter_type;
 
-	std::reverse_iterator<iter_type> rev_begin (myvector.end());
-	std::reverse_iterator<iter_type> rev_end (myvector.begin());
+	ft::reverse_iterator<iter_type> rev_begin (myvector.end());
+	ft::reverse_iterator<iter_type> rev_end (myvector.begin());
 
-	std::reverse_iterator<iter_type> rev_iterator = rev_begin;
+	ft::reverse_iterator<iter_type> rev_iterator = rev_begin;
 	while ( rev_iterator != rev_end )
 		std::cout << *rev_iterator++ << ' ';
 	std::cout << '\n';
@@ -316,9 +316,9 @@ void reverse_iterator_operator_pointer(TestContainer& container)
 
 	typedef std::map<int,std::string>::iterator map_iter;
 
-	std::reverse_iterator<map_iter> rev_end (numbers.begin());
+	ft::reverse_iterator<map_iter> rev_end (numbers.begin());
 
-	std::reverse_iterator<map_iter> rev_iterator (numbers.end());
+	ft::reverse_iterator<map_iter> rev_iterator (numbers.end());
 
 	for ( ; rev_iterator != rev_end ; ++rev_iterator )
 		std::cout << rev_iterator->first << ' ' << rev_iterator->second << '\n';
@@ -510,22 +510,22 @@ void my_vector_iterator(TestContainer& container)
 		std::cout << *it << std::endl;
 	std::cout << std::endl;
 
-	// ft::vector<const int> vec; // AE https://stackoverflow.com/questions/47794223/getting-const-iterator-from-begin-instead-of-cbegin
-	// vec.push_back(5);
-	// vec.push_back(5);
-	// vec.push_back(8);
-	// vec.push_back(4);
+	ft::vector<const int> vec; // AE https://stackoverflow.com/questions/47794223/getting-const-iterator-from-begin-instead-of-cbegin
+	vec.push_back(5);
+	vec.push_back(5);
+	vec.push_back(8);
+	vec.push_back(4);
 
-	// for (ft::vector<const int>::const_iterator it = vec.begin(); it != vec.end(); ++it)
-	// 	std::cout << *it << std::endl;
-	// std::cout << std::endl;
+	for (ft::vector<const int>::const_iterator it = vec.begin(); it != vec.end(); ++it)
+		std::cout << *it << std::endl;
+	std::cout << std::endl;
 
-	// for (ft::vector<const int>::const_reverse_iterator it = vec.rbegin(); it != vec.rend(); ++it)
-	// 	std::cout << *it << std::endl;
-	// std::cout << std::endl;
+	for (ft::vector<const int>::const_reverse_iterator it = vec.rbegin(); it != vec.rend(); ++it)
+		std::cout << *it << std::endl;
+	std::cout << std::endl;
 
 //////////////////////////////////
-	EXPECTED_OUTPUT(5\n5\n8\n4\n\n4\n8\n5\n5\n\n);
+	EXPECTED_OUTPUT(5\n5\n8\n4\n\n4\n8\n5\n5\n\n5\n5\n8\n4\n\n4\n8\n5\n5\n\n);
 }
 
 void vector_resize(TestContainer& container)
