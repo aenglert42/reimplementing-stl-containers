@@ -25,6 +25,8 @@ reverse_iterator_operator_plus, \
 reverse_iterator_operator_plus_equal, \
 reverse_iterator_operator_pointer, \
 sfinae, \
+vector_my_assign, \
+vector_my_erase, \
 vector_operator_equal, \
 vector_costructors, \
 vector_resize, \

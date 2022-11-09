@@ -113,7 +113,7 @@ namespace ft
 				_alloc = alloc;
 				_array = _alloc.allocate(n);
 				for (size_type i = 0; i < n; i++)
-					_array[i] = val;
+					_alloc.construct(_array + i, val); // base?
 			}
 
 			// range (3)	
@@ -127,7 +127,7 @@ namespace ft
 				_alloc = alloc;
 				_array = _alloc.allocate(_size);
 				for (difference_type i = 0; i < dist; ++i)
-					_alloc.construct(_array + i, *first++);
+					_alloc.construct(_array + i, *first++); // base?
 			}
 
 			// copy (4)	
@@ -327,7 +327,7 @@ namespace ft
 			void assign (InputIterator first, InputIterator last,
 				typename ft::enable_if< !ft::is_integral<InputIterator>::value, InputIterator >::type = InputIterator())
 			{
-				my_destroy();
+				clear();
 				size_type n = last - first;
 				if (n > _capacity)
 					my_realloc(n);
@@ -338,7 +338,7 @@ namespace ft
 			// fill (2)	
 			void assign (size_type n, const value_type& val)
 			{
-				my_destroy();
+				clear();
 				if (n > _capacity)
 					my_realloc(_size + n);
 				for (size_type i = 0; i < n; ++i)

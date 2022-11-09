@@ -23,11 +23,11 @@ namespace ft
 	struct Node
 	{
 		T _content;
-		// Node* _parent;
+		Node* _parent;
 		Node* _left_child;
 		Node* _right_child;
 
-		Node (T val) : _content(val), _left_child(ft_nullptr), _right_child(ft_nullptr)
+		Node (T val) : _content(val), _parent(ft_nullptr), _left_child(ft_nullptr), _right_child(ft_nullptr)
 		{
 
 		}
