@@ -6,6 +6,7 @@ HEADER_DIR := ./
 SRCS :=	main.cpp \
 		TesterClass.cpp
 CC := c++
+PLATFORM := $(shell uname -s)
 ifeq ($(PLATFORM), Linux)
 CFLAGS := -g -std=c++11 -Wall -Wextra -Werror -Wno-deprecated-copy
 else

@@ -27,7 +27,7 @@ namespace ft
 		Node* _left_child;
 		Node* _right_child;
 
-		Node (T val) : _content(val), _parent(ft_nullptr), _left_child(ft_nullptr), _right_child(ft_nullptr)
+		Node (T val, Node<T>* parent) : _content(val), _parent(parent), _left_child(ft_nullptr), _right_child(ft_nullptr)
 		{
 
 		}
@@ -38,14 +38,20 @@ namespace ft
 	{
 		Node<T>* _root;
 
-		Node<T>* insert(T val, Node<T>* node)
+		Node<T>* insert(T val, Node<T>* node, Node<T>* parent)
 		{
 			if (node == ft_nullptr)
-				node = new Node<T>(val);
+				node = new Node<T>(val, parent);
 			else if (val < node->_content)
-				node->_left_child = insert(val, node->_left_child);
-			else
-				node->_right_child = insert(val, node->_right_child);
+			{
+				node->_left_child = insert(val, node->_left_child, node);
+				node->_parent = parent;
+			}
+			else if (val > node->_content)
+			{
+				node->_right_child = insert(val, node->_right_child, node);
+				node->_parent = parent;
+			}
 			return (node);
 		}
 
@@ -77,7 +83,10 @@ namespace ft
 			std::cout << std::endl;
 			for (int i = COUNT; i < space; i++)
 				std::cout << " ";
-			std::cout << root->_content;
+			std::cout << root->_content << "(";
+			if (root->_parent != ft_nullptr)
+				std::cout << root->_parent->_content;
+			std::cout << ")";
 		
 			// Process left child
 			print2DUtil(root->_left_child, space);
@@ -91,12 +100,12 @@ namespace ft
 
 			Tree(T val) : _root(ft_nullptr)
 			{
-				_root = insert(val, _root);
+				_root = insert(val, _root, _root);
 			}
 
 			void insert(T val)
 			{
-				_root = insert(val, _root);
+				_root = insert(val, _root, ft_nullptr);
 			}
 
 			void print(void)

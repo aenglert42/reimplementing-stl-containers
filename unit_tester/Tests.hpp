@@ -510,22 +510,22 @@ void my_vector_iterator(TestContainer& container)
 		std::cout << *it << std::endl;
 	std::cout << std::endl;
 
-	ft::vector<const int> vec; // AE https://stackoverflow.com/questions/47794223/getting-const-iterator-from-begin-instead-of-cbegin
-	vec.push_back(5);
-	vec.push_back(5);
-	vec.push_back(8);
-	vec.push_back(4);
+	// ft::vector<const int> vec; // AE https://stackoverflow.com/questions/47794223/getting-const-iterator-from-begin-instead-of-cbegin
+	// vec.push_back(5);
+	// vec.push_back(5);
+	// vec.push_back(8);
+	// vec.push_back(4);
 
-	for (ft::vector<const int>::const_iterator it = vec.begin(); it != vec.end(); ++it)
-		std::cout << *it << std::endl;
-	std::cout << std::endl;
+	// for (ft::vector<const int>::const_iterator it = vec.begin(); it != vec.end(); ++it)
+	// 	std::cout << *it << std::endl;
+	// std::cout << std::endl;
 
-	for (ft::vector<const int>::const_reverse_iterator it = vec.rbegin(); it != vec.rend(); ++it)
-		std::cout << *it << std::endl;
-	std::cout << std::endl;
+	// for (ft::vector<const int>::const_reverse_iterator it = vec.rbegin(); it != vec.rend(); ++it)
+	// 	std::cout << *it << std::endl;
+	// std::cout << std::endl;
 
 //////////////////////////////////
-	EXPECTED_OUTPUT(5\n5\n8\n4\n\n4\n8\n5\n5\n\n5\n5\n8\n4\n\n4\n8\n5\n5\n\n);
+	EXPECTED_OUTPUT(5\n5\n8\n4\n\n4\n8\n5\n5\n\n);
 }
 
 void vector_resize(TestContainer& container)
