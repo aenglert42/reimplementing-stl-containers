@@ -26,7 +26,7 @@ namespace ft
 		Node* _left_child;
 		Node* _right_child;
 
-		Node (T val) : _content(val), _left_child(ft_nullptr), _right_child(ft_nullptr)
+		Node (const T& val) : _content(val), _left_child(ft_nullptr), _right_child(ft_nullptr)
 		{
 
 		}
@@ -37,7 +37,7 @@ namespace ft
 	{
 		Node<T>* _root;
 
-		Node<T>* insert(T val, Node<T>* node)
+		Node<T>* insert(const T& val, Node<T>* node)
 		{
 			if (node == ft_nullptr)
 				node = new Node<T>(val);
@@ -45,6 +45,8 @@ namespace ft
 				node->_left_child = insert(val, node->_left_child);
 			else if (val > node->_content)
 				node->_right_child = insert(val, node->_right_child);
+			else
+				node->_content = val;
 			return (node);
 		}
 
@@ -57,13 +59,13 @@ namespace ft
 			return (current);
 		}
 
-		Node<T>* remove_node_with_child(Node<T>* node, Node<T>* child)
+		Node<T>* remove_node_with_one_child(Node<T>* node, Node<T>* child)
 		{
 			delete node;
 			return (child);
 		}
 
-		Node<T>* remove_node_with_children(Node<T>* node)
+		Node<T>* remove_node_with_two_children(Node<T>* node)
 		{
 			Node<T>* tmp = min_val_node(node->_right_child);
 			node->_content = tmp->_content;
@@ -76,14 +78,14 @@ namespace ft
 			if (node->_left_child == ft_nullptr && node->_right_child == ft_nullptr)
 				return(ft_nullptr);
 			else if (node->_left_child == ft_nullptr)
-				return(remove_node_with_child(node, node->_right_child));
+				return(remove_node_with_one_child(node, node->_right_child));
 			else if (node->_right_child == ft_nullptr)
-				return(remove_node_with_child(node, node->_left_child));
+				return(remove_node_with_one_child(node, node->_left_child));
 			else
-				return(remove_node_with_children(node));
+				return(remove_node_with_two_children(node));
 		}
 
-		Node<T>* erase(T val, Node<T>* node)
+		Node<T>* erase(const T& val, Node<T>* node)
 		{
 			if (node == ft_nullptr)
 				return (node);
@@ -136,25 +138,31 @@ namespace ft
 
 			}
 
-			Tree(T val) : _root(ft_nullptr)
+			Tree(const T& val) : _root(ft_nullptr)
 			{
 				_root = insert(val, _root);
 			}
 
-			void insert(T val)
+			void insert(const T& val)
 			{
 				_root = insert(val, _root);
 			}
 
-			void erase(T val)
+			void erase(const T& val)
 			{
 				_root = erase(val, _root);
 			}
 
 			void print(void)
 			{
-				std::cout << "Root: " << _root->_content << std::endl;
-				print(_root);
+				std::cout << "Root: ";
+				if (_root == ft_nullptr)
+					std::cout << "(empty)" << std::endl;
+				else
+				{
+					std::cout << _root->_content << std::endl;
+					print(_root);
+				}
 				std::cout << std::endl;
 			}
 
