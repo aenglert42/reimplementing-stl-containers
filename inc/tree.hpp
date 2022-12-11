@@ -23,11 +23,10 @@ namespace ft
 	struct Node
 	{
 		T _content;
-		Node* _parent;
 		Node* _left_child;
 		Node* _right_child;
 
-		Node (T val, Node<T>* parent) : _content(val), _parent(parent), _left_child(ft_nullptr), _right_child(ft_nullptr)
+		Node (T val) : _content(val), _left_child(ft_nullptr), _right_child(ft_nullptr)
 		{
 
 		}
@@ -38,20 +37,14 @@ namespace ft
 	{
 		Node<T>* _root;
 
-		Node<T>* insert(T val, Node<T>* node, Node<T>* parent)
+		Node<T>* insert(T val, Node<T>* node)
 		{
 			if (node == ft_nullptr)
-				node = new Node<T>(val, parent);
+				node = new Node<T>(val);
 			else if (val < node->_content)
-			{
-				node->_left_child = insert(val, node->_left_child, node);
-				node->_parent = parent;
-			}
+				node->_left_child = insert(val, node->_left_child);
 			else if (val > node->_content)
-			{
-				node->_right_child = insert(val, node->_right_child, node);
-				node->_parent = parent;
-			}
+				node->_right_child = insert(val, node->_right_child);
 			return (node);
 		}
 
@@ -103,68 +96,6 @@ namespace ft
 			return (node);
 		}
 
-		// Node<T>* find(T val)
-		// {
-		// 	if (_root == ft_nullptr)
-		// 		return (_root);;
-		// 	// else if (val < node->_content)
-		// 	// {
-		// 	// 	node->_left_child = insert(val, node->_left_child, node);
-		// 	// 	node->_parent = parent;
-		// 	// }
-		// 	// else if (val > node->_content)
-		// 	// {
-		// 	// 	node->_right_child = insert(val, node->_right_child, node);
-		// 	// 	node->_parent = parent;
-		// 	// }
-		// 	// return (node);
-		// }
-
-		// void remove_node(Node<T>* node)
-		// {
-		// 	if (node == ft_nullptr)
-		// 		return ;
-		// 	else if (node == _root)
-		// 	{
-
-		// 	}
-		// 	else if (node->_left_child == ft_nullptr && node->_right_child == ft_nullptr)
-		// 	{
-		// 		remove_leave_node(node);
-		// 	}
-		// 	else if (node->_left_child == ft_nullptr)
-		// 	{
-		// 		remove_node_with_child(node, node->_right_child);
-		// 	}
-		// 	else if (node->_right_child == ft_nullptr)
-		// 	{
-		// 		remove_node_with_child(node, node->_left_child);
-		// 	}
-		// 	else
-		// 	{
-
-		// 	}
-		// }
-
-		// void remove_leave_node(Node<T>* node)
-		// {
-		// 	if (node->_parent->_left_child == node)
-		// 		node->_parent->_left_child = ft_nullptr;
-		// 	else
-		// 		node->_parent->_right_child = ft_nullptr;
-		// 	delete node;
-		// }
-
-		// void remove_node_with_child(Node<T>* node, Node<T>* child)
-		// {
-		// 	if (node->_parent->_left_child == node)
-		// 		node->_parent->_left_child = child;
-		// 	else
-		// 		node->_parent->_right_child = child;
-		// 	child->_parent = node->_parent;
-		// 	delete node;
-		// }
-
 		void print(Node<T>* node)
 		{
 			if (node == ft_nullptr)
@@ -193,10 +124,7 @@ namespace ft
 			std::cout << std::endl;
 			for (int i = COUNT; i < space; i++)
 				std::cout << " ";
-			std::cout << root->_content << "(";
-			if (root->_parent != ft_nullptr)
-				std::cout << root->_parent->_content;
-			std::cout << ")";
+			std::cout << root->_content;
 		
 			// Process left child
 			print2DUtil(root->_left_child, space);
@@ -210,20 +138,16 @@ namespace ft
 
 			Tree(T val) : _root(ft_nullptr)
 			{
-				_root = insert(val, _root, _root);
+				_root = insert(val, _root);
 			}
 
 			void insert(T val)
 			{
-				_root = insert(val, _root, ft_nullptr);
+				_root = insert(val, _root);
 			}
 
 			void erase(T val)
 			{
-				// Node<T>* tmp = find(val);
-				// if (tmp == ft_nullptr)
-				// 	return ;
-				// remove_node(tmp);
 				_root = erase(val, _root);
 			}
 
