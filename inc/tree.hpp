@@ -40,7 +40,7 @@ namespace ft
 		Node<T>* insert(const T& val, Node<T>* node)
 		{
 			if (node == ft_nullptr)
-				node = new Node<T>(val);
+				node = new Node<T>(val); // AE change to alloc
 			else if (val < node->_content)
 				node->_left_child = insert(val, node->_left_child);
 			else if (val > node->_content)
@@ -61,7 +61,7 @@ namespace ft
 
 		Node<T>* remove_node_with_one_child(Node<T>* node, Node<T>* child)
 		{
-			delete node;
+			delete node; // AE change to dealloc
 			return (child);
 		}
 
