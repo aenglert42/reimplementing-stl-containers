@@ -149,6 +149,8 @@ int main(void)
 	tree.insert(6);
 	tree.insert(7);
 	tree.insert(5);
+	tree.erase(7);
+	tree.erase(5);
 
 	// ft::Tree<int> tree(10);
 
@@ -157,16 +159,16 @@ int main(void)
 
 	tree.print2D();
 	// pair
-	ft::Tree<ft::pair<std::string, int> > pair_tree(ft::make_pair<std::string, int>("5", 5));
-	pair_tree.insert(ft::make_pair<std::string, int>("9", 9));
-	pair_tree.insert(ft::make_pair<std::string, int>("3", 3));
-	pair_tree.insert(ft::make_pair<std::string, int>("7", 7));
-	pair_tree.insert(ft::make_pair<std::string, int>("2", 2));
-	pair_tree.insert(ft::make_pair<std::string, int>("4", 4));
-	pair_tree.insert(ft::make_pair<std::string, int>("8", 8));
-	pair_tree.insert(ft::make_pair<std::string, int>("6", 6));
-	pair_tree.insert(ft::make_pair<std::string, int>("7", 7));
-	pair_tree.insert(ft::make_pair<std::string, int>("5", 5));
-	pair_tree.print2D();
+	// ft::Tree<ft::pair<std::string, int> > pair_tree(ft::make_pair<std::string, int>("5", 5));
+	// pair_tree.insert(ft::make_pair<std::string, int>("9", 9));
+	// pair_tree.insert(ft::make_pair<std::string, int>("3", 3));
+	// pair_tree.insert(ft::make_pair<std::string, int>("7", 7));
+	// pair_tree.insert(ft::make_pair<std::string, int>("2", 2));
+	// pair_tree.insert(ft::make_pair<std::string, int>("4", 4));
+	// pair_tree.insert(ft::make_pair<std::string, int>("8", 8));
+	// pair_tree.insert(ft::make_pair<std::string, int>("6", 6));
+	// pair_tree.insert(ft::make_pair<std::string, int>("7", 7));
+	// pair_tree.insert(ft::make_pair<std::string, int>("5", 5));
+	// pair_tree.print2D();
 
 }

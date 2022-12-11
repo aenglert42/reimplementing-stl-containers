@@ -55,6 +55,116 @@ namespace ft
 			return (node);
 		}
 
+		Node<T>* min_val_node(Node<T>* node)
+		{
+			Node<T>* current = node;
+
+			while (current && current->_left_child != ft_nullptr)
+				current = current->_left_child;
+			return (current);
+		}
+
+		Node<T>* remove_node_with_child(Node<T>* node, Node<T>* child)
+		{
+			delete node;
+			return (child);
+		}
+
+		Node<T>* remove_node_with_children(Node<T>* node)
+		{
+			Node<T>* tmp = min_val_node(node->_right_child);
+			node->_content = tmp->_content;
+			node->_right_child = erase(tmp->_content, node->_right_child);
+			return (node);
+		}
+
+		Node<T>* remove_node(Node<T>* node)
+		{
+			if (node->_left_child == ft_nullptr && node->_right_child == ft_nullptr)
+				return(ft_nullptr);
+			else if (node->_left_child == ft_nullptr)
+				return(remove_node_with_child(node, node->_right_child));
+			else if (node->_right_child == ft_nullptr)
+				return(remove_node_with_child(node, node->_left_child));
+			else
+				return(remove_node_with_children(node));
+		}
+
+		Node<T>* erase(T val, Node<T>* node)
+		{
+			if (node == ft_nullptr)
+				return (node);
+			else if (val < node->_content)
+				node->_left_child = erase(val, node->_left_child);
+			else if (val > node->_content)
+				node->_right_child = erase(val, node->_right_child);
+			else
+				node = remove_node(node);
+			return (node);
+		}
+
+		// Node<T>* find(T val)
+		// {
+		// 	if (_root == ft_nullptr)
+		// 		return (_root);;
+		// 	// else if (val < node->_content)
+		// 	// {
+		// 	// 	node->_left_child = insert(val, node->_left_child, node);
+		// 	// 	node->_parent = parent;
+		// 	// }
+		// 	// else if (val > node->_content)
+		// 	// {
+		// 	// 	node->_right_child = insert(val, node->_right_child, node);
+		// 	// 	node->_parent = parent;
+		// 	// }
+		// 	// return (node);
+		// }
+
+		// void remove_node(Node<T>* node)
+		// {
+		// 	if (node == ft_nullptr)
+		// 		return ;
+		// 	else if (node == _root)
+		// 	{
+
+		// 	}
+		// 	else if (node->_left_child == ft_nullptr && node->_right_child == ft_nullptr)
+		// 	{
+		// 		remove_leave_node(node);
+		// 	}
+		// 	else if (node->_left_child == ft_nullptr)
+		// 	{
+		// 		remove_node_with_child(node, node->_right_child);
+		// 	}
+		// 	else if (node->_right_child == ft_nullptr)
+		// 	{
+		// 		remove_node_with_child(node, node->_left_child);
+		// 	}
+		// 	else
+		// 	{
+
+		// 	}
+		// }
+
+		// void remove_leave_node(Node<T>* node)
+		// {
+		// 	if (node->_parent->_left_child == node)
+		// 		node->_parent->_left_child = ft_nullptr;
+		// 	else
+		// 		node->_parent->_right_child = ft_nullptr;
+		// 	delete node;
+		// }
+
+		// void remove_node_with_child(Node<T>* node, Node<T>* child)
+		// {
+		// 	if (node->_parent->_left_child == node)
+		// 		node->_parent->_left_child = child;
+		// 	else
+		// 		node->_parent->_right_child = child;
+		// 	child->_parent = node->_parent;
+		// 	delete node;
+		// }
+
 		void print(Node<T>* node)
 		{
 			if (node == ft_nullptr)
@@ -106,6 +216,15 @@ namespace ft
 			void insert(T val)
 			{
 				_root = insert(val, _root, ft_nullptr);
+			}
+
+			void erase(T val)
+			{
+				// Node<T>* tmp = find(val);
+				// if (tmp == ft_nullptr)
+				// 	return ;
+				// remove_node(tmp);
+				_root = erase(val, _root);
 			}
 
 			void print(void)
