@@ -34,7 +34,7 @@ namespace ft
 			template<class U, class V>
 			pair (const pair<U,V>& pr) : first(pr.first), second(pr.second)
 			{
-				std::cout << "->XXXXXXXXXXXXXXXXXXXXXXXXXX" << std::endl;
+
 			}
 
 			// initialization (3)	
@@ -45,8 +45,7 @@ namespace ft
 
 		////operator=///////////////////////////////////////////////////////
 			// copy (1)	
-			template <class myT1, class myT2>
-			pair& operator=(const pair<myT1, myT2>& pr)
+			pair& operator=(const pair& pr)
 			{
 				first = pr.first;
 				second = pr.second;

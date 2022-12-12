@@ -174,12 +174,13 @@ int main(void)
 	pair_tree.print2D();
 
 	//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> map
-	ft::map<int, short> myMap;
-	ft::pair<int, short> tmpPair;
-	tmpPair = ft::make_pair(3, 3);
-	ft::pair<int, short> tmpPair2(tmpPair);
-	myMap.insert(tmpPair);
-	// myMap.insert(ft::make_pair<std::string, int>("3", 3));
+	ft::map<std::string, int> myMap;
+	// ft::pair<int, std::string> tmpPair;
+	// tmpPair = ft::make_pair(3, "3");
+	// myMap.insert(tmpPair);
+	myMap.insert(ft::make_pair<std::string, int>("3", 3));
+	myMap.insert(ft::make_pair<std::string, int>("5", 5));
+	myMap.insert(ft::make_pair<std::string, int>("1", 1));
 	// myMap.erase(1);
 	myMap.print();
 }
