@@ -45,8 +45,8 @@ namespace ft
 				node->_left_child = insert(val, node->_left_child);
 			else if (val > node->_content)
 				node->_right_child = insert(val, node->_right_child);
-			else
-				node->_content = val;
+			// else
+			// 	node->_content = val; // AE this should not be assigned!
 			return (node);
 		}
 

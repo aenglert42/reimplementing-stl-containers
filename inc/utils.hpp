@@ -12,11 +12,11 @@ namespace ft
 			typedef T1 first_type;
 			typedef T2 second_type;
 		private:
-			typedef std::allocator<first_type> alloctor_first;
-			typedef std::allocator<second_type> alloctor_second;
+			// typedef std::allocator<first_type> allocator_first;
+			// typedef std::allocator<second_type> allocator_second;
 
-			alloctor_first alloc_first;
-			alloctor_second alloc_second;
+			// allocator_first alloc_first;
+			// allocator_second alloc_second;
 	//MEMBER VARIABLES
 		public:
 			first_type	first;
@@ -34,7 +34,7 @@ namespace ft
 			template<class U, class V>
 			pair (const pair<U,V>& pr) : first(pr.first), second(pr.second)
 			{
-
+				std::cout << "->XXXXXXXXXXXXXXXXXXXXXXXXXX" << std::endl;
 			}
 
 			// initialization (3)	
@@ -45,10 +45,11 @@ namespace ft
 
 		////operator=///////////////////////////////////////////////////////
 			// copy (1)	
-			pair& operator=(const pair& pr)
+			template <class myT1, class myT2>
+			pair& operator=(const pair<myT1, myT2>& pr)
 			{
-				alloc_first.construct(&first, pr.first);
-				alloc_second.construct(&second, pr.second);
+				first = pr.first;
+				second = pr.second;
 				return (*this);
 			}
 	};

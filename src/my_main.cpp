@@ -177,7 +177,8 @@ int main(void)
 	ft::map<int, short> myMap;
 	ft::pair<int, short> tmpPair;
 	tmpPair = ft::make_pair(3, 3);
-	// myMap.insert(tmpPair);
+	ft::pair<int, short> tmpPair2(tmpPair);
+	myMap.insert(tmpPair);
 	// myMap.insert(ft::make_pair<std::string, int>("3", 3));
 	// myMap.erase(1);
 	myMap.print();
