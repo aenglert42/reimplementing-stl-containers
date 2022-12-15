@@ -23,10 +23,11 @@ namespace ft
 	struct Node
 	{
 		T _content;
+		Node* _parent;
 		Node* _left_child;
 		Node* _right_child;
 
-		Node (const T& val) : _content(val), _left_child(ft_nullptr), _right_child(ft_nullptr)
+		Node (const T& val, Node<T>* parent) : _content(val), _parent(parent), _left_child(ft_nullptr), _right_child(ft_nullptr)
 		{
 
 		}
@@ -37,14 +38,20 @@ namespace ft
 	{
 		Node<T>* _root;
 
-		Node<T>* insert(const T& val, Node<T>* node)
+		Node<T>* insert(const T& val, Node<T>* node, Node<T>* parent)
 		{
 			if (node == ft_nullptr)
-				node = new Node<T>(val); // AE change to alloc
+				node = new Node<T>(val, parent); // AE change to alloc
 			else if (val < node->_content)
-				node->_left_child = insert(val, node->_left_child);
+			{
+				node->_left_child = insert(val, node->_left_child, node);
+				node->_parent = parent;
+			}
 			else if (val > node->_content)
-				node->_right_child = insert(val, node->_right_child);
+			{
+				node->_right_child = insert(val, node->_right_child, node);
+				node->_parent = parent;
+			}
 			// else
 			// 	node->_content = val; // AE this should not be assigned!
 			return (node);
@@ -61,6 +68,7 @@ namespace ft
 
 		Node<T>* remove_node_with_one_child(Node<T>* node, Node<T>* child)
 		{
+			child->_parent = node->_parent;
 			delete node; // AE change to dealloc
 			return (child);
 		}
@@ -126,7 +134,10 @@ namespace ft
 			std::cout << std::endl;
 			for (int i = COUNT; i < space; i++)
 				std::cout << " ";
-			std::cout << root->_content;
+			std::cout << root->_content << "(";
+			if (root->_parent != ft_nullptr)
+				std::cout << root->_parent->_content;
+			std::cout << ")";
 		
 			// Process left child
 			print2DUtil(root->_left_child, space);
@@ -140,12 +151,12 @@ namespace ft
 
 			Tree(const T& val) : _root(ft_nullptr)
 			{
-				_root = insert(val, _root);
+				_root = insert(val, _root, _root);
 			}
 
 			void insert(const T& val)
 			{
-				_root = insert(val, _root);
+				_root = insert(val, _root, ft_nullptr);
 			}
 
 			void erase(const T& val)
