@@ -162,6 +162,20 @@ int main(void)
 	// 	tree.insert(i);
 
 	tree.print2D();
+	std::cout << BLUE;
+	std::cout << tree.find(2)->_content << std::endl;
+	tree.pre(6);
+	tree.post(6);
+	ft::Tree<int>::iterator it = tree.begin();
+	ft::Tree<int>::iterator it2(it);
+	++it;
+	++it;
+	++it;
+	it2--;
+	it2--;
+	std::cout << it2->_content << std::endl;
+	std::cout << it->_content << std::endl;
+	std::cout << RESET;
 	// pair
 	// ft::Tree<ft::pair<std::string, int> > pair_tree(ft::make_pair<std::string, int>("5", 5));
 	// pair_tree.insert(ft::make_pair<std::string, int>("9", 9));

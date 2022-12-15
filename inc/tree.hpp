@@ -3,6 +3,8 @@
 #include <iostream>
 #include <memory> // std::allocator
 #include "ft_nullptr.hpp" // ft_nullptr
+#include "node.hpp"
+#include "tree_iterator.hpp"
 // #include "algorithm.hpp"
 // #include "type_traits.hpp"
 
@@ -19,23 +21,31 @@
 
 namespace ft
 {
-	template <class T>
-	struct Node
-	{
-		T _content;
-		Node* _parent;
-		Node* _left_child;
-		Node* _right_child;
+	// template <class T>
+	// struct Node
+	// {
+	// 	T _content;
+	// 	Node* _parent;
+	// 	Node* _left_child;
+	// 	Node* _right_child;
 
-		Node (const T& val, Node<T>* parent) : _content(val), _parent(parent), _left_child(ft_nullptr), _right_child(ft_nullptr)
-		{
+	// 	Node (const T& val, Node<T>* parent) : _content(val), _parent(parent), _left_child(ft_nullptr), _right_child(ft_nullptr)
+	// 	{
 
-		}
-	};
+	// 	}
+	// };
 
 	template <class T>
 	class Tree
 	{
+		public:
+			typedef Node<T>										node_type;
+			typedef TreeIterator<node_type>					iterator;
+			typedef TreeIterator<const node_type>				const_iterator;
+			typedef ft::reverse_iterator<iterator>				reverse_iterator;
+			typedef ft::reverse_iterator<const_iterator>		const_reverse_iterator;
+		
+		private:
 		Node<T>* _root;
 
 		Node<T>* insert(const T& val, Node<T>* node, Node<T>* parent)
@@ -52,19 +62,58 @@ namespace ft
 				node->_right_child = insert(val, node->_right_child, node);
 				node->_parent = parent;
 			}
-			// else
-			// 	node->_content = val; // AE this should not be assigned!
 			return (node);
 		}
 
-		Node<T>* min_val_node(Node<T>* node)
-		{
-			Node<T>* current = node;
+		// Node<T>* get_leftmost_node(Node<T>* node)
+		// {
+		// 	Node<T>* current = node;
 
-			while (current && current->_left_child != ft_nullptr)
-				current = current->_left_child;
-			return (current);
-		}
+		// 	while (current != ft_nullptr && current->_left_child != ft_nullptr)
+		// 		current = current->_left_child;
+		// 	return (current);
+		// }
+
+		// Node<T>* get_rightmost_node(Node<T>* node)
+		// {
+		// 	Node<T>* current = node;
+
+		// 	while (current != ft_nullptr && current->_right_child != ft_nullptr)
+		// 		current = current->_right_child;
+		// 	return (current);
+		// }
+
+		// Node<T>* get_successor_node(Node<T>* node)
+		// {
+		// 	if (node == ft_nullptr)
+		// 		return (ft_nullptr);
+		// 	if (node->_right_child != ft_nullptr)
+		// 		return (get_leftmost_node(node->_right_child));
+			
+		// 	Node<T>* current = node->_parent;
+		// 	while (current != ft_nullptr && node == current->_right_child)
+		// 	{
+		// 		node = current;
+		// 		current = current->_parent;
+		// 	}
+		// 	return (current);
+		// }
+
+		// Node<T>* get_predecessor_node(Node<T>* node)
+		// {
+		// 	if (node == ft_nullptr)
+		// 		return (ft_nullptr);
+		// 	if (node->_left_child != ft_nullptr)
+		// 		return (get_rightmost_node(node->_left_child));
+			
+		// 	Node<T>* current = node->_parent;
+		// 	while (current != ft_nullptr && node == current->_left_child)
+		// 	{
+		// 		node = current;
+		// 		current = current->_parent;
+		// 	}
+		// 	return (current);
+		// }
 
 		Node<T>* remove_node_with_one_child(Node<T>* node, Node<T>* child)
 		{
@@ -75,7 +124,7 @@ namespace ft
 
 		Node<T>* remove_node_with_two_children(Node<T>* node)
 		{
-			Node<T>* tmp = min_val_node(node->_right_child);
+			Node<T>* tmp = get_leftmost_node(node->_right_child);
 			node->_content = tmp->_content;
 			node->_right_child = erase(tmp->_content, node->_right_child);
 			return (node);
@@ -96,7 +145,7 @@ namespace ft
 		Node<T>* erase(const T& val, Node<T>* node)
 		{
 			if (node == ft_nullptr)
-				return (node);
+				return (ft_nullptr);
 			else if (val < node->_content)
 				node->_left_child = erase(val, node->_left_child);
 			else if (val > node->_content)
@@ -104,6 +153,19 @@ namespace ft
 			else
 				node = remove_node(node);
 			return (node);
+		}
+
+		Node<T>* find2(const T& val)
+		{
+			Node<T>* tmp = _root;
+			while (tmp != ft_nullptr && tmp->_content != val)
+			{
+				if (val < tmp->_content)
+					tmp = tmp->_left_child;
+				else
+					tmp = tmp->_right_child;
+			}
+			return (tmp);
 		}
 
 		void print(Node<T>* node)
@@ -154,6 +216,11 @@ namespace ft
 				_root = insert(val, _root, _root);
 			}
 
+			iterator begin()
+			{
+				return(iterator(_root));
+			}
+
 			void insert(const T& val)
 			{
 				_root = insert(val, _root, ft_nullptr);
@@ -162,6 +229,22 @@ namespace ft
 			void erase(const T& val)
 			{
 				_root = erase(val, _root);
+			}
+
+			Node<T>* find(const T& val)
+			{
+				// std::cout << find2(val)->_content << std::endl;
+				return(find2(val));
+			}
+
+			void pre(const T& val)
+			{
+				std::cout << get_predecessor_node(find2(val))->_content << std::endl;
+			}
+
+			void post(const T& val)
+			{
+				std::cout << get_successor_node(find2(val))->_content << std::endl;
 			}
 
 			void print(void)
