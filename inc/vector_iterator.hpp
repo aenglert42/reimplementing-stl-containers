@@ -112,7 +112,7 @@ namespace ft
 					}
 
 				// (2)	
-					VectorIterator& operator--(int)
+					VectorIterator operator--(int)
 					{
 						VectorIterator tmp(*this);
 						--_ptr;
