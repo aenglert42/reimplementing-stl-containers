@@ -15,15 +15,23 @@
 
 namespace ft
 {
-	template <class node_type>
+	template <class content_type>
 	struct Node
 	{
-		node_type _content;
-		Node* _parent;
-		Node* _left_child;
-		Node* _right_child;
+		typedef Node<content_type>				node_type;
+		typedef std::allocator<node_type>		allocator_type;
 
-		Node (const node_type& val, Node<node_type>* parent) : _content(val), _parent(parent), _left_child(ft_nullptr), _right_child(ft_nullptr)
+		content_type _content;
+		node_type* _parent;
+		node_type* _left_child;
+		node_type* _right_child;
+
+		Node (const content_type& val, node_type* parent) : _content(val), _parent(parent), _left_child(ft_nullptr), _right_child(ft_nullptr)
+		{
+
+		}
+
+		Node () : _parent(ft_nullptr), _left_child(ft_nullptr), _right_child(ft_nullptr) //AE remove
 		{
 
 		}

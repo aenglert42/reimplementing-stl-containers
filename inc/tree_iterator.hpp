@@ -62,59 +62,59 @@ namespace ft
 		return (current);
 	}
 
-	// template <typename T>
-	// bool has_successor_node(Node<T>* node)
-	// {
-	// 	Node<T>* tmp;
-	// 	if (node == ft_nullptr)
-	// 		return (false);
-	// 	if (node->_right_child != ft_nullptr)
-	// 	{
-	// 		tmp = get_leftmost_node(node->_right_child);
-	// 		if (tmp == ft_nullptr)
-	// 			return (false);
-	// 		else
-	// 			return (true);
-	// 	}
+	template <typename T>
+	bool has_successor_node(Node<T>* node)
+	{
+		Node<T>* tmp;
+		if (node == ft_nullptr)
+			return (false);
+		if (node->_right_child != ft_nullptr)
+		{
+			tmp = get_leftmost_node(node->_right_child);
+			if (tmp == ft_nullptr)
+				return (false);
+			else
+				return (true);
+		}
 		
-	// 	tmp = node->_parent;
-	// 	while (tmp != ft_nullptr && node == tmp->_right_child)
-	// 	{
-	// 		node = tmp;
-	// 		tmp = tmp->_parent;
-	// 	}
-	// 	if (tmp == ft_nullptr)
-	// 		return (false);
-	// 	else
-	// 		return (true);
-	// }
+		tmp = node->_parent;
+		while (tmp != ft_nullptr && node == tmp->_right_child)
+		{
+			node = tmp;
+			tmp = tmp->_parent;
+		}
+		if (tmp == ft_nullptr)
+			return (false);
+		else
+			return (true);
+	}
 
-	// template <typename T>
-	// bool has_predecessor_node(Node<T>* node)
-	// {
-	// 	Node<T>* tmp;
-	// 	if (node == ft_nullptr)
-	// 		return (false);
-	// 	if (node->_left_child != ft_nullptr)
-	// 	{
-	// 		tmp = get_rightmost_node(node->_left_child);
-	// 		if (tmp == ft_nullptr)
-	// 			return (false);
-	// 		else
-	// 			return (true);
-	// 	}
+	template <typename T>
+	bool has_predecessor_node(Node<T>* node)
+	{
+		Node<T>* tmp;
+		if (node == ft_nullptr)
+			return (false);
+		if (node->_left_child != ft_nullptr)
+		{
+			tmp = get_rightmost_node(node->_left_child);
+			if (tmp == ft_nullptr)
+				return (false);
+			else
+				return (true);
+		}
 		
-	// 	tmp = node->_parent;
-	// 	while (tmp != ft_nullptr && node == tmp->_left_child)
-	// 	{
-	// 		node = tmp;
-	// 		tmp = tmp->_parent;
-	// 	}
-	// 	if (tmp == ft_nullptr)
-	// 		return (false);
-	// 	else
-	// 		return (true);
-	// }
+		tmp = node->_parent;
+		while (tmp != ft_nullptr && node == tmp->_left_child)
+		{
+			node = tmp;
+			tmp = tmp->_parent;
+		}
+		if (tmp == ft_nullptr)
+			return (false);
+		else
+			return (true);
+	}
 
 	template <typename Tree>
 	class TreeIterator
@@ -180,7 +180,8 @@ namespace ft
 				// (1)
 					TreeIterator& operator++()
 					{
-						_ptr = get_successor_node(_ptr);
+						if (has_successor_node(_ptr))
+							_ptr = get_successor_node(_ptr);
 						return *this;
 					}
 
@@ -188,7 +189,8 @@ namespace ft
 					TreeIterator operator++(int)
 					{
 						TreeIterator tmp(*this);
-						_ptr = get_successor_node(_ptr);
+						if (has_successor_node(_ptr))
+							_ptr = get_successor_node(_ptr);
 						return tmp;
 					}
 			
@@ -216,7 +218,8 @@ namespace ft
 				// (1)
 					TreeIterator& operator--()
 					{
-						_ptr = get_predecessor_node(_ptr);
+						if (has_predecessor_node(_ptr))
+							_ptr = get_predecessor_node(_ptr);
 						return *this;
 					}
 
@@ -224,7 +227,8 @@ namespace ft
 					TreeIterator operator--(int)
 					{
 						TreeIterator tmp(*this);
-						_ptr = get_predecessor_node(_ptr);
+						if (has_predecessor_node(_ptr)) // AE is this correct? Or shoud I return something else?
+							_ptr = get_predecessor_node(_ptr);
 						return tmp;
 					}
 			

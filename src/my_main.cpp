@@ -2,6 +2,7 @@
 #include "tree.hpp"
 #include "utils.hpp"
 #include "map.hpp"
+#include "ft_nullptr.hpp" // ft_nullptr
 #include <iostream>
 #include <string>
 #include <map>
@@ -144,6 +145,8 @@ int main(void)
 	for (ft::vector<int>::reverse_iterator it = v.rbegin(); it != v.rend(); ++it)
 		std::cout << *it << std::endl;
 	std::cout << std::endl;
+
+	/*
 	//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> tree
 	// int
 	ft::Tree<int> tree(5);
@@ -195,7 +198,9 @@ int main(void)
 	// pair_tree.insert(ft::make_pair<std::string, int>("5", 5));
 	// // pair_tree.erase("5");
 	// pair_tree.print2D();
+	*/
 
+	/*
 	//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> map
 	ft::map<std::string, int> myMap;
 	// ft::pair<int, std::string> tmpPair;
@@ -246,4 +251,44 @@ int main(void)
 	stdit--;
 	std::cout << "it: " << stdit->first << std::endl;
 	std::cout << RESET;
+	*/
+
+	ft::Node<int> testNode;
+	ft::Node<ft::pair<std::string, int> > testNode2;
+
+	ft::Tree<int> testTree;
+	ft::Tree<ft::pair<std::string, int> > testTree2;
+	testTree2.insert(ft::make_pair<std::string, int>("9", 9));
+	testTree2.insert(ft::make_pair<std::string, int>("3", 3));
+	testTree2.insert(ft::make_pair<std::string, int>("7", 7));
+	testTree2.insert(ft::make_pair<std::string, int>("2", 2));
+	testTree2.insert(ft::make_pair<std::string, int>("4", 4));
+	testTree2.insert(ft::make_pair<std::string, int>("8", 8));
+	testTree2.insert(ft::make_pair<std::string, int>("6", 6));
+	testTree2.insert(ft::make_pair<std::string, int>("7", 7));
+	testTree2.insert(ft::make_pair<std::string, int>("5", 5));
+	testTree2.print2D();
+
+
+	ft::map<std::string, int> testMap;
+	testMap.insert(ft::make_pair<std::string, int>("3", 3));
+	testMap.insert(ft::make_pair<std::string, int>("5", 5));
+	testMap.insert(ft::make_pair<std::string, int>("1", 1));
+	testMap.print();
+	ft::map<std::string, int>::iterator testit = testMap.end();
+	(void)testit;
+	testit++;
+	testit--;
+	testit--;
+	testit--;
+	testit--;
+	testit++;
+	testit++;
+	testit++;
+	testit++;
+	testit++;
+	testit++;
+	testit--;
+	// testit++;
+	std::cout << testit->_content << std::endl;
 }
