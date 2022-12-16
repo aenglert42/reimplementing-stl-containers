@@ -15,15 +15,15 @@
 
 namespace ft
 {
-	template <class T>
+	template <class node_type>
 	struct Node
 	{
-		T _content;
+		node_type _content;
 		Node* _parent;
 		Node* _left_child;
 		Node* _right_child;
 
-		Node (const T& val, Node<T>* parent) : _content(val), _parent(parent), _left_child(ft_nullptr), _right_child(ft_nullptr)
+		Node (const node_type& val, Node<node_type>* parent) : _content(val), _parent(parent), _left_child(ft_nullptr), _right_child(ft_nullptr)
 		{
 
 		}

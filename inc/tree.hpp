@@ -40,172 +40,172 @@ namespace ft
 	{
 		public:
 			typedef Node<T>										node_type;
+			// typedef typename node_type::allocator_type			allocator_type;
 			typedef TreeIterator<node_type>						iterator;
 			typedef TreeIterator<const node_type>				const_iterator;
 			typedef ft::reverse_iterator<iterator>				reverse_iterator;
 			typedef ft::reverse_iterator<const_iterator>		const_reverse_iterator;
 		
 		private:
-		Node<T>* _root;
-		// Node<T> _end_node;
-		// Node<T> _rend_node;
+			Node<T>* _root;
+			Node<T>* _end_node;
 
-		Node<T>* insert(const T& val, Node<T>* node, Node<T>* parent)
-		{
-			if (node == ft_nullptr)
-				node = new Node<T>(val, parent); // AE change to alloc
-			else if (val < node->_content)
+			Node<T>* insert(const T& val, Node<T>* node, Node<T>* parent)
 			{
-				node->_left_child = insert(val, node->_left_child, node);
-				node->_parent = parent;
+				if (node == ft_nullptr)
+					node = new Node<T>(val, parent); // AE change to alloc
+				else if (val < node->_content)
+				{
+					node->_left_child = insert(val, node->_left_child, node);
+					node->_parent = parent;
+				}
+				else if (val > node->_content)
+				{
+					node->_right_child = insert(val, node->_right_child, node);
+					node->_parent = parent;
+				}
+				return (node);
 			}
-			else if (val > node->_content)
+
+			// Node<T>* get_leftmost_node(Node<T>* node)
+			// {
+			// 	Node<T>* current = node;
+
+			// 	while (current != ft_nullptr && current->_left_child != ft_nullptr)
+			// 		current = current->_left_child;
+			// 	return (current);
+			// }
+
+			// Node<T>* get_rightmost_node(Node<T>* node)
+			// {
+			// 	Node<T>* current = node;
+
+			// 	while (current != ft_nullptr && current->_right_child != ft_nullptr)
+			// 		current = current->_right_child;
+			// 	return (current);
+			// }
+
+			// Node<T>* get_successor_node(Node<T>* node)
+			// {
+			// 	if (node == ft_nullptr)
+			// 		return (ft_nullptr);
+			// 	if (node->_right_child != ft_nullptr)
+			// 		return (get_leftmost_node(node->_right_child));
+				
+			// 	Node<T>* current = node->_parent;
+			// 	while (current != ft_nullptr && node == current->_right_child)
+			// 	{
+			// 		node = current;
+			// 		current = current->_parent;
+			// 	}
+			// 	return (current);
+			// }
+
+			// Node<T>* get_predecessor_node(Node<T>* node)
+			// {
+			// 	if (node == ft_nullptr)
+			// 		return (ft_nullptr);
+			// 	if (node->_left_child != ft_nullptr)
+			// 		return (get_rightmost_node(node->_left_child));
+				
+			// 	Node<T>* current = node->_parent;
+			// 	while (current != ft_nullptr && node == current->_left_child)
+			// 	{
+			// 		node = current;
+			// 		current = current->_parent;
+			// 	}
+			// 	return (current);
+			// }
+
+			Node<T>* remove_node_with_one_child(Node<T>* node, Node<T>* child)
 			{
-				node->_right_child = insert(val, node->_right_child, node);
-				node->_parent = parent;
+				child->_parent = node->_parent;
+				delete node; // AE change to dealloc
+				return (child);
 			}
-			return (node);
-		}
 
-		// Node<T>* get_leftmost_node(Node<T>* node)
-		// {
-		// 	Node<T>* current = node;
-
-		// 	while (current != ft_nullptr && current->_left_child != ft_nullptr)
-		// 		current = current->_left_child;
-		// 	return (current);
-		// }
-
-		// Node<T>* get_rightmost_node(Node<T>* node)
-		// {
-		// 	Node<T>* current = node;
-
-		// 	while (current != ft_nullptr && current->_right_child != ft_nullptr)
-		// 		current = current->_right_child;
-		// 	return (current);
-		// }
-
-		// Node<T>* get_successor_node(Node<T>* node)
-		// {
-		// 	if (node == ft_nullptr)
-		// 		return (ft_nullptr);
-		// 	if (node->_right_child != ft_nullptr)
-		// 		return (get_leftmost_node(node->_right_child));
-			
-		// 	Node<T>* current = node->_parent;
-		// 	while (current != ft_nullptr && node == current->_right_child)
-		// 	{
-		// 		node = current;
-		// 		current = current->_parent;
-		// 	}
-		// 	return (current);
-		// }
-
-		// Node<T>* get_predecessor_node(Node<T>* node)
-		// {
-		// 	if (node == ft_nullptr)
-		// 		return (ft_nullptr);
-		// 	if (node->_left_child != ft_nullptr)
-		// 		return (get_rightmost_node(node->_left_child));
-			
-		// 	Node<T>* current = node->_parent;
-		// 	while (current != ft_nullptr && node == current->_left_child)
-		// 	{
-		// 		node = current;
-		// 		current = current->_parent;
-		// 	}
-		// 	return (current);
-		// }
-
-		Node<T>* remove_node_with_one_child(Node<T>* node, Node<T>* child)
-		{
-			child->_parent = node->_parent;
-			delete node; // AE change to dealloc
-			return (child);
-		}
-
-		Node<T>* remove_node_with_two_children(Node<T>* node)
-		{
-			Node<T>* tmp = get_leftmost_node(node->_right_child);
-			node->_content = tmp->_content;
-			node->_right_child = erase(tmp->_content, node->_right_child);
-			return (node);
-		}
-
-		Node<T>* remove_node(Node<T>* node)
-		{
-			if (node->_left_child == ft_nullptr && node->_right_child == ft_nullptr)
-				return(ft_nullptr);
-			else if (node->_left_child == ft_nullptr)
-				return(remove_node_with_one_child(node, node->_right_child));
-			else if (node->_right_child == ft_nullptr)
-				return(remove_node_with_one_child(node, node->_left_child));
-			else
-				return(remove_node_with_two_children(node));
-		}
-
-		Node<T>* erase(const T& val, Node<T>* node)
-		{
-			if (node == ft_nullptr)
-				return (ft_nullptr);
-			else if (val < node->_content)
-				node->_left_child = erase(val, node->_left_child);
-			else if (val > node->_content)
-				node->_right_child = erase(val, node->_right_child);
-			else
-				node = remove_node(node);
-			return (node);
-		}
-
-		Node<T>* find2(const T& val)
-		{
-			Node<T>* tmp = _root;
-			while (tmp != ft_nullptr && tmp->_content != val)
+			Node<T>* remove_node_with_two_children(Node<T>* node)
 			{
-				if (val < tmp->_content)
-					tmp = tmp->_left_child;
+				Node<T>* tmp = get_leftmost_node(node->_right_child);
+				node->_content = tmp->_content;
+				node->_right_child = erase(tmp->_content, node->_right_child);
+				return (node);
+			}
+
+			Node<T>* remove_node(Node<T>* node)
+			{
+				if (node->_left_child == ft_nullptr && node->_right_child == ft_nullptr)
+					return(ft_nullptr);
+				else if (node->_left_child == ft_nullptr)
+					return(remove_node_with_one_child(node, node->_right_child));
+				else if (node->_right_child == ft_nullptr)
+					return(remove_node_with_one_child(node, node->_left_child));
 				else
-					tmp = tmp->_right_child;
+					return(remove_node_with_two_children(node));
 			}
-			return (tmp);
-		}
 
-		void print(Node<T>* node)
-		{
-			if (node == ft_nullptr)
-				return;
-			print(node->_left_child);
-			std::cout << node->_content << " ";
-			print(node->_right_child);
-		}
+			Node<T>* erase(const T& val, Node<T>* node)
+			{
+				if (node == ft_nullptr)
+					return (ft_nullptr);
+				else if (val < node->_content)
+					node->_left_child = erase(val, node->_left_child);
+				else if (val > node->_content)
+					node->_right_child = erase(val, node->_right_child);
+				else
+					node = remove_node(node);
+				return (node);
+			}
 
-		// Function to print binary tree in 2D
-		// It does reverse inorder traversal
-		void print2DUtil(Node<T>* root, int space)
-		{
-			// Base case
-			if (root == NULL)
-				return;
-		
-			// Increase distance between levels
-			space += COUNT;
-		
-			// Process right child first
-			print2DUtil(root->_right_child, space);
-		
-			// Print current node after space
-			// count
-			std::cout << std::endl;
-			for (int i = COUNT; i < space; i++)
-				std::cout << " ";
-			std::cout << root->_content << "(";
-			if (root->_parent != ft_nullptr)
-				std::cout << root->_parent->_content;
-			std::cout << ")";
-		
-			// Process left child
-			print2DUtil(root->_left_child, space);
-		}
+			Node<T>* find2(const T& val)
+			{
+				Node<T>* tmp = _root;
+				while (tmp != ft_nullptr && tmp->_content != val)
+				{
+					if (val < tmp->_content)
+						tmp = tmp->_left_child;
+					else
+						tmp = tmp->_right_child;
+				}
+				return (tmp);
+			}
+
+			void print(Node<T>* node)
+			{
+				if (node == ft_nullptr)
+					return;
+				print(node->_left_child);
+				std::cout << node->_content << " ";
+				print(node->_right_child);
+			}
+
+			// Function to print binary tree in 2D
+			// It does reverse inorder traversal
+			void print2DUtil(Node<T>* root, int space)
+			{
+				// Base case
+				if (root == NULL)
+					return;
+			
+				// Increase distance between levels
+				space += COUNT;
+			
+				// Process right child first
+				print2DUtil(root->_right_child, space);
+			
+				// Print current node after space
+				// count
+				std::cout << std::endl;
+				for (int i = COUNT; i < space; i++)
+					std::cout << " ";
+				std::cout << root->_content << "(";
+				if (root->_parent != ft_nullptr)
+					std::cout << root->_parent->_content;
+				std::cout << ")";
+			
+				// Process left child
+				print2DUtil(root->_left_child, space);
+			}
 		
 		public:
 			Tree(void) : _root(ft_nullptr)

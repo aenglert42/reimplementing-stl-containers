@@ -62,6 +62,60 @@ namespace ft
 		return (current);
 	}
 
+	// template <typename T>
+	// bool has_successor_node(Node<T>* node)
+	// {
+	// 	Node<T>* tmp;
+	// 	if (node == ft_nullptr)
+	// 		return (false);
+	// 	if (node->_right_child != ft_nullptr)
+	// 	{
+	// 		tmp = get_leftmost_node(node->_right_child);
+	// 		if (tmp == ft_nullptr)
+	// 			return (false);
+	// 		else
+	// 			return (true);
+	// 	}
+		
+	// 	tmp = node->_parent;
+	// 	while (tmp != ft_nullptr && node == tmp->_right_child)
+	// 	{
+	// 		node = tmp;
+	// 		tmp = tmp->_parent;
+	// 	}
+	// 	if (tmp == ft_nullptr)
+	// 		return (false);
+	// 	else
+	// 		return (true);
+	// }
+
+	// template <typename T>
+	// bool has_predecessor_node(Node<T>* node)
+	// {
+	// 	Node<T>* tmp;
+	// 	if (node == ft_nullptr)
+	// 		return (false);
+	// 	if (node->_left_child != ft_nullptr)
+	// 	{
+	// 		tmp = get_rightmost_node(node->_left_child);
+	// 		if (tmp == ft_nullptr)
+	// 			return (false);
+	// 		else
+	// 			return (true);
+	// 	}
+		
+	// 	tmp = node->_parent;
+	// 	while (tmp != ft_nullptr && node == tmp->_left_child)
+	// 	{
+	// 		node = tmp;
+	// 		tmp = tmp->_parent;
+	// 	}
+	// 	if (tmp == ft_nullptr)
+	// 		return (false);
+	// 	else
+	// 		return (true);
+	// }
+
 	template <typename Tree>
 	class TreeIterator
 	{

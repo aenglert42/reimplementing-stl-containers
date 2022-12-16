@@ -4,8 +4,14 @@
 #include "map.hpp"
 #include <iostream>
 #include <string>
+#include <map>
 
+#define RED "\033[31m"
+#define GREEN "\033[32m"
+#define YELLOW "\033[33m"
 #define BLUE "\033[34m"
+#define BOLD "\033[1m"
+#define UNDERLINED "\033[4m"
 #define RESET "\033[0m"
 
 void my_leaks(void)
@@ -202,6 +208,42 @@ int main(void)
 	(void)mapit;
 	// mapit--;
 	std::cout << mapit->_content << std::endl;
+	mapit = myMap.end();
 	// myMap.erase(1);
 	// myMap.print();
+
+	// std::map::iterator test: min = begin(), max = end(), end -1 = last
+	std::cout << RED;
+	std::map<std::string, int> stdMap;
+	stdMap.insert(std::make_pair<std::string, int>("3", 3));
+	stdMap.insert(std::make_pair<std::string, int>("5", 5));
+	stdMap.insert(std::make_pair<std::string, int>("1", 1));
+	std::map<std::string, int>::iterator stdit = stdMap.end();
+	stdit--;
+	std::cout << stdit->first << std::endl;
+	stdit++;
+	stdit++;
+	stdit++;
+	stdit++;
+	stdit--;
+	std::cout << stdit->first << std::endl;
+	stdit--;
+	std::cout << stdit->first << std::endl;
+	stdit--;
+	stdit--;
+	stdit--;
+	stdit--;
+	// std::cout << stdit->first << std::endl;
+	stdit++;
+	std::cout << stdit->first << std::endl;
+	std::cout << YELLOW;
+	// std::map::iterator test: erase ivalidates iterators pointing to it
+	stdit = stdMap.end();
+	std::cout << "delete 3" << std::endl;
+	stdMap.erase("3");
+	stdit--;
+	std::cout << "it: " << stdit->first << std::endl;
+	stdit--;
+	std::cout << "it: " << stdit->first << std::endl;
+	std::cout << RESET;
 }
