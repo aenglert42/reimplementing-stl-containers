@@ -40,13 +40,15 @@ namespace ft
 	{
 		public:
 			typedef Node<T>										node_type;
-			typedef TreeIterator<node_type>					iterator;
+			typedef TreeIterator<node_type>						iterator;
 			typedef TreeIterator<const node_type>				const_iterator;
 			typedef ft::reverse_iterator<iterator>				reverse_iterator;
 			typedef ft::reverse_iterator<const_iterator>		const_reverse_iterator;
 		
 		private:
 		Node<T>* _root;
+		// Node<T> _end_node;
+		// Node<T> _rend_node;
 
 		Node<T>* insert(const T& val, Node<T>* node, Node<T>* parent)
 		{
@@ -218,7 +220,12 @@ namespace ft
 
 			iterator begin()
 			{
-				return(iterator(_root));
+				return(iterator(get_leftmost_node(_root)));
+			}
+
+			iterator end()
+			{
+				return(iterator(get_rightmost_node(_root)));
 			}
 
 			void insert(const T& val)

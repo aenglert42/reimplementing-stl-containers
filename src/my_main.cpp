@@ -168,13 +168,13 @@ int main(void)
 	tree.post(6);
 	ft::Tree<int>::iterator it = tree.begin();
 	ft::Tree<int>::iterator it2(it);
-	++it;
-	++it;
-	++it;
-	it2--;
-	it2--;
+	// ++it;
+	// ++it;
+	// ++it;
+	// it2--;
+	// it2--;
 	std::cout << it2->_content << std::endl;
-	std::cout << it->_content << std::endl;
+	std::cout << "begin: " << it->_content << std::endl;
 	std::cout << RESET;
 	// pair
 	// ft::Tree<ft::pair<std::string, int> > pair_tree(ft::make_pair<std::string, int>("5", 5));
@@ -198,6 +198,10 @@ int main(void)
 	myMap.insert(ft::make_pair<std::string, int>("3", 3));
 	myMap.insert(ft::make_pair<std::string, int>("5", 5));
 	myMap.insert(ft::make_pair<std::string, int>("1", 1));
+	ft::map<std::string, int>::iterator mapit = myMap.begin();
+	(void)mapit;
+	// mapit--;
+	std::cout << mapit->_content << std::endl;
 	// myMap.erase(1);
-	myMap.print();
+	// myMap.print();
 }
