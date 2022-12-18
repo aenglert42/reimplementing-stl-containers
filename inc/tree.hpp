@@ -5,6 +5,7 @@
 #include "ft_nullptr.hpp" // ft_nullptr
 #include "node.hpp"
 #include "tree_iterator.hpp"
+#include "utils.hpp"
 // #include "algorithm.hpp"
 // #include "type_traits.hpp"
 
@@ -26,6 +27,8 @@ namespace ft
 	{
 		public:
 			typedef Node<content_type>							node_type;
+			// typedef typename node_type::key_type				key_type; // AE uncommenting this will make node<int> invalid
+			// typedef typename node_type::value_type			value_type; // AE uncommenting this will make node<int> invalid
 			typedef typename node_type::allocator_type			allocator_type;
 			typedef TreeIterator<node_type>						iterator;
 			typedef TreeIterator<const node_type>				const_iterator;
@@ -49,6 +52,13 @@ namespace ft
 				if (node == _end_node)
 					return (true);
 				return (val < node->_content);
+			}
+
+			bool first_is_greater_than_second(const content_type& val, node_type* node)
+			{
+				if (node == _end_node)
+					return (false);
+				return (val > node->_content);
 			}
 
 			// node_type* insert(const node_type* new_node, node_type* node, node_type* parent)
@@ -84,6 +94,11 @@ namespace ft
 				}
 				return (node);
 			}
+
+			// node_type* insert(const content_type& val, iterator node, node_type* parent)
+			// {
+			// 	return (insert(val, node, parent));
+			// }
 
 			node_type* remove_node_with_one_child(node_type* node, node_type* child)
 			{
@@ -123,19 +138,6 @@ namespace ft
 				else
 					node = remove_node(node);
 				return (node);
-			}
-
-			node_type* find2(const content_type& val)
-			{
-				node_type* tmp = _root;
-				while (tmp != ft_nullptr && tmp->_content != val)
-				{
-					if (val < tmp->_content)
-						tmp = tmp->_left_child;
-					else
-						tmp = tmp->_right_child;
-				}
-				return (tmp);
 			}
 
 			void print(node_type* node)
@@ -213,9 +215,31 @@ namespace ft
 				return(iterator(get_rightmost_node(_root)));
 			}
 
-			void insert(const content_type& val)
+			// void insert(const content_type& val)
+			// {
+			// 	_root = insert(val, _root, ft_nullptr);
+			// }
+
+			ft::pair<iterator,bool> insert(const content_type& val)
 			{
+				bool key_is_new = true;
+				node_type* tmp = find(val); // AE have insert function that returns node* on success or ft_nullptr
 				_root = insert(val, _root, ft_nullptr);
+				if (tmp != ft_nullptr)
+					key_is_new = false;
+				else
+					tmp = find(val);
+				return (ft::make_pair(tmp , key_is_new));
+			}
+
+			iterator insert(iterator position, const content_type& val)
+			{
+				(void)position;
+				if (first_is_greater_than_second(val, position.base()))
+					insert(val, position.base(), position.base()->_parent); // AE what if this would be first node? What happens with root / parent?
+				else
+					_root = insert(val, _root, ft_nullptr);
+				return (find(val));
 			}
 
 			void erase(const content_type& val)
@@ -225,8 +249,15 @@ namespace ft
 
 			node_type* find(const content_type& val)
 			{
-				// std::cout << find2(val)->_content << std::endl;
-				return(find2(val));
+				node_type* tmp = _root->_left_child; // AE this is a workaround while _end_node is _root
+				while (tmp != ft_nullptr && tmp->_content != val)
+				{
+					if (val < tmp->_content)
+						tmp = tmp->_left_child;
+					else
+						tmp = tmp->_right_child;
+				}
+				return (tmp);
 			}
 
 			void pre(const content_type& val)

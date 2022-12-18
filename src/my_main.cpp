@@ -273,7 +273,11 @@ int main(void)
 	ft::map<std::string, int> testMap;
 	testMap.insert(ft::make_pair<std::string, int>("3", 3));
 	testMap.insert(ft::make_pair<std::string, int>("5", 5));
-	testMap.insert(ft::make_pair<std::string, int>("1", 1));
+	ft::pair<ft::map<std::string, int>::iterator, bool> ret = testMap.insert(ft::make_pair<std::string, int>("1", 1));
+	std::cout << "found: " << ret.second << std::endl;
+	// std::cout << "key: " << ret.first->_content << "found: " << ret.second << std::endl;
+	ret = testMap.insert(ft::make_pair<std::string, int>("1", 1));
+	std::cout << "found: " << ret.second << std::endl;
 	testMap.print();
 	ft::map<std::string, int>::iterator testit = testMap.end();
 	(void)testit;
@@ -291,4 +295,26 @@ int main(void)
 	testit--;
 	// testit++;
 	std::cout << testit->_content << std::endl;
+	testMap.insert(testit, ft::make_pair<std::string, int>("2", 2));
+	testMap.insert(testit, ft::make_pair<std::string, int>("8", 8));
+	testMap.print();
+	testMap.print2D();
+
+// ft::pair comparison test primary first secondary second
+	ft::pair<std::string, int> strint1 = ft::make_pair("abc", 123);
+	ft::pair<std::string, int> strint2 = ft::make_pair("abc", 123);
+	ft::pair<std::string, int> strint3 = ft::make_pair("abf", 123);
+	ft::pair<std::string, int> strint4 = ft::make_pair("abc", 124);
+	ft::pair<std::string, int> strint5 = ft::make_pair("abc", 122);
+
+	if (strint1 < strint2)
+		std::cout << "1 < 2" << std::endl;
+	if (strint1 < strint3)
+		std::cout << "1 < 3" << std::endl;
+	if (strint1 < strint4)
+		std::cout << "1 < 4" << std::endl;
+	if (strint1 < strint5)
+		std::cout << "1 < 5" << std::endl;
+	if (strint3 < strint4)
+		std::cout << "3 < 4" << std::endl;
 }

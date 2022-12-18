@@ -9,8 +9,9 @@ namespace ft
 	{
 	//MEMBER TYPES
 		public:
-			typedef T1 first_type;
-			typedef T2 second_type;
+			typedef T1 						first_type;
+			typedef T2 						second_type;
+
 		private:
 			// typedef std::allocator<first_type> allocator_first;
 			// typedef std::allocator<second_type> allocator_second;

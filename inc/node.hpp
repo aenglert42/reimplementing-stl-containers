@@ -18,8 +18,10 @@ namespace ft
 	template <class content_type>
 	struct Node
 	{
-		typedef Node<content_type>				node_type;
-		typedef std::allocator<node_type>		allocator_type;
+		typedef Node<content_type>					node_type;
+		// typedef typename content_type::first_type	key_type; // AE uncommenting this will make node<int> invalid
+		// typedef typename content_type::second_type	value_type; // AE uncommenting this will make node<int> invalid
+		typedef std::allocator<node_type>			allocator_type;
 
 		content_type _content;
 		node_type* _parent;

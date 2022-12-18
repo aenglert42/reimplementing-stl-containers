@@ -79,6 +79,11 @@ namespace ft
 			{
 				_tree.print();
 			}
+
+			void print2D(void) // AE remove
+			{
+				_tree.print2D();
+			}
 		////constructor///////////////////////////////////////////////////////
 			
 			// empty (1)	
@@ -205,16 +210,14 @@ namespace ft
 			// single element (1)	
 			ft::pair<iterator,bool> insert(const value_type& val)
 			{
-				ft::pair<iterator,bool> ret; // AE remove
-				_tree.insert(val);
-				return (ret);
+				return (_tree.insert(val));
 			}
 
 			// with hint (2)
-			// iterator insert(iterator position, const value_type& val)
-			// {
-
-			// }
+			iterator insert(iterator position, const value_type& val)
+			{
+				return (_tree.insert(position, val));
+			}
 
 			// range (3)
 			// template <class InputIterator>  void insert(InputIterator first, InputIterator last)
@@ -269,10 +272,10 @@ namespace ft
 
 	//Operations---------------------------------------------------------------
 		////find///////////////////////////////////////////////////////
-			// iterator find (const key_type& k)
-			// {
-				
-			// }
+			iterator find (const key_type& k)
+			{
+				return (_tree.find(k));
+			}
 			
 			// const_iterator find (const key_type& k) const
 			// {
