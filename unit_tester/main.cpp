@@ -52,8 +52,8 @@ vector_swap, \
 vector_clear, \
 vector_get_allocator, \
 vector_no_member_swap, \
-vector_rational_operators/*
 map_insert, \
+vector_rational_operators/*
 
 */
 

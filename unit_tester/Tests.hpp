@@ -18,6 +18,7 @@
 #include "../inc/type_traits.hpp"
 #include "../inc/utils.hpp"
 #include "../inc/vector.hpp"
+#include "../inc/map.hpp"
 #include "../inc/functional.hpp"
 
 // TEMPLATE FOR TEST FUNCTIONS (remove <> and edit text within)
@@ -1102,39 +1103,39 @@ void vector_my_erase(TestContainer& container)
 	EXPECTED_OUTPUT([0] erase: 2\n[1] erase: 0\n[2] erase: 7\n[3] erase: 0\n[4] erase: 1\n[5] erase: 1\n[6] erase: 0\n);
 }
 
-// void map_insert(TestContainer& container)
-// {
-//   ft::map<char,int> mymap;
+void map_insert(TestContainer& container)
+{
+  ft::map<char,int> mymap;
 
-//   // first insert function version (single parameter):
-//   mymap.insert ( ft::pair<char,int>('a',100) );
-//   mymap.insert ( ft::pair<char,int>('z',200) );
+  // first insert function version (single parameter):
+  mymap.insert ( ft::pair<char,int>('a',100) );
+  mymap.insert ( ft::pair<char,int>('z',200) );
 
-//   ft::pair<ft::map<char,int>::iterator,bool> ret;
-//   ret = mymap.insert ( ft::pair<char,int>('z',500) );
-//   if (ret.second==false) {
-//     std::cout << "element 'z' already existed";
-//     std::cout << " with a value of " << ret.first->second << '\n';
-//   }
+  ft::pair<ft::map<char,int>::iterator,bool> ret;
+  ret = mymap.insert ( ft::pair<char,int>('z',500) );
+  if (ret.second==false) {
+    std::cout << "element 'z' already existed";
+    std::cout << " with a value of " << ret.first->second << '\n';
+  }
 
-//   // second insert function version (with hint position):
-//   ft::map<char,int>::iterator it = mymap.begin();
-//   mymap.insert (it, ft::pair<char,int>('b',300));  // max efficiency inserting
-//   mymap.insert (it, ft::pair<char,int>('c',400));  // no max efficiency inserting
+  // second insert function version (with hint position):
+  ft::map<char,int>::iterator it = mymap.begin();
+  mymap.insert (it, ft::pair<char,int>('b',300));  // max efficiency inserting
+  mymap.insert (it, ft::pair<char,int>('c',400));  // no max efficiency inserting
 
-//   // third insert function version (range insertion):
-//   ft::map<char,int> anothermap;
-//   anothermap.insert(mymap.begin(),mymap.find('c'));
+  // third insert function version (range insertion):
+  ft::map<char,int> anothermap;
+  anothermap.insert(mymap.begin(),mymap.find('c'));
 
-//   // showing contents:
-//   std::cout << "mymap contains:\n";
-//   for (it=mymap.begin(); it!=mymap.end(); ++it)
-//     std::cout << it->first << " => " << it->second << '\n';
+  // showing contents:
+  std::cout << "mymap contains:\n";
+  for (it=mymap.begin(); it!=mymap.end(); ++it)
+    std::cout << it->first << " => " << it->second << '\n';
 
-//   std::cout << "anothermap contains:\n";
-//   for (it=anothermap.begin(); it!=anothermap.end(); ++it)
-//     std::cout << it->first << " => " << it->second << '\n';
+  std::cout << "anothermap contains:\n";
+  for (it=anothermap.begin(); it!=anothermap.end(); ++it)
+    std::cout << it->first << " => " << it->second << '\n';
 
-// //////////////////////////////////
-// 	EXPECTED_OUTPUT(element 'z' already existed with a value of 200\nmymap contains:\na => 100\nb => 300\nc => 400\nz => 200\nanothermap contains:\na => 100\nb => 300\n);
-// }
+//////////////////////////////////
+	EXPECTED_OUTPUT(element 'z' already existed with a value of 200\nmymap contains:\na => 100\nb => 300\nc => 400\nz => 200\nanothermap contains:\na => 100\nb => 300\n);
+}

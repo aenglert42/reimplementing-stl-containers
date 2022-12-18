@@ -253,6 +253,8 @@ int main(void)
 	std::cout << RESET;
 	*/
 
+	// Test for iterator old
+	/*
 	ft::Node<int> testNode;
 	ft::Node<ft::pair<std::string, int> > testNode2;
 
@@ -317,4 +319,16 @@ int main(void)
 		std::cout << "1 < 5" << std::endl;
 	if (strint3 < strint4)
 		std::cout << "3 < 4" << std::endl;
+	*/
+
+	// Test for iterator new
+	std::map<std::string, int> STD;
+	STD.insert(std::make_pair("abc", 1));
+	std::map<std::string, int>::iterator STDit = STD.begin();
+	std::cout << "STD: " << STDit->first << std::endl;
+
+	ft::map<std::string, int> FT;
+	FT.insert(ft::make_pair("abc", 1));
+	ft::map<std::string, int>::iterator FTit = FT.begin();
+	std::cout << "FT: " << FTit->first << std::endl;
 }

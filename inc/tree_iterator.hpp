@@ -127,6 +127,7 @@ namespace ft
 			typedef typename iterator_traits<iterator_type>::pointer				pointer;
 			typedef typename iterator_traits<iterator_type>::reference				reference;
 			typedef typename iterator_traits<iterator_type>::iterator_category		iterator_category;
+			typedef Node<Tree>*														node_pointer;
 
 	//MEMBER FUNCTIONS
 
@@ -136,7 +137,7 @@ namespace ft
 
 				}
 
-				TreeIterator(pointer ptr) : _ptr(ptr)
+				TreeIterator(node_pointer ptr) : _ptr(ptr)
 				{
 
 				}
@@ -159,7 +160,7 @@ namespace ft
 				}
 
 			////base///////////////////////////////////////////////////////
-				pointer base(void) const
+				node_pointer base(void) const
 				{
 					return (_ptr);
 				}
@@ -242,7 +243,7 @@ namespace ft
 			////operator->///////////////////////////////////////////////////////
 				pointer operator->() const
 				{
-					return (_ptr);
+					return (&_ptr->_content);
 				}
 
 			// ////operator[]///////////////////////////////////////////////////////
@@ -252,7 +253,7 @@ namespace ft
 			// 	}
 
 		private:
-			pointer _ptr;
+			node_pointer _ptr;
 	};
 
 	//NON-MEMBER FUNCTION OVERLOADS
