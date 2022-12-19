@@ -348,7 +348,10 @@ int main(void)
 	std::cout << "FT: " << FTit->first << std::endl;
 	FT.insert(FTit, ft::make_pair("2", 2));
 	FT.print2D();
-	FT.erase("4");
+	std::cout << "erase: " << FT.erase("4") << std::endl;
+	std::cout << "erase: " << FT.erase("4") << std::endl;
+	FTit = FT.begin();
+	FT.erase(FTit);
 	FT.print2D();
 
 }

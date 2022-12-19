@@ -255,18 +255,17 @@ namespace ft
 
 		////erase///////////////////////////////////////////////////////
 			// (1)
-			// void erase(iterator position)
-			// {
-
-			// }
+			void erase(iterator position)
+			{
+				_tree.erase(position);
+			}
 
 			// (2)
 			size_type erase(const key_type& k)
 			{
 				mapped_type value; // AE change dirty workaround
 				value_type tmp(k, value);
-				_tree.erase(tmp);
-				return (9); // AE remove
+				return (_tree.erase(tmp));
 			}
 
 			// (3)

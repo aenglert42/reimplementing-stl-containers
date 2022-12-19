@@ -38,7 +38,8 @@ namespace ft
 			typedef TreeIterator<const content_type>			const_iterator;
 			typedef ft::reverse_iterator<iterator>				reverse_iterator;
 			typedef ft::reverse_iterator<const_iterator>		const_reverse_iterator;
-		
+			typedef std::size_t									size_type;
+
 		private:
 			node_type* _root;
 			node_type* _end_node;
@@ -115,7 +116,6 @@ namespace ft
 			{
 				node_type* tmp = get_leftmost_node(node->_right_child);
 				node = update_node_pointers(node, tmp);
-				// node->_content = tmp->_content; // AE this has to be done differently (with swap?)
 				node->_right_child = erase(tmp->_content, node->_right_child);
 				return (node);
 			}
@@ -243,9 +243,19 @@ namespace ft
 				return (find(val));
 			}
 
-			void erase(const content_type& val)
+			void erase(iterator position)
 			{
+				if (position.base() != ft_nullptr)
+					_root = erase(*position, _root);
+			}
+
+			size_type erase(const content_type& val)
+			{
+				size_type ret = 0;
+				if (find(val) != ft_nullptr)
+					ret = 1;
 				_root = erase(val, _root);
+				return (ret);
 			}
 
 			node_type* find(const content_type& val)
