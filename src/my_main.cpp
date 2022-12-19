@@ -352,6 +352,9 @@ int main(void)
 	std::cout << "erase: " << FT.erase("4") << std::endl;
 	FTit = FT.begin();
 	FT.erase(FTit);
+	FTit = FT.begin();
+	FTit++;
+	FT.erase(FTit, FT.end());
 	FT.print2D();
 
 }

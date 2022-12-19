@@ -269,10 +269,11 @@ namespace ft
 			}
 
 			// (3)
-			// void erase (iterator first, iterator last)
-			// {
-
-			// }
+			void erase (iterator first, iterator last)
+			{
+				while (last != first)
+					_tree.erase(--last);
+			}
 
 		////swap///////////////////////////////////////////////////////
 			// void swap (map& x)
