@@ -495,6 +495,31 @@ void vector_operator_equal(TestContainer& container)
 	EXPECTED_OUTPUT(Size of foo: 0\nSize of bar: 3\n);
 }
 
+void my_map_iterator(TestContainer& container)
+{
+	ft::map<std::string, int> myMap;
+	myMap.insert(ft::make_pair("5", 5));
+	myMap.insert(ft::make_pair("1", 1));
+	myMap.insert(ft::make_pair("8", 8));
+
+	ft::map<std::string, int>::iterator it = myMap.begin();
+	it--;
+	it--;
+	std::cout << it->first << std::endl;
+	it = myMap.end();
+	it++;
+	it++;
+	it--;
+	it--;
+	it--;
+	std::cout << it->first << std::endl;
+	it--;
+	std::cout << it->first << std::endl;
+
+//////////////////////////////////
+	EXPECTED_OUTPUT(1\n8\n5\n);
+}
+
 void my_vector_iterator(TestContainer& container)
 {
 	ft::vector<int> v;

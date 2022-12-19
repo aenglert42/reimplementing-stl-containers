@@ -9,6 +9,7 @@ is_integral, \
 iterator_traits, \
 less, \
 make_pair, \
+my_map_iterator, \
 my_vector_iterator, \
 pair, \
 pair_delete_old_pointer, \

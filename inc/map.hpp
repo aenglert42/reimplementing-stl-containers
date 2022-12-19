@@ -33,7 +33,6 @@ namespace ft
 			typedef T											mapped_type; //The second template parameter (T)
 			typedef pair<const key_type,mapped_type>			value_type;
 			typedef Compare										key_compare; //The third template parameter (Compare)
-			// typedef ?										value_compare; //Nested function class to compare elements
 			typedef Alloc										allocator_type; //The fourth template parameter (Alloc) defaults to: allocator<value_type>
 			typedef typename allocator_type::reference			reference; //allocator_type::reference	for the default allocator: value_type&
 			typedef typename allocator_type::const_reference	const_reference; //allocator_type::const_reference	for the default allocator: const value_type&
@@ -46,29 +45,53 @@ namespace ft
 			typedef std::ptrdiff_t								difference_type; //a signed integral type, identical to: iterator_traits<iterator>::difference_type	usually the same as ptrdiff_t
 			typedef std::size_t									size_type; //an unsigned integral type that can represent any non-negative value of difference_type	usually the same as size_t
 	
-			// template <class Key, class T, class Compare, class Alloc>
-			// class map<Key,T,Compare,Alloc>::value_compare
-			// {   // in C++98, it is required to inherit binary_function<value_type,value_type,bool>
-			// 	friend class map;
-			// 	protected:
-			// 	Compare comp;
-			// 	value_compare (Compare c) : comp(c) {}  // constructed with map's comparison object
-			// 	public:
-			// 	typedef bool result_type;
-			// 	typedef value_type first_argument_type;
-			// 	typedef value_type second_argument_type;
-			// 	bool operator() (const value_type& x, const value_type& y) const
-			// 	{
-			// 		return comp(x.first, y.first);
-			// 	}
-			// }
-	
+			class value_compare //Nested function class to compare elements
+			{
+				public:
+					value_compare() : _compare()
+					{
+
+					}
+
+					value_compare(key_compare c) : _compare(c)
+					{
+
+					}
+
+					value_compare(const value_compare& other) : _compare(other._compare)
+					{
+
+					}
+
+					value_compare &operator=(const value_compare& other)
+					{
+						if (this != &other)
+						{
+							_compare = other._compare;
+						}
+						return (*this);
+					}
+
+					~value_compare()
+					{
+
+					}
+
+					bool operator()(const value_type& lhs, const value_type& rhs) const
+					{
+						return (_compare(lhs.first, rhs.first));
+					}
+
+				private:
+					key_compare _compare;
+			};
+
 	//PRIVATE MEMBER VARIABLES
 		private:
 			size_type _size;
-			// value_compare _compare;
+			value_compare _compare;
 			allocator_type _alloc;
-			Tree<value_type> _tree;
+			Tree<value_type, value_compare> _tree;
 
 	//PRIVATE MEMBER FUNCTIONS
 
@@ -220,10 +243,15 @@ namespace ft
 			}
 
 			// range (3)
-			// template <class InputIterator>  void insert(InputIterator first, InputIterator last)
-			// {
-
-			// }
+			template <class InputIterator>
+			void insert(InputIterator first, InputIterator last)
+			{
+				// iterator hint = begin();
+				// while (first != last)
+				// 	hint = insert(hint, *first++);
+				while (first != last)
+					_tree.insert(*first++);
+			}
 
 		////erase///////////////////////////////////////////////////////
 			// (1)
@@ -274,7 +302,9 @@ namespace ft
 		////find///////////////////////////////////////////////////////
 			iterator find (const key_type& k)
 			{
-				return (_tree.find(k));
+				mapped_type value; // AE change dirty workaround
+				value_type tmp(k, value);
+				return (_tree.find(tmp));
 			}
 			
 			// const_iterator find (const key_type& k) const

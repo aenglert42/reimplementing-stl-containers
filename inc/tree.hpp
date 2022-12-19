@@ -6,6 +6,7 @@
 #include "node.hpp"
 #include "tree_iterator.hpp"
 #include "utils.hpp"
+#include "functional.hpp"
 // #include "algorithm.hpp"
 // #include "type_traits.hpp"
 
@@ -22,16 +23,19 @@
 
 namespace ft
 {
-	template <class content_type>
+	template <class content_type,
+	class Compare = ft::less<content_type> >
+	// class Alloc = typename std::allocator<content_type> > // AE build this in later
 	class Tree
 	{
 		public:
 			typedef Node<content_type>							node_type;
 			// typedef typename node_type::key_type				key_type; // AE uncommenting this will make node<int> invalid
 			// typedef typename node_type::value_type			value_type; // AE uncommenting this will make node<int> invalid
+			typedef Compare										value_compare;
 			typedef typename node_type::allocator_type			allocator_type;
-			typedef TreeIterator<content_type>						iterator;
-			typedef TreeIterator<const content_type>				const_iterator;
+			typedef TreeIterator<content_type>					iterator;
+			typedef TreeIterator<const content_type>			const_iterator;
 			typedef ft::reverse_iterator<iterator>				reverse_iterator;
 			typedef ft::reverse_iterator<const_iterator>		const_reverse_iterator;
 		
@@ -39,6 +43,7 @@ namespace ft
 			node_type* _root;
 			node_type* _end_node;
 			allocator_type _allocator;
+			value_compare _compare;
 
 			// bool first_is_less_than_second(const node_type* new_node, node_type* node)
 			// {
@@ -51,15 +56,29 @@ namespace ft
 			{
 				if (node == _end_node)
 					return (true);
-				return (val < node->_content);
+				return (_compare(val, node->_content));
 			}
 
 			bool first_is_greater_than_second(const content_type& val, node_type* node)
 			{
 				if (node == _end_node)
 					return (false);
-				return (val > node->_content);
+				return (_compare(node->_content, val));
 			}
+
+			// bool first_is_less_than_second(const content_type& val, node_type* node)
+			// {
+			// 	if (node == _end_node)
+			// 		return (true);
+			// 	return (val < node->_content);
+			// }
+
+			// bool first_is_greater_than_second(const content_type& val, node_type* node)
+			// {
+			// 	if (node == _end_node)
+			// 		return (false);
+			// 	return (val > node->_content);
+			// }
 
 			// node_type* insert(const node_type* new_node, node_type* node, node_type* parent)
 			// {
@@ -250,9 +269,9 @@ namespace ft
 			node_type* find(const content_type& val)
 			{
 				node_type* tmp = _root->_left_child; // AE this is a workaround while _end_node is _root
-				while (tmp != ft_nullptr && tmp->_content != val)
+				while (tmp != ft_nullptr && (!first_is_less_than_second(val, tmp) && !first_is_greater_than_second(val, tmp)))
 				{
-					if (val < tmp->_content)
+					if (first_is_less_than_second(val, tmp))
 						tmp = tmp->_left_child;
 					else
 						tmp = tmp->_right_child;

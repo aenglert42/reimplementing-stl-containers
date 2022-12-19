@@ -323,12 +323,35 @@ int main(void)
 
 	// Test for iterator new
 	std::map<std::string, int> STD;
-	STD.insert(std::make_pair("abc", 1));
+	STD.insert(std::make_pair("5", 5));
+	STD.insert(std::make_pair("1", 1));
+	STD.insert(std::make_pair("8", 8));
 	std::map<std::string, int>::iterator STDit = STD.begin();
+	std::cout << "STD: " << STDit->first << std::endl;
+	STD.insert(STDit, std::make_pair("4", 4));
+	STDit++;
+	std::cout << "STD: " << STDit->first << std::endl;
+	STD.insert(STDit, std::make_pair("2", 2));
+	STDit = STD.find("5");
 	std::cout << "STD: " << STDit->first << std::endl;
 
 	ft::map<std::string, int> FT;
-	FT.insert(ft::make_pair("abc", 1));
+	FT.insert(ft::make_pair("5", 5));
+	FT.insert(ft::make_pair("1", 1));
+	FT.insert(ft::make_pair("8", 8));
 	ft::map<std::string, int>::iterator FTit = FT.begin();
 	std::cout << "FT: " << FTit->first << std::endl;
+	FT.insert(FTit, ft::make_pair("4", 4));
+	FTit++;
+	std::cout << "FT: " << FTit->first << std::endl;
+	FT.insert(FTit, ft::make_pair("2", 2));
+	// FT.print2D();
+
+	ft::map<std::string, int> FT2;
+	FT2.insert(FT.begin(), FT.end());
+	FT2.print2D();
+
+	// ft::Tree<ft::pair<std::string, int> > newTree;
+	// newTree.insert(ft::make_pair("5", 5));
+	// newTree.find("5");
 }
