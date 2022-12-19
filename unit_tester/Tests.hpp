@@ -510,8 +510,6 @@ void my_map_iterator(TestContainer& container)
 	it++;
 	it++;
 	it--;
-	it--;
-	it--;
 	std::cout << it->first << std::endl;
 	it--;
 	std::cout << it->first << std::endl;
@@ -1150,7 +1148,7 @@ void map_insert(TestContainer& container)
 
   // third insert function version (range insertion):
   ft::map<char,int> anothermap;
-  anothermap.insert(mymap.begin(),mymap.find('c'));
+  anothermap.insert(mymap.begin(), mymap.find('c'));
 
   // showing contents:
   std::cout << "mymap contains:\n";

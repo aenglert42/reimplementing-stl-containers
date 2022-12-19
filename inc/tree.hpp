@@ -45,18 +45,23 @@ namespace ft
 			allocator_type _allocator;
 			value_compare _compare;
 
-			// bool first_is_less_than_second(const node_type* new_node, node_type* node)
-			// {
-			// 	if (node == _end_node)
-			// 		return (true);
-			// 	return (new_node->_content < node->_content);
-			// }
-
 			bool first_is_less_than_second(const content_type& val, node_type* node)
 			{
 				if (node == _end_node)
 					return (true);
 				return (_compare(val, node->_content));
+			}
+
+			bool first_equals_second(const content_type& val, node_type* node)
+			{
+				bool less;
+				bool greater;
+
+				less = _compare(val, node->_content);
+				greater = _compare(node->_content, val);
+				if (less == false && greater == false)
+					return (true);
+				return (false);
 			}
 
 			bool first_is_greater_than_second(const content_type& val, node_type* node)
@@ -65,37 +70,6 @@ namespace ft
 					return (false);
 				return (_compare(node->_content, val));
 			}
-
-			// bool first_is_less_than_second(const content_type& val, node_type* node)
-			// {
-			// 	if (node == _end_node)
-			// 		return (true);
-			// 	return (val < node->_content);
-			// }
-
-			// bool first_is_greater_than_second(const content_type& val, node_type* node)
-			// {
-			// 	if (node == _end_node)
-			// 		return (false);
-			// 	return (val > node->_content);
-			// }
-
-			// node_type* insert(const node_type* new_node, node_type* node, node_type* parent)
-			// {
-			// 	if (node == ft_nullptr)
-			// 		node = new node_type(val, parent); // AE change to alloc
-			// 	else if (first_is_less_than_second(val, node))
-			// 	{
-			// 		node->_left_child = insert(val, node->_left_child, node);
-			// 		node->_parent = parent;
-			// 	}
-			// 	else if (val > node->_content)
-			// 	{
-			// 		node->_right_child = insert(val, node->_right_child, node);
-			// 		node->_parent = parent;
-			// 	}
-			// 	return (node);
-			// }
 
 			node_type* insert(const content_type& val, node_type* node, node_type* parent)
 			{
@@ -106,18 +80,13 @@ namespace ft
 					node->_left_child = insert(val, node->_left_child, node);
 					node->_parent = parent;
 				}
-				else if (val > node->_content)
+				else if (first_is_greater_than_second(val, node))
 				{
 					node->_right_child = insert(val, node->_right_child, node);
 					node->_parent = parent;
 				}
 				return (node);
 			}
-
-			// node_type* insert(const content_type& val, iterator node, node_type* parent)
-			// {
-			// 	return (insert(val, node, parent));
-			// }
 
 			node_type* remove_node_with_one_child(node_type* node, node_type* child)
 			{
@@ -150,9 +119,9 @@ namespace ft
 			{
 				if (node == ft_nullptr)
 					return (ft_nullptr);
-				else if (val < node->_content)
+				else if (first_is_less_than_second(val, node))
 					node->_left_child = erase(val, node->_left_child);
-				else if (val > node->_content)
+				else if (first_is_greater_than_second(val, node))
 					node->_right_child = erase(val, node->_right_child);
 				else
 					node = remove_node(node);
@@ -234,11 +203,6 @@ namespace ft
 				return(iterator(get_rightmost_node(_root)));
 			}
 
-			// void insert(const content_type& val)
-			// {
-			// 	_root = insert(val, _root, ft_nullptr);
-			// }
-
 			ft::pair<iterator,bool> insert(const content_type& val)
 			{
 				bool key_is_new = true;
@@ -248,7 +212,7 @@ namespace ft
 					key_is_new = false;
 				else
 					tmp = find(val);
-				return (ft::make_pair(tmp , key_is_new));
+				return (ft::make_pair(tmp, key_is_new));
 			}
 
 			iterator insert(iterator position, const content_type& val)
@@ -269,7 +233,7 @@ namespace ft
 			node_type* find(const content_type& val)
 			{
 				node_type* tmp = _root->_left_child; // AE this is a workaround while _end_node is _root
-				while (tmp != ft_nullptr && (!first_is_less_than_second(val, tmp) && !first_is_greater_than_second(val, tmp)))
+				while (tmp != ft_nullptr && !first_equals_second(val, tmp))
 				{
 					if (first_is_less_than_second(val, tmp))
 						tmp = tmp->_left_child;
@@ -277,16 +241,6 @@ namespace ft
 						tmp = tmp->_right_child;
 				}
 				return (tmp);
-			}
-
-			void pre(const content_type& val)
-			{
-				std::cout << get_predecessor_node(find2(val))->_content << std::endl;
-			}
-
-			void post(const content_type& val)
-			{
-				std::cout << get_successor_node(find2(val))->_content << std::endl;
 			}
 
 			void print(void)
