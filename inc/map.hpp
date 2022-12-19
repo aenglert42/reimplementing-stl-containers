@@ -263,7 +263,9 @@ namespace ft
 			// (2)
 			size_type erase(const key_type& k)
 			{
-				_tree.erase(k);
+				mapped_type value; // AE change dirty workaround
+				value_type tmp(k, value);
+				_tree.erase(tmp);
 				return (9); // AE remove
 			}
 

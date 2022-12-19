@@ -95,10 +95,27 @@ namespace ft
 				return (child);
 			}
 
+			node_type* update_node_pointers(node_type* old_node, node_type* tmp_node)
+			{
+				// AE nullcheck
+				node_type* new_node = new node_type(tmp_node->_content, old_node->_parent); // AE change to alloc
+				if (old_node->_parent->_left_child == old_node)
+					old_node->_parent->_left_child = new_node;
+				else
+					old_node->_parent->_right_child = new_node;
+				new_node->_left_child = old_node->_left_child;
+				new_node->_right_child = old_node->_right_child;
+				new_node->_left_child->_parent = new_node;
+				new_node->_right_child->_parent = new_node;
+				delete old_node; // AE change to dealloc
+				return (new_node);
+			}
+
 			node_type* remove_node_with_two_children(node_type* node)
 			{
 				node_type* tmp = get_leftmost_node(node->_right_child);
-				node->_content = tmp->_content;
+				node = update_node_pointers(node, tmp);
+				// node->_content = tmp->_content; // AE this has to be done differently (with swap?)
 				node->_right_child = erase(tmp->_content, node->_right_child);
 				return (node);
 			}
@@ -184,6 +201,7 @@ namespace ft
 			~Tree(void)
 			{
 				// delete _root;
+
 				if (_end_node != ft_nullptr)
 				{
 					_allocator.destroy(_end_node);
