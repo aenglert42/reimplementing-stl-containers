@@ -57,6 +57,7 @@ map_constructors, \
 map_insert, \
 map_erase, \
 vector_rational_operators/*
+map_operator_equal, \
 
 */
 

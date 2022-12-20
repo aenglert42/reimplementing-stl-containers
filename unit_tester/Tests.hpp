@@ -1216,7 +1216,13 @@ void map_constructors(TestContainer& container)
 
 	ft::map<char,int> second (first.begin(),first.end());
 
+	first['c']=500;
+	first['d']=700;
+
 	ft::map<char,int> third (second);
+
+	second['a']=100;
+	second['b']=300;
 
 	ft::map<char,int,classcomp> fourth;                 // class as Compare
 
@@ -1231,9 +1237,6 @@ void map_constructors(TestContainer& container)
 	fifth.insert(ft::make_pair('b', 30));
 	fifth.insert(ft::make_pair('c', 50));
 
-	// fifth['a']=10;
-	// fifth['b']=30;
-	// fifth['c']=50;
 
 	ft::map<char,int>::iterator it;
 	for (it=first.begin(); it!=first.end(); ++it)
@@ -1252,5 +1255,24 @@ void map_constructors(TestContainer& container)
 		std::cout << it->first << " => " << it->second << '\n';
 
 //////////////////////////////////
-	EXPECTED_OUTPUT(a => 10\nb => 30\nc => 50\nd => 70\na => 10\nb => 30\nc => 50\nd => 70\na => 10\nb => 30\nc => 50\nd => 70\nc => 50\nb => 30\na => 10\nc => 50\nb => 30\na => 10\n);
+	EXPECTED_OUTPUT(a => 10\nb => 30\nc => 500\nd => 700\na => 100\nb => 300\nc => 50\nd => 70\na => 10\nb => 30\nc => 50\nd => 70\nc => 50\nb => 30\na => 10\nc => 50\nb => 30\na => 10\n);
+}
+
+void map_operator_equal(TestContainer& container)
+{
+  ft::map<char,int> first;
+  ft::map<char,int> second;
+
+  first['x']=8;
+  first['y']=16;
+  first['z']=32;
+
+  second=first;                // second now contains 3 ints
+  first=ft::map<char,int>();  // and first is now empty
+
+  std::cout << "Size of first: " << first.size() << '\n';
+  std::cout << "Size of second: " << second.size() << '\n';
+
+//////////////////////////////////
+	EXPECTED_OUTPUT(Size of first: 0\nSize of second: 3\n);
 }

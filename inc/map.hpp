@@ -141,10 +141,16 @@ namespace ft
 
 		////operator=///////////////////////////////////////////////////////
 			// copy (1)	
-			// map& operator= (const map& x)
-			// {
-
-			// }
+			map& operator=(const map& x)
+			{
+				if (this != &x)
+				{
+					_comp = x._comp;
+					_alloc = x._alloc;
+					_tree = x._tree;
+				}
+				return (*this);
+			}
 
 	//Iterators---------------------------------------------------------------
 		////begin///////////////////////////////////////////////////////
@@ -203,7 +209,7 @@ namespace ft
 		////size///////////////////////////////////////////////////////
 			size_type size() const
 			{
-				return (_tree._size);
+				return (_tree.get_size());
 			}
 
 		////max_size///////////////////////////////////////////////////////
@@ -271,7 +277,11 @@ namespace ft
 			void erase (iterator first, iterator last)
 			{
 				while (last != first)
-					_tree.erase(--last);
+				{
+					iterator tmp = first;
+					first++;
+					_tree.erase(tmp);
+				}
 			}
 
 		////swap///////////////////////////////////////////////////////
@@ -281,10 +291,10 @@ namespace ft
 			// }
 
 		////clear///////////////////////////////////////////////////////
-			// void clear()
-			// {
-
-			// }
+			void clear()
+			{
+				_tree.clear();
+			}
 
 	//Observers---------------------------------------------------------------
 		////key_comp///////////////////////////////////////////////////////

@@ -39,5 +39,12 @@ namespace ft
 		{
 
 		}
+
+		~Node ()
+		{
+			_parent = ft_nullptr;
+			_left_child = ft_nullptr;
+			_right_child = ft_nullptr;
+		}
 	};
 }

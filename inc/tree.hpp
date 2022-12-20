@@ -59,6 +59,8 @@ namespace ft
 				bool less;
 				bool greater;
 
+				if (node == _end_node)
+					return (false);
 				less = _compare(val, node->_content);
 				greater = _compare(node->_content, val);
 				if (less == false && greater == false)
@@ -90,13 +92,6 @@ namespace ft
 				return (node);
 			}
 
-			node_type* remove_node_with_one_child(node_type* node, node_type* child)
-			{
-				child->_parent = node->_parent;
-				delete node; // AE change to dealloc
-				return (child);
-			}
-
 			node_type* update_node_pointers(node_type* old_node, node_type* tmp_node)
 			{
 				// AE nullcheck
@@ -121,10 +116,28 @@ namespace ft
 				return (node);
 			}
 
+			node_type* remove_node_with_one_child(node_type* node, node_type* child)
+			{
+				child->_parent = node->_parent;
+				delete node; // AE change to dealloc
+				return (child);
+			}
+
+			node_type* remove_node_without_children(node_type* node)
+			{
+				// AE maybe implement update parent function
+				if (node->_parent->_left_child == node)
+					node->_parent->_left_child = ft_nullptr;
+				else
+					node->_parent->_right_child = ft_nullptr;
+				delete node; // AE change to dealloc
+				return (ft_nullptr);
+			}
+
 			node_type* remove_node(node_type* node)
 			{
 				if (node->_left_child == ft_nullptr && node->_right_child == ft_nullptr)
-					return(ft_nullptr);
+					return(remove_node_without_children(node));
 				else if (node->_left_child == ft_nullptr)
 					return(remove_node_with_one_child(node, node->_right_child));
 				else if (node->_right_child == ft_nullptr)
@@ -144,6 +157,23 @@ namespace ft
 				else
 					node = remove_node(node);
 				return (node);
+			}
+
+			void delete_from_node_downwards(node_type* node)
+			{
+				if (node == ft_nullptr)
+					return ;
+				if (node->_left_child != ft_nullptr)
+					delete_from_node_downwards(node->_left_child);
+				if (node->_right_child != ft_nullptr)
+					delete_from_node_downwards(node->_right_child);
+
+				// AE maybe implement update parent function
+				if (node->_parent->_left_child == node)
+					node->_parent->_left_child = ft_nullptr;
+				else
+					node->_parent->_right_child = ft_nullptr;
+				delete node; // AE change to dealloc
 			}
 
 			void print(node_type* node)
@@ -183,40 +213,57 @@ namespace ft
 				print2DUtil(root->_left_child, space);
 			}
 		
-		public:
-			Tree(const value_compare& comp = value_compare()) : _root(ft_nullptr), _end_node(ft_nullptr), _allocator(), _compare(comp)
+			void init_tree(void)
 			{
 				_end_node = _allocator.allocate(1);
 				_allocator.construct(_end_node, node_type());
 				_root = _end_node;
 			}
 
+		public:
+			Tree(const value_compare& comp = value_compare()) : _root(ft_nullptr), _end_node(ft_nullptr), _allocator(), _compare(comp)
+			{
+				init_tree();
+			}
+
 			Tree(const content_type& val) : _root(ft_nullptr), _end_node(ft_nullptr), _allocator()
 			{
-				_end_node = _allocator.allocate(1);
-				_allocator.construct(_end_node, node_type());
-				_root = _end_node;
+				init_tree();
 				_root = insert(val, _root, _root);
 			}
 
 			Tree (const Tree& other) : _root(ft_nullptr), _end_node(ft_nullptr), _allocator(other._allocator)
 			{
-				// other.begin();
-				// other.end();
 				iterator first = other.begin();
 				iterator last = other.end();
 
-				_end_node = _allocator.allocate(1);
-				_allocator.construct(_end_node, node_type());
-				_root = _end_node;
+				init_tree();
 				while (first != last)
 					insert(*first++);
+			}
+
+			Tree& operator=(const Tree& other)
+			{
+				if (this != &other)
+				{
+					iterator first = other.begin();
+					iterator last = other.end();
+
+					// init_tree();
+					this->clear();
+					while (first != last)
+						insert(*first++);
+					_allocator = other._allocator;
+					_compare = other._compare;
+					_size = other._size;
+				}
+				return (*this);
 			}
 
 			~Tree(void)
 			{
 				// delete _root;
-
+				clear();
 				if (_end_node != ft_nullptr)
 				{
 					_allocator.destroy(_end_node);
@@ -224,6 +271,11 @@ namespace ft
 				}
 				_root = ft_nullptr;
 				_end_node = ft_nullptr;
+			}
+
+			size_type get_size(void) const
+			{
+				return (_size);
 			}
 
 			iterator begin() const
@@ -251,9 +303,9 @@ namespace ft
 			iterator insert(iterator position, const content_type& val)
 			{
 				(void)position;
-				if (first_is_greater_than_second(val, position.base()))
-					insert(val, position.base(), position.base()->_parent); // AE what if this would be first node? What happens with root / parent?
-				else
+				// if (first_is_greater_than_second(val, position.base())) // AE this needs tuning
+				// 	insert(val, position.base(), position.base()->_parent); // AE what if this would be first node? What happens with root / parent?
+				// else
 					_root = insert(val, _root, ft_nullptr);
 				return (find(val));
 			}
@@ -273,9 +325,14 @@ namespace ft
 				return (ret);
 			}
 
+			void clear(void)
+			{
+				delete_from_node_downwards(_end_node->_left_child);
+			}
+
 			node_type* find(const content_type& val)
 			{
-				node_type* tmp = _root->_left_child; // AE this is a workaround while _end_node is _root
+				node_type* tmp = _root;
 				while (tmp != ft_nullptr && !first_equals_second(val, tmp))
 				{
 					if (first_is_less_than_second(val, tmp))

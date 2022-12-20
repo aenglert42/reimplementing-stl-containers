@@ -105,6 +105,7 @@ int main(void)
 	atexit(my_leaks);
 	#endif
 	//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> vector
+	/*
 	// constructor
 	ft::vector<int> v;
 	v.push_back(5);
@@ -145,9 +146,10 @@ int main(void)
 	for (ft::vector<int>::reverse_iterator it = v.rbegin(); it != v.rend(); ++it)
 		std::cout << *it << std::endl;
 	std::cout << std::endl;
+	*/
 
-	/*
 	//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> tree
+	/*
 	// int
 	ft::Tree<int> tree(5);
 	tree.insert(9);
@@ -322,6 +324,7 @@ int main(void)
 	*/
 
 	// Test for iterator new
+	
 	std::map<std::string, int> STD;
 	STD.insert(std::make_pair("5", 5));
 	STD.insert(std::make_pair("1", 1));
@@ -347,14 +350,26 @@ int main(void)
 	FTit++;
 	std::cout << "FT: " << FTit->first << std::endl;
 	FT.insert(FTit, ft::make_pair("2", 2));
+	std::cout << RED;
 	FT.print2D();
-	std::cout << "erase: " << FT.erase("4") << std::endl;
-	std::cout << "erase: " << FT.erase("4") << std::endl;
+	std::cout << RESET;
+	std::cout << "erased 4? " << FT.erase("4") << std::endl;
+	std::cout << "erased 4? " << FT.erase("4") << std::endl;
+	FT.print2D();
 	FTit = FT.begin();
 	FT.erase(FTit);
+	std::cout << "erased 1" << std::endl;
+	FT.print2D();
 	FTit = FT.begin();
+	std::cout << "FT: " << FTit->first << std::endl;
 	FTit++;
+	std::cout << "FT: " << FTit->first << std::endl;
+	FTit++;
+	std::cout << "FT: " << FTit->first << std::endl;
+	FT.print2D();
 	FT.erase(FTit, FT.end());
+	FT.print2D();
+	FT.clear();
 	FT.print2D();
 
 }
