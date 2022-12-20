@@ -1128,37 +1128,129 @@ void vector_my_erase(TestContainer& container)
 
 void map_insert(TestContainer& container)
 {
-  ft::map<char,int> mymap;
+	ft::map<char,int> mymap;
 
-  // first insert function version (single parameter):
-  mymap.insert ( ft::pair<char,int>('a',100) );
-  mymap.insert ( ft::pair<char,int>('z',200) );
+	// first insert function version (single parameter):
+	mymap.insert ( ft::pair<char,int>('a',100) );
+	mymap.insert ( ft::pair<char,int>('z',200) );
 
-  ft::pair<ft::map<char,int>::iterator,bool> ret;
-  ret = mymap.insert ( ft::pair<char,int>('z',500) );
-  if (ret.second==false) {
-    std::cout << "element 'z' already existed";
-    std::cout << " with a value of " << ret.first->second << '\n';
-  }
+	ft::pair<ft::map<char,int>::iterator,bool> ret;
+	ret = mymap.insert ( ft::pair<char,int>('z',500) );
+	if (ret.second==false) {
+		std::cout << "element 'z' already existed";
+		std::cout << " with a value of " << ret.first->second << '\n';
+	}
 
-  // second insert function version (with hint position):
-  ft::map<char,int>::iterator it = mymap.begin();
-  mymap.insert (it, ft::pair<char,int>('b',300));  // max efficiency inserting
-  mymap.insert (it, ft::pair<char,int>('c',400));  // no max efficiency inserting
+	// second insert function version (with hint position):
+	ft::map<char,int>::iterator it = mymap.begin();
+	mymap.insert (it, ft::pair<char,int>('b',300));  // max efficiency inserting
+	mymap.insert (it, ft::pair<char,int>('c',400));  // no max efficiency inserting
 
-  // third insert function version (range insertion):
-  ft::map<char,int> anothermap;
-  anothermap.insert(mymap.begin(), mymap.find('c'));
+	// third insert function version (range insertion):
+	ft::map<char,int> anothermap;
+	anothermap.insert(mymap.begin(), mymap.find('c'));
 
-  // showing contents:
-  std::cout << "mymap contains:\n";
-  for (it=mymap.begin(); it!=mymap.end(); ++it)
-    std::cout << it->first << " => " << it->second << '\n';
+	// showing contents:
+	std::cout << "mymap contains:\n";
+	for (it=mymap.begin(); it!=mymap.end(); ++it)
+		std::cout << it->first << " => " << it->second << '\n';
 
-  std::cout << "anothermap contains:\n";
-  for (it=anothermap.begin(); it!=anothermap.end(); ++it)
-    std::cout << it->first << " => " << it->second << '\n';
+	std::cout << "anothermap contains:\n";
+	for (it=anothermap.begin(); it!=anothermap.end(); ++it)
+		std::cout << it->first << " => " << it->second << '\n';
 
 //////////////////////////////////
 	EXPECTED_OUTPUT(element 'z' already existed with a value of 200\nmymap contains:\na => 100\nb => 300\nc => 400\nz => 200\nanothermap contains:\na => 100\nb => 300\n);
+}
+
+void map_erase(TestContainer& container)
+{
+	ft::map<char,int> mymap;
+	ft::map<char,int>::iterator it;
+
+	// insert some values:
+	mymap['a']=10;
+	mymap['b']=20;
+	mymap['c']=30;
+	mymap['d']=40;
+	mymap['e']=50;
+	mymap['f']=60;
+	// mymap.insert(ft::make_pair('a', 10));
+	// mymap.insert(ft::make_pair('b', 20));
+	// mymap.insert(ft::make_pair('c', 30));
+	// mymap.insert(ft::make_pair('d', 40));
+	// mymap.insert(ft::make_pair('e', 50));
+	// mymap.insert(ft::make_pair('f', 60));
+
+	it=mymap.find('b');
+	mymap.erase (it);                   // erasing by iterator
+
+	mymap.erase ('c');                  // erasing by key
+
+	it=mymap.find ('e');
+	mymap.erase ( it, mymap.end() );    // erasing by range
+
+	// show content:
+	for (it=mymap.begin(); it!=mymap.end(); ++it)
+		std::cout << it->first << " => " << it->second << '\n';
+
+//////////////////////////////////
+	EXPECTED_OUTPUT(a => 10\nd => 40\n);
+}
+
+bool fncomp (char lhs, char rhs) {return lhs>rhs;}
+
+struct classcomp {
+  bool operator() (const char& lhs, const char& rhs) const
+  {return lhs>rhs;}
+};
+
+void map_constructors(TestContainer& container)
+{
+	ft::map<char,int> first;
+
+	first['a']=10;
+	first['b']=30;
+	first['c']=50;
+	first['d']=70;
+
+	ft::map<char,int> second (first.begin(),first.end());
+
+	ft::map<char,int> third (second);
+
+	ft::map<char,int,classcomp> fourth;                 // class as Compare
+
+	fourth['a']=10;
+	fourth['b']=30;
+	fourth['c']=50;
+
+	bool(*fn_pt)(char,char) = fncomp;
+	ft::map<char,int,bool(*)(char,char)> fifth (fn_pt); // function pointer as Compare
+
+	fifth.insert(ft::make_pair('a', 10));
+	fifth.insert(ft::make_pair('b', 30));
+	fifth.insert(ft::make_pair('c', 50));
+
+	// fifth['a']=10;
+	// fifth['b']=30;
+	// fifth['c']=50;
+
+	ft::map<char,int>::iterator it;
+	for (it=first.begin(); it!=first.end(); ++it)
+		std::cout << it->first << " => " << it->second << '\n';
+
+	for (it=second.begin(); it!=second.end(); ++it)
+		std::cout << it->first << " => " << it->second << '\n';
+
+	for (it=third.begin(); it!=third.end(); ++it)
+		std::cout << it->first << " => " << it->second << '\n';
+
+	for (it=fourth.begin(); it!=fourth.end(); ++it)
+		std::cout << it->first << " => " << it->second << '\n';
+
+	for (it=fifth.begin(); it!=fifth.end(); ++it)
+		std::cout << it->first << " => " << it->second << '\n';
+
+//////////////////////////////////
+	EXPECTED_OUTPUT(a => 10\nb => 30\nc => 50\nd => 70\na => 10\nb => 30\nc => 50\nd => 70\na => 10\nb => 30\nc => 50\nd => 70\nc => 50\nb => 30\na => 10\nc => 50\nb => 30\na => 10\n);
 }

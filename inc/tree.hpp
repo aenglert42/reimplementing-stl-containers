@@ -45,6 +45,7 @@ namespace ft
 			node_type* _end_node;
 			allocator_type _allocator;
 			value_compare _compare;
+			size_type _size;
 
 			bool first_is_less_than_second(const content_type& val, node_type* node)
 			{
@@ -183,7 +184,7 @@ namespace ft
 			}
 		
 		public:
-			Tree(void) : _root(ft_nullptr), _end_node(ft_nullptr), _allocator()
+			Tree(const value_compare& comp = value_compare()) : _root(ft_nullptr), _end_node(ft_nullptr), _allocator(), _compare(comp)
 			{
 				_end_node = _allocator.allocate(1);
 				_allocator.construct(_end_node, node_type());
@@ -196,6 +197,20 @@ namespace ft
 				_allocator.construct(_end_node, node_type());
 				_root = _end_node;
 				_root = insert(val, _root, _root);
+			}
+
+			Tree (const Tree& other) : _root(ft_nullptr), _end_node(ft_nullptr), _allocator(other._allocator)
+			{
+				// other.begin();
+				// other.end();
+				iterator first = other.begin();
+				iterator last = other.end();
+
+				_end_node = _allocator.allocate(1);
+				_allocator.construct(_end_node, node_type());
+				_root = _end_node;
+				while (first != last)
+					insert(*first++);
 			}
 
 			~Tree(void)
@@ -211,12 +226,12 @@ namespace ft
 				_end_node = ft_nullptr;
 			}
 
-			iterator begin()
+			iterator begin() const
 			{
 				return(iterator(get_leftmost_node(_root)));
 			}
 
-			iterator end()
+			iterator end() const
 			{
 				return(iterator(get_rightmost_node(_root)));
 			}

@@ -88,8 +88,8 @@ namespace ft
 
 	//PRIVATE MEMBER VARIABLES
 		private:
-			size_type _size;
-			value_compare _compare;
+			// size_type _size;
+			value_compare _comp;
 			allocator_type _alloc;
 			Tree<value_type, value_compare> _tree;
 
@@ -110,32 +110,34 @@ namespace ft
 		////constructor///////////////////////////////////////////////////////
 			
 			// empty (1)	
-			// explicit map (const key_compare& comp = key_compare(),
-			// 	const allocator_type& alloc = allocator_type())
-			// {
+			explicit map (const key_compare& comp = key_compare(),
+				const allocator_type& alloc = allocator_type()) : _comp(comp), _alloc(alloc), _tree(comp)
+			{
 
-			// }
+			}
 
 			// range (2)	
-			// template <class InputIterator>  map (InputIterator first, InputIterator last,
-			// 	const key_compare& comp = key_compare(),
-			// 	const allocator_type& alloc = allocator_type())
-			// {
-
-			// }
+			template <class InputIterator>
+			map (InputIterator first, InputIterator last,
+				const key_compare& comp = key_compare(),
+				const allocator_type& alloc = allocator_type()) : _comp(comp), _alloc(alloc), _tree()
+			{
+				while (first != last)
+					insert(*first++);
+			}
 
 			// copy (3)	
-			// map (const map& x)
-			// {
+			map (const map& x) : _comp(x._comp), _alloc(x._alloc), _tree(x._tree)
+			{
 
-			// }
+			}
 
 		////destructor///////////////////////////////////////////////////////
 			// ~map()
-			// ~map(void)
-			// {
+			~map(void)
+			{
 
-			// }
+			}
 
 		////operator=///////////////////////////////////////////////////////
 			// copy (1)	
@@ -193,7 +195,7 @@ namespace ft
 		////empty///////////////////////////////////////////////////////
 			bool empty() const
 			{
-				if (_size == 0)
+				if (size() == 0)
 					return (true);
 				return (false);
 			}
@@ -201,7 +203,7 @@ namespace ft
 		////size///////////////////////////////////////////////////////
 			size_type size() const
 			{
-				return (_size);
+				return (_tree._size);
 			}
 
 		////max_size///////////////////////////////////////////////////////
@@ -212,10 +214,11 @@ namespace ft
 
 	//Element access---------------------------------------------------------------
 		////operator[]///////////////////////////////////////////////////////
-			// mapped_type& operator[](const key_type& k)
-			// {
-
-			// }
+			mapped_type& operator[](const key_type& k)
+			{
+				value_type tmp = ft::make_pair(k, mapped_type());
+				return ((*_tree.insert(tmp).first).second);
+			}
 
 		////at///////////////////////////////////////////////////////
 			// mapped_type& at (const key_type& k)
@@ -246,9 +249,6 @@ namespace ft
 			template <class InputIterator>
 			void insert(InputIterator first, InputIterator last)
 			{
-				// iterator hint = begin();
-				// while (first != last)
-				// 	hint = insert(hint, *first++);
 				while (first != last)
 					_tree.insert(*first++);
 			}
@@ -263,8 +263,7 @@ namespace ft
 			// (2)
 			size_type erase(const key_type& k)
 			{
-				mapped_type value; // AE change dirty workaround
-				value_type tmp(k, value);
+				value_type tmp = ft::make_pair(k, mapped_type());
 				return (_tree.erase(tmp));
 			}
 
@@ -304,8 +303,7 @@ namespace ft
 		////find///////////////////////////////////////////////////////
 			iterator find (const key_type& k)
 			{
-				mapped_type value; // AE change dirty workaround
-				value_type tmp(k, value);
+				value_type tmp = ft::make_pair(k, mapped_type());
 				return (_tree.find(tmp));
 			}
 			
