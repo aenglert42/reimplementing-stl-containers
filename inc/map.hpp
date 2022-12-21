@@ -306,10 +306,10 @@ namespace ft
 
 	//Observers---------------------------------------------------------------
 		////key_comp///////////////////////////////////////////////////////
-			// key_compare key_comp() const
-			// {
-
-			// }
+			key_compare key_comp() const
+			{
+				return(key_compare());
+			}
 
 		////value_comp///////////////////////////////////////////////////////
 			// value_compare value_comp() const

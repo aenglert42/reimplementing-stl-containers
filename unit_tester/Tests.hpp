@@ -1513,6 +1513,31 @@ void map_clear(TestContainer& container)
 	EXPECTED_OUTPUT(mymap contains:\nx => 100\ny => 200\nz => 300\nmymap contains:\na => 1101\nb => 2202\n);
 }
 
+void map_key_comp(TestContainer& container)
+{
+	ft::map<char,int> mymap;
+
+	ft::map<char,int>::key_compare mycomp = mymap.key_comp();
+
+	mymap['a']=100;
+	mymap['b']=200;
+	mymap['c']=300;
+
+	std::cout << "mymap contains:\n";
+
+	char highest = mymap.rbegin()->first;     // key value of last element
+
+	ft::map<char,int>::iterator it = mymap.begin();
+	do {
+		std::cout << it->first << " => " << it->second << '\n';
+	} while ( mycomp((*it++).first, highest) );
+
+	std::cout << '\n';
+
+//////////////////////////////////
+	EXPECTED_OUTPUT(mymap contains:\na => 100\nb => 200\nc => 300\n\n);
+}
+
 void map_find(TestContainer& container)
 {
 	ft::map<char,int> mymap;
