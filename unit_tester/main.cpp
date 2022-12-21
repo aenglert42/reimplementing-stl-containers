@@ -62,6 +62,7 @@ map_rend, \
 map_empty, \
 map_size, \
 map_max_size, \
+map_operator_access_element, \
 map_insert, \
 map_erase, \
 vector_rational_operators/*

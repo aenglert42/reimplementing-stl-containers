@@ -1395,3 +1395,22 @@ void map_max_size(TestContainer& container)
 //////////////////////////////////
 	EXPECTED_OUTPUT(The map contains 1000 elements.\n);
 }
+
+void map_operator_access_element(TestContainer& container)
+{
+	ft::map<char,std::string> mymap;
+
+	mymap['a']="an element";
+	mymap['b']="another element";
+	mymap['c']=mymap['b'];
+
+	std::cout << "mymap['a'] is " << mymap['a'] << '\n';
+	std::cout << "mymap['b'] is " << mymap['b'] << '\n';
+	std::cout << "mymap['c'] is " << mymap['c'] << '\n';
+	std::cout << "mymap['d'] is " << mymap['d'] << '\n';
+
+	std::cout << "mymap now contains " << mymap.size() << " elements.\n";
+
+//////////////////////////////////
+	EXPECTED_OUTPUT(mymap['a'] is an element\nmymap['b'] is another element\nmymap['c'] is another element\nmymap['d'] is \nmymap now contains 4 elements.\n);
+}
