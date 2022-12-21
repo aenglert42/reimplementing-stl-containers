@@ -1348,3 +1348,21 @@ void map_rend(TestContainer& container)
 //////////////////////////////////
 	EXPECTED_OUTPUT(z => 300\ny => 200\nx => 100\n);
 }
+
+void map_empty(TestContainer& container)
+{
+	ft::map<char,int> mymap;
+
+	mymap['a']=10;
+	mymap['b']=20;
+	mymap['c']=30;
+
+	while (!mymap.empty())
+	{
+		std::cout << mymap.begin()->first << " => " << mymap.begin()->second << '\n';
+		mymap.erase(mymap.begin());
+	}
+
+//////////////////////////////////
+	EXPECTED_OUTPUT(a => 10\nb => 20\nc => 30\n);
+}

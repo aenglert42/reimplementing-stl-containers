@@ -59,6 +59,7 @@ map_begin, \
 map_end, \
 map_rbegin, \
 map_rend, \
+map_empty, \
 map_insert, \
 map_erase, \
 vector_rational_operators/*
