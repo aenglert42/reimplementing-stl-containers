@@ -1538,6 +1538,27 @@ void map_key_comp(TestContainer& container)
 	EXPECTED_OUTPUT(mymap contains:\na => 100\nb => 200\nc => 300\n\n);
 }
 
+void map_value_comp(TestContainer& container)
+{
+	ft::map<char,int> mymap;
+
+	mymap['x']=1001;
+	mymap['y']=2002;
+	mymap['z']=3003;
+
+	std::cout << "mymap contains:\n";
+
+	ft::pair<char,int> highest = *mymap.rbegin();          // last element
+
+	ft::map<char,int>::iterator it = mymap.begin();
+	do {
+		std::cout << it->first << " => " << it->second << '\n';
+	} while ( mymap.value_comp()(*it++, highest) );
+
+//////////////////////////////////
+	EXPECTED_OUTPUT(mymap contains:\nx => 1001\ny => 2002\nz => 3003\n);
+}
+
 void map_find(TestContainer& container)
 {
 	ft::map<char,int> mymap;

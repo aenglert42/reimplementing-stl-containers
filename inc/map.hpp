@@ -312,10 +312,10 @@ namespace ft
 			}
 
 		////value_comp///////////////////////////////////////////////////////
-			// value_compare value_comp() const
-			// {
-
-			// }
+			value_compare value_comp() const
+			{
+				return(value_compare());
+			}
 
 	//Operations---------------------------------------------------------------
 		////find///////////////////////////////////////////////////////

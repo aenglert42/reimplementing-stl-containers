@@ -69,6 +69,7 @@ map_erase, \
 map_swap, \
 map_clear, \
 map_key_comp, \
+map_value_comp, \
 map_find, \
 vector_rational_operators/*
 
