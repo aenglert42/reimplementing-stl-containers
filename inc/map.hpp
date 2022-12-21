@@ -291,10 +291,12 @@ namespace ft
 			}
 
 		////swap///////////////////////////////////////////////////////
-			// void swap (map& x)
-			// {
-
-			// }
+			void swap (map& x) // AE this could be optimized by only swapping the tree content
+			{
+				map tmp = x;
+				x = *this;
+				*this = tmp;
+			}
 
 		////clear///////////////////////////////////////////////////////
 			void clear()

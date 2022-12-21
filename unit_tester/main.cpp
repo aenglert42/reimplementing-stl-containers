@@ -66,6 +66,7 @@ map_operator_access_element, \
 map_at, \
 map_insert, \
 map_erase, \
+map_swap, \
 map_find, \
 vector_rational_operators/*
 
