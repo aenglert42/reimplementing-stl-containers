@@ -1366,3 +1366,16 @@ void map_empty(TestContainer& container)
 //////////////////////////////////
 	EXPECTED_OUTPUT(a => 10\nb => 20\nc => 30\n);
 }
+
+void map_size(TestContainer& container)
+{
+	ft::map<char,int> mymap;
+	mymap['a']=101;
+	mymap['b']=202;
+	mymap['c']=302;
+
+	std::cout << "mymap.size() is " << mymap.size() << '\n';
+
+//////////////////////////////////
+	EXPECTED_OUTPUT(mymap.size() is 3\n);
+}
