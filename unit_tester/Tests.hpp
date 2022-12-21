@@ -1379,3 +1379,19 @@ void map_size(TestContainer& container)
 //////////////////////////////////
 	EXPECTED_OUTPUT(mymap.size() is 3\n);
 }
+
+void map_max_size(TestContainer& container)
+{
+	int i;
+	ft::map<int,int> mymap;
+
+	if (mymap.max_size()>1000)
+	{
+		for (i=0; i<1000; i++) mymap[i]=0;
+		std::cout << "The map contains 1000 elements.\n";
+	}
+	else std::cout << "The map could not hold 1000 elements.\n";
+
+//////////////////////////////////
+	EXPECTED_OUTPUT(The map contains 1000 elements.\n);
+}
