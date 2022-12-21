@@ -9,8 +9,8 @@ is_integral, \
 iterator_traits, \
 less, \
 make_pair, \
-my_map_iterator, \
 my_vector_iterator, \
+my_map_iterator, \
 pair, \
 pair_delete_old_pointer, \
 pair_operator_equal, \
@@ -63,8 +63,10 @@ map_empty, \
 map_size, \
 map_max_size, \
 map_operator_access_element, \
+map_at, \
 map_insert, \
 map_erase, \
+map_find, \
 vector_rational_operators/*
 
 */

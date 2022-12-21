@@ -514,6 +514,20 @@ void my_map_iterator(TestContainer& container)
 	it--;
 	std::cout << it->first << std::endl;
 
+	// // const AE test const
+	// const ft::map<std::string, int> myConstMap (myMap);
+	// ft::map<std::string, int>::const_iterator cit = myConstMap.begin();
+	// cit--;
+	// cit--;
+	// std::cout << cit->first << std::endl;
+	// cit = myConstMap.end();
+	// cit++;
+	// cit++;
+	// cit--;
+	// std::cout << cit->first << std::endl;
+	// cit--;
+	// std::cout << cit->first << std::endl;
+
 //////////////////////////////////
 	EXPECTED_OUTPUT(1\n8\n5\n);
 }
@@ -1413,4 +1427,65 @@ void map_operator_access_element(TestContainer& container)
 
 //////////////////////////////////
 	EXPECTED_OUTPUT(mymap['a'] is an element\nmymap['b'] is another element\nmymap['c'] is another element\nmymap['d'] is \nmymap now contains 4 elements.\n);
+}
+
+void map_at(TestContainer& container)
+{
+	// ft::map<std::string,int> mymap = {
+	// 				{ "alpha", 0 },
+	// 				{ "beta", 0 },
+	// 				{ "gamma", 0 } };
+
+	std::map<std::string,int> mymap;
+	mymap["alpha"]=0;
+	mymap["beta"]=0;
+	mymap["gamma"]=0;
+
+	mymap.at("alpha") = 10;
+	mymap.at("beta") = 20;
+	mymap.at("gamma") = 30;
+
+	for (auto& x: mymap) {
+		std::cout << x.first << ": " << x.second << '\n';
+	}
+	try{
+		mymap.at("lambda") = 30;
+	}
+	catch (const std::out_of_range& oor) {
+		std::cout << "exeption caught: " << oor.what() << '\n';
+	}
+
+// const AE test const
+	// const std::map<std::string,int> myconstmap(mymap);
+	// int test = myconstmap.at("alpha");
+	// std::cout << test << '\n';
+
+//////////////////////////////////
+	EXPECTED_OUTPUT(alpha: 10\nbeta: 20\ngamma: 30\nexeption caught: map::at\n10\n);
+}
+
+void map_find(TestContainer& container)
+{
+	ft::map<char,int> mymap;
+	ft::map<char,int>::iterator it;
+
+	mymap['a']=50;
+	mymap['b']=100;
+	mymap['c']=150;
+	mymap['d']=200;
+
+	it = mymap.find('b');
+	if (it != mymap.end())
+		mymap.erase (it);
+
+	// print content:
+	std::cout << "elements in mymap:" << '\n';
+	std::cout << "a => " << mymap.find('a')->second << '\n';
+	std::cout << "c => " << mymap.find('c')->second << '\n';
+	std::cout << "d => " << mymap.find('d')->second << '\n';
+	if (mymap.find('b') == mymap.end())
+		std::cout << "'b' not in mymap" << '\n';
+
+//////////////////////////////////
+	EXPECTED_OUTPUT(elements in mymap:\na => 50\nc => 150\nd => 200\n'b' not in mymap\n);
 }

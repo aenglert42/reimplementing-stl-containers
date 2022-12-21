@@ -227,15 +227,21 @@ namespace ft
 			}
 
 		////at///////////////////////////////////////////////////////
-			// mapped_type& at (const key_type& k)
-			// {
-
-			// }
+			mapped_type& at (const key_type& k)
+			{
+				iterator tmp = find(k);
+				if (tmp == end())
+					throw std::out_of_range("map::at");
+				return (tmp->second);
+			}
 			
-			// const mapped_type& at (const key_type& k) const
-			// {
-
-			// }
+			const mapped_type& at (const key_type& k) const
+			{
+				const_iterator tmp= find(k);
+				if (tmp == end())
+					throw std::out_of_range("map::at");
+				return (tmp->second);
+			}
 
 	//Modifiers---------------------------------------------------------------
 		////insert///////////////////////////////////////////////////////
@@ -314,13 +320,22 @@ namespace ft
 			iterator find (const key_type& k)
 			{
 				value_type tmp = ft::make_pair(k, mapped_type());
-				return (_tree.find(tmp));
+				iterator ret = _tree.find(tmp);
+
+				if (ret == iterator(ft_nullptr)) // AE this should be handled in tree already
+					return (end());
+				return (ret);
 			}
 			
-			// const_iterator find (const key_type& k) const
-			// {
+			const_iterator find (const key_type& k) const
+			{
+				value_type tmp = ft::make_pair(k, mapped_type());
+				const_iterator ret = _tree.find(tmp);
 
-			// }
+				if (ret == iterator(ft_nullptr)) // AE this should be handled in tree already
+					return (end());
+				return (ret);
+			}
 
 		////count///////////////////////////////////////////////////////
 			// size_type count (const key_type& k) const

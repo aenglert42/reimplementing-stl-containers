@@ -47,14 +47,14 @@ namespace ft
 			allocator_type _allocator;
 			value_compare _compare;
 
-			bool first_is_less_than_second(const content_type& val, node_type* node)
+			bool first_is_less_than_second(const content_type& val, node_type* node) const
 			{
 				if (node == _end_node)
 					return (true);
 				return (_compare(val, node->_content));
 			}
 
-			bool first_equals_second(const content_type& val, node_type* node)
+			bool first_equals_second(const content_type& val, node_type* node) const
 			{
 				bool less;
 				bool greater;
@@ -345,7 +345,7 @@ namespace ft
 				delete_from_node_downwards(_end_node->_left_child);
 			}
 
-			node_type* find(const content_type& val)
+			node_type* find(const content_type& val) const
 			{
 				node_type* tmp = _root;
 				while (tmp != ft_nullptr && !first_equals_second(val, tmp))
@@ -355,6 +355,8 @@ namespace ft
 					else
 						tmp = tmp->_right_child;
 				}
+				// if (tmp == ft_nullptr)
+				// 	tmp = _end_node;
 				return (tmp);
 			}
 
