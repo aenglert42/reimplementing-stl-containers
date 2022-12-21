@@ -1282,3 +1282,69 @@ void map_operator_equal(TestContainer& container)
 //////////////////////////////////
 	EXPECTED_OUTPUT(Size of first: 0\nSize of second: 3\nx => 8\ny => 16\nz => 32\n);
 }
+
+void map_begin(TestContainer& container)
+{
+	ft::map<char,int> mymap;
+
+	mymap['b'] = 100;
+	mymap['a'] = 200;
+	mymap['c'] = 300;
+
+	// show content:
+	for (ft::map<char,int>::iterator it=mymap.begin(); it!=mymap.end(); ++it)
+		std::cout << it->first << " => " << it->second << '\n';
+
+//////////////////////////////////
+	EXPECTED_OUTPUT(a => 200\nb => 100\nc => 300\n);
+}
+
+void map_end(TestContainer& container)
+{
+	ft::map<char,int> mymap;
+
+	mymap['b'] = 100;
+	mymap['a'] = 200;
+	mymap['c'] = 300;
+
+	// show content:
+	for (ft::map<char,int>::iterator it=mymap.begin(); it!=mymap.end(); ++it)
+		std::cout << it->first << " => " << it->second << '\n';
+
+//////////////////////////////////
+	EXPECTED_OUTPUT(a => 200\nb => 100\nc => 300\n);
+}
+
+void map_rbegin(TestContainer& container)
+{
+	ft::map<char,int> mymap;
+
+	mymap['x'] = 100;
+	mymap['y'] = 200;
+	mymap['z'] = 300;
+
+	// show content:
+	ft::map<char,int>::reverse_iterator rit;
+	for (rit=mymap.rbegin(); rit!=mymap.rend(); ++rit)
+		std::cout << rit->first << " => " << rit->second << '\n';
+
+//////////////////////////////////
+	EXPECTED_OUTPUT(z => 300\ny => 200\nx => 100\n);
+}
+
+void map_rend(TestContainer& container)
+{
+	ft::map<char,int> mymap;
+
+	mymap['x'] = 100;
+	mymap['y'] = 200;
+	mymap['z'] = 300;
+
+	// show content:
+	ft::map<char,int>::reverse_iterator rit;
+	for (rit=mymap.rbegin(); rit!=mymap.rend(); ++rit)
+		std::cout << rit->first << " => " << rit->second << '\n';
+
+//////////////////////////////////
+	EXPECTED_OUTPUT(z => 300\ny => 200\nx => 100\n);
+}

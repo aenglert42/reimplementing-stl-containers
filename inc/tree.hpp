@@ -288,9 +288,19 @@ namespace ft
 				return(iterator(get_leftmost_node(_root)));
 			}
 
+			reverse_iterator rbegin() const
+			{
+				return (reverse_iterator(end()));
+			}
+
 			iterator end() const
 			{
 				return(iterator(get_rightmost_node(_root)));
+			}
+
+			reverse_iterator rend() const
+			{
+				return (reverse_iterator(begin()));
 			}
 
 			ft::pair<iterator,bool> insert(const content_type& val)

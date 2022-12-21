@@ -55,6 +55,10 @@ vector_get_allocator, \
 vector_no_member_swap, \
 map_constructors, \
 map_operator_equal, \
+map_begin, \
+map_end, \
+map_rbegin, \
+map_rend, \
 map_insert, \
 map_erase, \
 vector_rational_operators/*
