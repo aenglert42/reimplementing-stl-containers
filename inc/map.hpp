@@ -293,7 +293,7 @@ namespace ft
 		////swap///////////////////////////////////////////////////////
 			void swap (map& x) // AE this could be optimized by only swapping the tree content
 			{
-				map tmp = x;
+				map tmp (x);
 				x = *this;
 				*this = tmp;
 			}

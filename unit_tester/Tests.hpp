@@ -1489,6 +1489,30 @@ void map_swap(TestContainer& container)
 	EXPECTED_OUTPUT(foo contains:\na => 11\nb => 22\nc => 33\nbar contains:\nx => 100\ny => 200\n);
 }
 
+void map_clear(TestContainer& container)
+{
+	ft::map<char,int> mymap;
+
+	mymap['x']=100;
+	mymap['y']=200;
+	mymap['z']=300;
+
+	std::cout << "mymap contains:\n";
+	for (ft::map<char,int>::iterator it=mymap.begin(); it!=mymap.end(); ++it)
+		std::cout << it->first << " => " << it->second << '\n';
+
+	mymap.clear();
+	mymap['a']=1101;
+	mymap['b']=2202;
+
+	std::cout << "mymap contains:\n";
+	for (ft::map<char,int>::iterator it=mymap.begin(); it!=mymap.end(); ++it)
+		std::cout << it->first << " => " << it->second << '\n';
+
+//////////////////////////////////
+	EXPECTED_OUTPUT(mymap contains:\nx => 100\ny => 200\nz => 300\nmymap contains:\na => 1101\nb => 2202\n);
+}
+
 void map_find(TestContainer& container)
 {
 	ft::map<char,int> mymap;
