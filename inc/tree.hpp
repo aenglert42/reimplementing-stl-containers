@@ -41,11 +41,11 @@ namespace ft
 			typedef std::size_t									size_type;
 
 		private:
+			size_type _size;
 			node_type* _root;
 			node_type* _end_node;
 			allocator_type _allocator;
 			value_compare _compare;
-			size_type _size;
 
 			bool first_is_less_than_second(const content_type& val, node_type* node)
 			{
@@ -78,7 +78,10 @@ namespace ft
 			node_type* insert(const content_type& val, node_type* node, node_type* parent)
 			{
 				if (node == ft_nullptr)
+				{
 					node = new node_type(val, parent); // AE change to alloc
+					_size++;
+				}
 				else if (first_is_less_than_second(val, node))
 				{
 					node->_left_child = insert(val, node->_left_child, node);
@@ -120,6 +123,7 @@ namespace ft
 			{
 				child->_parent = node->_parent;
 				delete node; // AE change to dealloc
+				_size--;
 				return (child);
 			}
 
@@ -131,6 +135,7 @@ namespace ft
 				else
 					node->_parent->_right_child = ft_nullptr;
 				delete node; // AE change to dealloc
+				_size--;
 				return (ft_nullptr);
 			}
 
@@ -221,18 +226,18 @@ namespace ft
 			}
 
 		public:
-			Tree(const value_compare& comp = value_compare()) : _root(ft_nullptr), _end_node(ft_nullptr), _allocator(), _compare(comp)
+			Tree(const value_compare& comp = value_compare()) : _size(0), _root(ft_nullptr), _end_node(ft_nullptr), _allocator(), _compare(comp)
 			{
 				init_tree();
 			}
 
-			Tree(const content_type& val) : _root(ft_nullptr), _end_node(ft_nullptr), _allocator()
+			Tree(const content_type& val) : _size(0), _root(ft_nullptr), _end_node(ft_nullptr), _allocator()
 			{
 				init_tree();
 				_root = insert(val, _root, _root);
 			}
 
-			Tree (const Tree& other) : _root(ft_nullptr), _end_node(ft_nullptr), _allocator(other._allocator)
+			Tree (const Tree& other) : _size(other._size), _root(ft_nullptr), _end_node(ft_nullptr), _allocator(other._allocator)
 			{
 				iterator first = other.begin();
 				iterator last = other.end();

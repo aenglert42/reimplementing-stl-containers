@@ -1260,19 +1260,25 @@ void map_constructors(TestContainer& container)
 
 void map_operator_equal(TestContainer& container)
 {
-  ft::map<char,int> first;
-  ft::map<char,int> second;
+	ft::map<char,int> first;
+	ft::map<char,int> second;
 
-  first['x']=8;
-  first['y']=16;
-  first['z']=32;
+	first['x']=8;
+	first['y']=16;
+	first['z']=32;
 
-  second=first;                // second now contains 3 ints
-  first=ft::map<char,int>();  // and first is now empty
+	second=first;                // second now contains 3 ints
+	first=ft::map<char,int>();  // and first is now empty
 
-  std::cout << "Size of first: " << first.size() << '\n';
-  std::cout << "Size of second: " << second.size() << '\n';
+	ft::map<char,int>::iterator it;
+	std::cout << "Size of first: " << first.size() << '\n';
+	for (it=first.begin(); it!=first.end(); ++it)
+		std::cout << it->first << " => " << it->second << '\n';
+
+	std::cout << "Size of second: " << second.size() << '\n';
+	for (it=second.begin(); it!=second.end(); ++it)
+		std::cout << it->first << " => " << it->second << '\n';
 
 //////////////////////////////////
-	EXPECTED_OUTPUT(Size of first: 0\nSize of second: 3\n);
+	EXPECTED_OUTPUT(Size of first: 0\nSize of second: 3\nx => 8\ny => 16\nz => 32\n);
 }
