@@ -1685,3 +1685,43 @@ void map_equal_range(TestContainer& container)
 //////////////////////////////////
 	EXPECTED_OUTPUT(lower bound points to: 'b' => 20\nupper bound points to: 'c' => 30\n);
 }
+
+void map_lexicographical_compares(TestContainer& container)
+{
+		ft::map<int, char> alice;
+		alice.insert(ft::make_pair(1, 'a'));
+		alice.insert(ft::make_pair(2, 'b'));
+		alice.insert(ft::make_pair(3, 'c'));
+		ft::map<int, char> bob;
+		bob.insert(ft::make_pair(7, 'Z'));
+		bob.insert(ft::make_pair(8, 'Y'));
+		bob.insert(ft::make_pair(9, 'X'));
+		bob.insert(ft::make_pair(10, 'W'));
+		ft::map<int, char> eve;
+		eve.insert(ft::make_pair(1, 'a'));
+		eve.insert(ft::make_pair(2, 'b'));
+		eve.insert(ft::make_pair(3, 'c'));
+	
+		std::cout << std::boolalpha;
+	
+		// Compare non equal containers
+		std::cout << "alice == bob returns " << (alice == bob) << '\n';
+		std::cout << "alice != bob returns " << (alice != bob) << '\n';
+		std::cout << "alice < bob returns " << (alice < bob) << '\n';
+		std::cout << "alice <= bob returns " << (alice <= bob) << '\n';
+		std::cout << "alice > bob returns " << (alice > bob) << '\n';
+		std::cout << "alice >= bob returns " << (alice >= bob) << '\n';
+	
+		std::cout << '\n';
+	
+		// Compare equal containers
+		std::cout << "alice == eve returns " << (alice == eve) << '\n';
+		std::cout << "alice != eve returns " << (alice != eve) << '\n';
+		std::cout << "alice < eve returns " << (alice < eve) << '\n';
+		std::cout << "alice <= eve returns " << (alice <= eve) << '\n';
+		std::cout << "alice > eve returns " << (alice > eve) << '\n';
+		std::cout << "alice >= eve returns " << (alice >= eve) << '\n';
+
+//////////////////////////////////
+	EXPECTED_OUTPUT(alice == bob returns false\nalice != bob returns true\nalice < bob returns true\nalice <= bob returns true\nalice > bob returns false\nalice >= bob returns false\n\nalice == eve returns true\nalice != eve returns false\nalice < eve returns false\nalice <= eve returns true\nalice > eve returns false\nalice >= eve returns true\n);
+}

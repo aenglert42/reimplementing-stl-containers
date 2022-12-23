@@ -75,6 +75,7 @@ map_count, \
 map_lower_bound, \
 map_upper_bound, \
 map_equal_range, \
+map_lexicographical_compares, \
 vector_rational_operators/*
 
 */
