@@ -514,7 +514,7 @@ void my_map_iterator(TestContainer& container)
 	it--;
 	std::cout << it->first << std::endl;
 
-	// const iterator
+	// const_iterator
 	const ft::map<std::string, int> myConstMap (myMap);
 	ft::map<std::string, int>::const_iterator cit = myConstMap.begin();
 	cit--;
@@ -528,8 +528,18 @@ void my_map_iterator(TestContainer& container)
 	cit--;
 	std::cout << cit->first << std::endl;
 
+	// reverse iterator
+	ft::map<std::string, int>::reverse_iterator rit = myMap.rend();
+	rit++;
+	std::cout << rit->first << std::endl;
+
+	// reverse const_iterator
+	ft::map<std::string, int>::const_reverse_iterator crit = myConstMap.rend();
+	rit++;
+	std::cout << crit->first << std::endl;
+
 //////////////////////////////////
-	EXPECTED_OUTPUT(1\n8\n5\n1\n8\n5\n);
+	EXPECTED_OUTPUT(1\n8\n5\n1\n8\n5\n1\n1\n);
 }
 
 void my_vector_iterator(TestContainer& container)
