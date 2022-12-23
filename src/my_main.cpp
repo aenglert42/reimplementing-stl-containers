@@ -324,7 +324,7 @@ int main(void)
 	*/
 
 	// Test for iterator new
-	
+	/*
 	std::map<std::string, int> STD;
 	STD.insert(std::make_pair("5", 5));
 	STD.insert(std::make_pair("1", 1));
@@ -371,5 +371,43 @@ int main(void)
 	FT.print2D();
 	FT.clear();
 	FT.print2D();
+	*/
 
+	// const Test
+
+	std::map<std::string, int> stdMap;
+	stdMap.insert(std::make_pair("2", 2));
+	// std::map<const std::string, int> stdMapConstNon(stdMap);
+	// std::map<std::string, const int> stdMapNonConst(stdMap);
+	// std::map<const std::string, const int> stdMapConstConst(stdMap);
+	// const std::map<const std::string, int> stdConstMapConstNon(stdMap);
+	// const std::map<std::string, const int> stdConstMapNonConst(stdMap);
+	const std::map<std::string, int> stdConstMapNonNon(stdMap);
+	// const std::map<const std::string, const int> stdConstMapConstConst(stdMap);
+	std::map<std::string, int>::const_iterator stdConstMapConstIt = stdConstMapNonNon.begin();
+	// std::map<std::string, int>::iterator stdConstMapIt = stdConstMapConstIt;
+	// (void)stdConstMapIt;
+	(void)stdConstMapConstIt;
+
+	// int i = 2;
+	// const int* ptr = &i;
+	// ptr++;
+	// *ptr = 1;
+
+	// int i2 = 2;
+	// int* const ptr2 = &i2;
+	// ptr2++;
+	// *ptr2 = 1;
+
+	ft::map<std::string, int> ftMap;
+	ftMap.insert(ft::make_pair("2", 2));
+	// // ft::map<const std::string, int> ftMapConstNon(ftMap);
+	// // ft::map<std::string, const int> ftMapNonConst(ftMap);
+	// // ft::map<const std::string, const int> ftMapConstConst(ftMap);
+	// // const ft::map<const std::string, int> ftConstMapConstNon(ftMap);
+	// // const ft::map<std::string, const int> ftConstMapNonConst(ftMap);
+	const ft::map<std::string, int> ftConstMapNonNon(ftMap);
+	// // const ft::map<const std::string, const int> ftConstMapConstConst(ftMap);
+	ft::map<std::string, int>::const_iterator ftConstMapConstIt = ftConstMapNonNon.begin();
+	(void)ftConstMapConstIt;
 }

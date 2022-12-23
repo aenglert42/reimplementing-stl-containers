@@ -71,6 +71,7 @@ map_clear, \
 map_key_comp, \
 map_value_comp, \
 map_find, \
+map_count, \
 vector_rational_operators/*
 
 */

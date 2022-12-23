@@ -9,7 +9,7 @@
 namespace ft
 {
 	template <typename T>
-	Node<T>* get_leftmost_node(Node<T>* node)
+	void* get_leftmost_node(Node<T>* node)
 	{
 		Node<T>* current = node;
 
@@ -19,7 +19,7 @@ namespace ft
 	}
 
 	template <typename T>
-	Node<T>* get_rightmost_node(Node<T>* node)
+	void* get_rightmost_node(Node<T>* node)
 	{
 		Node<T>* current = node;
 
@@ -34,7 +34,7 @@ namespace ft
 		if (node == ft_nullptr)
 			return (ft_nullptr);
 		if (node->_right_child != ft_nullptr)
-			return (get_leftmost_node(node->_right_child));
+			return (static_cast<Node<T>*>(get_leftmost_node(node->_right_child)));
 		
 		Node<T>* current = node->_parent;
 		while (current != ft_nullptr && node == current->_right_child)
@@ -70,7 +70,7 @@ namespace ft
 			return (false);
 		if (node->_right_child != ft_nullptr)
 		{
-			tmp = get_leftmost_node(node->_right_child);
+			tmp = static_cast<Node<T>*>(get_leftmost_node(node->_right_child));
 			if (tmp == ft_nullptr)
 				return (false);
 			else
@@ -148,10 +148,10 @@ namespace ft
 				}
 
 			////non-const to const///////////////////////////////////////////////////////
-				operator TreeIterator<const Tree>() const
-				{
-					return (TreeIterator<const Tree>(base()));
-				}
+				// operator TreeIterator<const Tree>() const
+				// {
+				// 	return (TreeIterator<const Tree>(base()));
+				// }
 
 			////destructor///////////////////////////////////////////////////////
 				~TreeIterator(void)

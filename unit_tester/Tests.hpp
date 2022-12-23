@@ -1584,3 +1584,25 @@ void map_find(TestContainer& container)
 //////////////////////////////////
 	EXPECTED_OUTPUT(elements in mymap:\na => 50\nc => 150\nd => 200\n'b' not in mymap\n);
 }
+
+void map_count(TestContainer& container)
+{
+	std::map<char,int> mymap;
+	char c;
+
+	mymap ['a']=101;
+	mymap ['c']=202;
+	mymap ['f']=303;
+
+	for (c='a'; c<'h'; c++)
+	{
+		std::cout << c;
+		if (mymap.count(c)>0)
+		std::cout << " is an element of mymap.\n";
+		else 
+		std::cout << " is not an element of mymap.\n";
+	}
+
+//////////////////////////////////
+	EXPECTED_OUTPUT(a is an element of mymap.\nb is not an element of mymap.\nc is an element of mymap.\nd is not an element of mymap.\ne is not an element of mymap.\nf is an element of mymap.\ng is not an element of mymap.\n);
+}

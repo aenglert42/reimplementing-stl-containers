@@ -36,6 +36,7 @@ namespace ft
 			typedef typename node_type::allocator_type			allocator_type;
 			typedef TreeIterator<content_type>					iterator;
 			typedef TreeIterator<const content_type>			const_iterator;
+			// typedef const TreeIterator<content_type>			const_iterator; // AE check this out might be solution for const_iterator issue
 			typedef ft::reverse_iterator<iterator>				reverse_iterator;
 			typedef ft::reverse_iterator<const_iterator>		const_reverse_iterator;
 			typedef std::size_t									size_type;
@@ -239,8 +240,8 @@ namespace ft
 
 			Tree (const Tree& other) : _size(other._size), _root(ft_nullptr), _end_node(ft_nullptr), _allocator(other._allocator)
 			{
-				iterator first = other.begin();
-				iterator last = other.end();
+				const_iterator first = other.begin();
+				const_iterator last = other.end();
 
 				init_tree();
 				while (first != last)
@@ -283,9 +284,17 @@ namespace ft
 				return (_size);
 			}
 
-			iterator begin() const
+			iterator begin()
 			{
 				return(iterator(get_leftmost_node(_root)));
+			}
+
+			const_iterator begin() const
+			{
+				// Node<const content_type>* tmp = get_leftmost_node(_root);
+				// return(const_iterator(tmp));
+				// return(const_iterator(get_leftmost_node(_root)));
+				return(const_iterator(static_cast<Node<const content_type>*>(get_leftmost_node(_root))));
 			}
 
 			reverse_iterator rbegin() const
@@ -293,9 +302,17 @@ namespace ft
 				return (reverse_iterator(end()));
 			}
 
-			iterator end() const
+			iterator end()
 			{
-				return(iterator(get_rightmost_node(_root)));
+				return(get_rightmost_node(_root));
+			}
+
+			const_iterator end() const
+			{
+				// Node<const content_type>* tmp = get_rightmost_node(_root);
+				// return(const_iterator(tmp));
+				// return(const_iterator(get_rightmost_node(_root)));
+				return(const_iterator(static_cast<Node<const content_type>*>(get_leftmost_node(_root))));
 			}
 
 			reverse_iterator rend() const
