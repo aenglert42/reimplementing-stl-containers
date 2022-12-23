@@ -1119,7 +1119,7 @@ static void	checkErase(ft::vector<std::string> const &vct,
 	std::cout << "[" << i++ << "] " << "erase: " << it - vct.begin() << std::endl;
 }
 
-void vector_my_erase(TestContainer& container)
+void vector_my_erase(TestContainer& container) // AE Problem is probably iterator + n
 {
 	ft::vector<std::string> vct(10);
 
@@ -1597,7 +1597,7 @@ void map_find(TestContainer& container)
 
 void map_count(TestContainer& container)
 {
-	std::map<char,int> mymap;
+	ft::map<char,int> mymap;
 	char c;
 
 	mymap ['a']=101;
@@ -1615,4 +1615,28 @@ void map_count(TestContainer& container)
 
 //////////////////////////////////
 	EXPECTED_OUTPUT(a is an element of mymap.\nb is not an element of mymap.\nc is an element of mymap.\nd is not an element of mymap.\ne is not an element of mymap.\nf is an element of mymap.\ng is not an element of mymap.\n);
+}
+
+void map_lower_bound(TestContainer& container)
+{
+	// ft::map<char,int> mymap;
+	// ft::map<char,int>::iterator itlow,itup;
+
+	// mymap['a']=20;
+	// mymap['b']=40;
+	// mymap['c']=60;
+	// mymap['d']=80;
+	// mymap['e']=100;
+
+	// itlow=mymap.lower_bound ('b');  // itlow points to b
+	// itup=mymap.upper_bound ('d');   // itup points to e (not d!)
+
+	// mymap.erase(itlow,itup);        // erases [itlow,itup)
+
+	// // print content:
+	// for (ft::map<char,int>::iterator it=mymap.begin(); it!=mymap.end(); ++it)
+	// 	std::cout << it->first << " => " << it->second << '\n';
+
+//////////////////////////////////
+	EXPECTED_OUTPUT(a => 20\ne => 100\n);
 }

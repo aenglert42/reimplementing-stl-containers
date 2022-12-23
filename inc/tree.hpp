@@ -23,8 +23,10 @@
 
 namespace ft
 {
-	template <class content_type,
-	class Compare = ft::less<content_type> >
+	template <class content_type, // AE give key and map content_type to key
+	class key_type = content_type,
+	class Compare = ft::less<content_type> > // AE this will be sorted wrong for pair -> no, because will get overwritten by map
+	// class GetKey = ft::identity<content_type>, identity returns what it gets via argument
 	// class Alloc = typename std::allocator<content_type> > // AE build this in later
 	class Tree
 	{
@@ -69,7 +71,7 @@ namespace ft
 				return (false);
 			}
 
-			bool first_is_greater_than_second(const content_type& val, node_type* node)
+			bool first_is_greater_than_second(const content_type& val, node_type* node) const
 			{
 				if (node == _end_node)
 					return (false);
@@ -364,7 +366,7 @@ namespace ft
 				delete_from_node_downwards(_end_node->_left_child);
 			}
 
-			node_type* find(const content_type& val) const
+			node_type* find(const content_type& val) const // AE look for key_type instead of content_type
 			{
 				node_type* tmp = _root;
 				while (tmp != ft_nullptr && !first_equals_second(val, tmp))
@@ -374,8 +376,47 @@ namespace ft
 					else
 						tmp = tmp->_right_child;
 				}
-				// if (tmp == ft_nullptr)
-				// 	tmp = _end_node;
+				return (tmp);
+			}
+
+			size_type count(const content_type& val) const // AE look for key_type instead of content_type
+			{
+				node_type* tmp = _root;
+				while (tmp != ft_nullptr && !first_equals_second(val, tmp))
+				{
+					if (first_is_less_than_second(val, tmp))
+						tmp = tmp->_left_child;
+					else
+						tmp = tmp->_right_child;
+				}
+				if (tmp == ft_nullptr)
+					return (0);
+				return (1);
+			}
+
+			node_type* lower_bound(const content_type& val) const
+			{
+				node_type* tmp = _root;
+				while (tmp != ft_nullptr && !first_is_greater_than_second(val, tmp))
+				{
+					if (first_is_less_than_second(val, tmp))
+						tmp = tmp->_left_child;
+					else
+						tmp = tmp->_right_child;
+				}
+				return (tmp);
+			}
+
+			node_type* upper_bound(const content_type& val) const
+			{
+				node_type* tmp = _root;
+				while (tmp != ft_nullptr && first_is_greater_than_second(val, tmp))
+				{
+					if (first_is_less_than_second(val, tmp))
+						tmp = tmp->_left_child;
+					else
+						tmp = tmp->_right_child;
+				}
 				return (tmp);
 			}
 

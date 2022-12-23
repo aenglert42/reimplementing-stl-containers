@@ -38,8 +38,8 @@ namespace ft
 			typedef typename allocator_type::const_reference	const_reference; //allocator_type::const_reference	for the default allocator: const value_type&
 			typedef typename allocator_type::pointer			pointer; //allocator_type::pointer	for the default allocator: value_type*
 			typedef typename allocator_type::const_pointer		const_pointer; //allocator_type::const_pointer	for the default allocator: const value_type*
-			typedef TreeIterator<value_type>				iterator; //a bidirectional iterator to value_type	convertible to const_iterator
-			typedef TreeIterator<const value_type>		const_iterator; //a bidirectional iterator to const value_type	
+			typedef TreeIterator<value_type>					iterator; //a bidirectional iterator to value_type	convertible to const_iterator
+			typedef TreeIterator<const value_type>				const_iterator; //a bidirectional iterator to const value_type	
 			typedef ft::reverse_iterator<iterator>				reverse_iterator; //reverse_iterator<iterator>	
 			typedef ft::reverse_iterator<const_iterator>		const_reverse_iterator; //reverse_iterator<const_iterator>	
 			typedef std::ptrdiff_t								difference_type; //a signed integral type, identical to: iterator_traits<iterator>::difference_type	usually the same as ptrdiff_t
@@ -91,7 +91,7 @@ namespace ft
 			// size_type _size;
 			value_compare _comp;
 			allocator_type _alloc;
-			Tree<value_type, value_compare> _tree;
+			Tree<value_type, key_type, value_compare> _tree;
 
 	//PRIVATE MEMBER FUNCTIONS
 
@@ -319,9 +319,9 @@ namespace ft
 
 	//Operations---------------------------------------------------------------
 		////find///////////////////////////////////////////////////////
-			iterator find (const key_type& k)
+			iterator find(const key_type& k)
 			{
-				value_type tmp = ft::make_pair(k, mapped_type());
+				value_type tmp = ft::make_pair(k, mapped_type()); // AE this will not work if a class has no default constructor
 				iterator ret = _tree.find(tmp);
 
 				if (ret == iterator(ft_nullptr)) // AE this should be handled in tree already
@@ -329,7 +329,7 @@ namespace ft
 				return (ret);
 			}
 			
-			const_iterator find (const key_type& k) const
+			const_iterator find(const key_type& k) const
 			{
 				value_type tmp = ft::make_pair(k, mapped_type());
 				const_iterator ret = _tree.find(tmp);
@@ -340,31 +340,52 @@ namespace ft
 			}
 
 		////count///////////////////////////////////////////////////////
-			// size_type count (const key_type& k) const
-			// {
-				
-			// }
+			size_type count (const key_type& k) const
+			{
+				value_type tmp = ft::make_pair(k, mapped_type()); // AE this will not work if a class has no default constructor
+				return (_tree.count(tmp));
+			}
 
 		////lower_bound///////////////////////////////////////////////////////
-			// iterator lower_bound (const key_type& k)
+			// iterator lower_bound(const key_type& k)
 			// {
-				
+			// 	value_type tmp = ft::make_pair(k, mapped_type());
+			// 	iterator ret = _tree.lower_bound(tmp);
+
+			// 	if (ret == iterator(ft_nullptr)) // AE this should be handled in tree already
+			// 		return (end());
+			// 	return (ret);
 			// }
 			
-			// const_iterator lower_bound (const key_type& k) const
+			// const_iterator lower_bound(const key_type& k) const
 			// {
+			// 	value_type tmp = ft::make_pair(k, mapped_type());
+			// 	const_iterator ret = _tree.lower_bound(tmp);
 
+			// 	if (ret == iterator(ft_nullptr)) // AE this should be handled in tree already
+			// 		return (end());
+			// 	return (ret);
 			// }
 
 		////upper_bound///////////////////////////////////////////////////////
-			// iterator upper_bound (const key_type& k)
+			// iterator upper_bound(const key_type& k)
 			// {
-				
+			// 	value_type tmp = ft::make_pair(k, mapped_type());
+			// 	iterator ret = _tree.upper_bound(tmp);
+
+			// 	if (ret == iterator(ft_nullptr)) // AE this should be handled in tree already
+			// 		return (end());
+			// 	return (ret);
 			// }
 			
-			// const_iterator upper_bound (const key_type& k) const
+			// const_iterator upper_bound(const key_type& k) const
 			// {
+			// 	value_type tmp = ft::make_pair(k, mapped_type());
+			// 	const_iterator ret = _tree.upper_bound(tmp);
 
+			// 	if (ret == iterator(ft_nullptr)) // AE this should be handled in tree already
+			// 		return (end());
+			// 	return (ret);
 			// }
 
 		////equal_range///////////////////////////////////////////////////////

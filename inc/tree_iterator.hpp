@@ -18,6 +18,16 @@ namespace ft
 		return (current);
 	}
 
+	// template <typename NT> // AE cleaner solution with templates
+	// NT* get_leftmost_node(NT* node)
+	// {
+	// 	NT* current = node;
+
+	// 	while (current != ft_nullptr && current->_left_child != ft_nullptr)
+	// 		current = current->_left_child;
+	// 	return (current);
+	// }
+
 	template <typename T>
 	void* get_rightmost_node(Node<T>* node)
 	{

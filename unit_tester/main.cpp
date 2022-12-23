@@ -72,6 +72,7 @@ map_key_comp, \
 map_value_comp, \
 map_find, \
 map_count, \
+map_lower_bound, \
 vector_rational_operators/*
 
 */
