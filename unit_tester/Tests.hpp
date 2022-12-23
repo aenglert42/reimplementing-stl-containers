@@ -514,22 +514,22 @@ void my_map_iterator(TestContainer& container)
 	it--;
 	std::cout << it->first << std::endl;
 
-	// // const AE test const
-	// const ft::map<std::string, int> myConstMap (myMap);
-	// ft::map<std::string, int>::const_iterator cit = myConstMap.begin();
-	// cit--;
-	// cit--;
-	// std::cout << cit->first << std::endl;
-	// cit = myConstMap.end();
-	// cit++;
-	// cit++;
-	// cit--;
-	// std::cout << cit->first << std::endl;
-	// cit--;
-	// std::cout << cit->first << std::endl;
+	// const iterator
+	const ft::map<std::string, int> myConstMap (myMap);
+	ft::map<std::string, int>::const_iterator cit = myConstMap.begin();
+	cit--;
+	cit--;
+	std::cout << cit->first << std::endl;
+	cit = myConstMap.end();
+	cit++;
+	cit++;
+	cit--;
+	std::cout << cit->first << std::endl;
+	cit--;
+	std::cout << cit->first << std::endl;
 
 //////////////////////////////////
-	EXPECTED_OUTPUT(1\n8\n5\n);
+	EXPECTED_OUTPUT(1\n8\n5\n1\n8\n5\n);
 }
 
 void my_vector_iterator(TestContainer& container)
@@ -1383,10 +1383,10 @@ void map_at(TestContainer& container)
 		std::cout << "exeption caught: " << oor.what() << '\n';
 	}
 
-// const AE test const
-	// const std::map<std::string,int> myconstmap(mymap);
-	// int test = myconstmap.at("alpha");
-	// std::cout << test << '\n';
+// const map
+	const std::map<std::string,int> myconstmap(mymap);
+	int test = myconstmap.at("alpha");
+	std::cout << test << '\n';
 
 //////////////////////////////////
 	EXPECTED_OUTPUT(alpha: 10\nbeta: 20\ngamma: 30\nexeption caught: map::at\n10\n);

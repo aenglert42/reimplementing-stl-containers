@@ -255,8 +255,7 @@ namespace ft
 					const_iterator first = other.begin();
 					const_iterator last = other.end();
 
-					// init_tree();
-					this->clear();
+					clear();
 					while (first != last)
 						insert(*first++);
 					_allocator = other._allocator;
@@ -268,7 +267,6 @@ namespace ft
 
 			~Tree(void)
 			{
-				// delete _root;
 				clear();
 				if (_end_node != ft_nullptr)
 				{
@@ -291,9 +289,6 @@ namespace ft
 
 			const_iterator begin() const
 			{
-				// Node<const content_type>* tmp = get_leftmost_node(_root);
-				// return(const_iterator(tmp));
-				// return(const_iterator(get_leftmost_node(_root)));
 				return(const_iterator(static_cast<Node<const content_type>*>(get_leftmost_node(_root))));
 			}
 
@@ -314,9 +309,6 @@ namespace ft
 
 			const_iterator end() const
 			{
-				// Node<const content_type>* tmp = get_rightmost_node(_root);
-				// return(const_iterator(tmp));
-				// return(const_iterator(get_rightmost_node(_root)));
 				return(const_iterator(static_cast<Node<const content_type>*>(get_rightmost_node(_root))));
 			}
 
