@@ -51,7 +51,7 @@ namespace ft
 		if (node == ft_nullptr)
 			return (ft_nullptr);
 		if (node->_left_child != ft_nullptr)
-			return (get_rightmost_node(node->_left_child));
+			return (static_cast<Node<T>*>(get_rightmost_node(node->_left_child)));
 		
 		Node<T>* current = node->_parent;
 		while (current != ft_nullptr && node == current->_left_child)
@@ -97,7 +97,7 @@ namespace ft
 			return (false);
 		if (node->_left_child != ft_nullptr)
 		{
-			tmp = get_rightmost_node(node->_left_child);
+			tmp = static_cast<Node<T>*>(get_rightmost_node(node->_left_child));
 			if (tmp == ft_nullptr)
 				return (false);
 			else

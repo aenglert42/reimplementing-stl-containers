@@ -114,7 +114,7 @@ namespace ft
 
 			node_type* remove_node_with_two_children(node_type* node)
 			{
-				node_type* tmp = get_leftmost_node(node->_right_child);
+				node_type* tmp = static_cast<node_type*>(get_leftmost_node(node->_right_child));
 				node = update_node_pointers(node, tmp);
 				node->_right_child = erase(tmp->_content, node->_right_child);
 				return (node);
@@ -252,8 +252,8 @@ namespace ft
 			{
 				if (this != &other)
 				{
-					iterator first = other.begin();
-					iterator last = other.end();
+					const_iterator first = other.begin();
+					const_iterator last = other.end();
 
 					// init_tree();
 					this->clear();
@@ -286,7 +286,7 @@ namespace ft
 
 			iterator begin()
 			{
-				return(iterator(get_leftmost_node(_root)));
+				return(iterator(static_cast<Node<content_type>*>(get_leftmost_node(_root))));
 			}
 
 			const_iterator begin() const
@@ -297,14 +297,19 @@ namespace ft
 				return(const_iterator(static_cast<Node<const content_type>*>(get_leftmost_node(_root))));
 			}
 
-			reverse_iterator rbegin() const
+			reverse_iterator rbegin()
+			{
+				return (reverse_iterator(end()));
+			}
+
+			const_reverse_iterator rbegin() const
 			{
 				return (reverse_iterator(end()));
 			}
 
 			iterator end()
 			{
-				return(get_rightmost_node(_root));
+				return(static_cast<Node<content_type>*>(get_rightmost_node(_root)));
 			}
 
 			const_iterator end() const
@@ -312,10 +317,15 @@ namespace ft
 				// Node<const content_type>* tmp = get_rightmost_node(_root);
 				// return(const_iterator(tmp));
 				// return(const_iterator(get_rightmost_node(_root)));
-				return(const_iterator(static_cast<Node<const content_type>*>(get_leftmost_node(_root))));
+				return(const_iterator(static_cast<Node<const content_type>*>(get_rightmost_node(_root))));
 			}
 
-			reverse_iterator rend() const
+			reverse_iterator rend()
+			{
+				return (reverse_iterator(begin()));
+			}
+
+			const_reverse_iterator rend() const
 			{
 				return (reverse_iterator(begin()));
 			}
