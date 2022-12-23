@@ -347,57 +347,57 @@ namespace ft
 			}
 
 		////lower_bound///////////////////////////////////////////////////////
-			// iterator lower_bound(const key_type& k)
-			// {
-			// 	value_type tmp = ft::make_pair(k, mapped_type());
-			// 	iterator ret = _tree.lower_bound(tmp);
+			iterator lower_bound(const key_type& k)
+			{
+				value_type tmp = ft::make_pair(k, mapped_type());
+				iterator ret = _tree.lower_bound(tmp);
 
-			// 	if (ret == iterator(ft_nullptr)) // AE this should be handled in tree already
-			// 		return (end());
-			// 	return (ret);
-			// }
+				if (ret == iterator(ft_nullptr)) // AE this should be handled in tree already
+					return (end());
+				return (ret);
+			}
 			
-			// const_iterator lower_bound(const key_type& k) const
-			// {
-			// 	value_type tmp = ft::make_pair(k, mapped_type());
-			// 	const_iterator ret = _tree.lower_bound(tmp);
+			const_iterator lower_bound(const key_type& k) const
+			{
+				value_type tmp = ft::make_pair(k, mapped_type());
+				const_iterator ret = _tree.lower_bound(tmp);
 
-			// 	if (ret == iterator(ft_nullptr)) // AE this should be handled in tree already
-			// 		return (end());
-			// 	return (ret);
-			// }
+				if (ret == iterator(ft_nullptr)) // AE this should be handled in tree already
+					return (end());
+				return (ret);
+			}
 
 		////upper_bound///////////////////////////////////////////////////////
-			// iterator upper_bound(const key_type& k)
-			// {
-			// 	value_type tmp = ft::make_pair(k, mapped_type());
-			// 	iterator ret = _tree.upper_bound(tmp);
+			iterator upper_bound(const key_type& k)
+			{
+				value_type tmp = ft::make_pair(k, mapped_type());
+				iterator ret = _tree.upper_bound(tmp);
 
-			// 	if (ret == iterator(ft_nullptr)) // AE this should be handled in tree already
-			// 		return (end());
-			// 	return (ret);
-			// }
+				if (ret == iterator(ft_nullptr)) // AE this should be handled in tree already
+					return (end());
+				return (ret);
+			}
 			
-			// const_iterator upper_bound(const key_type& k) const
-			// {
-			// 	value_type tmp = ft::make_pair(k, mapped_type());
-			// 	const_iterator ret = _tree.upper_bound(tmp);
+			const_iterator upper_bound(const key_type& k) const
+			{
+				value_type tmp = ft::make_pair(k, mapped_type());
+				const_iterator ret = _tree.upper_bound(tmp);
 
-			// 	if (ret == iterator(ft_nullptr)) // AE this should be handled in tree already
-			// 		return (end());
-			// 	return (ret);
-			// }
+				if (ret == iterator(ft_nullptr)) // AE this should be handled in tree already
+					return (end());
+				return (ret);
+			}
 
 		////equal_range///////////////////////////////////////////////////////
-			// pair<const_iterator,const_iterator> equal_range (const key_type& k) const
-			// {
-				
-			// }
-			
-			// pair<iterator,iterator> equal_range (const key_type& k)
-			// {
+			pair<iterator,iterator> equal_range(const key_type& k)
+			{
+				return (ft::make_pair(lower_bound(k), upper_bound(k)));
+			}
 
-			// }
+			pair<const_iterator,const_iterator> equal_range(const key_type& k) const
+			{
+				return (ft::make_pair(lower_bound(k), upper_bound(k)));
+			}
 
 	//Allocator---------------------------------------------------------------
 		////get_allocator///////////////////////////////////////////////////////

@@ -396,8 +396,8 @@ namespace ft
 
 			node_type* lower_bound(const content_type& val) const
 			{
-				node_type* tmp = _root;
-				while (tmp != ft_nullptr && !first_is_greater_than_second(val, tmp))
+				node_type* tmp = _end_node->_left_child; // AE workaround
+				while (tmp != ft_nullptr && (!first_is_less_than_second(val, tmp) && !first_equals_second(val, tmp)))
 				{
 					if (first_is_less_than_second(val, tmp))
 						tmp = tmp->_left_child;
@@ -409,8 +409,8 @@ namespace ft
 
 			node_type* upper_bound(const content_type& val) const
 			{
-				node_type* tmp = _root;
-				while (tmp != ft_nullptr && first_is_greater_than_second(val, tmp))
+				node_type* tmp = _end_node->_left_child; // AE workaround
+				while (tmp != ft_nullptr && !first_is_less_than_second(val, tmp))
 				{
 					if (first_is_less_than_second(val, tmp))
 						tmp = tmp->_left_child;
