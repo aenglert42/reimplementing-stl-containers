@@ -34,8 +34,8 @@ namespace ft
 			typedef Node<content_type>							node_type;
 			// typedef typename node_type::key_type				key_type; // AE uncommenting this will make node<int> invalid
 			// typedef typename node_type::value_type			value_type; // AE uncommenting this will make node<int> invalid
+			typedef std::allocator<node_type>					allocator_type;
 			typedef Compare										value_compare;
-			typedef typename node_type::allocator_type			allocator_type;
 			typedef TreeIterator<content_type>					iterator;
 			typedef TreeIterator<const content_type>			const_iterator;
 			// typedef const TreeIterator<content_type>			const_iterator; // AE check this out might be solution for const_iterator issue
@@ -49,6 +49,21 @@ namespace ft
 			node_type* _end_node;
 			allocator_type _allocator;
 			value_compare _compare;
+
+			node_type* my_new(const content_type& val, node_type* parent)
+			{
+				node_type* node = _allocator.allocate(1);
+				_allocator.construct(node, node_type(val, parent));
+				return (node);
+			}
+
+			void my_delete(node_type* node)
+			{
+				if (node == ft_nullptr)
+					return ;
+				_allocator.destroy(node);
+				_allocator.deallocate(node, 1);
+			}
 
 			bool first_is_less_than_second(const content_type& val, node_type* node) const
 			{
@@ -82,7 +97,9 @@ namespace ft
 			{
 				if (node == ft_nullptr)
 				{
-					node = new node_type(val, parent); // AE change to alloc
+					node = my_new(val, parent); // AE change to alloc
+					// node = _allocator.allocate(1);
+					// _allocator.construct(node, node_type(val, parent));
 					_size++;
 				}
 				else if (first_is_less_than_second(val, node))
@@ -101,7 +118,7 @@ namespace ft
 			node_type* update_node_pointers(node_type* old_node, node_type* tmp_node)
 			{
 				// AE nullcheck
-				node_type* new_node = new node_type(tmp_node->_content, old_node->_parent); // AE change to alloc
+				node_type* new_node = my_new(tmp_node->_content, old_node->_parent); // AE change to alloc
 				if (old_node->_parent->_left_child == old_node)
 					old_node->_parent->_left_child = new_node;
 				else
@@ -110,7 +127,7 @@ namespace ft
 				new_node->_right_child = old_node->_right_child;
 				new_node->_left_child->_parent = new_node;
 				new_node->_right_child->_parent = new_node;
-				delete old_node; // AE change to dealloc
+				my_delete(old_node);
 				return (new_node);
 			}
 
@@ -125,7 +142,7 @@ namespace ft
 			node_type* remove_node_with_one_child(node_type* node, node_type* child)
 			{
 				child->_parent = node->_parent;
-				delete node; // AE change to dealloc
+				my_delete(node);
 				_size--;
 				return (child);
 			}
@@ -137,7 +154,7 @@ namespace ft
 					node->_parent->_left_child = ft_nullptr;
 				else
 					node->_parent->_right_child = ft_nullptr;
-				delete node; // AE change to dealloc
+				my_delete(node);
 				_size--;
 				return (ft_nullptr);
 			}
@@ -181,7 +198,7 @@ namespace ft
 					node->_parent->_left_child = ft_nullptr;
 				else
 					node->_parent->_right_child = ft_nullptr;
-				delete node; // AE change to dealloc
+				my_delete(node);
 			}
 
 			void print(node_type* node)
@@ -270,11 +287,7 @@ namespace ft
 			~Tree(void)
 			{
 				clear();
-				if (_end_node != ft_nullptr)
-				{
-					_allocator.destroy(_end_node);
-					_allocator.deallocate(_end_node, 1);
-				}
+				my_delete(_end_node);
 				_root = ft_nullptr;
 				_end_node = ft_nullptr;
 			}

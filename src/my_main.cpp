@@ -6,6 +6,7 @@
 #include <iostream>
 #include <string>
 #include <map>
+#include <vector>
 
 #define RED "\033[31m"
 #define GREEN "\033[32m"
@@ -218,17 +219,61 @@ int main(void)
 	mapit = myMap.end();
 	// myMap.erase(1);
 	// myMap.print();
+	*/
 
-	// std::map::iterator test: min = begin(), max = end(), end -1 = last
+	/*
+	// std::map::iterator test: once it is < begin() or > end() --> undefined behaviour
 	std::cout << RED;
 	std::map<std::string, int> stdMap;
 	stdMap.insert(std::make_pair<std::string, int>("3", 3));
 	stdMap.insert(std::make_pair<std::string, int>("5", 5));
 	stdMap.insert(std::make_pair<std::string, int>("1", 1));
+	stdMap.insert(std::make_pair<std::string, int>("6", 6));
+	stdMap.insert(std::make_pair<std::string, int>("8", 8));
 	std::map<std::string, int>::iterator stdit = stdMap.end();
 	stdit--;
+	std::cout << "8 " << stdit->first << std::endl;
+	stdit++;
+	stdit++;
+	stdit++;
+	stdit++;
+	stdit++;
+	stdit--;
+	stdit--;
+	stdit--;
+	stdit--;
+	stdit--;
+	std::cout << "8 " << stdit->first << std::endl;
+	stdit++;
+	stdit++;
+	stdit++;
+	stdit++;
+	stdit++;
+	stdit--;
+	stdit--;
+	stdit--;
+	stdit--;
+	stdit--;
+	std::cout << "8 " << stdit->first << std::endl;
+	stdit++;
+	stdit++;
+	stdit++;
+	stdit++;
+	stdit++;
+	stdit--;
+	stdit--;
+	stdit--;
+	stdit--;
+	stdit--;
+	stdit--;
+	std::cout << "6 " << stdit->first << std::endl;
+	// end+1
 	std::cout << stdit->first << std::endl;
 	stdit++;
+	std::cout << stdit->first << std::endl;
+	// end+2
+	stdit++;
+	// end+3
 	stdit++;
 	stdit++;
 	stdit++;
@@ -375,15 +420,15 @@ int main(void)
 
 	// const Test
 
-	std::map<std::string, int> stdMap;
-	stdMap.insert(std::make_pair("2", 2));
-	// std::map<const std::string, int> stdMapConstNon(stdMap);
-	// std::map<std::string, const int> stdMapNonConst(stdMap);
-	// std::map<const std::string, const int> stdMapConstConst(stdMap);
-	// const std::map<const std::string, int> stdConstMapConstNon(stdMap);
-	// const std::map<std::string, const int> stdConstMapNonConst(stdMap);
-	const std::map<std::string, int> stdConstMapNonNon(stdMap);
-	// const std::map<const std::string, const int> stdConstMapConstConst(stdMap);
+	std::map<std::string, int> cstdMap;
+	cstdMap.insert(std::make_pair("2", 2));
+	// std::map<const std::string, int> stdMapConstNon(cstdMap);
+	// std::map<std::string, const int> stdMapNonConst(cstdMap);
+	// std::map<const std::string, const int> stdMapConstConst(cstdMap);
+	// const std::map<const std::string, int> stdConstMapConstNon(cstdMap);
+	// const std::map<std::string, const int> stdConstMapNonConst(cstdMap);
+	const std::map<std::string, int> stdConstMapNonNon(cstdMap);
+	// const std::map<const std::string, const int> stdConstMapConstConst(cstdMap);
 	std::map<std::string, int>::const_iterator stdConstMapConstIt = stdConstMapNonNon.begin();
 	// std::map<std::string, int>::iterator stdConstMapIt = stdConstMapConstIt;
 	// (void)stdConstMapIt;
@@ -410,4 +455,5 @@ int main(void)
 	// // const ft::map<const std::string, const int> ftConstMapConstConst(ftMap);
 	ft::map<std::string, int>::const_iterator ftConstMapConstIt = ftConstMapNonNon.begin();
 	(void)ftConstMapConstIt;
+
 }
