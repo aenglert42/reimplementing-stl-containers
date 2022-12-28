@@ -1,3 +1,3 @@
 #!/bin/bash
 
-FT_CONTAINERS="../ft_containers"
+FT_CONTAINERS="../inc"
