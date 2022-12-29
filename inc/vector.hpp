@@ -68,7 +68,7 @@ namespace ft
 				if (_capacity == 0)
 					newCapacity = 1;
 				else
-					newCapacity = _capacity * 2;
+					newCapacity = _capacity * 2; // AE limit to max capacity ?
 				pointer newArray = my_alloc(newCapacity);
 				for (size_type i = 0; i < _size; i++)
 					_alloc.construct(&newArray[i], _array[i]);
@@ -230,7 +230,7 @@ namespace ft
 			void resize (size_type n, value_type val = value_type())
 			{
 				while (n > size())
-					push_back(val);
+					insert(end(), n - size(), val);
 				while (n < size())
 					pop_back();
 			}
@@ -328,11 +328,12 @@ namespace ft
 				typename ft::enable_if< !ft::is_integral<InputIterator>::value, InputIterator >::type = InputIterator())
 			{
 				clear();
-				size_type n = last - first;
+				// size_type n = last - first;
+				size_type n = ft::distance(first, last);
 				if (n > _capacity)
 					my_realloc(n);
 				for (size_type i = 0; i < n; ++i)
-					push_back(*(first + i));
+					push_back(*(first++));
 			}
 
 			// fill (2)	
@@ -403,7 +404,8 @@ namespace ft
 			void insert (iterator position, InputIterator first, InputIterator last,
 				typename ft::enable_if< !ft::is_integral<InputIterator>::value, InputIterator >::type = InputIterator())
 			{
-				size_type n = last - first;
+				// size_type n = last - first;
+				size_type n = ft::distance(first, last);
 				size_type old_size = _size;
 				difference_type offset = end() - position;
 
@@ -420,7 +422,7 @@ namespace ft
 				}
 				for (size_type i = 0; i < n; ++i)
 				{
-					_array[old_size - offset + i] = *(first + i);
+					_array[old_size - offset + i] = *(first++);
 				}
 			}
 

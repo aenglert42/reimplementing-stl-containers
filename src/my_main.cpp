@@ -4,6 +4,7 @@
 #include "map.hpp"
 #include "ft_nullptr.hpp" // ft_nullptr
 #include <iostream>
+#include <sstream>
 #include <string>
 #include <map>
 #include <vector>
@@ -464,4 +465,58 @@ int main(void)
 	ft::map<std::string, int>::const_iterator ftMapConstIt = ftMap.begin();
 	(void)ftMapConstIt;
 
+	std::map<int, std::string, std::less<int> > stdEraseMap;
+	for (int i = 0; i < 62; ++i)
+	{
+		std::stringstream tmp;
+		tmp << i;
+		stdEraseMap.insert(std::make_pair(i, tmp.str()));
+	}
+	std::cout << stdEraseMap.size() << std::endl;
+	std::map<int, std::string, std::less<int> >::iterator stdEraseMapit(stdEraseMap.begin());
+	std::map<int, std::string, std::less<int> >::iterator stdEraseMapend(stdEraseMapit);
+
+	std::advance(stdEraseMapend, 1);
+
+	stdEraseMap.erase(stdEraseMapit, stdEraseMapend);
+
+	stdEraseMapit = stdEraseMap.begin();
+	stdEraseMapend = stdEraseMapit;
+	std::advance(stdEraseMapit, 24);
+	std::advance(stdEraseMapend, 30);
+
+	stdEraseMap.erase(stdEraseMapit, stdEraseMapend);
+	std::cout << stdEraseMap.size() << std::endl;
+	for (std::map<int, std::string, std::less<int> >::iterator it = stdEraseMap.begin(); it != stdEraseMap.end(); ++it)
+	{
+		std::cout << it->first << std::endl;
+	}
+	std::cout << std::endl;
+
+	ft::map<int, std::string, std::less<int> > ftEraseMap;
+	for (int i = 0; i < 62; ++i)
+	{
+		std::stringstream tmp;
+		tmp << i;
+		ftEraseMap.insert(ft::make_pair(i, tmp.str()));
+	}
+	std::cout << ftEraseMap.size() << std::endl;
+	ft::map<int, std::string, std::less<int> >::iterator ftEraseMapit(ftEraseMap.begin());
+	ft::map<int, std::string, std::less<int> >::iterator ftEraseMapend(ftEraseMapit);
+
+	std::advance(ftEraseMapend, 1);
+
+	ftEraseMap.erase(ftEraseMapit, ftEraseMapend);
+
+	ftEraseMapit = ftEraseMap.begin();
+	ftEraseMapend = ftEraseMapit;
+	std::advance(ftEraseMapit, 24);
+	std::advance(ftEraseMapend, 30);
+
+	ftEraseMap.erase(ftEraseMapit, ftEraseMapend);
+	std::cout << ftEraseMap.size() << std::endl;
+	for (ft::map<int, std::string, std::less<int> >::iterator it = ftEraseMap.begin(); it != ftEraseMap.end(); ++it)
+	{
+		std::cout << it->first << std::endl;
+	}
 }

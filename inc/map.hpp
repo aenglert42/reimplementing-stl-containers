@@ -282,12 +282,14 @@ namespace ft
 			// (3)
 			void erase (iterator first, iterator last)
 			{
-				while (last != first)
+				while (last != first) // AE fix endless loop (test erase_range, random)
 				{
 					iterator tmp = first;
-					first++;
+					++first;
 					_tree.erase(tmp);
 				}
+				// (void)first;
+				// (void)last;
 			}
 
 		////swap///////////////////////////////////////////////////////

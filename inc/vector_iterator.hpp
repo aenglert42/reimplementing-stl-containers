@@ -12,12 +12,13 @@ namespace ft
 	{
 		public:
 	//MEMBER TYPES
-			typedef iterator<random_access_iterator_tag, T>							iterator_type;
+			typedef iterator<ft::random_access_iterator_tag, T>							iterator_type;
+			typedef iterator<std::random_access_iterator_tag, T>							std_iterator_type;
 			typedef typename iterator_traits<iterator_type>::difference_type		difference_type;
 			typedef typename iterator_traits<iterator_type>::value_type				value_type;
 			typedef typename iterator_traits<iterator_type>::pointer				pointer;
 			typedef typename iterator_traits<iterator_type>::reference				reference;
-			typedef typename iterator_traits<iterator_type>::iterator_category		iterator_category;
+			typedef typename iterator_traits<std_iterator_type>::iterator_category		iterator_category;
 
 	//MEMBER FUNCTIONS
 
