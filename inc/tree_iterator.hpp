@@ -121,12 +121,13 @@ namespace ft
 	{
 		public:
 	//MEMBER TYPES
-			typedef iterator<bidirectional_iterator_tag, content_type>				iterator_type;
-			typedef typename iterator_traits<iterator_type>::difference_type		difference_type;
-			typedef typename iterator_traits<iterator_type>::value_type				value_type;
-			typedef typename iterator_traits<iterator_type>::pointer				pointer;
-			typedef typename iterator_traits<iterator_type>::reference				reference;
-			typedef typename iterator_traits<iterator_type>::iterator_category		iterator_category;
+			typedef ft::iterator<ft::bidirectional_iterator_tag, content_type>				iterator_type;
+			typedef std::iterator<std::bidirectional_iterator_tag, content_type>				std_iterator_type;
+			typedef typename ft::iterator_traits<iterator_type>::difference_type		difference_type;
+			typedef typename ft::iterator_traits<iterator_type>::value_type				value_type;
+			typedef typename ft::iterator_traits<iterator_type>::pointer				pointer;
+			typedef typename ft::iterator_traits<iterator_type>::reference				reference;
+			typedef typename std::iterator_traits<std_iterator_type>::iterator_category		iterator_category;
 			// typedef Node<content_type>*												node_pointer;
 
 	//MEMBER FUNCTIONS
