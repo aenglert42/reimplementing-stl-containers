@@ -148,10 +148,10 @@ namespace ft
 				}
 
 			////non-const to const///////////////////////////////////////////////////////
-				// operator TreeIterator<const content_type>() const
-				// {
-				// 	return (TreeIterator<const content_type>(base()));
-				// }
+				operator TreeIterator<const content_type, node_pointer>() const
+				{
+					return (TreeIterator<const content_type, node_pointer>(base()));
+				}
 
 			////destructor///////////////////////////////////////////////////////
 				~TreeIterator(void)
@@ -229,61 +229,4 @@ namespace ft
 			node_pointer _ptr;
 	};
 
-	//NON-MEMBER FUNCTION OVERLOADS
-			////relational operators///////////////////////////////////////////////////////
-				// (1)
-					// template <class Iterator1, class Iterator2>
-
-				// (2)
-					// template <class Iterator1, class Iterator2>
-					
-				// // (3)
-				// 	template <class Iterator1, class Iterator2>
-				// 	bool operator<(const TreeIterator<Iterator1>& lhs,
-				// 					const TreeIterator<Iterator2>& rhs)
-				// 	{
-				// 		return (lhs.base() < rhs.base());
-				// 	}
-
-				// // (4)
-				// 	template <class Iterator1, class Iterator2>
-				// 	bool operator<=(const TreeIterator<Iterator1>& lhs,
-				// 					const TreeIterator<Iterator2>& rhs)
-				// 	{
-				// 		return (lhs.base() <= rhs.base());
-				// 	}
-
-				// // (5)
-				// 	template <class Iterator1, class Iterator2>
-				// 	bool operator>(const TreeIterator<Iterator1>& lhs,
-				// 					const TreeIterator<Iterator2>& rhs)
-				// 	{
-				// 		return (lhs.base() > rhs.base());
-				// 	}
-
-				// // (6)
-				// 	template <class Iterator1, class Iterator2>
-				// 	bool operator>=(const TreeIterator<Iterator1>& lhs,
-				// 					const TreeIterator<Iterator2>& rhs)
-				// 	{
-				// 		return (lhs.base() >= rhs.base());
-				// 	}
-
-			// ////operator+///////////////////////////////////////////////////////
-			// 	template <class Iterator>
-			// 	TreeIterator<Iterator> operator+(
-			// 		typename TreeIterator<Iterator>::difference_type n,
-			// 		const TreeIterator<Iterator>& rev_it)
-			// 	{
-			// 		return (TreeIterator<Iterator>(rev_it.base() + n));
-			// 	}
-
-			// ////operator-///////////////////////////////////////////////////////
-			// 	template <class Iterator>
-			// 	typename TreeIterator<Iterator>::difference_type operator-(
-			// 		const TreeIterator<Iterator>& lhs,
-			// 		const TreeIterator<Iterator>& rhs)
-			// 	{
-			// 		return (lhs.base() + rhs.base());
-			// 	}
 }
