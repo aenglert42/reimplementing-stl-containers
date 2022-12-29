@@ -38,8 +38,8 @@ namespace ft
 			typedef typename allocator_type::const_reference	const_reference; //allocator_type::const_reference	for the default allocator: const value_type&
 			typedef typename allocator_type::pointer			pointer; //allocator_type::pointer	for the default allocator: value_type*
 			typedef typename allocator_type::const_pointer		const_pointer; //allocator_type::const_pointer	for the default allocator: const value_type*
-			typedef TreeIterator<value_type>					iterator; //a bidirectional iterator to value_type	convertible to const_iterator
-			typedef TreeIterator<const value_type>				const_iterator; //a bidirectional iterator to const value_type	
+			typedef TreeIterator<value_type, Node<value_type>* >					iterator; //a bidirectional iterator to value_type	convertible to const_iterator
+			typedef TreeIterator<const value_type, Node<value_type>* >				const_iterator; //a bidirectional iterator to const value_type	
 			typedef ft::reverse_iterator<iterator>				reverse_iterator; //reverse_iterator<iterator>	
 			typedef ft::reverse_iterator<const_iterator>		const_reverse_iterator; //reverse_iterator<const_iterator>	
 			typedef std::ptrdiff_t								difference_type; //a signed integral type, identical to: iterator_traits<iterator>::difference_type	usually the same as ptrdiff_t

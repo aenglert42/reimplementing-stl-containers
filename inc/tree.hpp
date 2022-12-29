@@ -36,10 +36,10 @@ namespace ft
 			// typedef typename node_type::value_type			value_type; // AE uncommenting this will make node<int> invalid
 			typedef std::allocator<node_type>					allocator_type;
 			typedef Compare										value_compare;
-			typedef TreeIterator<content_type>					iterator;
-			// typedef TreeIterator<content_type, node_type>					iterator;
-			typedef TreeIterator<const content_type>			const_iterator;
-			// typedef TreeIterator<const content_type, node_type>			const_iterator;
+			// typedef TreeIterator<content_type>					iterator;
+			typedef TreeIterator<content_type, node_type*>			iterator;
+			// typedef TreeIterator<const content_type>				const_iterator;
+			typedef TreeIterator<const content_type, node_type*>		const_iterator;
 			typedef ft::reverse_iterator<iterator>				reverse_iterator;
 			typedef ft::reverse_iterator<const_iterator>		const_reverse_iterator;
 			typedef std::size_t									size_type;

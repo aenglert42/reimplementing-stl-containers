@@ -146,7 +146,7 @@ namespace ft
 			return (true);
 	}
 
-	template <typename content_type>
+	template <typename content_type, typename node_pointer>
 	class TreeIterator
 	{
 		public:
@@ -157,7 +157,7 @@ namespace ft
 			typedef typename iterator_traits<iterator_type>::pointer				pointer;
 			typedef typename iterator_traits<iterator_type>::reference				reference;
 			typedef typename iterator_traits<iterator_type>::iterator_category		iterator_category;
-			typedef Node<content_type>*												node_pointer;
+			// typedef Node<content_type>*												node_pointer;
 
 	//MEMBER FUNCTIONS
 
@@ -282,6 +282,18 @@ namespace ft
 			// 		return (*(_ptr + n));
 			// 	}
 
+				friend bool operator==(const TreeIterator& lhs,
+								const TreeIterator& rhs)
+				{
+					return (lhs.base() == rhs.base());
+				}
+
+				friend bool operator!=(const TreeIterator& lhs,
+								const TreeIterator& rhs)
+				{
+					return (lhs.base() != rhs.base());
+				}
+
 		private:
 			node_pointer _ptr;
 	};
@@ -289,20 +301,10 @@ namespace ft
 	//NON-MEMBER FUNCTION OVERLOADS
 			////relational operators///////////////////////////////////////////////////////
 				// (1)
-					template <class Iterator1, class Iterator2>
-					bool operator==(const TreeIterator<Iterator1>& lhs,
-									const TreeIterator<Iterator2>& rhs)
-					{
-						return (lhs.base() == rhs.base());
-					}
+					// template <class Iterator1, class Iterator2>
 
 				// (2)
-					template <class Iterator1, class Iterator2>
-					bool operator!=(const TreeIterator<Iterator1>& lhs,
-									const TreeIterator<Iterator2>& rhs)
-					{
-						return (lhs.base() != rhs.base());
-					}
+					// template <class Iterator1, class Iterator2>
 					
 				// // (3)
 				// 	template <class Iterator1, class Iterator2>
