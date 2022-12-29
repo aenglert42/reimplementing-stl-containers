@@ -9,9 +9,19 @@
 namespace ft
 {
 	template <typename T>
-	void* get_leftmost_node(Node<T>* node)
+	Node<T>* get_leftmost_node(Node<T>* node)
 	{
 		Node<T>* current = node;
+
+		while (current != ft_nullptr && current->_left_child != ft_nullptr)
+			current = current->_left_child;
+		return (current);
+	}
+
+	template <typename T>
+	Node<const T>* get_leftmost_node(Node<const T>* node)
+	{
+		Node<const T>* current = node;
 
 		while (current != ft_nullptr && current->_left_child != ft_nullptr)
 			current = current->_left_child;
@@ -29,9 +39,19 @@ namespace ft
 	// }
 
 	template <typename T>
-	void* get_rightmost_node(Node<T>* node)
+	Node<T>* get_rightmost_node(Node<T>* node)
 	{
 		Node<T>* current = node;
+
+		while (current != ft_nullptr && current->_right_child != ft_nullptr)
+			current = current->_right_child;
+		return (current);
+	}
+
+	template <typename T>
+	Node<const T>* get_rightmost_node(Node<const T>* node)
+	{
+		Node<const T>* current = node;
 
 		while (current != ft_nullptr && current->_right_child != ft_nullptr)
 			current = current->_right_child;
@@ -44,7 +64,7 @@ namespace ft
 		if (node == ft_nullptr)
 			return (ft_nullptr);
 		if (node->_right_child != ft_nullptr)
-			return (static_cast<Node<T>*>(get_leftmost_node(node->_right_child)));
+			return (get_leftmost_node(node->_right_child));
 		
 		Node<T>* current = node->_parent;
 		while (current != ft_nullptr && node == current->_right_child)
@@ -61,7 +81,7 @@ namespace ft
 		if (node == ft_nullptr)
 			return (ft_nullptr);
 		if (node->_left_child != ft_nullptr)
-			return (static_cast<Node<T>*>(get_rightmost_node(node->_left_child)));
+			return (get_rightmost_node(node->_left_child));
 		
 		Node<T>* current = node->_parent;
 		while (current != ft_nullptr && node == current->_left_child)
@@ -80,7 +100,7 @@ namespace ft
 			return (false);
 		if (node->_right_child != ft_nullptr)
 		{
-			tmp = static_cast<Node<T>*>(get_leftmost_node(node->_right_child));
+			tmp = get_leftmost_node(node->_right_child);
 			if (tmp == ft_nullptr)
 				return (false);
 			else
@@ -107,7 +127,7 @@ namespace ft
 			return (false);
 		if (node->_left_child != ft_nullptr)
 		{
-			tmp = static_cast<Node<T>*>(get_rightmost_node(node->_left_child));
+			tmp = get_rightmost_node(node->_left_child);
 			if (tmp == ft_nullptr)
 				return (false);
 			else
@@ -126,18 +146,18 @@ namespace ft
 			return (true);
 	}
 
-	template <typename Tree>
+	template <typename content_type>
 	class TreeIterator
 	{
 		public:
 	//MEMBER TYPES
-			typedef iterator<bidirectional_iterator_tag, Tree>							iterator_type;
+			typedef iterator<bidirectional_iterator_tag, content_type>				iterator_type;
 			typedef typename iterator_traits<iterator_type>::difference_type		difference_type;
 			typedef typename iterator_traits<iterator_type>::value_type				value_type;
 			typedef typename iterator_traits<iterator_type>::pointer				pointer;
 			typedef typename iterator_traits<iterator_type>::reference				reference;
 			typedef typename iterator_traits<iterator_type>::iterator_category		iterator_category;
-			typedef Node<Tree>*														node_pointer;
+			typedef Node<content_type>*												node_pointer;
 
 	//MEMBER FUNCTIONS
 
@@ -158,9 +178,9 @@ namespace ft
 				}
 
 			////non-const to const///////////////////////////////////////////////////////
-				// operator TreeIterator<const Tree>() const
+				// operator TreeIterator<const content_type>() const
 				// {
-				// 	return (TreeIterator<const Tree>(base()));
+				// 	return (TreeIterator<const content_type>(base()));
 				// }
 
 			////destructor///////////////////////////////////////////////////////

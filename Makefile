@@ -40,6 +40,11 @@ unitre:
 test: all unit
 	./unit_test
 
+terminator:
+	@cd ft_containers-terminator; \
+	./test_containers.sh map; \
+	cd ../../ft_containers;
+
 $(NAME): $(OBJ_DIR) $(OBJS) $(DEPS)
 	@$(CC) $(CFLAGS) $(INCLUDES) $(OBJS) -o $@
 	@echo "\n$(GREEN)$(NAME) created$(RESET)"

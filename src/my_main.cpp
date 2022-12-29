@@ -432,7 +432,11 @@ int main(void)
 	std::map<std::string, int>::const_iterator stdConstMapConstIt = stdConstMapNonNon.begin();
 	// std::map<std::string, int>::iterator stdConstMapIt = stdConstMapConstIt;
 	// (void)stdConstMapIt;
+	std::map<std::string, int>::iterator stdMapIt = cstdMap.begin();
+	std::map<std::string, int>::const_iterator stdMapConstIt = cstdMap.begin();
 	(void)stdConstMapConstIt;
+	(void)stdMapIt;
+	(void)stdMapConstIt;
 
 	// int i = 2;
 	// const int* ptr = &i;
@@ -453,7 +457,11 @@ int main(void)
 	// // const ft::map<std::string, const int> ftConstMapNonConst(ftMap);
 	const ft::map<std::string, int> ftConstMapNonNon(ftMap);
 	// // const ft::map<const std::string, const int> ftConstMapConstConst(ftMap);
+	ft::map<std::string, int>::iterator ftMapIt = ftMap.begin();
 	ft::map<std::string, int>::const_iterator ftConstMapConstIt = ftConstMapNonNon.begin();
 	(void)ftConstMapConstIt;
+	(void)ftMapIt;
+	// ft::map<std::string, int>::const_iterator ftMapConstIt = ftMap.begin();
+	// (void)ftMapConstIt;
 
 }
