@@ -461,7 +461,7 @@ int main(void)
 	ft::map<std::string, int>::const_iterator ftConstMapConstIt = ftConstMapNonNon.begin();
 	(void)ftConstMapConstIt;
 	(void)ftMapIt;
-	ft::map<std::string, int>::const_iterator ftMapConstIt = ftMap.begin();
-	(void)ftMapConstIt;
+	// ft::map<std::string, int>::const_iterator ftMapConstIt = ftMap.begin();
+	// (void)ftMapConstIt;
 
 }

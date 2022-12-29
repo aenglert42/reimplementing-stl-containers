@@ -8,65 +8,35 @@
 
 namespace ft
 {
-	template <typename T>
-	Node<T>* get_leftmost_node(Node<T>* node)
+	template <typename NT>
+	NT* get_leftmost_node(NT* node)
 	{
-		Node<T>* current = node;
+		NT* current = node;
 
 		while (current != ft_nullptr && current->_left_child != ft_nullptr)
 			current = current->_left_child;
 		return (current);
 	}
 
-	template <typename T>
-	Node<const T>* get_leftmost_node(Node<const T>* node)
+	template <typename NT>
+	NT* get_rightmost_node(NT* node)
 	{
-		Node<const T>* current = node;
-
-		while (current != ft_nullptr && current->_left_child != ft_nullptr)
-			current = current->_left_child;
-		return (current);
-	}
-
-	// template <typename NT> // AE cleaner solution with templates
-	// NT* get_leftmost_node(NT* node)
-	// {
-	// 	NT* current = node;
-
-	// 	while (current != ft_nullptr && current->_left_child != ft_nullptr)
-	// 		current = current->_left_child;
-	// 	return (current);
-	// }
-
-	template <typename T>
-	Node<T>* get_rightmost_node(Node<T>* node)
-	{
-		Node<T>* current = node;
+		NT* current = node;
 
 		while (current != ft_nullptr && current->_right_child != ft_nullptr)
 			current = current->_right_child;
 		return (current);
 	}
 
-	template <typename T>
-	Node<const T>* get_rightmost_node(Node<const T>* node)
-	{
-		Node<const T>* current = node;
-
-		while (current != ft_nullptr && current->_right_child != ft_nullptr)
-			current = current->_right_child;
-		return (current);
-	}
-
-	template <typename T>
-	Node<T>* get_successor_node(Node<T>* node)
+	template <typename NT>
+	NT* get_successor_node(NT* node)
 	{
 		if (node == ft_nullptr)
 			return (ft_nullptr);
 		if (node->_right_child != ft_nullptr)
 			return (get_leftmost_node(node->_right_child));
 		
-		Node<T>* current = node->_parent;
+		NT* current = node->_parent;
 		while (current != ft_nullptr && node == current->_right_child)
 		{
 			node = current;
@@ -75,15 +45,15 @@ namespace ft
 		return (current);
 	}
 
-	template <typename T>
-	Node<T>* get_predecessor_node(Node<T>* node)
+	template <typename NT>
+	NT* get_predecessor_node(NT* node)
 	{
 		if (node == ft_nullptr)
 			return (ft_nullptr);
 		if (node->_left_child != ft_nullptr)
 			return (get_rightmost_node(node->_left_child));
 		
-		Node<T>* current = node->_parent;
+		NT* current = node->_parent;
 		while (current != ft_nullptr && node == current->_left_child)
 		{
 			node = current;
@@ -92,10 +62,10 @@ namespace ft
 		return (current);
 	}
 
-	template <typename T>
-	bool has_successor_node(Node<T>* node)
+	template <typename NT>
+	bool has_successor_node(NT* node)
 	{
-		Node<T>* tmp;
+		NT* tmp;
 		if (node == ft_nullptr)
 			return (false);
 		if (node->_right_child != ft_nullptr)
@@ -119,10 +89,10 @@ namespace ft
 			return (true);
 	}
 
-	template <typename T>
-	bool has_predecessor_node(Node<T>* node)
+	template <typename NT>
+	bool has_predecessor_node(NT* node)
 	{
-		Node<T>* tmp;
+		NT* tmp;
 		if (node == ft_nullptr)
 			return (false);
 		if (node->_left_child != ft_nullptr)
@@ -201,12 +171,6 @@ namespace ft
 					return (_ptr->_content);
 				}
 
-			// ////operator+///////////////////////////////////////////////////////
-			// 	TreeIterator operator+(difference_type n) const
-			// 	{
-			// 		return (TreeIterator(_ptr + n));
-			// 	}
-			
 			////operator++///////////////////////////////////////////////////////
 				// (1)
 					TreeIterator& operator++()
@@ -224,26 +188,6 @@ namespace ft
 							_ptr = get_successor_node(_ptr);
 						return tmp;
 					}
-			
-			// ////operator+=///////////////////////////////////////////////////////
-			// 	TreeIterator& operator+=(difference_type n)
-			// 	{
-			// 		_ptr += n;
-			// 		return (*this);
-			// 	}
-			
-			// ////operator-///////////////////////////////////////////////////////
-			// 	// (1)
-			// 		difference_type operator-(const TreeIterator& other) const
-			// 		{
-			// 			return (_ptr - other._ptr);
-			// 		}
-
-			// 	// (2)
-			// 		TreeIterator operator-(difference_type n) const
-			// 		{
-			// 			return (TreeIterator(_ptr - n));
-			// 		}
 
 			////operator--///////////////////////////////////////////////////////
 				// (1)
@@ -263,24 +207,11 @@ namespace ft
 						return tmp;
 					}
 			
-			// ////operator-=///////////////////////////////////////////////////////
-			// 	TreeIterator& operator-=(difference_type n)
-			// 	{
-			// 		_ptr -= n;
-			// 		return (*this);
-			// 	}
-			
 			////operator->///////////////////////////////////////////////////////
 				pointer operator->() const
 				{
 					return (&_ptr->_content);
 				}
-
-			// ////operator[]///////////////////////////////////////////////////////
-			// 	reference operator[] (difference_type n) const
-			// 	{
-			// 		return (*(_ptr + n));
-			// 	}
 
 				friend bool operator==(const TreeIterator& lhs,
 								const TreeIterator& rhs)
