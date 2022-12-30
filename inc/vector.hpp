@@ -58,7 +58,8 @@ namespace ft
 			void my_dealloc(void)
 			{
 				my_destroy();
-				_alloc.deallocate(_array, _capacity);
+				if (_size > 0)
+					_alloc.deallocate(_array, _capacity);
 			}
 
 			void my_realloc(void)
