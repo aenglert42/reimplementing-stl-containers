@@ -519,4 +519,45 @@ int main(void)
 	{
 		std::cout << it->first << std::endl;
 	}
+
+
+	std::map<int, std::string> m;
+
+	m.insert(std::make_pair(34, "kljd9834iuhwet"));
+	m.insert(std::make_pair(3468, "dfghe45sywu4hsr"));
+	m.insert(std::make_pair(96533, "sdfghthrdfg5456ik"));
+	m.insert(std::make_pair(89548945894, "jtt5454wujtjse"));
+	m.insert(std::make_pair(7754322, "w4wt5u4wjhstrhj"));
+	m.insert(std::make_pair(3632, "dfgjjkuy56ue5uwyhry5yeh"));
+	m.insert(std::make_pair(3, "rtjey5w4u4u5e6kjwj5w4"));
+	m.insert(std::make_pair(4, "asdfhfjgh54w3ag"));
+	m.insert(std::make_pair(-873487, "jw56jw45jsryjsrt5u4w5"));
+	m.insert(std::make_pair(-95763433, "ws45uhsrtjnsrths54yh"));
+	m.insert(std::make_pair(453834782, "juytje54yaerdrj"));
+	m.insert(std::make_pair(19458942, "j567uysdts56y6uj5r"));
+	m.insert(std::make_pair(3245689793, "jr67e5674574668679789ruyerdtadh"));
+
+	std::map<int, std::string>::iterator b = m.upper_bound(98583944);
+	std::cout << RED << b->first << RESET << std::endl;
+
+
+
+	ft::map<int, std::string> ftm;
+
+	ftm.insert(ft::make_pair(34, "kljd9834iuhwet"));
+	ftm.insert(ft::make_pair(3468, "dfghe45sywu4hsr"));
+	ftm.insert(ft::make_pair(96533, "sdfghthrdfg5456ik"));
+	ftm.insert(ft::make_pair(89548945894, "jtt5454wujtjse"));
+	ftm.insert(ft::make_pair(7754322, "w4wt5u4wjhstrhj"));
+	ftm.insert(ft::make_pair(3632, "dfgjjkuy56ue5uwyhry5yeh"));
+	ftm.insert(ft::make_pair(3, "rtjey5w4u4u5e6kjwj5w4"));
+	ftm.insert(ft::make_pair(4, "asdfhfjgh54w3ag"));
+	ftm.insert(ft::make_pair(-873487, "jw56jw45jsryjsrt5u4w5"));
+	ftm.insert(ft::make_pair(-95763433, "ws45uhsrtjnsrths54yh"));
+	ftm.insert(ft::make_pair(453834782, "juytje54yaerdrj"));
+	ftm.insert(ft::make_pair(19458942, "j567uysdts56y6uj5r"));
+	ftm.insert(ft::make_pair(3245689793, "jr67e5674574668679789ruyerdtadh"));
+
+	ft::map<int, std::string>::iterator ftb = ftm.upper_bound(98583944);
+	std::cout << BLUE << ftb->first << RESET << std::endl;
 }
