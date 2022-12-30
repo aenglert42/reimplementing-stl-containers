@@ -200,6 +200,7 @@ namespace ft
 				else
 					node->_parent->_right_child = ft_nullptr;
 				my_delete(node);
+				_size--;
 			}
 
 			void print(node_type* node)
