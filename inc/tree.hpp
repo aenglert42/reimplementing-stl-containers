@@ -415,16 +415,16 @@ namespace ft
 				return (find(val));
 			}
 
-			void erase(node_type* node)
-			{
-				if (node != ft_nullptr)
-					_root = erase(*node, _root); // problem if node = end()?
-			}
+			// void erase(node_type* node)
+			// {
+			// 	if (node != ft_nullptr)
+			// 		_root = erase(*node, _root); // problem if node = end()?
+			// }
 
 			void erase(iterator position)
 			{
-				if (position.base() != ft_nullptr)
-					_root = erase(*position, _root); // problem if position = end()?
+				if (position.base() != ft_nullptr && position != _end_node)
+					_root = erase(*position, _root);
 			}
 
 			size_type erase(const content_type& val)
@@ -436,12 +436,13 @@ namespace ft
 				return (ret);
 			}
 
-			void erase (iterator first, iterator last)
+			void erase(iterator first, iterator last)
 			{
-				_root = removeRange(_root, *first, *last);
+				_root = removeRange(_root, first.base(), last.base());
+				erase(first);
 			}
 
-			node_type* removeRange(node_type* node, const content_type low, const content_type high)
+			node_type* removeRange(node_type* node, node_type* low, node_type* high)
 			{
 
 				// Base case
@@ -455,7 +456,11 @@ namespace ft
 				// Now fix the node.
 				// if given node is in Range then delete it
 				// if (node->data >= low && node->data <= high)
-				if (!first_is_greater_than_second(low, node) && first_is_greater_than_second(high, node))
+				// if (!first_is_greater_than_second(low, node) && first_is_greater_than_second(high, node))
+				bool is_greater_than_low = lhs_node_is_greater_than_rhs_node(node, low);
+				bool is_less_than_high = lhs_node_is_less_than_rhs_node(node, high);
+				if (is_greater_than_low && is_less_than_high)
+				// if (!lhs_node_is_greater_than_rhs_node(low, node) && lhs_node_is_greater_than_rhs_node(high, node))
 					return remove_node(node);
 
 				// Root is out of range

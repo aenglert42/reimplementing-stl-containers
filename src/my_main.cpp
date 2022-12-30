@@ -475,13 +475,13 @@ int main(void)
 	ftEMap.print2D();
 
 	ft::map<int, std::string>::iterator ftbegin = ftEMap.begin();
-	ftbegin++;
+	// ftbegin++;
 	std::cout << "ftbegin: " << ftbegin->first << std::endl;
 	ft::map<int, std::string>::iterator ftend = ftbegin;
 
-	ftend++;
-	ftend++;
-	ftend++;
+	// ftend++;
+	// ftend++;
+	// ftend++;
 	// std::cout << "ftend: " << ftend->first << std::endl;
 	ftend = ftEMap.end();
 

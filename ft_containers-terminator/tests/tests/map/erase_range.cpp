@@ -6,7 +6,7 @@
 /*   By: englot <englot@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 13:23:58 by mleblanc          #+#    #+#             */
-/*   Updated: 2022/12/29 19:48:22 by englot           ###   ########.fr       */
+/*   Updated: 2022/12/30 19:37:29 by englot           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,30 +47,30 @@ void map_test_erase_range()
         std::advance(it, 24);
         std::advance(end, 30);
 
-        // m.erase(it, end); // AE uncomment
+        m.erase(it, end);
 
-        // PRINT_ALL(m);
+        PRINT_ALL(m);
 
-        // it = m.begin();
-        // end = it;
-        // std::advance(it, 34);
-        // std::advance(end, 55);
+        it = m.begin();
+        end = it;
+        std::advance(it, 34);
+        std::advance(end, 55);
 
-        // m.erase(it, end);
+        m.erase(it, end);
 
-        // PRINT_ALL(m);
+        PRINT_ALL(m);
 
-        // it = m.begin();
-        // end = it;
-        // std::advance(end, 1);
+        it = m.begin();
+        end = it;
+        std::advance(end, 1);
 
-        // m.erase(it, end);
+        m.erase(it, end);
 
-        // PRINT_ALL(m);
+        PRINT_ALL(m);
 
-        // m.erase(m.begin(), m.end());
+        m.erase(m.begin(), m.end());
 
-        // PRINT_ALL(m);
+        PRINT_ALL(m);
     }
 }
 
