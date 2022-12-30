@@ -116,6 +116,26 @@ namespace ft
 				return (node);
 			}
 
+			// void update_node_pointers(node_type* old_node, node_type* new_node)
+			// {
+			// 	// AE nullcheck
+			// 	// tmp node
+			// 	node_type tmp_node = *old_node;
+			// 	_allocator.destroy(old_node);
+			// 	_allocator.construct(old_node, node_type(new_node->_content, tmp_node->parent));
+
+			// 	// if (old_node->_parent->_left_child == old_node)
+			// 	// 	old_node->_parent->_left_child = new_node;
+			// 	// else
+			// 	// 	old_node->_parent->_right_child = new_node;
+			// 	// new_node->_left_child = old_node->_left_child;
+			// 	// new_node->_right_child = old_node->_right_child;
+			// 	// new_node->_left_child->_parent = new_node;
+			// 	// new_node->_right_child->_parent = new_node;
+			// 	// my_delete(old_node);
+			// 	// return (new_node);
+			// }
+
 			node_type* update_node_pointers(node_type* old_node, node_type* tmp_node)
 			{
 				// AE nullcheck
@@ -132,10 +152,23 @@ namespace ft
 				return (new_node);
 			}
 
+			// node_type* remove_node_with_two_children(node_type* node)
+			// {
+			// 	node_type* tmp = get_leftmost_node(node->_right_child);
+			// 	node = update_node_pointers(node, tmp);
+			// 	node->_right_child = erase(tmp->_content, node->_right_child);
+			// 	return (node);
+			// }
+
 			node_type* remove_node_with_two_children(node_type* node)
 			{
+				node_type old = *node;
+				// node_type* tmp = get_successor_node(node);
 				node_type* tmp = get_leftmost_node(node->_right_child);
-				node = update_node_pointers(node, tmp);
+				_allocator.destroy(node);
+				_allocator.construct(node, node_type(tmp->_content, old._parent));
+				node->_left_child = old._left_child;
+				node->_right_child = old._right_child;
 				node->_right_child = erase(tmp->_content, node->_right_child);
 				return (node);
 			}
@@ -361,10 +394,16 @@ namespace ft
 				return (find(val));
 			}
 
+			void erase(node_type* node)
+			{
+				if (node != ft_nullptr)
+					_root = erase(*node, _root); // problem if node = end()?
+			}
+
 			void erase(iterator position)
 			{
 				if (position.base() != ft_nullptr)
-					_root = erase(*position, _root);
+					_root = erase(*position, _root); // problem if position = end()?
 			}
 
 			size_type erase(const content_type& val)
@@ -374,6 +413,32 @@ namespace ft
 					ret = 1;
 				_root = erase(val, _root);
 				return (ret);
+			}
+
+			void erase (iterator first, iterator last)
+			{
+				_root = removeRange(_root, *first, *last);
+			}
+
+			node_type* removeRange(node_type* node, const content_type low, const content_type high)
+			{
+
+				// Base case
+				if (node == ft_nullptr)
+					return ft_nullptr;
+
+				// First fix the left and right subtrees of node
+				node->_left_child = removeRange(node->_left_child, low, high);
+				node->_right_child = removeRange(node->_right_child, low, high);
+
+				// Now fix the node.
+				// if given node is in Range then delete it
+				// if (node->data >= low && node->data <= high)
+				if (!first_is_greater_than_second(low, node) && first_is_greater_than_second(high, node))
+					return remove_node(node);
+
+				// Root is out of range
+				return node;
 			}
 
 			void clear(void)

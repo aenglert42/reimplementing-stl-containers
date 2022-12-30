@@ -465,99 +465,26 @@ int main(void)
 	ft::map<std::string, int>::const_iterator ftMapConstIt = ftMap.begin();
 	(void)ftMapConstIt;
 
-	std::map<int, std::string, std::less<int> > stdEraseMap;
-	for (int i = 0; i < 62; ++i)
-	{
-		std::stringstream tmp;
-		tmp << i;
-		stdEraseMap.insert(std::make_pair(i, tmp.str()));
-	}
-	std::cout << stdEraseMap.size() << std::endl;
-	std::map<int, std::string, std::less<int> >::iterator stdEraseMapit(stdEraseMap.begin());
-	std::map<int, std::string, std::less<int> >::iterator stdEraseMapend(stdEraseMapit);
 
-	std::advance(stdEraseMapend, 1);
+	ft::map<int, std::string> ftEMap;
+	ftEMap.insert(ft::make_pair(2, "2"));
+	ftEMap.insert(ft::make_pair(5, "5"));
+	ftEMap.insert(ft::make_pair(-1, "-1"));
+	ftEMap.insert(ft::make_pair(-5, "-5"));
+	ftEMap.insert(ft::make_pair(1, "1"));
+	ftEMap.print2D();
 
-	stdEraseMap.erase(stdEraseMapit, stdEraseMapend);
+	ft::map<int, std::string>::iterator ftbegin = ftEMap.begin();
+	ftbegin++;
+	std::cout << "ftbegin: " << ftbegin->first << std::endl;
+	ft::map<int, std::string>::iterator ftend = ftbegin;
 
-	stdEraseMapit = stdEraseMap.begin();
-	stdEraseMapend = stdEraseMapit;
-	std::advance(stdEraseMapit, 24);
-	std::advance(stdEraseMapend, 30);
+	ftend++;
+	ftend++;
+	ftend++;
+	// std::cout << "ftend: " << ftend->first << std::endl;
+	ftend = ftEMap.end();
 
-	stdEraseMap.erase(stdEraseMapit, stdEraseMapend);
-	std::cout << stdEraseMap.size() << std::endl;
-	for (std::map<int, std::string, std::less<int> >::iterator it = stdEraseMap.begin(); it != stdEraseMap.end(); ++it)
-	{
-		std::cout << it->first << std::endl;
-	}
-	std::cout << std::endl;
-
-	ft::map<int, std::string, std::less<int> > ftEraseMap;
-	for (int i = 0; i < 62; ++i)
-	{
-		std::stringstream tmp;
-		tmp << i;
-		ftEraseMap.insert(ft::make_pair(i, tmp.str()));
-	}
-	std::cout << ftEraseMap.size() << std::endl;
-	ft::map<int, std::string, std::less<int> >::iterator ftEraseMapit(ftEraseMap.begin());
-	ft::map<int, std::string, std::less<int> >::iterator ftEraseMapend(ftEraseMapit);
-
-	std::advance(ftEraseMapend, 1);
-
-	ftEraseMap.erase(ftEraseMapit, ftEraseMapend);
-
-	ftEraseMapit = ftEraseMap.begin();
-	ftEraseMapend = ftEraseMapit;
-	std::advance(ftEraseMapit, 24);
-	std::advance(ftEraseMapend, 30);
-
-	ftEraseMap.erase(ftEraseMapit, ftEraseMapend);
-	std::cout << ftEraseMap.size() << std::endl;
-	for (ft::map<int, std::string, std::less<int> >::iterator it = ftEraseMap.begin(); it != ftEraseMap.end(); ++it)
-	{
-		std::cout << it->first << std::endl;
-	}
-
-
-	std::map<int, std::string> m;
-
-	m.insert(std::make_pair(34, "kljd9834iuhwet"));
-	m.insert(std::make_pair(3468, "dfghe45sywu4hsr"));
-	m.insert(std::make_pair(96533, "sdfghthrdfg5456ik"));
-	m.insert(std::make_pair(89548945894, "jtt5454wujtjse"));
-	m.insert(std::make_pair(7754322, "w4wt5u4wjhstrhj"));
-	m.insert(std::make_pair(3632, "dfgjjkuy56ue5uwyhry5yeh"));
-	m.insert(std::make_pair(3, "rtjey5w4u4u5e6kjwj5w4"));
-	m.insert(std::make_pair(4, "asdfhfjgh54w3ag"));
-	m.insert(std::make_pair(-873487, "jw56jw45jsryjsrt5u4w5"));
-	m.insert(std::make_pair(-95763433, "ws45uhsrtjnsrths54yh"));
-	m.insert(std::make_pair(453834782, "juytje54yaerdrj"));
-	m.insert(std::make_pair(19458942, "j567uysdts56y6uj5r"));
-	m.insert(std::make_pair(3245689793, "jr67e5674574668679789ruyerdtadh"));
-
-	std::map<int, std::string>::iterator b = m.upper_bound(98583944);
-	std::cout << RED << b->first << RESET << std::endl;
-
-
-
-	ft::map<int, std::string> ftm;
-
-	ftm.insert(ft::make_pair(34, "kljd9834iuhwet"));
-	ftm.insert(ft::make_pair(3468, "dfghe45sywu4hsr"));
-	ftm.insert(ft::make_pair(96533, "sdfghthrdfg5456ik"));
-	ftm.insert(ft::make_pair(89548945894, "jtt5454wujtjse"));
-	ftm.insert(ft::make_pair(7754322, "w4wt5u4wjhstrhj"));
-	ftm.insert(ft::make_pair(3632, "dfgjjkuy56ue5uwyhry5yeh"));
-	ftm.insert(ft::make_pair(3, "rtjey5w4u4u5e6kjwj5w4"));
-	ftm.insert(ft::make_pair(4, "asdfhfjgh54w3ag"));
-	ftm.insert(ft::make_pair(-873487, "jw56jw45jsryjsrt5u4w5"));
-	ftm.insert(ft::make_pair(-95763433, "ws45uhsrtjnsrths54yh"));
-	ftm.insert(ft::make_pair(453834782, "juytje54yaerdrj"));
-	ftm.insert(ft::make_pair(19458942, "j567uysdts56y6uj5r"));
-	ftm.insert(ft::make_pair(3245689793, "jr67e5674574668679789ruyerdtadh"));
-
-	ft::map<int, std::string>::iterator ftb = ftm.upper_bound(98583944);
-	std::cout << BLUE << ftb->first << RESET << std::endl;
+	ftEMap.erase(ftbegin, ftend);
+	ftEMap.print2D();
 }
