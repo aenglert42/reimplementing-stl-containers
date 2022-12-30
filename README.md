@@ -51,6 +51,10 @@ Reimplement the following:
 ## Resources
 ###### <p align="right">Next: [Notes](#notes)&emsp;Previous: [How to use](#how-to-use)&emsp;&emsp;[[Contents](#table-of-contents)]</p>
 [The Cherno](https://www.youtube.com/c/TheChernoProject)'s YouTube videos of reimplementing [vector](https://www.youtube.com/watch?v=ryRf4Jh_YC0) with [iterator](https://www.youtube.com/watch?v=F9eDv-YIOQ0).</br>
+https://www.geeksforgeeks.org/deletion-in-binary-search-tree/</br>
+https://www.geeksforgeeks.org/print-binary-tree-2-dimensions/</br>
+https://www.geeksforgeeks.org/insertion-in-an-avl-tree/</br>
+https://www.geeksforgeeks.org/binary-tree-iterator-for-inorder-traversal/</br>
 </br></br></br>
 
 ## Notes
