@@ -51,6 +51,27 @@ namespace ft
 			allocator_type _allocator;
 			value_compare _compare;
 
+			bool lhs_node_is_less_than_rhs_node(node_type* lhs, node_type* rhs)
+			{
+				if (lhs == rhs)
+					return (false);
+				else if (lhs == _end_node)
+					return (false);
+				else if (rhs == _end_node)
+					return (true);
+				return (_compare(lhs->_content, rhs->_content));
+			}
+
+			bool lhs_node_is_greater_than_rhs_node(node_type* lhs, node_type* rhs)
+			{
+				return (_compare(rhs->_content, lhs->_content));
+			}
+
+			bool lhs_node_is_equal_to_rhs_node(node_type* lhs, node_type* rhs)
+			{
+				return (!_compare(lhs->_content, rhs->_content) && !_compare(rhs->_content, lhs->_content));
+			}
+
 			node_type* my_new(const content_type& val, node_type* parent)
 			{
 				node_type* node = _allocator.allocate(1);
@@ -116,6 +137,26 @@ namespace ft
 				return (node);
 			}
 
+			// void update_node_pointers(node_type* old_node, node_type* new_node)
+			// {
+			// 	// AE nullcheck
+			// 	// tmp node
+			// 	node_type tmp_node = *old_node;
+			// 	_allocator.destroy(old_node);
+			// 	_allocator.construct(old_node, node_type(new_node->_content, tmp_node->parent));
+
+			// 	// if (old_node->_parent->_left_child == old_node)
+			// 	// 	old_node->_parent->_left_child = new_node;
+			// 	// else
+			// 	// 	old_node->_parent->_right_child = new_node;
+			// 	// new_node->_left_child = old_node->_left_child;
+			// 	// new_node->_right_child = old_node->_right_child;
+			// 	// new_node->_left_child->_parent = new_node;
+			// 	// new_node->_right_child->_parent = new_node;
+			// 	// my_delete(old_node);
+			// 	// return (new_node);
+			// }
+
 			node_type* update_node_pointers(node_type* old_node, node_type* tmp_node)
 			{
 				// AE nullcheck
@@ -132,10 +173,23 @@ namespace ft
 				return (new_node);
 			}
 
+			// node_type* remove_node_with_two_children(node_type* node)
+			// {
+			// 	node_type* tmp = get_leftmost_node(node->_right_child);
+			// 	node = update_node_pointers(node, tmp);
+			// 	node->_right_child = erase(tmp->_content, node->_right_child);
+			// 	return (node);
+			// }
+
 			node_type* remove_node_with_two_children(node_type* node)
 			{
+				node_type old = *node;
+				// node_type* tmp = get_successor_node(node);
 				node_type* tmp = get_leftmost_node(node->_right_child);
-				node = update_node_pointers(node, tmp);
+				_allocator.destroy(node);
+				_allocator.construct(node, node_type(tmp->_content, old._parent));
+				node->_left_child = old._left_child;
+				node->_right_child = old._right_child;
 				node->_right_child = erase(tmp->_content, node->_right_child);
 				return (node);
 			}
@@ -361,9 +415,15 @@ namespace ft
 				return (find(val));
 			}
 
+			// void erase(node_type* node)
+			// {
+			// 	if (node != ft_nullptr)
+			// 		_root = erase(*node, _root); // problem if node = end()?
+			// }
+
 			void erase(iterator position)
 			{
-				if (position.base() != ft_nullptr)
+				if (position.base() != ft_nullptr && position != _end_node)
 					_root = erase(*position, _root);
 			}
 
@@ -374,6 +434,37 @@ namespace ft
 					ret = 1;
 				_root = erase(val, _root);
 				return (ret);
+			}
+
+			void erase(iterator first, iterator last)
+			{
+				_root = removeRange(_root, first.base(), last.base());
+				erase(first);
+			}
+
+			node_type* removeRange(node_type* node, node_type* low, node_type* high)
+			{
+
+				// Base case
+				if (node == ft_nullptr)
+					return ft_nullptr;
+
+				// First fix the left and right subtrees of node
+				node->_left_child = removeRange(node->_left_child, low, high);
+				node->_right_child = removeRange(node->_right_child, low, high);
+
+				// Now fix the node.
+				// if given node is in Range then delete it
+				// if (node->data >= low && node->data <= high)
+				// if (!first_is_greater_than_second(low, node) && first_is_greater_than_second(high, node))
+				bool is_greater_than_low = lhs_node_is_greater_than_rhs_node(node, low);
+				bool is_less_than_high = lhs_node_is_less_than_rhs_node(node, high);
+				if (is_greater_than_low && is_less_than_high)
+				// if (!lhs_node_is_greater_than_rhs_node(low, node) && lhs_node_is_greater_than_rhs_node(high, node))
+					return remove_node(node);
+
+				// Root is out of range
+				return node;
 			}
 
 			void clear(void)

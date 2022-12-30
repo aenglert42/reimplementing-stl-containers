@@ -6,7 +6,7 @@
 /*   By: englot <englot@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 19:45:46 by mleblanc          #+#    #+#             */
-/*   Updated: 2022/12/29 19:48:28 by englot           ###   ########.fr       */
+/*   Updated: 2022/12/30 19:37:57 by englot           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,44 +48,44 @@ void map_test_random()
         it = m.begin();
         std::advance(it, 10);
 
-        // m.erase(it, m.end()); // AE uncomment
+        m.erase(it, m.end());
 
-        // PRINT_ALL(m);
+        PRINT_ALL(m);
 
-        // strmap::size_type s = m.erase("1234");
+        strmap::size_type s = m.erase("1234");
 
-        // PRINT_ALL(m);
-        // PRINT_LINE("S:", s);
+        PRINT_ALL(m);
+        PRINT_LINE("S:", s);
 
-        // m.clear();
+        m.clear();
 
-        // PRINT_ALL(m);
+        PRINT_ALL(m);
 
-        // it = m.insert(m.begin(), NAMESPACE::make_pair("", "test"));
+        it = m.insert(m.begin(), NAMESPACE::make_pair("", "test"));
 
-        // PRINT_LINE("Count:", m.count(""));
+        PRINT_LINE("Count:", m.count(""));
 
-        // PRINT_PAIR_REF(*it);
-        // PRINT_ALL(m);
+        PRINT_PAIR_REF(*it);
+        PRINT_ALL(m);
 
-        // m.insert(strstr_arr, strstr_arr + strstr_size);
+        m.insert(strstr_arr, strstr_arr + strstr_size);
 
-        // strmap n(strstr_arr, strstr_arr + 10);
+        strmap n(strstr_arr, strstr_arr + 10);
 
-        // m.swap(n);
+        m.swap(n);
 
-        // PRINT_ALL(m);
-        // PRINT_ALL(n);
+        PRINT_ALL(m);
+        PRINT_ALL(n);
 
-        // PRINT_EQ_RANGE(m.equal_range("abcd"), m.end());
-        // PRINT_BOUND(m.lower_bound("123"), m.end());
-        // PRINT_BOUND(m.upper_bound("jhg456"), m.end());
+        PRINT_EQ_RANGE(m.equal_range("abcd"), m.end());
+        PRINT_BOUND(m.lower_bound("123"), m.end());
+        PRINT_BOUND(m.upper_bound("jhg456"), m.end());
 
-        // PRINT_LINE("Find:", m.find("hello") != m.end() ? m.find("hello")->first : "End");
+        PRINT_LINE("Find:", m.find("hello") != m.end() ? m.find("hello")->first : "End");
 
-        // m["hello"] = "world";
+        m["hello"] = "world";
 
-        // PRINT_LINE("Find:", m.find("hello") != m.end() ? m.find("hello")->first : "End");
+        PRINT_LINE("Find:", m.find("hello") != m.end() ? m.find("hello")->first : "End");
     }
 
     {
