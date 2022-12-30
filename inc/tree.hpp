@@ -51,6 +51,27 @@ namespace ft
 			allocator_type _allocator;
 			value_compare _compare;
 
+			bool lhs_node_is_less_than_rhs_node(node_type* lhs, node_type* rhs)
+			{
+				if (lhs == rhs)
+					return (false);
+				else if (lhs == _end_node)
+					return (false);
+				else if (rhs == _end_node)
+					return (true);
+				return (_compare(lhs->_content, rhs->_content));
+			}
+
+			bool lhs_node_is_greater_than_rhs_node(node_type* lhs, node_type* rhs)
+			{
+				return (_compare(rhs->_content, lhs->_content));
+			}
+
+			bool lhs_node_is_equal_to_rhs_node(node_type* lhs, node_type* rhs)
+			{
+				return (!_compare(lhs->_content, rhs->_content) && !_compare(rhs->_content, lhs->_content));
+			}
+
 			node_type* my_new(const content_type& val, node_type* parent)
 			{
 				node_type* node = _allocator.allocate(1);
