@@ -258,7 +258,7 @@ namespace ft
 				_root = insert(val, _root, _root);
 			}
 
-			Tree (const Tree& other) : _size(other._size), _root(ft_nullptr), _end_node(ft_nullptr), _allocator(other._allocator)
+			Tree (const Tree& other) : _size(0), _root(ft_nullptr), _end_node(ft_nullptr), _allocator(other._allocator)
 			{
 				const_iterator first = other.begin();
 				const_iterator last = other.end();
