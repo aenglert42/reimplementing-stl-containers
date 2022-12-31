@@ -57,9 +57,10 @@ namespace ft
 
 			void my_dealloc(void)
 			{
+				if (empty())
+					return ;
 				my_destroy();
-				if (_size > 0)
-					_alloc.deallocate(_array, _capacity);
+				_alloc.deallocate(_array, _capacity);
 			}
 
 			void my_realloc(void)
@@ -122,13 +123,18 @@ namespace ft
 			vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type(),
 				typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type = InputIterator())
 			{
-				difference_type dist = ft::distance(first, last);
-				_size = dist;
-				_capacity = _size;
+				// difference_type dist = ft::distance(first, last);
+				// _size = dist;
+				// _capacity = _size;
+				// _array = _alloc.allocate(_size);
+				// for (size_type i = 0; i < _size; ++i)
+				// 	_alloc.construct(_array + i, *first++); // base?
 				_alloc = alloc;
-				_array = _alloc.allocate(_size);
-				for (difference_type i = 0; i < dist; ++i)
-					_alloc.construct(_array + i, *first++); // base?
+				while (first != last)
+				{
+					push_back(*first);
+					++first;
+				}
 			}
 
 			// copy (4)	
@@ -361,11 +367,10 @@ namespace ft
 		////pop_back///////////////////////////////////////////////////////
 			void pop_back()
 			{
-				if (_size > 0)
-				{
-					_alloc.destroy(&_array[_size]);
-					_size--;
-				}
+				if (empty())
+					return ;
+				_alloc.destroy(&_array[_size]);
+				_size--;
 			}
 
 		////insert///////////////////////////////////////////////////////
