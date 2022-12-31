@@ -91,6 +91,14 @@ namespace ft
 				_capacity = newCapacity;
 			}
 
+			// size_type check_init_len(size_type n, const allocator_type& a)
+			size_type check_init_len(size_type n)
+			{
+				if (n > max_size())
+					throw std::out_of_range("cannot create ft::vector larger than max_size()");
+				return (n);
+			}
+
 		public:
 	//PUBLIC MEMBER FUNCTIONS
 
@@ -110,12 +118,16 @@ namespace ft
 			// fill (2)	
 			explicit vector (size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type())
 			{
-				_size = n;
-				_capacity = _size;
+				// _size = n;
+				// _capacity = _size;
+				// _alloc = alloc;
+				// _array = _alloc.allocate(n);
+				// for (size_type i = 0; i < n; i++)
+				// 	_alloc.construct(_array + i, val); // base?
 				_alloc = alloc;
-				_array = _alloc.allocate(n);
-				for (size_type i = 0; i < n; i++)
-					_alloc.construct(_array + i, val); // base?
+				check_init_len(n);
+				for (size_type i = 0; i < n; ++i)
+					push_back(val);
 			}
 
 			// range (3)	
