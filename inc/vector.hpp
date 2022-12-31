@@ -91,11 +91,10 @@ namespace ft
 				_capacity = newCapacity;
 			}
 
-			// size_type check_init_len(size_type n, const allocator_type& a)
 			size_type check_init_len(size_type n)
 			{
 				if (n > max_size())
-					throw std::out_of_range("cannot create ft::vector larger than max_size()");
+					throw std::length_error("cannot create ft::vector larger than max_size()");
 				return (n);
 			}
 
@@ -116,15 +115,8 @@ namespace ft
 			}
 
 			// fill (2)	
-			explicit vector (size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type())
+			explicit vector (size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type()) : _size(0), _capacity(0), _alloc(alloc), _array(ft_nullptr)
 			{
-				// _size = n;
-				// _capacity = _size;
-				// _alloc = alloc;
-				// _array = _alloc.allocate(n);
-				// for (size_type i = 0; i < n; i++)
-				// 	_alloc.construct(_array + i, val); // base?
-				_alloc = alloc;
 				check_init_len(n);
 				for (size_type i = 0; i < n; ++i)
 					push_back(val);
@@ -133,15 +125,8 @@ namespace ft
 			// range (3)	
 			template <class InputIterator>
 			vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type(),
-				typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type = InputIterator())
+				typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type = InputIterator()) : _size(0), _capacity(0), _alloc(alloc), _array(ft_nullptr)
 			{
-				// difference_type dist = ft::distance(first, last);
-				// _size = dist;
-				// _capacity = _size;
-				// _array = _alloc.allocate(_size);
-				// for (size_type i = 0; i < _size; ++i)
-				// 	_alloc.construct(_array + i, *first++); // base?
-				_alloc = alloc;
 				while (first != last)
 				{
 					push_back(*first);
@@ -524,7 +509,7 @@ namespace ft
 			template <class T, class Alloc>
 			bool operator<(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
 			{
-				return ft::lexicographical_compare(lhs.begin(), lhs.end(), // AE ft version
+				return ft::lexicographical_compare(lhs.begin(), lhs.end(),
 					  rhs.begin(), rhs.end());
 			}
 
