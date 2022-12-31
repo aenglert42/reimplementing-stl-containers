@@ -366,7 +366,7 @@ namespace ft
 			{
 				if (empty())
 					return ;
-				_alloc.destroy(&_array[_size]);
+				_alloc.destroy(&_array[_size - 1]);
 				_size--;
 			}
 
