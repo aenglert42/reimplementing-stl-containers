@@ -477,7 +477,8 @@ namespace ft
 		////clear///////////////////////////////////////////////////////
 			void clear()
 			{
-				my_destroy();
+				// my_destroy();
+				my_dealloc();
 				_size = 0;
 			}
 
