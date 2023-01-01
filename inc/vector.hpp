@@ -57,10 +57,11 @@ namespace ft
 
 			void my_dealloc(void)
 			{
-				if (empty())
-					return ;
-				my_destroy();
-				_alloc.deallocate(_array, _capacity);
+				if (!empty())
+					my_destroy();
+				if (_capacity > 0)
+					_alloc.deallocate(_array, _capacity);
+				_capacity = 0;
 			}
 
 			void my_realloc(void)
@@ -98,6 +99,16 @@ namespace ft
 				return (n);
 			}
 
+			template <class InputIterator>
+			void range_init(InputIterator first, InputIterator last)
+			{
+				while (first != last)
+				{
+					push_back(*first);
+					++first;
+				}
+			}
+
 		public:
 	//PUBLIC MEMBER FUNCTIONS
 
@@ -127,11 +138,7 @@ namespace ft
 			vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type(),
 				typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type = InputIterator()) : _size(0), _capacity(0), _alloc(alloc), _array(ft_nullptr)
 			{
-				while (first != last)
-				{
-					push_back(*first);
-					++first;
-				}
+				range_init(first,last);
 			}
 
 			// copy (4)	
@@ -148,10 +155,7 @@ namespace ft
 			// ~vector()
 			~vector(void)
 			{
-				if (_array != ft_nullptr)
-				{
-					my_dealloc();
-				}
+				clear();
 			}
 
 		////operator=///////////////////////////////////////////////////////
@@ -328,30 +332,27 @@ namespace ft
 		////assign///////////////////////////////////////////////////////
 			// range (1)	
 			template <class InputIterator>
-			void assign (InputIterator first, InputIterator last,
+			void assign(InputIterator first, InputIterator last,
 				typename ft::enable_if< !ft::is_integral<InputIterator>::value, InputIterator >::type = InputIterator())
 			{
-				clear();
-				// size_type n = last - first;
-				size_type n = ft::distance(first, last);
-				if (n > _capacity)
-					my_realloc(n);
-				for (size_type i = 0; i < n; ++i)
-					push_back(*(first++));
+				my_destroy();
+				_size = 0;
+				range_init(first, last);
 			}
 
 			// fill (2)	
-			void assign (size_type n, const value_type& val)
+			void assign(size_type n, const value_type& val)
 			{
-				clear();
+				my_destroy();
+				_size = 0;
 				if (n > _capacity)
-					my_realloc(_size + n);
+					my_realloc(n);
 				for (size_type i = 0; i < n; ++i)
 					push_back(val);
 			}
 
 		////push_back///////////////////////////////////////////////////////
-			void push_back (const value_type& val)
+			void push_back(const value_type& val)
 			{
 				if (_size >= _capacity)
 				{
@@ -477,7 +478,6 @@ namespace ft
 		////clear///////////////////////////////////////////////////////
 			void clear()
 			{
-				// my_destroy();
 				my_dealloc();
 				_size = 0;
 			}
