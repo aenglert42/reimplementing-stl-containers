@@ -376,31 +376,43 @@ namespace ft
 			iterator insert (iterator position, const value_type& val)
 			{
 				difference_type pos = position - begin();
-				insert (position, 1, val);
-				return (begin() + pos);
+
+				if (_size >= _capacity)
+				{
+					my_realloc();
+				}
+				_alloc.construct(_array + _size, value_type());
+				_size++;
+				for (iterator tmp = (end() - 1); tmp != iterator(_array + pos); --tmp)
+					*tmp = *(tmp - 1);
+				*(_array + pos) = val;
+				return (_array + pos);
 			}
 
 			// fill (2)	
 			void insert (iterator position, size_type n, const value_type& val)
 			{
-				size_type old_size = _size;
-				difference_type offset = end() - position;
+				check_init_len(_size + n);
+				// size_type old_size = _size;
+				// difference_type offset = end() - position;
 
-				if (_size + n >= _capacity)
-					my_realloc(_size + n);
+				// if (!empty() && _size + n >= _capacity)
+				// 	my_realloc(_size + n);
+				// for (size_type i = 0; i < n; ++i)
+				// {
+				// 	_alloc.construct(&_array[_size], val); // AE change this to something that doesnt need val
+				// 	_size++;
+				// }	
+				// for (difference_type i = 0; i < offset; ++i)
+				// {
+				// 	_array[_size - 1 - i] = _array[old_size - 1 - i];
+				// }
+				// for (size_type i = 0; i < n; ++i)
+				// {
+				// 	_array[old_size - offset + i] = val;
+				// }
 				for (size_type i = 0; i < n; ++i)
-				{
-					_alloc.construct(&_array[_size], val); // AE change this to something that doesnt need val
-					_size++;
-				}	
-				for (difference_type i = 0; i < offset; ++i)
-				{
-					_array[_size - 1 - i] = _array[old_size - 1 - i];
-				}
-				for (size_type i = 0; i < n; ++i)
-				{
-					_array[old_size - offset + i] = val;
-				}
+					insert(position, val);
 			}
 
 			// range (3)	
@@ -444,7 +456,6 @@ namespace ft
 		////erase///////////////////////////////////////////////////////
 			iterator erase(iterator position)
 			{
-				iterator tmp = position;
 				for (iterator tmp = position; tmp + 1 != end(); ++tmp)
 					*tmp = *(tmp + 1);
 				pop_back();
