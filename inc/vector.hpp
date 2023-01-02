@@ -283,14 +283,14 @@ namespace ft
 		////at///////////////////////////////////////////////////////
 			reference at (size_type n)
 			{
-				if (n > _size - 1)
+				if (_size == 0 || n > _size - 1)
 					throw std::out_of_range("Catch out_of_range exception!");  // AE remove make function for that
 				return (_array[n]);
 			}
 
 			const_reference at (size_type n) const
 			{
-				if (n > _size - 1)
+				if (_size == 0 || n > _size - 1)
 					throw std::out_of_range("Catch out_of_range exception!");  // AE remove make function for that
 				return (_array[n]);
 			}
