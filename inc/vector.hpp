@@ -433,45 +433,19 @@ namespace ft
 		////erase///////////////////////////////////////////////////////
 			iterator erase(iterator position)
 			{
-				if (position != end())
-				{
-					iterator tmp = position;
-					for (iterator tmp = position; tmp + 1 != end(); ++tmp)
-						*tmp = *(tmp + 1);
-					pop_back();
-				}
+				iterator tmp = position;
+				for (iterator tmp = position; tmp + 1 != end(); ++tmp)
+					*tmp = *(tmp + 1);
+				pop_back();
 				return (position);
 			}
 
 			iterator erase(iterator first, iterator last)
 			{
 				size_type n = last - first;
-				if (n == 0)
-					return (last);
-				// for (size_type i = 0; i < n; ++i)
-				// 	*(first + i) = *(first + i + n);
-				// // for (iterator it = first; it != end() - n; ++it)
-				// // {
-				// // 	*(it) = *(it + n);
-				// // }
-				// // for (size_type i = 0; i < n; ++i)
-				// // {
-				// // 	*(first + i) = *(first + n + i);
-				// // }
-				// for (size_type i = 0; i < n; ++i)
-				// {
-				// 	_alloc.destroy(&_array[_size - 1 - i]); // AE what if size == 0
-				// 	// _array[_size - 1 - i] = _array[0];
-				// }
-
-				
-				for (iterator it = first; it != first + n; ++it)
-					*(it) = *(it + n);
-
 				for (size_type i = 0; i < n; ++i)
-					_alloc.destroy(&_array[_size - 1 - i]);
-				_size -= n;
-				return (last);
+					erase(first);
+				return (first + n);
 			}
 
 		////swap///////////////////////////////////////////////////////
