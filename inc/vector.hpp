@@ -375,6 +375,7 @@ namespace ft
 			// single element (1)	
 			iterator insert (iterator position, const value_type& val)
 			{
+				iterator beg = begin();
 				difference_type pos = position - begin();
 
 				if (_size >= _capacity)
@@ -412,7 +413,7 @@ namespace ft
 				// 	_array[old_size - offset + i] = val;
 				// }
 				for (size_type i = 0; i < n; ++i)
-					insert(position, val);
+					position = insert(position, val);
 			}
 
 			// range (3)	
