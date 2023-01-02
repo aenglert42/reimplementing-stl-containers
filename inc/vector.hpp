@@ -408,6 +408,7 @@ namespace ft
 			void insert (iterator position, InputIterator first, InputIterator last,
 				typename ft::enable_if< !ft::is_integral<InputIterator>::value, InputIterator >::type = InputIterator())
 			{
+				/*
 				// size_type n = last - first;
 				size_type n = ft::distance(first, last);
 				size_type old_size = _size;
@@ -428,6 +429,16 @@ namespace ft
 				{
 					_array[old_size - offset + i] = *(first++);
 				}
+
+				// difference_type offset = position - begin();
+				// _M_insert_dispatch(begin() + offset,
+				// 			first, last, __false_type());
+				// return (begin() + offset);
+				*/
+				vector tmp (position, end());
+				erase(position, end());
+				range_init(first, last);
+				range_init(tmp.begin(), tmp.end());
 			}
 
 		////erase///////////////////////////////////////////////////////
