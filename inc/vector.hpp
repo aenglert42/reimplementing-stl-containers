@@ -260,6 +260,7 @@ namespace ft
 		////reserve///////////////////////////////////////////////////////
 			void reserve (size_type n)
 			{
+				check_init_len(n);
 				if (n > _capacity)
 					my_realloc(n);
 			}
@@ -394,24 +395,6 @@ namespace ft
 			void insert (iterator position, size_type n, const value_type& val)
 			{
 				check_init_len(_size + n);
-				// size_type old_size = _size;
-				// difference_type offset = end() - position;
-
-				// if (!empty() && _size + n >= _capacity)
-				// 	my_realloc(_size + n);
-				// for (size_type i = 0; i < n; ++i)
-				// {
-				// 	_alloc.construct(&_array[_size], val); // AE change this to something that doesnt need val
-				// 	_size++;
-				// }	
-				// for (difference_type i = 0; i < offset; ++i)
-				// {
-				// 	_array[_size - 1 - i] = _array[old_size - 1 - i];
-				// }
-				// for (size_type i = 0; i < n; ++i)
-				// {
-				// 	_array[old_size - offset + i] = val;
-				// }
 				for (size_type i = 0; i < n; ++i)
 					position = insert(position, val);
 			}
