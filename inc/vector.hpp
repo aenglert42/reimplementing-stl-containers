@@ -450,8 +450,8 @@ namespace ft
 			{
 				size_type n = last - first;
 				for (size_type i = 0; i < n; ++i)
-					erase(first);
-				return (first + n);
+					last = erase(first);
+				return (last);
 			}
 
 		////swap///////////////////////////////////////////////////////
