@@ -449,13 +449,14 @@ namespace ft
 			iterator erase(iterator first, iterator last)
 			{
 				size_type n = last - first;
-				for (iterator it = first; it != first + n; ++it)
+				
+				for (iterator it = first; it != end() - n; ++it)
 					*(it) = *(it + n);
 
 				for (size_type i = 0; i < n; ++i)
 					_alloc.destroy(&_array[_size - 1 - i]);
 				_size -= n;
-				return (last);
+				return (first);
 			}
 
 		////swap///////////////////////////////////////////////////////
