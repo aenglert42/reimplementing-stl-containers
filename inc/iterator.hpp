@@ -279,7 +279,7 @@ namespace ft
 					const reverse_iterator<Iterator>& lhs,
 					const reverse_iterator<Iterator>& rhs)
 				{
-					return (lhs.base() - rhs.base());
+					return (rhs.base() - lhs.base());
 				}
 
 			////distance///////////////////////////////////////////////////////

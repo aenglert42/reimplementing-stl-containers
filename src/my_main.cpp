@@ -488,4 +488,28 @@ int main(void)
 	ftEMap.erase(ftbegin, ftend);
 	ftEMap.print2D();
 
+
+	{
+		ft::vector<int> ftVector;
+
+		ftVector.push_back(2);
+		ftVector.push_back(5);
+		ftVector.push_back(-1);
+
+		std::cout << "Size: " << ftVector.rend() - ftVector.rbegin() << std::endl;
+		std::cout << "Size: " << ftVector.rbegin() - ftVector.rend() << std::endl;
+		std::cout << "Size: " << ftVector.end() - ftVector.begin() << std::endl;
+		std::cout << "Size: " << ftVector.begin() - ftVector.end() << std::endl;
+
+		std::vector<int> stdVector;
+
+		stdVector.push_back(2);
+		stdVector.push_back(5);
+		stdVector.push_back(-1);
+
+		std::cout << "Size: " << stdVector.rend() - stdVector.rbegin() << std::endl;
+		std::cout << "Size: " << stdVector.rbegin() - stdVector.rend() << std::endl;
+		std::cout << "Size: " << stdVector.end() - stdVector.begin() << std::endl;
+		std::cout << "Size: " << stdVector.begin() - stdVector.end() << std::endl;
+	}
 }
