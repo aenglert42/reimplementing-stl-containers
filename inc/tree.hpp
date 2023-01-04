@@ -331,14 +331,14 @@ namespace ft
 				_root = insert(val, _root, _root);
 			}
 
-			node_type* copyTree(node_type* toCopy, node_type* parent)
+			node_type* copy_tree(node_type* node, node_type* parent)
 			{
-				if (toCopy == ft_nullptr)
+				if (node == ft_nullptr)
 					return (ft_nullptr);
 				
-				node_type* ret = my_new(toCopy->_content, parent);
-				ret->_right_child = copyTree(toCopy->_right_child, ret);
-				ret->_left_child = copyTree(toCopy->_left_child, ret);
+				node_type* ret = my_new(node->_content, parent);
+				ret->_right_child = copy_tree(node->_right_child, ret);
+				ret->_left_child = copy_tree(node->_left_child, ret);
 				return ret;
 			}
 
@@ -350,7 +350,7 @@ namespace ft
 				init_tree();
 				// while (first != last)
 				// 	insert(*first++);
-				_root->_left_child = copyTree(other._root->_left_child, _root);
+				_root->_left_child = copy_tree(other._root->_left_child, _root);
 			}
 
 			Tree& operator=(const Tree& other)
@@ -363,7 +363,7 @@ namespace ft
 					clear();
 					// while (first != last)
 					// 	insert(*first++);
-					_root->_left_child = copyTree(other._root->_left_child, _root);
+					_root->_left_child = copy_tree(other._root->_left_child, _root);
 					_allocator = other._allocator;
 					_compare = other._compare;
 					_size = other._size;
