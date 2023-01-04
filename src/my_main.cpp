@@ -8,6 +8,34 @@
 #include <string>
 #include <map>
 #include <vector>
+#include <cstdlib>
+#include <limits>
+
+#define MAXRAM (std::numeric_limits<int>::max())
+#define MAXSIZE ((std::size_t)MAXRAM / sizeof(int))
+#define PRINT_TIME(t)                                                                              \
+	{                                                                                              \
+		std::cout << t.get_time() << "ms" << std::endl;                                            \
+	}
+
+#define PRINT_SUM()                                                                                \
+	{                                                                                              \
+		std::cout << sum << "ms" << std::endl;                                                     \
+	}
+
+#define SETUP                                                                                      \
+	srand(64);                                                                                     \
+	volatile int x = 0;                                                                            \
+	(void)x;                                                                                       \
+	long sum = 0;                                                                                  \
+	(void)sum;
+
+#define BLOCK_OPTIMIZATION(v)                                                                      \
+	{                                                                                              \
+		if (v[0] == 64) {                                                                          \
+			x = x + 64;                                                                            \
+		}                                                                                          \
+	}
 
 #define RED "\033[31m"
 #define GREEN "\033[32m"
@@ -16,6 +44,42 @@
 #define BOLD "\033[1m"
 #define UNDERLINED "\033[4m"
 #define RESET "\033[0m"
+
+#include <sys/time.h>
+
+class timer
+{
+public:
+    timer();
+
+public:
+    long get_time();
+    void reset();
+
+private:
+    struct timeval stamp;
+};
+
+timer::timer()
+{
+    reset();
+}
+
+long timer::get_time()
+{
+    struct timeval now;
+    struct timeval diff;
+
+    gettimeofday(&now, NULL);
+    timersub(&now, &stamp, &diff);
+
+    return diff.tv_sec * 1000 + diff.tv_usec / 1000;
+}
+
+void timer::reset()
+{
+    gettimeofday(&stamp, NULL);
+}
 
 void my_leaks(void)
 {
@@ -511,5 +575,30 @@ int main(void)
 		std::cout << "Size: " << stdVector.rbegin() - stdVector.rend() << std::endl;
 		std::cout << "Size: " << stdVector.end() - stdVector.begin() << std::endl;
 		std::cout << "Size: " << stdVector.begin() - stdVector.end() << std::endl;
+	}
+
+
+
+	{
+		#define NAMESPACE ft
+
+		SETUP;
+
+		NAMESPACE::map<int, int> data;
+
+		for (std::size_t i = 0; i < MAXSIZE / 2; ++i) {
+			data.insert(NAMESPACE::make_pair(rand(), rand()));
+		}
+
+		timer t;
+
+		{
+			NAMESPACE::map<int, int> m;
+			for (int i = 0; i < 5; ++i) {
+				m = data;
+			}
+		}
+
+		PRINT_TIME(t);
 	}
 }
