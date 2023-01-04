@@ -167,13 +167,10 @@ namespace ft
 			{
 				if (*this == x)
 					return (*this);
-				for(size_type i = 0; i < _size; i++)
-					_alloc.destroy(&_array[i]);
-				if (_capacity > 0)
-					_alloc.deallocate(_array, _capacity);
+				my_dealloc();
 				_capacity = x._capacity;
+				_array = my_alloc(_capacity);
 				_size = x._size;
-				_array = _alloc.allocate(_capacity);
 				for (size_type i = 0; i < _size; i++)
 					_alloc.construct(&_array[i], x._array[i]);
 				return (*this);
