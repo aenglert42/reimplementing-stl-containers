@@ -257,13 +257,31 @@ namespace ft
 				_size--;
 			}
 
-			void print(node_type* node)
+			void print_preorder(node_type* node)
 			{
 				if (node == ft_nullptr)
 					return;
-				print(node->_left_child);
 				std::cout << node->_content << " ";
-				print(node->_right_child);
+				print_preorder(node->_left_child);
+				print_preorder(node->_right_child);
+			}
+
+			void print_inorder(node_type* node)
+			{
+				if (node == ft_nullptr)
+					return;
+				print_inorder(node->_left_child);
+				std::cout << node->_content << " ";
+				print_inorder(node->_right_child);
+			}
+
+			void print_postorder(node_type* node)
+			{
+				if (node == ft_nullptr)
+					return;
+				print_postorder(node->_left_child);
+				print_postorder(node->_right_child);
+				std::cout << node->_content << " ";
 			}
 
 			// Function to print binary tree in 2D
@@ -271,7 +289,7 @@ namespace ft
 			void print2DUtil(node_type* root, int space)
 			{
 				// Base case
-				if (root == NULL)
+				if (root == ft_nullptr)
 					return;
 			
 				// Increase distance between levels
@@ -286,7 +304,7 @@ namespace ft
 				for (int i = COUNT; i < space; i++)
 					std::cout << " ";
 				std::cout << root->_content << "(";
-				if (root->_parent != ft_nullptr)
+				if (root->_parent != _end_node)
 					std::cout << root->_parent->_content;
 				std::cout << ")";
 			
@@ -313,26 +331,39 @@ namespace ft
 				_root = insert(val, _root, _root);
 			}
 
+			node_type* copyTree(node_type* toCopy, node_type* parent)
+			{
+				if (toCopy == ft_nullptr)
+					return (ft_nullptr);
+				
+				node_type* ret = my_new(toCopy->_content, parent);
+				ret->_right_child = copyTree(toCopy->_right_child, ret);
+				ret->_left_child = copyTree(toCopy->_left_child, ret);
+				return ret;
+			}
+
 			Tree (const Tree& other) : _size(0), _root(ft_nullptr), _end_node(ft_nullptr), _allocator(other._allocator)
 			{
-				const_iterator first = other.begin();
-				const_iterator last = other.end();
+				// const_iterator first = other.begin();
+				// const_iterator last = other.end();
 
 				init_tree();
-				while (first != last)
-					insert(*first++);
+				// while (first != last)
+				// 	insert(*first++);
+				_root->_left_child = copyTree(other._root->_left_child, _root);
 			}
 
 			Tree& operator=(const Tree& other)
 			{
 				if (this != &other)
 				{
-					const_iterator first = other.begin();
-					const_iterator last = other.end();
+					// const_iterator first = other.begin();
+					// const_iterator last = other.end();
 
 					clear();
-					while (first != last)
-						insert(*first++);
+					// while (first != last)
+					// 	insert(*first++);
+					_root->_left_child = copyTree(other._root->_left_child, _root);
 					_allocator = other._allocator;
 					_compare = other._compare;
 					_size = other._size;
@@ -348,7 +379,7 @@ namespace ft
 				_end_node = ft_nullptr;
 			}
 
-			size_type get_size(void) const
+			size_type size(void) const
 			{
 				return (_size);
 			}
@@ -538,24 +569,51 @@ namespace ft
 				// return (tmp);
 			}
 
-			void print(void)
+			bool empty() const
 			{
-				std::cout << "Root: ";
-				if (_root == ft_nullptr)
-					std::cout << "(empty)" << std::endl;
+				if (size() == 0)
+					return (true);
+				return (false);
+			}
+
+			void print_preorder(void)
+			{
+				std::cout << "Preorder:\n";
+				if (empty())
+					std::cout << "(empty)";
 				else
-				{
-					std::cout << _root->_content << std::endl;
-					print(_root);
-				}
+					print_preorder(_root->_left_child);
+				std::cout << std::endl;
+			}
+
+			void print_inorder(void)
+			{
+				std::cout << "Inorder:\n";
+				if (empty())
+					std::cout << "(empty)";
+				else
+					print_inorder(_root->_left_child);
+				std::cout << std::endl;
+			}
+
+			void print_postorder(void)
+			{
+				std::cout << "Postorder:\n";
+				if (empty())
+					std::cout << "(empty)";
+				else
+					print_postorder(_root->_left_child);
 				std::cout << std::endl;
 			}
 
 			// Wrapper over print2DUtil()
 			void print2D(void)
 			{
-				// Pass initial space count as 0
-				print2DUtil(_root, 0);
+				std::cout << "Tree:\n";
+				if (empty())
+					std::cout << "(empty)";
+				else
+					print2DUtil(_root->_left_child, 0);
 				std::cout << std::endl;
 			}
 	};

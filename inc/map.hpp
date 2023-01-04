@@ -201,15 +201,13 @@ namespace ft
 		////empty///////////////////////////////////////////////////////
 			bool empty() const
 			{
-				if (size() == 0)
-					return (true);
-				return (false);
+				return (_tree.empty());
 			}
 			
 		////size///////////////////////////////////////////////////////
 			size_type size() const
 			{
-				return (_tree.get_size());
+				return (_tree.size());
 			}
 
 		////max_size///////////////////////////////////////////////////////

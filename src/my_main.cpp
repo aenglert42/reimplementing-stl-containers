@@ -577,28 +577,54 @@ int main(void)
 		std::cout << "Size: " << stdVector.begin() - stdVector.end() << std::endl;
 	}
 
-
-
 	{
-		#define NAMESPACE ft
+		ft::Tree<int> Blue;
+		Blue.print_preorder();
+		Blue.print_inorder();
+		Blue.print_postorder();
+		Blue.print2D();
 
-		SETUP;
+		Blue.insert(3);
+		Blue.insert(8);
+		Blue.insert(5);
+		Blue.insert(1);
+		Blue.insert(9);
+		Blue.insert(2);
+		Blue.insert(4);
 
-		NAMESPACE::map<int, int> data;
+		Blue.print_preorder();
+		Blue.print_inorder();
+		Blue.print_postorder();
+		std::cout << BLUE;
+		Blue.print2D();
 
-		for (std::size_t i = 0; i < MAXSIZE / 2; ++i) {
-			data.insert(NAMESPACE::make_pair(rand(), rand()));
-		}
-
-		timer t;
-
-		{
-			NAMESPACE::map<int, int> m;
-			for (int i = 0; i < 5; ++i) {
-				m = data;
-			}
-		}
-
-		PRINT_TIME(t);
+		ft::Tree<int> Green(Blue);
+		std::cout << GREEN;
+		Green.print2D();
+		std::cout << RESET;
 	}
+
+	// map assignment benchmark
+	// {
+	// 	#define NAMESPACE ft
+
+	// 	SETUP;
+
+	// 	NAMESPACE::map<int, int> data;
+
+	// 	for (std::size_t i = 0; i < MAXSIZE / 2; ++i) {
+	// 		data.insert(NAMESPACE::make_pair(rand(), rand()));
+	// 	}
+
+	// 	timer t;
+
+	// 	{
+	// 		NAMESPACE::map<int, int> m;
+	// 		for (int i = 0; i < 5; ++i) {
+	// 			m = data;
+	// 		}
+	// 	}
+
+	// 	PRINT_TIME(t);
+	// }
 }
