@@ -257,7 +257,7 @@ namespace ft
 
 			// range (3)
 			template <class InputIterator>
-			void insert(InputIterator first, InputIterator last)
+			void insert(InputIterator first, InputIterator last) // AE improve performance for benchmark
 			{
 				while (first != last)
 					_tree.insert(*first++);

@@ -578,67 +578,30 @@ int main(void)
 	}
 
 	{
-		ft::Tree<int> Blue;
-		Blue.print_preorder();
-		Blue.print_inorder();
-		Blue.print_postorder();
-		Blue.print2D();
-
-		Blue.insert(3);
-		Blue.insert(8);
-		Blue.insert(5);
-		Blue.insert(1);
-		Blue.insert(9);
-		Blue.insert(2);
-		Blue.insert(4);
-
-		Blue.print_preorder();
-		Blue.print_inorder();
-		Blue.print_postorder();
-		std::cout << BLUE;
-		Blue.print2D();
-
-		ft::Tree<int> Green(Blue);
-		std::cout << GREEN;
-		Green.print2D();
-		// std::cout << (Green.upper_bound(7))->_content << std::endl;
-		std::cout << (Green.lower_bound(7))->_content << std::endl;
-		// std::cout << (Green.upper_bound(5))->_content << std::endl;
-		std::cout << (Green.lower_bound(5))->_content << std::endl;
-		// std::cout << (Green.upper_bound(0))->_content << std::endl;
-		std::cout << (Green.lower_bound(0))->_content << std::endl;
-		// std::cout << (Green.upper_bound(1))->_content << std::endl;
-		std::cout << (Green.lower_bound(1))->_content << std::endl;
-		// std::cout << (Green.upper_bound(9))->_content << std::endl;
-		std::cout << (Green.lower_bound(9))->_content << std::endl;
-		// std::cout << (Green.upper_bound(3))->_content << std::endl;
-		std::cout << (Green.lower_bound(3))->_content << std::endl;
-		std::cout << RESET;
-	}
-
-	{
 		std::cout << RED;
-		std::map<int, int> Map;
-		Map.insert(std::make_pair(3, 3));
-		Map.insert(std::make_pair(8, 8));
-		Map.insert(std::make_pair(5, 5));
-		Map.insert(std::make_pair(1, 1));
-		Map.insert(std::make_pair(9, 9));
-		Map.insert(std::make_pair(2, 2));
-		Map.insert(std::make_pair(4, 4));
-		// std::cout << (Map.upper_bound(7))->first << std::endl; 
-		std::cout << (Map.lower_bound(7))->first << std::endl;
-		// std::cout << (Map.upper_bound(5))->first << std::endl;
-		std::cout << (Map.lower_bound(5))->first << std::endl;
-		// std::cout << (Map.upper_bound(0))->first << std::endl;
-		std::cout << (Map.lower_bound(0))->first << std::endl;
-		// std::cout << (Map.upper_bound(1))->first << std::endl;
-		std::cout << (Map.lower_bound(1))->first << std::endl;
-		// std::cout << (Map.upper_bound(9))->first << std::endl;
-		std::cout << (Map.lower_bound(9))->first << std::endl;
-		// std::cout << (Map.upper_bound(3))->first << std::endl;
-		std::cout << (Map.lower_bound(3))->first << std::endl;
+		ft::map<int, int> Map;
+		Map.insert(ft::make_pair(3, 3));
+		Map.insert(ft::make_pair(7, 7));
+		Map.insert(ft::make_pair(5, 5));
+		Map.insert(ft::make_pair(1, 1));
+		Map.insert(ft::make_pair(9, 9));
+		Map.insert(ft::make_pair(2, 2));
+		std::cout << "inserted: " << Map.insert(ft::make_pair(4, 4)).second << std::endl;
+		std::cout << "inserted: " << Map.insert(ft::make_pair(7, 7)).second << std::endl;
+		Map.print2D();
+
+		ft::map<int, int>::iterator it = Map.begin();
+		++it;
+		++it;
+		++it;
+		++it;
+		++it;
+		std::cout << "Hint: " << *it << std::endl;
+		std::cout << "Content: " << *(Map.insert(it, ft::make_pair(8, 8))) << std::endl;
+		std::cout << "Content: " << *(Map.insert(it, ft::make_pair(4, 4))) << std::endl;
+
 		std::cout << RESET;
+		Map.print2D();
 	}
 
 	// map assignment benchmark

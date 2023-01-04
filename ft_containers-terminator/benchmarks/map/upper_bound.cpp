@@ -6,7 +6,7 @@
 /*   By: englot <englot@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 20:19:38 by mleblanc          #+#    #+#             */
-/*   Updated: 2023/01/04 15:12:57 by englot           ###   ########.fr       */
+/*   Updated: 2023/01/04 17:55:46 by englot           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,7 @@ int main()
 
     NAMESPACE::map<int, int> data;
 
-    std::cout << "Number of Elements: " << MAXSIZE / 2 << std::endl;
-
     for (std::size_t i = 0; i < MAXSIZE / 2; ++i) {
-        if (i % 10000 == 0)
-            std::cout << i << "\r";
         data.insert(NAMESPACE::make_pair(rand(), rand()));
     }
 

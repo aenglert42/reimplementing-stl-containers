@@ -127,14 +127,42 @@ namespace ft
 				else if (first_is_less_than_second(val, node))
 				{
 					node->_left_child = insert(val, node->_left_child, node);
-					node->_parent = parent;
+					// node->_parent = parent;
 				}
 				else if (first_is_greater_than_second(val, node))
 				{
 					node->_right_child = insert(val, node->_right_child, node);
-					node->_parent = parent;
+					// node->_parent = parent;
 				}
 				return (node);
+			}
+
+			ft::pair<node_type*, bool> insert2(const content_type& val, node_type* node, node_type* parent)
+			{
+				ft::pair<node_type*, bool> tmp;
+				tmp.second = false;
+				if (node == ft_nullptr)
+				{
+					node = my_new(val, parent);
+					tmp.first = node;
+					_size++;
+					tmp.second = true;
+					if (first_is_less_than_second(val, parent))
+						parent->_left_child = node;
+					else
+						parent->_right_child = node;
+				}
+				else if (first_is_less_than_second(val, node))
+				{
+					tmp = insert2(val, node->_left_child, node);
+				}
+				else if (first_is_greater_than_second(val, node))
+				{
+					tmp = insert2(val, node->_right_child, node);
+				}
+				else
+					tmp.first = node;
+				return (tmp);
 			}
 
 			// void update_node_pointers(node_type* old_node, node_type* new_node)
@@ -416,24 +444,37 @@ namespace ft
 
 			ft::pair<iterator,bool> insert(const content_type& val)
 			{
-				bool key_is_new = true;
-				node_type* tmp = find(val); // AE have insert function that returns node* on success or ft_nullptr
-				_root = insert(val, _root, ft_nullptr);
-				if (tmp != ft_nullptr)
-					key_is_new = false;
-				else
-					tmp = find(val);
-				return (ft::make_pair(tmp, key_is_new));
+				// bool success = false;
+				// node_type* tmp = insert2(val, _root, ft_nullptr);
+				// if (tmp != ft_nullptr)
+				// 	success = true;
+				// return (ft::make_pair(tmp, success));
+				return (insert2(val, _root, ft_nullptr));
 			}
 
-			iterator insert(iterator position, const content_type& val)
+			iterator insert(iterator position, const content_type& val) // AE improve performance for benchmark
 			{
 				(void)position;
+				iterator tmp = position;
+				iterator next = position;
+				++next;
+				if (first_is_greater_than_second(val, tmp.base()) && first_is_less_than_second(val, next.base()))
+				{
+					// _root = insert(val, _root, ft_nullptr);
+					std::cout << YELLOW << "\nGOOD HINT!" << RESET << std::endl;
+					return (insert2(val, tmp.base(), tmp.base()->_parent).first);
+				}
+				else
+				{
+					std::cout << YELLOW << "\nBAD HINT!" << RESET << std::endl;
+					return (insert2(val, _root, ft_nullptr).first);
+				}
 				// if (first_is_greater_than_second(val, position.base())) // AE this needs tuning
 				// 	insert(val, position.base(), position.base()->_parent); // AE what if this would be first node? What happens with root / parent?
 				// else
-					_root = insert(val, _root, ft_nullptr);
-				return (find(val));
+					// _root = insert(val, _root, ft_nullptr);
+					// _root = insert(val, position.base(), position.base()->_parent);
+				// return (find(val));
 			}
 
 			// void erase(node_type* node)
@@ -457,7 +498,7 @@ namespace ft
 				return (ret);
 			}
 
-			void erase(iterator first, iterator last)
+			void erase(iterator first, iterator last) // AE improve performance for benchmark
 			{
 				_root = removeRange(_root, first.base(), last.base());
 				erase(first);
