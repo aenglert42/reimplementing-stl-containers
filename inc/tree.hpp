@@ -319,6 +319,17 @@ namespace ft
 				_root = _end_node;
 			}
 
+			node_type* copy_tree(node_type* node, node_type* parent)
+			{
+				if (node == ft_nullptr)
+					return (ft_nullptr);
+				
+				node_type* ret = my_new(node->_content, parent);
+				ret->_right_child = copy_tree(node->_right_child, ret);
+				ret->_left_child = copy_tree(node->_left_child, ret);
+				return ret;
+			}
+
 		public:
 			Tree(const value_compare& comp = value_compare()) : _size(0), _root(ft_nullptr), _end_node(ft_nullptr), _allocator(), _compare(comp)
 			{
@@ -331,25 +342,9 @@ namespace ft
 				_root = insert(val, _root, _root);
 			}
 
-			node_type* copy_tree(node_type* node, node_type* parent)
+			Tree (const Tree& other) : _size(other._size), _root(ft_nullptr), _end_node(ft_nullptr), _allocator(other._allocator)
 			{
-				if (node == ft_nullptr)
-					return (ft_nullptr);
-				
-				node_type* ret = my_new(node->_content, parent);
-				ret->_right_child = copy_tree(node->_right_child, ret);
-				ret->_left_child = copy_tree(node->_left_child, ret);
-				return ret;
-			}
-
-			Tree (const Tree& other) : _size(0), _root(ft_nullptr), _end_node(ft_nullptr), _allocator(other._allocator)
-			{
-				// const_iterator first = other.begin();
-				// const_iterator last = other.end();
-
 				init_tree();
-				// while (first != last)
-				// 	insert(*first++);
 				_root->_left_child = copy_tree(other._root->_left_child, _root);
 			}
 
@@ -357,14 +352,9 @@ namespace ft
 			{
 				if (this != &other)
 				{
-					// const_iterator first = other.begin();
-					// const_iterator last = other.end();
-
 					clear();
-					// while (first != last)
-					// 	insert(*first++);
 					_root->_left_child = copy_tree(other._root->_left_child, _root);
-					_allocator = other._allocator;
+					// _allocator = other._allocator;
 					_compare = other._compare;
 					_size = other._size;
 				}

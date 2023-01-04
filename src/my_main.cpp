@@ -627,4 +627,9 @@ int main(void)
 
 	// 	PRINT_TIME(t);
 	// }
+
+	// map equal_range benchmark
+	{
+		
+	}
 }

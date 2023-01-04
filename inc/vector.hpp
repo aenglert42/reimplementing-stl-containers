@@ -74,7 +74,9 @@ namespace ft
 				if (_capacity == 0)
 					newCapacity = 1;
 				else
-					newCapacity = _capacity * 2; // AE limit to max capacity ?
+					newCapacity = _capacity * 2;
+				if (newCapacity > max_size())
+					throw std::length_error("cannot create ft::vector larger than max_size()");
 				pointer newArray = my_alloc(newCapacity);
 				for (size_type i = 0; i < _size; i++)
 					_alloc.construct(&newArray[i], _array[i]);
@@ -87,6 +89,8 @@ namespace ft
 			{
 				if (newCapacity < _size)
 					return ;
+				if (newCapacity > max_size())
+					throw std::length_error("cannot create ft::vector larger than max_size()");
 				pointer newArray = my_alloc(newCapacity);
 				for (size_type i = 0; i < _size; i++)
 					_alloc.construct(&newArray[i], _array[i]);
@@ -95,7 +99,7 @@ namespace ft
 				_capacity = newCapacity;
 			}
 
-			size_type check_init_len(size_type n)
+			size_type check_against_max_size(size_type n)
 			{
 				if (n > max_size())
 					throw std::length_error("cannot create ft::vector larger than max_size()");
@@ -131,7 +135,7 @@ namespace ft
 			// fill (2)	
 			explicit vector (size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type()) : _size(0), _capacity(0), _alloc(alloc), _array(ft_nullptr)
 			{
-				check_init_len(n);
+				check_against_max_size(n);
 				for (size_type i = 0; i < n; ++i)
 					push_back(val);
 			}
@@ -260,7 +264,7 @@ namespace ft
 		////reserve///////////////////////////////////////////////////////
 			void reserve (size_type n)
 			{
-				check_init_len(n);
+				check_against_max_size(n);
 				if (n > _capacity)
 					my_realloc(n);
 			}
@@ -392,7 +396,7 @@ namespace ft
 			void insert (iterator position, size_type n, const value_type& val)
 			{
 				size_type new_size = _size + n;
-				check_init_len(new_size);
+				check_against_max_size(new_size);
 				// for (size_type i = 0; i < n; ++i)
 				// 	position = insert(position, val);
 

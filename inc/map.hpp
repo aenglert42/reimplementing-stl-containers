@@ -146,7 +146,7 @@ namespace ft
 				if (this != &x)
 				{
 					_comp = x._comp;
-					_alloc = x._alloc;
+					// _alloc = x._alloc;
 					_tree = x._tree;
 				}
 				return (*this);
