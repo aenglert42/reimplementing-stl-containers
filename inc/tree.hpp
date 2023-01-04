@@ -521,42 +521,60 @@ namespace ft
 				return (1);
 			}
 
-			node_type* lower_bound(const content_type& val) const
+			node_type* upper_bound(const content_type& val, node_type* node, node_type* parent) const
 			{
-				node_type* tmp = get_leftmost_node(_root);
-				while (tmp != ft_nullptr && (!first_is_less_than_second(val, tmp) && !first_equals_second(val, tmp)))
+				if (node == ft_nullptr)
 				{
-					tmp = get_successor_node(tmp);
+					if (first_is_greater_than_second(val, parent))
+						node = (get_successor_node(parent));
+					else
+						node = parent;
 				}
-				return (tmp);
-				// node_type* tmp = get_leftmost_node(_root);
-				// while (tmp != ft_nullptr && (!first_is_less_than_second(val, tmp) && !first_equals_second(val, tmp)))
-				// {
-				// 	if (first_is_less_than_second(val, tmp))
-				// 		tmp = tmp->_left_child;
-				// 	else
-				// 		tmp = tmp->_right_child;
-				// }
-				// return (tmp);
+				else if (first_equals_second(val, node))
+					node = (get_successor_node(node));
+				else if (first_is_less_than_second(val, node))
+				{
+					node = (upper_bound(val, node->_left_child, node));
+				}
+				else if (first_is_greater_than_second(val, node))
+				{
+					node = (upper_bound(val, node->_right_child, node));
+				}
+				return (node);
 			}
 
 			node_type* upper_bound(const content_type& val) const
 			{
-				node_type* tmp = get_leftmost_node(_root);
-				while (tmp != ft_nullptr && !first_is_less_than_second(val, tmp))
+				if (empty())
+					return (_end_node);
+				return (upper_bound(val, _root->_left_child, ft_nullptr));
+			}
+
+			node_type* lower_bound(const content_type& val, node_type* node, node_type* parent) const
+			{
+				if (node == ft_nullptr)
 				{
-					tmp = get_successor_node(tmp);
+					if (first_is_greater_than_second(val, parent))
+						node = (get_successor_node(parent));
+					else
+						node = parent;
 				}
-				return (tmp);
-				// node_type* tmp = _end_node->_left_child;
-				// while (tmp != ft_nullptr && !first_is_less_than_second(val, tmp))
-				// {
-				// 	if (first_is_less_than_second(val, tmp))
-				// 		tmp = tmp->_left_child;
-				// 	else
-				// 		tmp = tmp->_right_child;
-				// }
-				// return (tmp);
+				else if (first_is_less_than_second(val, node))
+				{
+					node = (lower_bound(val, node->_left_child, node));
+				}
+				else if (first_is_greater_than_second(val, node))
+				{
+					node = (lower_bound(val, node->_right_child, node));
+				}
+				return (node);
+			}
+
+			node_type* lower_bound(const content_type& val) const
+			{
+				if (empty())
+					return (_end_node);
+				return (lower_bound(val, _root->_left_child, ft_nullptr));
 			}
 
 			bool empty() const

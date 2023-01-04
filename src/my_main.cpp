@@ -601,6 +601,43 @@ int main(void)
 		ft::Tree<int> Green(Blue);
 		std::cout << GREEN;
 		Green.print2D();
+		// std::cout << (Green.upper_bound(7))->_content << std::endl;
+		std::cout << (Green.lower_bound(7))->_content << std::endl;
+		// std::cout << (Green.upper_bound(5))->_content << std::endl;
+		std::cout << (Green.lower_bound(5))->_content << std::endl;
+		// std::cout << (Green.upper_bound(0))->_content << std::endl;
+		std::cout << (Green.lower_bound(0))->_content << std::endl;
+		// std::cout << (Green.upper_bound(1))->_content << std::endl;
+		std::cout << (Green.lower_bound(1))->_content << std::endl;
+		// std::cout << (Green.upper_bound(9))->_content << std::endl;
+		std::cout << (Green.lower_bound(9))->_content << std::endl;
+		// std::cout << (Green.upper_bound(3))->_content << std::endl;
+		std::cout << (Green.lower_bound(3))->_content << std::endl;
+		std::cout << RESET;
+	}
+
+	{
+		std::cout << RED;
+		std::map<int, int> Map;
+		Map.insert(std::make_pair(3, 3));
+		Map.insert(std::make_pair(8, 8));
+		Map.insert(std::make_pair(5, 5));
+		Map.insert(std::make_pair(1, 1));
+		Map.insert(std::make_pair(9, 9));
+		Map.insert(std::make_pair(2, 2));
+		Map.insert(std::make_pair(4, 4));
+		// std::cout << (Map.upper_bound(7))->first << std::endl; 
+		std::cout << (Map.lower_bound(7))->first << std::endl;
+		// std::cout << (Map.upper_bound(5))->first << std::endl;
+		std::cout << (Map.lower_bound(5))->first << std::endl;
+		// std::cout << (Map.upper_bound(0))->first << std::endl;
+		std::cout << (Map.lower_bound(0))->first << std::endl;
+		// std::cout << (Map.upper_bound(1))->first << std::endl;
+		std::cout << (Map.lower_bound(1))->first << std::endl;
+		// std::cout << (Map.upper_bound(9))->first << std::endl;
+		std::cout << (Map.lower_bound(9))->first << std::endl;
+		// std::cout << (Map.upper_bound(3))->first << std::endl;
+		std::cout << (Map.lower_bound(3))->first << std::endl;
 		std::cout << RESET;
 	}
 
@@ -629,7 +666,28 @@ int main(void)
 	// }
 
 	// map equal_range benchmark
-	{
+	// {
+	// 	#define NAMESPACE ft
 		
-	}
+	// 	SETUP;
+
+	// 	NAMESPACE::map<int, int> data;
+
+	// 	for (std::size_t i = 0; i < 8388607; ++i) {
+	// 		if (i % 10000 == 0)
+	// 			std::cout << i << "\r";
+	// 		data.insert(NAMESPACE::make_pair(rand(), rand()));
+	// 	}
+
+	// 	timer t;
+
+	// 	for (int i = 0; i < 10000000; ++i) {
+	// 		NAMESPACE::map<int, int>::iterator it = data.upper_bound(rand());
+	// 		if (it != data.end()) {
+	// 			it->second = 64;
+	// 		}
+	// 	}
+
+	// 	PRINT_TIME(t);
+	// }
 }
