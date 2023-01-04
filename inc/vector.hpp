@@ -145,13 +145,13 @@ namespace ft
 			}
 
 			// copy (4)	
-			vector (const vector& x)
+			vector (const vector& x) : _size(x._size), _capacity(x._capacity), _alloc(x._alloc), _array(ft_nullptr)
 			{
-				_size = 0;
-				_capacity = 0;
-				_alloc = allocator_type();
-				_array = ft_nullptr;
-				*this = x;
+				if (_capacity == 0)
+					return ;
+				_array = my_alloc(_capacity);
+				for (size_type i = 0; i < _size; i++)
+					_alloc.construct(&_array[i], x._array[i]);
 			}
 
 		////destructor///////////////////////////////////////////////////////
@@ -401,8 +401,8 @@ namespace ft
 
 				vector tmp (position, end());
 				erase(position, end());
-				if (new_size >= _capacity)
-					my_realloc(new_size);
+				// if (new_size >= _capacity)
+				// 	my_realloc(new_size);
 				for (size_type i = 0; i < n; ++i)
 					push_back(val);
 				range_push_back(tmp.begin(), tmp.end());
