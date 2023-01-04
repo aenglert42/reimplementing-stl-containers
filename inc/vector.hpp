@@ -59,8 +59,11 @@ namespace ft
 			{
 				if (!empty())
 					my_destroy();
-				if (_capacity > 0)
+				if (_array != ft_nullptr)
+				{
 					_alloc.deallocate(_array, _capacity);
+					_array = ft_nullptr;
+				}
 				_capacity = 0;
 			}
 
@@ -100,7 +103,7 @@ namespace ft
 			}
 
 			template <class InputIterator>
-			void range_init(InputIterator first, InputIterator last)
+			void range_push_back(InputIterator first, InputIterator last)
 			{
 				while (first != last)
 				{
@@ -138,7 +141,7 @@ namespace ft
 			vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type(),
 				typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type = InputIterator()) : _size(0), _capacity(0), _alloc(alloc), _array(ft_nullptr)
 			{
-				range_init(first,last);
+				range_push_back(first,last);
 			}
 
 			// copy (4)	
@@ -338,7 +341,7 @@ namespace ft
 			{
 				my_destroy();
 				_size = 0;
-				range_init(first, last);
+				range_push_back(first, last);
 			}
 
 			// fill (2)	
@@ -376,13 +379,10 @@ namespace ft
 			// single element (1)	
 			iterator insert (iterator position, const value_type& val)
 			{
-				iterator beg = begin();
 				difference_type pos = position - begin();
 
 				if (_size >= _capacity)
-				{
 					my_realloc();
-				}
 				_alloc.construct(_array + _size, value_type());
 				_size++;
 				for (iterator tmp = (end() - 1); tmp != iterator(_array + pos); --tmp)
@@ -394,9 +394,18 @@ namespace ft
 			// fill (2)	
 			void insert (iterator position, size_type n, const value_type& val)
 			{
-				check_init_len(_size + n);
+				size_type new_size = _size + n;
+				check_init_len(new_size);
+				// for (size_type i = 0; i < n; ++i)
+				// 	position = insert(position, val);
+
+				vector tmp (position, end());
+				erase(position, end());
+				if (new_size >= _capacity)
+					my_realloc(new_size);
 				for (size_type i = 0; i < n; ++i)
-					position = insert(position, val);
+					push_back(val);
+				range_push_back(tmp.begin(), tmp.end());
 			}
 
 			// range (3)	
@@ -433,8 +442,8 @@ namespace ft
 				*/
 				vector tmp (position, end());
 				erase(position, end());
-				range_init(first, last);
-				range_init(tmp.begin(), tmp.end());
+				range_push_back(first, last);
+				range_push_back(tmp.begin(), tmp.end());
 			}
 
 		////erase///////////////////////////////////////////////////////
