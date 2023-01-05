@@ -38,7 +38,7 @@ namespace ft
 		}
 
 		// for _end_node
-		Node () : _content(content_type()), _parent(ft_nullptr), _left_child(ft_nullptr), _right_child(ft_nullptr), _height(1) //AE remove
+		Node () : _content(content_type()), _parent(ft_nullptr), _left_child(ft_nullptr), _right_child(ft_nullptr), _height(1) //AE remove?
 		{
 
 		}

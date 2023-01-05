@@ -81,6 +81,15 @@ void timer::reset()
     gettimeofday(&stamp, NULL);
 }
 
+template <typename ForwardIt, typename T>
+void iota(ForwardIt first, ForwardIt last, T value = T())
+{
+	while (first != last) {
+		*first++ = rand();
+		++value;
+	}
+}
+
 void my_leaks(void)
 {
 	std::cerr << BLUE;
@@ -484,7 +493,7 @@ int main(void)
 	*/
 
 	// const Test
-
+	/*
 	std::map<std::string, int> cstdMap;
 	cstdMap.insert(std::make_pair("2", 2));
 	// std::map<const std::string, int> stdMapConstNon(cstdMap);
@@ -551,58 +560,59 @@ int main(void)
 
 	ftEMap.erase(ftbegin, ftend);
 	ftEMap.print2D();
+	*/
 
+	// {
+	// 	ft::vector<int> ftVector;
 
-	{
-		ft::vector<int> ftVector;
+	// 	ftVector.push_back(2);
+	// 	ftVector.push_back(5);
+	// 	ftVector.push_back(-1);
 
-		ftVector.push_back(2);
-		ftVector.push_back(5);
-		ftVector.push_back(-1);
+	// 	std::cout << "Size: " << ftVector.rend() - ftVector.rbegin() << std::endl;
+	// 	std::cout << "Size: " << ftVector.rbegin() - ftVector.rend() << std::endl;
+	// 	std::cout << "Size: " << ftVector.end() - ftVector.begin() << std::endl;
+	// 	std::cout << "Size: " << ftVector.begin() - ftVector.end() << std::endl;
 
-		std::cout << "Size: " << ftVector.rend() - ftVector.rbegin() << std::endl;
-		std::cout << "Size: " << ftVector.rbegin() - ftVector.rend() << std::endl;
-		std::cout << "Size: " << ftVector.end() - ftVector.begin() << std::endl;
-		std::cout << "Size: " << ftVector.begin() - ftVector.end() << std::endl;
+	// 	std::vector<int> stdVector;
 
-		std::vector<int> stdVector;
+	// 	stdVector.push_back(2);
+	// 	stdVector.push_back(5);
+	// 	stdVector.push_back(-1);
 
-		stdVector.push_back(2);
-		stdVector.push_back(5);
-		stdVector.push_back(-1);
+	// 	std::cout << "Size: " << stdVector.rend() - stdVector.rbegin() << std::endl;
+	// 	std::cout << "Size: " << stdVector.rbegin() - stdVector.rend() << std::endl;
+	// 	std::cout << "Size: " << stdVector.end() - stdVector.begin() << std::endl;
+	// 	std::cout << "Size: " << stdVector.begin() - stdVector.end() << std::endl;
+	// }
 
-		std::cout << "Size: " << stdVector.rend() - stdVector.rbegin() << std::endl;
-		std::cout << "Size: " << stdVector.rbegin() - stdVector.rend() << std::endl;
-		std::cout << "Size: " << stdVector.end() - stdVector.begin() << std::endl;
-		std::cout << "Size: " << stdVector.begin() - stdVector.end() << std::endl;
-	}
+	// {
+	// 	std::cout << RED;
+	// 	ft::map<int, int> Map;
+	// 	Map.insert(ft::make_pair(3, 3));
+	// 	Map.insert(ft::make_pair(7, 7));
+	// 	Map.insert(ft::make_pair(5, 5));
+	// 	Map.insert(ft::make_pair(1, 1));
+	// 	Map.insert(ft::make_pair(9, 9));
+	// 	Map.insert(ft::make_pair(2, 2));
+	// 	std::cout << "inserted: " << Map.insert(ft::make_pair(4, 4)).second << std::endl;
+	// 	std::cout << "inserted: " << Map.insert(ft::make_pair(7, 7)).second << std::endl;
+	// 	Map.print2D();
 
-	{
-		std::cout << RED;
-		ft::map<int, int> Map;
-		Map.insert(ft::make_pair(3, 3));
-		Map.insert(ft::make_pair(7, 7));
-		Map.insert(ft::make_pair(5, 5));
-		Map.insert(ft::make_pair(1, 1));
-		Map.insert(ft::make_pair(9, 9));
-		Map.insert(ft::make_pair(2, 2));
-		std::cout << "inserted: " << Map.insert(ft::make_pair(4, 4)).second << std::endl;
-		std::cout << "inserted: " << Map.insert(ft::make_pair(7, 7)).second << std::endl;
-		Map.print2D();
+	// 	ft::map<int, int>::iterator it = Map.begin();
+	// 	++it;
+	// 	++it;
+	// 	++it;
+	// 	++it;
+	// 	++it;
+	// 	std::cout << "Hint: " << *it << std::endl;
+	// 	std::cout << "Content: " << *(Map.insert(it, ft::make_pair(8, 8))) << std::endl;
+	// 	std::cout << "Content: " << *(Map.insert(it, ft::make_pair(15, 15))) << std::endl;
 
-		ft::map<int, int>::iterator it = Map.begin();
-		++it;
-		++it;
-		++it;
-		++it;
-		++it;
-		std::cout << "Hint: " << *it << std::endl;
-		std::cout << "Content: " << *(Map.insert(it, ft::make_pair(8, 8))) << std::endl;
-		std::cout << "Content: " << *(Map.insert(it, ft::make_pair(4, 4))) << std::endl;
+	// 	std::cout << RESET;
+	// 	Map.print2D();
+	// }
 
-		std::cout << RESET;
-		Map.print2D();
-	}
 
 	// map assignment benchmark
 	// {
@@ -627,6 +637,7 @@ int main(void)
 
 	// 	PRINT_TIME(t);
 	// }
+
 
 	// map equal_range benchmark
 	// {
@@ -653,4 +664,46 @@ int main(void)
 
 	// 	PRINT_TIME(t);
 	// }
+
+
+	// map insert_hint benchmark
+	// {
+	// 	#define NAMESPACE std
+	// 	SETUP;
+
+	// 	NAMESPACE::vector<int> data(MAXSIZE / 100000);
+
+	// 	iota(data.begin(), data.end(), rand());
+
+	// 	NAMESPACE::map<int, int> m;
+
+	// 	timer t;
+
+	// 	for (std::size_t i = 0; i < 5; ++i) {
+	// 		t.reset();
+	// 		for (NAMESPACE::vector<int>::iterator it = data.begin(); it != data.end(); ++it) {
+	// 			m.insert(m.end(), NAMESPACE::make_pair(*it, 5));
+	// 		}
+	// 		sum += t.get_time();
+	// 		m.clear();
+	// 	}
+
+	// 	PRINT_SUM();
+	// }
+
+
+
+	{
+		ft::Tree<int> Tree;
+		(void)Tree;
+		Tree.insert(5);
+		Tree.insert(8);
+		Tree.insert(9);
+		Tree.insert(11);
+		Tree.insert(12);
+		Tree.insert(13);
+		Tree.insert(1);
+
+		Tree.print2D();
+	}
 }

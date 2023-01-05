@@ -87,11 +87,60 @@ namespace ft
 				_allocator.deallocate(node, 1);
 			}
 
+			size_type height(node_type* node)
+			{
+				if (node == ft_nullptr)
+					return (0);
+				return (node->_height);
+			}
+
 			int get_balance(node_type* node)
 			{
 				if (node == _root)
 					return (0);
-				return (node->_left_child->_height - node->_right_child->_height);
+				return (height(node->_left_child) - height(node->_right_child));
+			}
+
+			node_type* rotate_right(node_type* y)
+			{
+				node_type* x = y->_left_child;
+				node_type* T2 = x->_right_child;
+
+				// rotate
+				x->_right_child = y;
+				y->_left_child = T2;
+				x->_parent = y->_parent;
+				y->_parent = x;
+				if (T2 != ft_nullptr)
+					T2->_parent = y;
+
+				// update height
+				y->_height = std::max(height(y->_left_child), height(y->_right_child) + 1);
+				x->_height = std::max(height(x->_left_child), height(x->_right_child) + 1);
+
+				// return new root
+				return (x);
+			}
+
+			node_type* rotate_left(node_type* x)
+			{
+				node_type* y = x->_right_child;
+				node_type* T2 = y->_left_child;
+
+				// rotate
+				y->_left_child = x;
+				x->_right_child = T2;
+				y->_parent = x->_parent;
+				x->_parent = y;
+				if (T2 != ft_nullptr)
+					T2->_parent = x;
+
+				// update height
+				x->_height = std::max(height(x->_left_child), height(x->_right_child) + 1);
+				y->_height = std::max(height(y->_left_child), height(y->_right_child) + 1);
+
+				// return new root
+				return (y);
 			}
 
 			bool first_is_less_than_second(const content_type& val, node_type* node) const
@@ -126,8 +175,8 @@ namespace ft
 			{
 				if (node == ft_nullptr)
 				{
-					node = my_new(val, parent);
 					_size++;
+					return(my_new(val, parent));
 				}
 				else if (first_is_less_than_second(val, node))
 				{
@@ -139,6 +188,37 @@ namespace ft
 					node->_right_child = insert(val, node->_right_child, node);
 					node->_parent = parent;
 				}
+				else
+					return (node);
+
+				// Update height
+				node->_height = 1 + std::max(height(node->_left_child), height(node->_right_child));
+
+				// check balance
+				int balance = get_balance(node);
+
+					// left left case
+					if (balance > 1 && first_is_less_than_second(val, node->_left_child))
+						return (rotate_right(node));
+					
+					// right right case
+					if (balance < -1 && first_is_greater_than_second(val, node->_right_child))
+						return (rotate_left(node));
+
+					// left right case
+					if (balance > 1 && first_is_greater_than_second(val, node->_left_child))
+					{
+						node->_left_child = rotate_left(node->_left_child);
+						return (rotate_right(node));
+					}	
+
+					// right left case
+					if (balance < -1 && first_is_less_than_second(val, node->_right_child))
+					{
+						node->_right_child = rotate_right(node->_right_child);
+						return (rotate_left(node));
+					}	
+
 				return (node);
 			}
 
@@ -169,7 +249,7 @@ namespace ft
 			// 		tmp.first = node;
 
 			// 	// Update height
-			// 	node->_height = 1 + max(node->_left_child->_height, node->_right_child->_height);
+			// 	node->_height = 1 + std::max(height(node->_left_child), height(node->_right_child));
 
 			// 	// check balance
 			// 	int balance = get_balance(node);
