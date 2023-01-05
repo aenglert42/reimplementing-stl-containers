@@ -87,6 +87,13 @@ namespace ft
 				_allocator.deallocate(node, 1);
 			}
 
+			int get_balance(node_type* node)
+			{
+				if (node == _root)
+					return (0);
+				return (node->_left_child->_height - node->_right_child->_height);
+			}
+
 			bool first_is_less_than_second(const content_type& val, node_type* node) const
 			{
 				if (node == _end_node)
@@ -119,51 +126,77 @@ namespace ft
 			{
 				if (node == ft_nullptr)
 				{
-					node = my_new(val, parent); // AE change to alloc
-					// node = _allocator.allocate(1);
-					// _allocator.construct(node, node_type(val, parent));
+					node = my_new(val, parent);
 					_size++;
 				}
 				else if (first_is_less_than_second(val, node))
 				{
 					node->_left_child = insert(val, node->_left_child, node);
-					// node->_parent = parent;
+					node->_parent = parent;
 				}
 				else if (first_is_greater_than_second(val, node))
 				{
 					node->_right_child = insert(val, node->_right_child, node);
-					// node->_parent = parent;
+					node->_parent = parent;
 				}
 				return (node);
 			}
 
-			ft::pair<node_type*, bool> insert2(const content_type& val, node_type* node, node_type* parent)
-			{
-				ft::pair<node_type*, bool> tmp;
-				tmp.second = false;
-				if (node == ft_nullptr)
-				{
-					node = my_new(val, parent);
-					tmp.first = node;
-					_size++;
-					tmp.second = true;
-					if (first_is_less_than_second(val, parent))
-						parent->_left_child = node;
-					else
-						parent->_right_child = node;
-				}
-				else if (first_is_less_than_second(val, node))
-				{
-					tmp = insert2(val, node->_left_child, node);
-				}
-				else if (first_is_greater_than_second(val, node))
-				{
-					tmp = insert2(val, node->_right_child, node);
-				}
-				else
-					tmp.first = node;
-				return (tmp);
-			}
+			// ft::pair<node_type*, bool> insert2(const content_type& val, node_type* node, node_type* parent)
+			// {
+			// 	ft::pair<node_type*, bool> tmp;
+			// 	tmp.second = false;
+			// 	if (node == ft_nullptr)
+			// 	{
+			// 		node = my_new(val, parent);
+			// 		tmp.first = node;
+			// 		_size++;
+			// 		tmp.second = true;
+			// 		if (first_is_less_than_second(val, parent))
+			// 			parent->_left_child = node;
+			// 		else
+			// 			parent->_right_child = node;
+			// 	}
+			// 	else if (first_is_less_than_second(val, node))
+			// 	{
+			// 		tmp = insert2(val, node->_left_child, node);
+			// 	}
+			// 	else if (first_is_greater_than_second(val, node))
+			// 	{
+			// 		tmp = insert2(val, node->_right_child, node);
+			// 	}
+			// 	else
+			// 		tmp.first = node;
+
+			// 	// Update height
+			// 	node->_height = 1 + max(node->_left_child->_height, node->_right_child->_height);
+
+			// 	// check balance
+			// 	int balance = get_balance(node);
+
+			// 		// left left case
+			// 		if (balance > 1 && first_is_less_than_second(val, node->_left_child))
+			// 			return (rotate_right(node));
+					
+			// 		// right right case
+			// 		if (balance < -1 && first_is_greater_than_second(val, node->_right_child))
+			// 			return (rotate_left(node));
+
+			// 		// left right case
+			// 		if (balance > 1 && first_is_greater_than_second(val, node->_left_child))
+			// 		{
+			// 			node->_left_child = rotate_left(node->_left_child)
+			// 			return (rotate_right(node));
+			// 		}	
+
+			// 		// right left case
+			// 		if (balance < -1 && first_is_less_than_second(val, node->_right_child))
+			// 		{
+			// 			node->_right_child = rotate_right(node->_right_child)
+			// 			return (rotate_left(node));
+			// 		}	
+			// 	return (tmp);
+			// }
 
 			// void update_node_pointers(node_type* old_node, node_type* new_node)
 			// {
@@ -442,32 +475,47 @@ namespace ft
 				return (const_reverse_iterator(begin()));
 			}
 
+			// version for insert
 			ft::pair<iterator,bool> insert(const content_type& val)
 			{
-				// bool success = false;
-				// node_type* tmp = insert2(val, _root, ft_nullptr);
-				// if (tmp != ft_nullptr)
-				// 	success = true;
-				// return (ft::make_pair(tmp, success));
-				return (insert2(val, _root, ft_nullptr));
+				bool key_is_new = true;
+				node_type* tmp = find(val); // AE have insert function that returns node* on success or ft_nullptr
+				_root = insert(val, _root, ft_nullptr);
+				if (tmp != ft_nullptr)
+					key_is_new = false;
+				else
+					tmp = find(val);
+				return (ft::make_pair(tmp, key_is_new));
 			}
 
-			iterator insert(iterator position, const content_type& val) // AE improve performance for benchmark
+			// // version for insert2
+			// ft::pair<iterator,bool> insert(const content_type& val)
+			// {
+			// 	return (insert2(val, _root, ft_nullptr));
+			// }
+
+			// version for insert
+			iterator insert(iterator position, const content_type& val) // AE improve performance for benchmark stl_tree.h 2193
 			{
 				(void)position;
+				/*
 				iterator tmp = position;
 				iterator next = position;
 				++next;
+				// iterator before = position;
+				// --before;
+				// iterator after = position;
+				// ++after;
 				if (first_is_greater_than_second(val, tmp.base()) && first_is_less_than_second(val, next.base()))
 				{
 					// _root = insert(val, _root, ft_nullptr);
-					std::cout << YELLOW << "\nGOOD HINT!" << RESET << std::endl;
-					return (insert2(val, tmp.base(), tmp.base()->_parent).first);
+					// std::cout << YELLOW << "\nGOOD HINT!" << RESET << std::endl;
+					return (iterator(insert(val, tmp.base(), tmp.base()->_parent)));
 				}
 				else
 				{
-					std::cout << YELLOW << "\nBAD HINT!" << RESET << std::endl;
-					return (insert2(val, _root, ft_nullptr).first);
+					// std::cout << YELLOW << "\nBAD HINT!" << RESET << std::endl;
+					return (iterator(insert(val, _root, ft_nullptr)));
 				}
 				// if (first_is_greater_than_second(val, position.base())) // AE this needs tuning
 				// 	insert(val, position.base(), position.base()->_parent); // AE what if this would be first node? What happens with root / parent?
@@ -475,12 +523,22 @@ namespace ft
 					// _root = insert(val, _root, ft_nullptr);
 					// _root = insert(val, position.base(), position.base()->_parent);
 				// return (find(val));
+				*/
+				_root = insert(val, _root, ft_nullptr);
+				return (find(val));
 			}
 
-			// void erase(node_type* node)
+			// // version for insert2
+			// iterator insert(iterator position, const content_type& val) // AE improve performance for benchmark stl_tree.h 2193
 			// {
-			// 	if (node != ft_nullptr)
-			// 		_root = erase(*node, _root); // problem if node = end()?
+			// 	(void)position;
+			// 	iterator tmp = position;
+			// 	iterator next = position;
+			// 	++next;
+			// 	if (first_is_greater_than_second(val, tmp.base()) && first_is_less_than_second(val, next.base()))
+			// 		return (insert2(val, tmp.base(), tmp.base()->_parent).first);
+			// 	else
+			// 		return (insert2(val, _root, ft_nullptr).first);
 			// }
 
 			void erase(iterator position)
