@@ -50,12 +50,28 @@ Reimplement the following:
 
 ## Resources
 ###### <p align="right">Next: [Notes](#notes)&emsp;Previous: [How to use](#how-to-use)&emsp;&emsp;[[Contents](#table-of-contents)]</p>
+
 [The Cherno](https://www.youtube.com/c/TheChernoProject)'s YouTube videos of reimplementing [vector](https://www.youtube.com/watch?v=ryRf4Jh_YC0) with [iterator](https://www.youtube.com/watch?v=F9eDv-YIOQ0).</br>
+</br>
+
+[RobEdward](https://www.youtube.com/@RobEdwardsVideos)'s YouTube videos about trees:</br>
+[AVL Tree 5 checking balance in an AVL tree](https://www.youtube.com/watch?v=iNy6c4Q9Umw)</br>
+[AVL Tree 6 Rebalancing AVL trees](https://www.youtube.com/watch?v=wn1tc5SAGZk)</br>
+[Trees 9 Introduction to rotations](https://www.youtube.com/watch?v=M0Y3kDuyUCU)</br>
+[Trees 10 Rotations](https://www.youtube.com/watch?v=NczBLeco6XA)</br>
+[Trees 11 Coding Rotations](https://www.youtube.com/watch?v=Y-nmgO8ALjM)</br>
+</br>
+
+[AVL Tree Visualizer](https://www.cs.usfca.edu/~galles/visualization/AVLtree.html) to play around and to understand how an AVL tree works step by step.</br>
+</br>
+
 https://www.geeksforgeeks.org/deletion-in-binary-search-tree/</br>
 https://www.geeksforgeeks.org/print-binary-tree-2-dimensions/</br>
 https://www.geeksforgeeks.org/insertion-in-an-avl-tree/</br>
+https://www.geeksforgeeks.org/deletion-in-an-avl-tree/</br>
 https://www.geeksforgeeks.org/binary-tree-iterator-for-inorder-traversal/</br>
 https://www.geeksforgeeks.org/remove-bst-keys-in-a-given-range/</br>
+https://www.educative.io/answers/how-to-balance-an-avl-tree</br>
 </br></br></br>
 
 ## Notes
