@@ -250,7 +250,7 @@ namespace ft
 				{
 					balance_factor = check_balance(node->_right_child);
 					// child's left subtree is longer than child's right subtree
-					if (balance_factor > 0)
+					if (balance_factor < 0)
 						rotate_left(node);
 					// child's right subtree is longer than child's left subtree
 					else
