@@ -137,6 +137,153 @@ namespace ft
 				return (node);
 			}
 
+			int check_balance(node_type* node)
+			{
+				// size_type balance_factor = 0;
+				// if (node != ft_nullptr)
+				// {
+				// 	size_type left_height = get_height(node->_left_child);
+				// 	size_type right_height = get_height(node->_right_child);
+				// 	balance_factor = left_height - right_height;
+				// }
+				// return (balance_factor);
+
+				if (node == ft_nullptr)
+					return(0);
+				return (calculate_height(node->_left_child) - calculate_height(node->_right_child));
+			}
+
+			size_type get_height(node_type* node)
+			{
+				if (node == ft_nullptr)
+					return (0);
+				return (node->_height);
+			}
+
+			size_type calculate_height(node_type* node)
+			{
+				if (node == ft_nullptr)
+					return (0);
+				size_type left_height = calculate_height(node->_left_child);
+				size_type right_height = calculate_height(node->_right_child);
+
+				if (left_height > right_height)
+					return (left_height + 1);
+				return (right_height + 1);
+			}
+
+			void rotate_left(node_type* grandparent)
+			{
+				node_type* tmp = grandparent->_right_child;
+				grandparent->_right_child = tmp->_left_child;
+				tmp->_left_child = grandparent;
+
+				if (grandparent->_right_child != ft_nullptr)
+					grandparent->_right_child->_parent = grandparent;
+
+				if (grandparent->_parent == ft_nullptr)
+				{
+					_root = tmp;
+					tmp->_parent = ft_nullptr;
+				}
+				else
+				{
+					if (grandparent->_parent->_right_child == grandparent)
+						grandparent->_parent->_right_child = tmp;
+					else
+						grandparent->_parent->_left_child = tmp;
+					tmp->_parent = grandparent->_parent;
+				}
+
+				grandparent->_parent = tmp;
+			}
+
+			void rotate_right(node_type* grandparent)
+			{
+				node_type* tmp = grandparent->_left_child;
+				grandparent->_left_child = tmp->_right_child;
+				tmp->_right_child = grandparent;
+
+				if (grandparent->_left_child != ft_nullptr)
+					grandparent->_left_child->_parent = grandparent;
+
+				if (grandparent->_parent == ft_nullptr)
+				{
+					_root = tmp;
+					tmp->_parent = ft_nullptr;
+				}
+				else
+				{
+					if (grandparent->_parent->_left_child == grandparent)
+						grandparent->_parent->_left_child = tmp;
+					else
+						grandparent->_parent->_right_child = tmp;
+					tmp->_parent = grandparent->_parent;
+				}
+
+				grandparent->_parent = tmp;
+			}
+
+			void rebalance(node_type* node)
+			{
+				int balance_factor = check_balance(node);
+				// if (balance_factor <= 1 && balance_factor >= -1)
+				// 	return ;
+
+				// original long version
+				// node's left subtree is longer than node's right subtree
+				if (balance_factor > 1)
+				{
+					balance_factor = check_balance(node->_left_child); // AE
+					// child's left subtree is longer than child's right subtree
+					if (balance_factor > 0)
+						rotate_right(node);
+					// child's right subtree is longer than child's left subtree
+					else// if (balance_factor < -1)
+					{
+						rotate_left(node->_left_child);
+						rotate_right(node);
+					}
+				}
+				// node's right subtree is longer than node's left subtree
+				else if (balance_factor < -1)
+				{
+					balance_factor = check_balance(node->_right_child);
+					// child's left subtree is longer than child's right subtree
+					if (balance_factor > 0)
+						rotate_left(node);
+					// child's right subtree is longer than child's left subtree
+					else
+					{
+						rotate_right(node->_right_child);
+						rotate_left(node);
+					}
+				}
+				/*
+				// shorter version (wrong)
+				
+				// check for node
+				if (balance_factor > 1) // node's left subtree is longer than node's right subtree
+					child = node->_left_child;
+				else // node's right subtree is longer than node's left subtree
+					child = node->_right_child;
+
+				balance_factor = check_balance(child);
+				// check for child
+				if (balance_factor > 1) // child's left subtree is longer than child's right subtree
+					rotate_right(node);
+				else // child's right subtree is longer than child's left subtree
+				{
+					rotate_left(child);
+					rotate_right(node);
+				}
+				*/
+
+				// // update _root
+				// if (node->_parent == ft_nullptr) // AE does this have to happen here or in rotation?
+				// 	_root = node;
+			}
+
 			ft::pair<node_type*, bool> insert2(const content_type& val, node_type* node, node_type* parent)
 			{
 				ft::pair<node_type*, bool> tmp;
@@ -155,10 +302,14 @@ namespace ft
 				else if (first_is_less_than_second(val, node))
 				{
 					tmp = insert2(val, node->_left_child, node);
+					node->_height = calculate_height(node);
+					rebalance(node);
 				}
 				else if (first_is_greater_than_second(val, node))
 				{
 					tmp = insert2(val, node->_right_child, node);
+					node->_height = calculate_height(node);
+					rebalance(node);
 				}
 				else
 					tmp.first = node;
@@ -337,7 +488,7 @@ namespace ft
 					std::cout << root_name;
 				else
 					std::cout << root->_content;
-				std::cout << "(";
+				std::cout << ", h: " << root->_height << "(";
 				if (root->_parent != _end_node && root->_parent != ft_nullptr)
 					std::cout << root->_parent->_content;
 				else if (root->_parent == _end_node)
@@ -382,7 +533,7 @@ namespace ft
 			Tree (const Tree& other) : _size(other._size), _root(ft_nullptr), _end_node(ft_nullptr), _allocator(other._allocator)
 			{
 				init_tree();
-				_root->_left_child = copy_tree(other._root->_left_child, _root);
+				_root->_left_child = copy_tree(other._root->_left_child, _root); // AE _end_node _root
 			}
 
 			Tree& operator=(const Tree& other)
@@ -464,6 +615,7 @@ namespace ft
 			iterator insert(iterator position, const content_type& val) // AE improve performance for benchmark
 			{
 				(void)position;
+				/*
 				iterator tmp = position;
 				iterator next = position;
 				++next;
@@ -484,6 +636,9 @@ namespace ft
 					// _root = insert(val, _root, ft_nullptr);
 					// _root = insert(val, position.base(), position.base()->_parent);
 				// return (find(val));
+				*/
+					_root = insert(val, _root, ft_nullptr);
+				return (find(val));
 			}
 
 			// void erase(node_type* node)

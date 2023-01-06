@@ -484,7 +484,7 @@ int main(void)
 	*/
 
 	// const Test
-
+	/*
 	std::map<std::string, int> cstdMap;
 	cstdMap.insert(std::make_pair("2", 2));
 	// std::map<const std::string, int> stdMapConstNon(cstdMap);
@@ -551,58 +551,58 @@ int main(void)
 
 	ftEMap.erase(ftbegin, ftend);
 	ftEMap.print2D();
+	*/
 
+	// {
+	// 	ft::vector<int> ftVector;
 
-	{
-		ft::vector<int> ftVector;
+	// 	ftVector.push_back(2);
+	// 	ftVector.push_back(5);
+	// 	ftVector.push_back(-1);
 
-		ftVector.push_back(2);
-		ftVector.push_back(5);
-		ftVector.push_back(-1);
+	// 	std::cout << "Size: " << ftVector.rend() - ftVector.rbegin() << std::endl;
+	// 	std::cout << "Size: " << ftVector.rbegin() - ftVector.rend() << std::endl;
+	// 	std::cout << "Size: " << ftVector.end() - ftVector.begin() << std::endl;
+	// 	std::cout << "Size: " << ftVector.begin() - ftVector.end() << std::endl;
 
-		std::cout << "Size: " << ftVector.rend() - ftVector.rbegin() << std::endl;
-		std::cout << "Size: " << ftVector.rbegin() - ftVector.rend() << std::endl;
-		std::cout << "Size: " << ftVector.end() - ftVector.begin() << std::endl;
-		std::cout << "Size: " << ftVector.begin() - ftVector.end() << std::endl;
+	// 	std::vector<int> stdVector;
 
-		std::vector<int> stdVector;
+	// 	stdVector.push_back(2);
+	// 	stdVector.push_back(5);
+	// 	stdVector.push_back(-1);
 
-		stdVector.push_back(2);
-		stdVector.push_back(5);
-		stdVector.push_back(-1);
+	// 	std::cout << "Size: " << stdVector.rend() - stdVector.rbegin() << std::endl;
+	// 	std::cout << "Size: " << stdVector.rbegin() - stdVector.rend() << std::endl;
+	// 	std::cout << "Size: " << stdVector.end() - stdVector.begin() << std::endl;
+	// 	std::cout << "Size: " << stdVector.begin() - stdVector.end() << std::endl;
+	// }
 
-		std::cout << "Size: " << stdVector.rend() - stdVector.rbegin() << std::endl;
-		std::cout << "Size: " << stdVector.rbegin() - stdVector.rend() << std::endl;
-		std::cout << "Size: " << stdVector.end() - stdVector.begin() << std::endl;
-		std::cout << "Size: " << stdVector.begin() - stdVector.end() << std::endl;
-	}
+	// {
+	// 	std::cout << RED;
+	// 	ft::map<int, int> Map;
+	// 	Map.insert(ft::make_pair(3, 3));
+	// 	Map.insert(ft::make_pair(7, 7));
+	// 	Map.insert(ft::make_pair(5, 5));
+	// 	Map.insert(ft::make_pair(1, 1));
+	// 	Map.insert(ft::make_pair(9, 9));
+	// 	Map.insert(ft::make_pair(2, 2));
+	// 	std::cout << "inserted: " << Map.insert(ft::make_pair(4, 4)).second << std::endl;
+	// 	std::cout << "inserted: " << Map.insert(ft::make_pair(7, 7)).second << std::endl;
+	// 	Map.print2D();
 
-	{
-		std::cout << RED;
-		ft::map<int, int> Map;
-		Map.insert(ft::make_pair(3, 3));
-		Map.insert(ft::make_pair(7, 7));
-		Map.insert(ft::make_pair(5, 5));
-		Map.insert(ft::make_pair(1, 1));
-		Map.insert(ft::make_pair(9, 9));
-		Map.insert(ft::make_pair(2, 2));
-		std::cout << "inserted: " << Map.insert(ft::make_pair(4, 4)).second << std::endl;
-		std::cout << "inserted: " << Map.insert(ft::make_pair(7, 7)).second << std::endl;
-		Map.print2D();
+	// 	ft::map<int, int>::iterator it = Map.begin();
+	// 	++it;
+	// 	++it;
+	// 	++it;
+	// 	++it;
+	// 	++it;
+	// 	std::cout << "Hint: " << *it << std::endl;
+	// 	std::cout << "Content: " << *(Map.insert(it, ft::make_pair(8, 8))) << std::endl;
+	// 	std::cout << "Content: " << *(Map.insert(it, ft::make_pair(4, 4))) << std::endl;
 
-		ft::map<int, int>::iterator it = Map.begin();
-		++it;
-		++it;
-		++it;
-		++it;
-		++it;
-		std::cout << "Hint: " << *it << std::endl;
-		std::cout << "Content: " << *(Map.insert(it, ft::make_pair(8, 8))) << std::endl;
-		std::cout << "Content: " << *(Map.insert(it, ft::make_pair(4, 4))) << std::endl;
-
-		std::cout << RESET;
-		Map.print2D();
-	}
+	// 	std::cout << RESET;
+	// 	Map.print2D();
+	// }
 
 	// map assignment benchmark
 	// {
@@ -653,4 +653,30 @@ int main(void)
 
 	// 	PRINT_TIME(t);
 	// }
+
+
+	{
+		ft::Tree<int> Tree;
+		std::cout << RED << "inserted: " << *Tree.insert(8).first << RESET << std::endl;
+		// Tree.print2D();
+		std::cout << RED << "inserted: " << *Tree.insert(9).first << RESET << std::endl;
+		// Tree.print2D();
+		std::cout << RED << "inserted: " << *Tree.insert(7).first << RESET << std::endl;
+		// Tree.print2D();
+		std::cout << RED << "inserted: " << *Tree.insert(6).first << RESET << std::endl;
+		// Tree.print2D();
+		std::cout << RED << "inserted: " << *Tree.insert(5).first << RESET << std::endl;
+		// Tree.print2D();
+		std::cout << RED << "inserted: " << *Tree.insert(4).first << RESET << std::endl;
+		// Tree.print2D();
+		std::cout << RED << "inserted: " << *Tree.insert(3).first << RESET << std::endl;
+		// Tree.print2D();
+		std::cout << RED << "inserted: " << *Tree.insert(2).first << RESET << std::endl;
+		// Tree.print2D();
+		std::cout << RED << "inserted: " << *Tree.insert(1).first << RESET << std::endl;
+		// Tree.print2D();
+		std::cout << RED << "inserted: " << *Tree.insert(0).first << RESET << std::endl;
+
+		Tree.print2D();
+	}
 }
