@@ -654,34 +654,47 @@ int main(void)
 	// 	PRINT_TIME(t);
 	// }
 
-	// // AVL test crashing case
-	// {
-	// 	ft::Tree<int> Tree;
-	// 	std::cout << RED << "inserted: " << *Tree.insert(197).first << RESET << std::endl;
-	// 	// Tree.print2D();
-	// 	std::cout << RED << "inserted: " << *Tree.insert(207).first << RESET << std::endl;
-	// 	// Tree.print2D();
-	// 	std::cout << RED << "inserted: " << *Tree.insert(23).first << RESET << std::endl;
-	// 	// Tree.print2D();
-	// 	std::cout << RED << "inserted: " << *Tree.insert(183).first << RESET << std::endl;
-	// 	// Tree.print2D();
-	// 	std::cout << RED << "inserted: " << *Tree.insert(191).first << RESET << std::endl;
-	// 	// Tree.print2D();
-	// 	std::cout << RED << "inserted: " << *Tree.insert(70).first << RESET << std::endl;
-	// 	// Tree.print2D();
-	// 	std::cout << RED << "inserted: " << *Tree.insert(59).first << RESET << std::endl;
-	// 	// Tree.print2D();
-	// 	std::cout << RED << "inserted: " << *Tree.insert(81).first << RESET << std::endl;
-	// 	// Tree.print2D();
-	// 	std::cout << RED << "inserted: " << *Tree.insert(79).first << RESET << std::endl;
-	// 	// Tree.print2D();
-	// 	std::cout << RED << "inserted: " << *Tree.insert(66).first << RESET << std::endl;
+	// AVL test crashing case
+	{
+		ft::Tree<int> Tree;
+		std::cout << RED << "inserted: " << *Tree.insert(197).first << RESET << std::endl;
+		// Tree.print2D();
+		std::cout << RED << "inserted: " << *Tree.insert(207).first << RESET << std::endl;
+		// Tree.print2D();
+		std::cout << RED << "inserted: " << *Tree.insert(23).first << RESET << std::endl;
+		// Tree.print2D();
+		std::cout << RED << "inserted: " << *Tree.insert(183).first << RESET << std::endl;
+		// Tree.print2D();
+		std::cout << RED << "inserted: " << *Tree.insert(191).first << RESET << std::endl;
+		// Tree.print2D();
+		std::cout << RED << "inserted: " << *Tree.insert(70).first << RESET << std::endl;
+		// Tree.print2D();
+		std::cout << RED << "inserted: " << *Tree.insert(59).first << RESET << std::endl;
+		// Tree.print2D();
+		std::cout << RED << "inserted: " << *Tree.insert(81).first << RESET << std::endl;
+		// Tree.print2D();
+		std::cout << RED << "inserted: " << *Tree.insert(79).first << RESET << std::endl;
+		// Tree.print2D();
+		std::cout << RED << "inserted: " << *Tree.insert(66).first << RESET << std::endl;
 
+		Tree.insert(Tree.begin(), 0);
+
+		Tree.print2D();
+	}
+
+	// // AVL test right rotation
+	// {
+	// 	std::cout << GREEN << ">>>>>>>>>>>>>>Test AVL right rotation:" << RESET << std::endl;
+	// 	ft::Tree<int> Tree;
+	// 	std::cout << RED << "inserted: " << *Tree.insert(6).first << RESET << std::endl;
+	// 	Tree.print2D();
+	// 	std::cout << RED << "inserted: " << *Tree.insert(4).first << RESET << std::endl;
 	// 	Tree.print2D();
 	// }
 
 	// // AVL test left rotation
 	// {
+	// 	std::cout << GREEN << ">>>>>>>>>>>>>>Test AVL left rotation:" << RESET << std::endl;
 	// 	ft::Tree<int> Tree;
 	// 	std::cout << RED << "inserted: " << *Tree.insert(4).first << RESET << std::endl;
 	// 	Tree.print2D();
@@ -691,68 +704,31 @@ int main(void)
 	// 	Tree.print2D();
 	// 	std::cout << RED << "inserted: " << *Tree.insert(7).first << RESET << std::endl;
 	// 	Tree.print2D();
+	// }
 
-
-	// 	// Tree.print2D();
+	// // AVL test right-left rotation
+	// {
+	// 	std::cout << GREEN << ">>>>>>>>>>>>>>Test AVL right-left rotation:" << RESET << std::endl;
+	// 	ft::Tree<int> Tree;
+	// 	std::cout << RED << "inserted: " << *Tree.insert(4).first << RESET << std::endl;
+	// 	Tree.print2D();
+	// 	std::cout << RED << "inserted: " << *Tree.insert(8).first << RESET << std::endl;
+	// 	Tree.print2D();
+	// 	std::cout << RED << "inserted: " << *Tree.insert(6).first << RESET << std::endl;
+	// 	Tree.print2D();
+	// 	std::cout << RED << "inserted: " << *Tree.insert(5).first << RESET << std::endl;
+	// 	Tree.print2D();
 	// }
 
 	// // AVL test left-right rotation
 	// {
+	// 	std::cout << GREEN << ">>>>>>>>>>>>>>Test AVL left-right rotation:" << RESET << std::endl;
 	// 	ft::Tree<int> Tree;
 	// 	std::cout << RED << "inserted: " << *Tree.insert(4).first << RESET << std::endl;
 	// 	Tree.print2D();
 	// 	std::cout << RED << "inserted: " << *Tree.insert(6).first << RESET << std::endl;
 	// 	Tree.print2D();
-	// 	std::cout << RED << "inserted: " << *Tree.insert(8).first << RESET << std::endl;
-	// 	Tree.print2D();
-
-	// AVL test right rotation
-	{
-		std::cout << GREEN << ">>>>>>>>>>>>>>Test AVL right rotation:" << RESET << std::endl;
-		ft::Tree<int> Tree;
-		std::cout << RED << "inserted: " << *Tree.insert(6).first << RESET << std::endl;
-		Tree.print2D();
-		std::cout << RED << "inserted: " << *Tree.insert(4).first << RESET << std::endl;
-		Tree.print2D();
-	}
-
-	// AVL test left rotation
-	{
-		std::cout << GREEN << ">>>>>>>>>>>>>>Test AVL left rotation:" << RESET << std::endl;
-		ft::Tree<int> Tree;
-		std::cout << RED << "inserted: " << *Tree.insert(4).first << RESET << std::endl;
-		Tree.print2D();
-		std::cout << RED << "inserted: " << *Tree.insert(8).first << RESET << std::endl;
-		Tree.print2D();
-		std::cout << RED << "inserted: " << *Tree.insert(6).first << RESET << std::endl;
-		Tree.print2D();
-		std::cout << RED << "inserted: " << *Tree.insert(7).first << RESET << std::endl;
-		Tree.print2D();
-	}
-
-	// AVL test right-left rotation
-	{
-		std::cout << GREEN << ">>>>>>>>>>>>>>Test AVL right-left rotation:" << RESET << std::endl;
-		ft::Tree<int> Tree;
-		std::cout << RED << "inserted: " << *Tree.insert(4).first << RESET << std::endl;
-		Tree.print2D();
-		std::cout << RED << "inserted: " << *Tree.insert(8).first << RESET << std::endl;
-		Tree.print2D();
-		std::cout << RED << "inserted: " << *Tree.insert(6).first << RESET << std::endl;
-		Tree.print2D();
-		std::cout << RED << "inserted: " << *Tree.insert(5).first << RESET << std::endl;
-		Tree.print2D();
-	}
-
-	// AVL test left-right rotation
-	{
-		std::cout << GREEN << ">>>>>>>>>>>>>>Test AVL left-right rotation:" << RESET << std::endl;
-		ft::Tree<int> Tree;
-		std::cout << RED << "inserted: " << *Tree.insert(4).first << RESET << std::endl;
-		Tree.print2D();
-		std::cout << RED << "inserted: " << *Tree.insert(6).first << RESET << std::endl;
-		Tree.print2D();
-	}
+	// }
 
 	// // map insert benchmark
 	// {
@@ -776,4 +752,5 @@ int main(void)
 
 	// 	PRINT_TIME(t);
 	// }
+
 }

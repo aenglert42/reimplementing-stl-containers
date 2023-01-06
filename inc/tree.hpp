@@ -115,42 +115,10 @@ namespace ft
 				return (_compare(node->_content, val));
 			}
 
-			node_type* insert(const content_type& val, node_type* node, node_type* parent)
-			{
-				if (node == ft_nullptr)
-				{
-					node = my_new(val, parent); // AE change to alloc
-					// node = _allocator.allocate(1);
-					// _allocator.construct(node, node_type(val, parent));
-					_size++;
-				}
-				else if (first_is_less_than_second(val, node))
-				{
-					node->_left_child = insert(val, node->_left_child, node);
-					// node->_parent = parent;
-				}
-				else if (first_is_greater_than_second(val, node))
-				{
-					node->_right_child = insert(val, node->_right_child, node);
-					// node->_parent = parent;
-				}
-				return (node);
-			}
-
 			int check_balance(node_type* node)
 			{
-				// size_type balance_factor = 0;
-				// if (node != ft_nullptr)
-				// {
-				// 	size_type left_height = get_height(node->_left_child);
-				// 	size_type right_height = get_height(node->_right_child);
-				// 	balance_factor = left_height - right_height;
-				// }
-				// return (balance_factor);
-
 				if (node == ft_nullptr)
 					return(0);
-				// return (calculate_height(node->_left_child) - calculate_height(node->_right_child));
 				return (get_height(node->_left_child) - get_height(node->_right_child));
 			}
 
@@ -206,7 +174,6 @@ namespace ft
 
 				grandparent->_parent = tmp;
 				update_height(grandparent);
-				// update_height(tmp);
 			}
 
 			void rotate_right(node_type* grandparent)
@@ -234,7 +201,6 @@ namespace ft
 
 				grandparent->_parent = tmp;
 				update_height(grandparent);
-				// update_height(tmp);
 			}
 
 			void rebalance(node_type* node)
@@ -272,32 +238,9 @@ namespace ft
 						rotate_left(node);
 					}
 				}
-				/*
-				// shorter version (wrong)
-				
-				// check for node
-				if (balance_factor > 1) // node's left subtree is longer than node's right subtree
-					child = node->_left_child;
-				else // node's right subtree is longer than node's left subtree
-					child = node->_right_child;
-
-				balance_factor = check_balance(child);
-				// check for child
-				if (balance_factor > 1) // child's left subtree is longer than child's right subtree
-					rotate_right(node);
-				else // child's right subtree is longer than child's left subtree
-				{
-					rotate_left(child);
-					rotate_right(node);
-				}
-				*/
-
-				// // update _root
-				// if (node->_parent == ft_nullptr) // AE does this have to happen here or in rotation?
-				// 	_root = node;
 			}
 
-			ft::pair<node_type*, bool> insert2(const content_type& val, node_type* node, node_type* parent)
+			ft::pair<node_type*, bool> insert(const content_type& val, node_type* node, node_type* parent)
 			{
 				ft::pair<node_type*, bool> tmp;
 				tmp.second = false;
@@ -315,40 +258,18 @@ namespace ft
 				}
 				else if (first_is_less_than_second(val, node))
 				{
-					tmp = insert2(val, node->_left_child, node);
-					// node->_height = calculate_height(node);
+					tmp = insert(val, node->_left_child, node);
 					rebalance(node);
 				}
 				else if (first_is_greater_than_second(val, node))
 				{
-					tmp = insert2(val, node->_right_child, node);
-					// node->_height = calculate_height(node);
+					tmp = insert(val, node->_right_child, node);
 					rebalance(node);
 				}
 				else
 					tmp.first = node;
 				return (tmp);
 			}
-
-			// void update_node_pointers(node_type* old_node, node_type* new_node)
-			// {
-			// 	// AE nullcheck
-			// 	// tmp node
-			// 	node_type tmp_node = *old_node;
-			// 	_allocator.destroy(old_node);
-			// 	_allocator.construct(old_node, node_type(new_node->_content, tmp_node->parent));
-
-			// 	// if (old_node->_parent->_left_child == old_node)
-			// 	// 	old_node->_parent->_left_child = new_node;
-			// 	// else
-			// 	// 	old_node->_parent->_right_child = new_node;
-			// 	// new_node->_left_child = old_node->_left_child;
-			// 	// new_node->_right_child = old_node->_right_child;
-			// 	// new_node->_left_child->_parent = new_node;
-			// 	// new_node->_right_child->_parent = new_node;
-			// 	// my_delete(old_node);
-			// 	// return (new_node);
-			// }
 
 			node_type* update_node_pointers(node_type* old_node, node_type* tmp_node)
 			{
@@ -365,14 +286,6 @@ namespace ft
 				my_delete(old_node);
 				return (new_node);
 			}
-
-			// node_type* remove_node_with_two_children(node_type* node)
-			// {
-			// 	node_type* tmp = get_leftmost_node(node->_right_child);
-			// 	node = update_node_pointers(node, tmp);
-			// 	node->_right_child = erase(tmp->_content, node->_right_child);
-			// 	return (node);
-			// }
 
 			node_type* remove_node_with_two_children(node_type* node)
 			{
@@ -541,7 +454,7 @@ namespace ft
 			Tree(const content_type& val) : _size(0), _root(ft_nullptr), _end_node(ft_nullptr), _allocator()
 			{
 				init_tree();
-				_root = insert(val, _root, _root);
+				insert(val, _root, ft_nullptr);
 			}
 
 			Tree (const Tree& other) : _size(other._size), _root(ft_nullptr), _end_node(ft_nullptr), _allocator(other._allocator)
@@ -618,18 +531,13 @@ namespace ft
 
 			ft::pair<iterator,bool> insert(const content_type& val)
 			{
-				// bool success = false;
-				// node_type* tmp = insert2(val, _root, ft_nullptr);
-				// if (tmp != ft_nullptr)
-				// 	success = true;
-				// return (ft::make_pair(tmp, success));
-				return (insert2(val, _root, ft_nullptr));
+				return (insert(val, _root, ft_nullptr));
 			}
 
-			iterator insert(iterator position, const content_type& val) // AE improve performance for benchmark
+			iterator insert(iterator position, const content_type& val) // AE improve performance for benchmark (file stl_tree.h, function _M_get_insert_hint_unique_pos, line 2193)
 			{
 				(void)position;
-				/*
+
 				iterator tmp = position;
 				iterator next = position;
 				++next;
@@ -637,12 +545,12 @@ namespace ft
 				{
 					// _root = insert(val, _root, ft_nullptr);
 					// std::cout << YELLOW << "\nGOOD HINT!" << RESET << std::endl;
-					return (insert2(val, tmp.base(), tmp.base()->_parent).first);
+					return (insert(val, tmp.base(), tmp.base()->_parent).first);
 				}
 				else
 				{
 					// std::cout << YELLOW << "\nBAD HINT!" << RESET << std::endl;
-					return (insert2(val, _root, ft_nullptr).first);
+					return (insert(val, _root, ft_nullptr).first);
 				}
 				// if (first_is_greater_than_second(val, position.base())) // AE this needs tuning
 				// 	insert(val, position.base(), position.base()->_parent); // AE what if this would be first node? What happens with root / parent?
@@ -650,16 +558,9 @@ namespace ft
 					// _root = insert(val, _root, ft_nullptr);
 					// _root = insert(val, position.base(), position.base()->_parent);
 				// return (find(val));
-				*/
-					_root = insert(val, _root, ft_nullptr);
-				return (find(val));
-			}
 
-			// void erase(node_type* node)
-			// {
-			// 	if (node != ft_nullptr)
-			// 		_root = erase(*node, _root); // problem if node = end()?
-			// }
+				// return (insert(val, _root, ft_nullptr).first);
+			}
 
 			void erase(iterator position)
 			{
