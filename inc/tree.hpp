@@ -316,6 +316,8 @@ namespace ft
 			// It does reverse inorder traversal
 			void print2DUtil(node_type* root, int space)
 			{
+				std::string root_name = "r";
+
 				// Base case
 				if (root == ft_nullptr)
 					return;
@@ -331,9 +333,16 @@ namespace ft
 				std::cout << std::endl;
 				for (int i = COUNT; i < space; i++)
 					std::cout << " ";
-				std::cout << root->_content << "(";
-				if (root->_parent != _end_node)
+				if (root == _end_node)
+					std::cout << root_name;
+				else
+					std::cout << root->_content;
+				std::cout << "(";
+				if (root->_parent != _end_node && root->_parent != ft_nullptr)
 					std::cout << root->_parent->_content;
+				else if (root->_parent == _end_node)
+					std::cout << root_name;
+
 				std::cout << ")";
 			
 				// Process left child
@@ -662,7 +671,7 @@ namespace ft
 				if (empty())
 					std::cout << "(empty)";
 				else
-					print2DUtil(_root->_left_child, 0);
+					print2DUtil(_root, 0);
 				std::cout << std::endl;
 			}
 	};
