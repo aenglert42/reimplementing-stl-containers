@@ -461,12 +461,12 @@ namespace ft
 				if (first_is_greater_than_second(val, tmp.base()) && first_is_less_than_second(val, next.base()))
 				{
 					// _root = insert(val, _root, ft_nullptr);
-					std::cout << YELLOW << "\nGOOD HINT!" << RESET << std::endl;
+					// std::cout << YELLOW << "\nGOOD HINT!" << RESET << std::endl;
 					return (insert2(val, tmp.base(), tmp.base()->_parent).first);
 				}
 				else
 				{
-					std::cout << YELLOW << "\nBAD HINT!" << RESET << std::endl;
+					// std::cout << YELLOW << "\nBAD HINT!" << RESET << std::endl;
 					return (insert2(val, _root, ft_nullptr).first);
 				}
 				// if (first_is_greater_than_second(val, position.base())) // AE this needs tuning
