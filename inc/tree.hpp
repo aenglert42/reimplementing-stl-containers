@@ -150,7 +150,8 @@ namespace ft
 
 				if (node == ft_nullptr)
 					return(0);
-				return (calculate_height(node->_left_child) - calculate_height(node->_right_child));
+				// return (calculate_height(node->_left_child) - calculate_height(node->_right_child));
+				return (get_height(node->_left_child) - get_height(node->_right_child));
 			}
 
 			size_type get_height(node_type* node)
@@ -158,6 +159,14 @@ namespace ft
 				if (node == ft_nullptr)
 					return (0);
 				return (node->_height);
+			}
+
+			void update_height(node_type* node)
+			{
+				if (node == ft_nullptr)
+					return ;
+				node->_height = 1 + std::max(get_height(node->_left_child), get_height(node->_right_child));
+				update_height(node->_parent);
 			}
 
 			size_type calculate_height(node_type* node)
@@ -196,6 +205,8 @@ namespace ft
 				}
 
 				grandparent->_parent = tmp;
+				update_height(grandparent);
+				// update_height(tmp);
 			}
 
 			void rotate_right(node_type* grandparent)
@@ -222,6 +233,8 @@ namespace ft
 				}
 
 				grandparent->_parent = tmp;
+				update_height(grandparent);
+				// update_height(tmp);
 			}
 
 			void rebalance(node_type* node)
@@ -298,17 +311,18 @@ namespace ft
 						parent->_left_child = node;
 					else
 						parent->_right_child = node;
+					update_height(node);
 				}
 				else if (first_is_less_than_second(val, node))
 				{
 					tmp = insert2(val, node->_left_child, node);
-					node->_height = calculate_height(node);
+					// node->_height = calculate_height(node);
 					rebalance(node);
 				}
 				else if (first_is_greater_than_second(val, node))
 				{
 					tmp = insert2(val, node->_right_child, node);
-					node->_height = calculate_height(node);
+					// node->_height = calculate_height(node);
 					rebalance(node);
 				}
 				else
