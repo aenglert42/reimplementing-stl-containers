@@ -378,23 +378,23 @@ namespace ft
 				return (ret);
 			}
 
-			void delete_from_node_downwards(node_type* node)
-			{
-				if (node == ft_nullptr)
-					return ;
-				if (node->_left_child != ft_nullptr)
-					delete_from_node_downwards(node->_left_child);
-				if (node->_right_child != ft_nullptr)
-					delete_from_node_downwards(node->_right_child);
+			// void delete_from_node_downwards(node_type* node)
+			// {
+			// 	if (node == ft_nullptr || node == _end_node)
+			// 		return ;
+			// 	if (node->_left_child != ft_nullptr)
+			// 		delete_from_node_downwards(node->_left_child);
+			// 	if (node->_right_child != ft_nullptr)
+			// 		delete_from_node_downwards(node->_right_child);
 
-				// AE maybe implement update parent function
-				if (node->_parent->_left_child == node)
-					node->_parent->_left_child = ft_nullptr;
-				else
-					node->_parent->_right_child = ft_nullptr;
-				my_delete(node);
-				_size--;
-			}
+			// 	// AE maybe implement update parent function
+			// 	if (node->_parent->_left_child == node)
+			// 		node->_parent->_left_child = ft_nullptr;
+			// 	else
+			// 		node->_parent->_right_child = ft_nullptr;
+			// 	my_delete(node);
+			// 	_size--;
+			// }
 
 			void print_preorder(node_type* node)
 			{
@@ -469,16 +469,16 @@ namespace ft
 				_root = _end_node;
 			}
 
-			node_type* copy_tree(node_type* node, node_type* parent)
-			{
-				if (node == ft_nullptr)
-					return (ft_nullptr);
+			// node_type* copy_tree(node_type* node, node_type* parent)
+			// {
+			// 	if (node == ft_nullptr || node->_is_end_node == true)
+			// 		return (ft_nullptr);
 				
-				node_type* ret = my_new(node->_content, parent);
-				ret->_right_child = copy_tree(node->_right_child, ret);
-				ret->_left_child = copy_tree(node->_left_child, ret);
-				return ret;
-			}
+			// 	node_type* ret = my_new(node->_content, parent);
+			// 	ret->_right_child = copy_tree(node->_right_child, ret);
+			// 	ret->_left_child = copy_tree(node->_left_child, ret);
+			// 	return ret;
+			// }
 
 		public:
 			Tree(const value_compare& comp = value_compare()) : _size(0), _root(ft_nullptr), _end_node(ft_nullptr), _allocator(), _compare(comp)
@@ -492,10 +492,10 @@ namespace ft
 				insert(val, _root, ft_nullptr);
 			}
 
-			Tree (const Tree& other) : _size(other._size), _root(ft_nullptr), _end_node(ft_nullptr), _allocator(other._allocator)
+			Tree (const Tree& other) : _size(0), _root(ft_nullptr), _end_node(ft_nullptr), _allocator(other._allocator)
 			{
 				init_tree();
-				_root->_left_child = copy_tree(other._root->_left_child, _root); // AE after change to AVL tree _end_node _root or _root->_left_child
+				insert(other.begin(), other.end());
 			}
 
 			Tree& operator=(const Tree& other)
@@ -503,10 +503,8 @@ namespace ft
 				if (this != &other)
 				{
 					clear();
-					_root->_left_child = copy_tree(other._root->_left_child, _root); // AE after change to AVL tree _end_node _root or _root->_left_child
-					// _allocator = other._allocator;
+					insert(other.begin(), other.end());
 					_compare = other._compare;
-					_size = other._size;
 				}
 				return (*this);
 			}
@@ -573,32 +571,32 @@ namespace ft
 			{
 				(void)position;
 
-				////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-				// old version
-				iterator tmp = position;
-				iterator next = position;
-				++next;
-				if (first_is_greater_than_second(val, tmp.base()) && first_is_less_than_second(val, next.base()))
-				{
-					// _root = insert(val, _root, ft_nullptr);
-					// std::cout << YELLOW << "\nGOOD HINT!" << RESET << std::endl;
-					return (insert(val, tmp.base(), tmp.base()->_parent).first);
-				}
-				else
-				{
-					// std::cout << YELLOW << "\nBAD HINT!" << RESET << std::endl;
-					return (insert(val, _root, ft_nullptr).first);
-				}
-				// if (first_is_greater_than_second(val, position.base())) // AE this needs tuning
-				// 	insert(val, position.base(), position.base()->_parent); // AE what if this would be first node? What happens with root / parent?
+				// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+				// // old version
+				// iterator tmp = position;
+				// iterator next = position;
+				// ++next;
+				// if (first_is_greater_than_second(val, tmp.base()) && first_is_less_than_second(val, next.base()))
+				// {
+				// 	// _root = insert(val, _root, ft_nullptr);
+				// 	// std::cout << YELLOW << "\nGOOD HINT!" << RESET << std::endl;
+				// 	return (insert(val, tmp.base(), tmp.base()->_parent).first);
+				// }
 				// else
-					// _root = insert(val, _root, ft_nullptr);
-					// _root = insert(val, position.base(), position.base()->_parent);
-				// return (find(val));
+				// {
+				// 	// std::cout << YELLOW << "\nBAD HINT!" << RESET << std::endl;
+				// 	return (insert(val, _root, ft_nullptr).first);
+				// }
+				// // if (first_is_greater_than_second(val, position.base())) // AE this needs tuning
+				// // 	insert(val, position.base(), position.base()->_parent); // AE what if this would be first node? What happens with root / parent?
+				// // else
+				// 	// _root = insert(val, _root, ft_nullptr);
+				// 	// _root = insert(val, position.base(), position.base()->_parent);
+				// // return (find(val));
 
 				////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 				// alternative ignore hint
-				// return (insert(val, _root, ft_nullptr).first);
+				return (insert(val, _root, ft_nullptr).first);
 
 				/*
 				////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -647,6 +645,13 @@ namespace ft
 				else // Equivalent keys.
 					return _Res(position._M_node, 0);
 				*/
+			}
+
+			template <class InputIterator>
+			void insert(InputIterator first, InputIterator last)
+			{
+				while (first != last)
+					insert(*first++);
 			}
 
 			void erase (iterator position)
@@ -739,7 +744,8 @@ namespace ft
 
 			void clear(void)
 			{
-				delete_from_node_downwards(_end_node->_left_child);
+				erase(begin(), end());
+				// delete_from_node_downwards(_root);
 			}
 
 			node_type* find(const content_type& val) const // AE look for key_type instead of content_type
@@ -796,7 +802,7 @@ namespace ft
 			{
 				if (empty())
 					return (_end_node);
-				return (upper_bound(val, _root->_left_child, ft_nullptr));
+				return (upper_bound(val, _root, ft_nullptr));
 			}
 
 			node_type* lower_bound(const content_type& val, node_type* node, node_type* parent) const
@@ -823,7 +829,7 @@ namespace ft
 			{
 				if (empty())
 					return (_end_node);
-				return (lower_bound(val, _root->_left_child, ft_nullptr));
+				return (lower_bound(val, _root, ft_nullptr));
 			}
 
 			bool empty() const
@@ -839,7 +845,7 @@ namespace ft
 				if (empty())
 					std::cout << "(empty)";
 				else
-					print_preorder(_root->_left_child);
+					print_preorder(_root);
 				std::cout << std::endl;
 			}
 
@@ -849,7 +855,7 @@ namespace ft
 				if (empty())
 					std::cout << "(empty)";
 				else
-					print_inorder(_root->_left_child);
+					print_inorder(_root);
 				std::cout << std::endl;
 			}
 
@@ -859,7 +865,7 @@ namespace ft
 				if (empty())
 					std::cout << "(empty)";
 				else
-					print_postorder(_root->_left_child);
+					print_postorder(_root);
 				std::cout << std::endl;
 			}
 

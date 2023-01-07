@@ -111,7 +111,7 @@ namespace ft
 			
 			// empty (1)	
 			explicit map (const key_compare& comp = key_compare(),
-				const allocator_type& alloc = allocator_type()) : _comp(comp), _alloc(alloc), _tree(comp)
+				const allocator_type& alloc = allocator_type()) : _comp(comp), _alloc(alloc), _tree()
 			{
 
 			}
@@ -129,7 +129,7 @@ namespace ft
 			// copy (3)	
 			map (const map& x) : _comp(x._comp), _alloc(x._alloc), _tree(x._tree)
 			{
-
+				
 			}
 
 		////destructor///////////////////////////////////////////////////////
@@ -257,10 +257,9 @@ namespace ft
 
 			// range (3)
 			template <class InputIterator>
-			void insert(InputIterator first, InputIterator last) // AE improve performance for benchmark
+			void insert(InputIterator first, InputIterator last) // AE use tree insert function
 			{
-				while (first != last)
-					_tree.insert(*first++);
+				return (_tree.insert(first, last));
 			}
 
 		////erase///////////////////////////////////////////////////////
