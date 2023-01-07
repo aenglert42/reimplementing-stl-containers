@@ -753,185 +753,7 @@ int main(void)
 	// 	PRINT_TIME(t);
 	// }
 
-	// AVL deletion left rotation
-	{
-		int i;
-		ft::Tree<int> Tree;
-		std::cout << RED << "inserted: " << *Tree.insert(10).first << RESET << std::endl;
-		// Tree.print2D();
-		std::cout << RED << "inserted: " << *Tree.insert(9).first << RESET << std::endl;
-		// Tree.print2D();
-		std::cout << RED << "inserted: " << *Tree.insert(8).first << RESET << std::endl;
-		// Tree.print2D();
-		std::cout << RED << "inserted: " << *Tree.insert(7).first << RESET << std::endl;
-		// Tree.print2D();
-		std::cout << RED << "inserted: " << *Tree.insert(6).first << RESET << std::endl;
-		// Tree.print2D();
-		std::cout << RED << "inserted: " << *Tree.insert(5).first << RESET << std::endl;
-		// Tree.print2D();
-		std::cout << RED << "inserted: " << *Tree.insert(4).first << RESET << std::endl;
-		// Tree.print2D();
-		std::cout << RED << "inserted: " << *Tree.insert(3).first << RESET << std::endl;
-		// Tree.print2D();
-		std::cout << RED << "inserted: " << *Tree.insert(2).first << RESET << std::endl;
-		// Tree.print2D();
-		std::cout << RED << "inserted: " << *Tree.insert(1).first << RESET << std::endl;
-		// Tree.print2D();
-		std::cout << RED << "inserted: " << *Tree.insert(0).first << RESET << std::endl;
-		// Tree.print2D();
-		i = 9;
-		Tree.erase(i);
-		std::cout << RED << "erased: " << i << RESET << std::endl;
-		// Tree.print2D();
-		i = 7;
-		Tree.erase(i);
-		std::cout << RED << "erased: " << i << RESET << std::endl;
-		// Tree.print2D();
-		i = 0;
-		Tree.erase(i);
-		std::cout << RED << "erased: " << i << RESET << std::endl;
-		Tree.print2D();
-		i = 2;
-		Tree.erase(i);
-		std::cout << RED << "erased: " << i << RESET << std::endl;
-		Tree.print2D();
-		i = 3;
-		Tree.erase(i);
-		std::cout << RED << "erased: " << i << RESET << std::endl;
-
-		Tree.print2D();
-	}
-
-	// AVL deletion left-right rotation (double right)
-	{
-		int i;
-		ft::Tree<int> Tree;
-		std::cout << RED << "inserted: " << *Tree.insert(10).first << RESET << std::endl;
-		// Tree.print2D();
-		std::cout << RED << "inserted: " << *Tree.insert(9).first << RESET << std::endl;
-		// Tree.print2D();
-		std::cout << RED << "inserted: " << *Tree.insert(8).first << RESET << std::endl;
-		// Tree.print2D();
-		std::cout << RED << "inserted: " << *Tree.insert(7).first << RESET << std::endl;
-		// Tree.print2D();
-		std::cout << RED << "inserted: " << *Tree.insert(6).first << RESET << std::endl;
-		// Tree.print2D();
-		std::cout << RED << "inserted: " << *Tree.insert(5).first << RESET << std::endl;
-		// Tree.print2D();
-		std::cout << RED << "inserted: " << *Tree.insert(4).first << RESET << std::endl;
-		// Tree.print2D();
-		std::cout << RED << "inserted: " << *Tree.insert(3).first << RESET << std::endl;
-		// Tree.print2D();
-		std::cout << RED << "inserted: " << *Tree.insert(2).first << RESET << std::endl;
-		// Tree.print2D();
-		std::cout << RED << "inserted: " << *Tree.insert(1).first << RESET << std::endl;
-		// Tree.print2D();
-		std::cout << RED << "inserted: " << *Tree.insert(0).first << RESET << std::endl;
-		// Tree.print2D();
-		i = 9;
-		Tree.erase(i);
-		std::cout << RED << "erased: " << i << RESET << std::endl;
-		// Tree.print2D();
-		i = 7;
-		Tree.erase(i);
-		std::cout << RED << "erased: " << i << RESET << std::endl;
-		// Tree.print2D();
-		i = 0;
-		Tree.erase(i);
-		std::cout << RED << "erased: " << i << RESET << std::endl;
-		Tree.print2D();
-		i = 2;
-		Tree.erase(i);
-		std::cout << RED << "erased: " << i << RESET << std::endl;
-		Tree.print2D();
-		i = 3;
-		Tree.erase(i);
-		std::cout << RED << "erased: " << i << RESET << std::endl;
-		Tree.print2D();
-		i = 10;
-		Tree.erase(i);
-		std::cout << RED << "erased: " << i << RESET << std::endl;
-
-		Tree.print2D();
-	}
-
-	// AVL deletion right rotation
-	{
-		int i;
-		(void)i;
-		ft::Tree<int> Tree;
-		std::cout << RED << "inserted: " << *Tree.insert(10).first << RESET << std::endl;
-		// Tree.print2D();
-		std::cout << RED << "inserted: " << *Tree.insert(9).first << RESET << std::endl;
-		// Tree.print2D();
-		std::cout << RED << "inserted: " << *Tree.insert(8).first << RESET << std::endl;
-		// Tree.print2D();
-		std::cout << RED << "inserted: " << *Tree.insert(7).first << RESET << std::endl;
-		// Tree.print2D();
-		std::cout << RED << "inserted: " << *Tree.insert(6).first << RESET << std::endl;
-		// Tree.print2D();
-		std::cout << RED << "inserted: " << *Tree.insert(5).first << RESET << std::endl;
-		// Tree.print2D();
-		std::cout << RED << "inserted: " << *Tree.insert(4).first << RESET << std::endl;
-		// Tree.print2D();
-		std::cout << RED << "inserted: " << *Tree.insert(3).first << RESET << std::endl;
-		// Tree.print2D();
-		std::cout << RED << "inserted: " << *Tree.insert(2).first << RESET << std::endl;
-		// Tree.print2D();
-		std::cout << RED << "inserted: " << *Tree.insert(1).first << RESET << std::endl;
-		i = 10;
-		Tree.erase(i);
-		std::cout << RED << "erased: " << i << RESET << std::endl;
-		Tree.print2D();
-		i = 9;
-		Tree.erase(i);
-		std::cout << RED << "erased: " << i << RESET << std::endl;
-		Tree.print2D();
-	}
-
-	// AVL deletion right-left rotation (double left)
-	{
-		int i;
-		(void)i;
-		ft::Tree<int> Tree;
-		std::cout << RED << "inserted: " << *Tree.insert(10).first << RESET << std::endl;
-		// Tree.print2D();
-		std::cout << RED << "inserted: " << *Tree.insert(9).first << RESET << std::endl;
-		// Tree.print2D();
-		std::cout << RED << "inserted: " << *Tree.insert(8).first << RESET << std::endl;
-		// Tree.print2D();
-		std::cout << RED << "inserted: " << *Tree.insert(7).first << RESET << std::endl;
-		// Tree.print2D();
-		std::cout << RED << "inserted: " << *Tree.insert(6).first << RESET << std::endl;
-		// Tree.print2D();
-		std::cout << RED << "inserted: " << *Tree.insert(5).first << RESET << std::endl;
-		// Tree.print2D();
-		std::cout << RED << "inserted: " << *Tree.insert(4).first << RESET << std::endl;
-		// Tree.print2D();
-		std::cout << RED << "inserted: " << *Tree.insert(3).first << RESET << std::endl;
-		// Tree.print2D();
-		std::cout << RED << "inserted: " << *Tree.insert(2).first << RESET << std::endl;
-		// Tree.print2D();
-		std::cout << RED << "inserted: " << *Tree.insert(1).first << RESET << std::endl;
-		i = 10;
-		Tree.erase(i);
-		std::cout << RED << "erased: " << i << RESET << std::endl;
-		Tree.print2D();
-		i = 9;
-		Tree.erase(i);
-		std::cout << RED << "erased: " << i << RESET << std::endl;
-		Tree.print2D();
-		i = 3;
-		Tree.erase(i);
-		std::cout << RED << "erased: " << i << RESET << std::endl;
-		Tree.print2D();
-		i = 1;
-		Tree.erase(i);
-		std::cout << RED << "erased: " << i << RESET << std::endl;
-		Tree.print2D();
-	}
-
-	// // AVL test
+	// // AVL deletion left rotation
 	// {
 	// 	int i;
 	// 	ft::Tree<int> Tree;
@@ -960,7 +782,218 @@ int main(void)
 	// 	i = 9;
 	// 	Tree.erase(i);
 	// 	std::cout << RED << "erased: " << i << RESET << std::endl;
+	// 	// Tree.print2D();
+	// 	i = 7;
+	// 	Tree.erase(i);
+	// 	std::cout << RED << "erased: " << i << RESET << std::endl;
+	// 	// Tree.print2D();
+	// 	i = 0;
+	// 	Tree.erase(i);
+	// 	std::cout << RED << "erased: " << i << RESET << std::endl;
+	// 	Tree.print2D();
+	// 	i = 2;
+	// 	Tree.erase(i);
+	// 	std::cout << RED << "erased: " << i << RESET << std::endl;
+	// 	Tree.print2D();
+	// 	i = 3;
+	// 	Tree.erase(i);
+	// 	std::cout << RED << "erased: " << i << RESET << std::endl;
 
 	// 	Tree.print2D();
 	// }
+
+	// // AVL deletion left-right rotation (double right)
+	// {
+	// 	int i;
+	// 	ft::Tree<int> Tree;
+	// 	std::cout << RED << "inserted: " << *Tree.insert(10).first << RESET << std::endl;
+	// 	// Tree.print2D();
+	// 	std::cout << RED << "inserted: " << *Tree.insert(9).first << RESET << std::endl;
+	// 	// Tree.print2D();
+	// 	std::cout << RED << "inserted: " << *Tree.insert(8).first << RESET << std::endl;
+	// 	// Tree.print2D();
+	// 	std::cout << RED << "inserted: " << *Tree.insert(7).first << RESET << std::endl;
+	// 	// Tree.print2D();
+	// 	std::cout << RED << "inserted: " << *Tree.insert(6).first << RESET << std::endl;
+	// 	// Tree.print2D();
+	// 	std::cout << RED << "inserted: " << *Tree.insert(5).first << RESET << std::endl;
+	// 	// Tree.print2D();
+	// 	std::cout << RED << "inserted: " << *Tree.insert(4).first << RESET << std::endl;
+	// 	// Tree.print2D();
+	// 	std::cout << RED << "inserted: " << *Tree.insert(3).first << RESET << std::endl;
+	// 	// Tree.print2D();
+	// 	std::cout << RED << "inserted: " << *Tree.insert(2).first << RESET << std::endl;
+	// 	// Tree.print2D();
+	// 	std::cout << RED << "inserted: " << *Tree.insert(1).first << RESET << std::endl;
+	// 	// Tree.print2D();
+	// 	std::cout << RED << "inserted: " << *Tree.insert(0).first << RESET << std::endl;
+	// 	// Tree.print2D();
+	// 	i = 9;
+	// 	Tree.erase(i);
+	// 	std::cout << RED << "erased: " << i << RESET << std::endl;
+	// 	// Tree.print2D();
+	// 	i = 7;
+	// 	Tree.erase(i);
+	// 	std::cout << RED << "erased: " << i << RESET << std::endl;
+	// 	// Tree.print2D();
+	// 	i = 0;
+	// 	Tree.erase(i);
+	// 	std::cout << RED << "erased: " << i << RESET << std::endl;
+	// 	Tree.print2D();
+	// 	i = 2;
+	// 	Tree.erase(i);
+	// 	std::cout << RED << "erased: " << i << RESET << std::endl;
+	// 	Tree.print2D();
+	// 	i = 3;
+	// 	Tree.erase(i);
+	// 	std::cout << RED << "erased: " << i << RESET << std::endl;
+	// 	Tree.print2D();
+	// 	i = 10;
+	// 	Tree.erase(i);
+	// 	std::cout << RED << "erased: " << i << RESET << std::endl;
+
+	// 	Tree.print2D();
+	// }
+
+	// // AVL deletion right rotation
+	// {
+	// 	int i;
+	// 	(void)i;
+	// 	ft::Tree<int> Tree;
+	// 	std::cout << RED << "inserted: " << *Tree.insert(10).first << RESET << std::endl;
+	// 	// Tree.print2D();
+	// 	std::cout << RED << "inserted: " << *Tree.insert(9).first << RESET << std::endl;
+	// 	// Tree.print2D();
+	// 	std::cout << RED << "inserted: " << *Tree.insert(8).first << RESET << std::endl;
+	// 	// Tree.print2D();
+	// 	std::cout << RED << "inserted: " << *Tree.insert(7).first << RESET << std::endl;
+	// 	// Tree.print2D();
+	// 	std::cout << RED << "inserted: " << *Tree.insert(6).first << RESET << std::endl;
+	// 	// Tree.print2D();
+	// 	std::cout << RED << "inserted: " << *Tree.insert(5).first << RESET << std::endl;
+	// 	// Tree.print2D();
+	// 	std::cout << RED << "inserted: " << *Tree.insert(4).first << RESET << std::endl;
+	// 	// Tree.print2D();
+	// 	std::cout << RED << "inserted: " << *Tree.insert(3).first << RESET << std::endl;
+	// 	// Tree.print2D();
+	// 	std::cout << RED << "inserted: " << *Tree.insert(2).first << RESET << std::endl;
+	// 	// Tree.print2D();
+	// 	std::cout << RED << "inserted: " << *Tree.insert(1).first << RESET << std::endl;
+	// 	i = 10;
+	// 	Tree.erase(i);
+	// 	std::cout << RED << "erased: " << i << RESET << std::endl;
+	// 	Tree.print2D();
+	// 	i = 9;
+	// 	Tree.erase(i);
+	// 	std::cout << RED << "erased: " << i << RESET << std::endl;
+	// 	Tree.print2D();
+	// }
+
+	// // AVL deletion right-left rotation (double left)
+	// {
+	// 	int i;
+	// 	(void)i;
+	// 	ft::Tree<int> Tree;
+	// 	std::cout << RED << "inserted: " << *Tree.insert(10).first << RESET << std::endl;
+	// 	// Tree.print2D();
+	// 	std::cout << RED << "inserted: " << *Tree.insert(9).first << RESET << std::endl;
+	// 	// Tree.print2D();
+	// 	std::cout << RED << "inserted: " << *Tree.insert(8).first << RESET << std::endl;
+	// 	// Tree.print2D();
+	// 	std::cout << RED << "inserted: " << *Tree.insert(7).first << RESET << std::endl;
+	// 	// Tree.print2D();
+	// 	std::cout << RED << "inserted: " << *Tree.insert(6).first << RESET << std::endl;
+	// 	// Tree.print2D();
+	// 	std::cout << RED << "inserted: " << *Tree.insert(5).first << RESET << std::endl;
+	// 	// Tree.print2D();
+	// 	std::cout << RED << "inserted: " << *Tree.insert(4).first << RESET << std::endl;
+	// 	// Tree.print2D();
+	// 	std::cout << RED << "inserted: " << *Tree.insert(3).first << RESET << std::endl;
+	// 	// Tree.print2D();
+	// 	std::cout << RED << "inserted: " << *Tree.insert(2).first << RESET << std::endl;
+	// 	// Tree.print2D();
+	// 	std::cout << RED << "inserted: " << *Tree.insert(1).first << RESET << std::endl;
+	// 	i = 10;
+	// 	Tree.erase(i);
+	// 	std::cout << RED << "erased: " << i << RESET << std::endl;
+	// 	Tree.print2D();
+	// 	i = 9;
+	// 	Tree.erase(i);
+	// 	std::cout << RED << "erased: " << i << RESET << std::endl;
+	// 	Tree.print2D();
+	// 	i = 3;
+	// 	Tree.erase(i);
+	// 	std::cout << RED << "erased: " << i << RESET << std::endl;
+	// 	Tree.print2D();
+	// 	i = 1;
+	// 	Tree.erase(i);
+	// 	std::cout << RED << "erased: " << i << RESET << std::endl;
+	// 	Tree.print2D();
+	// }
+
+	// AVL range deletion
+	{
+		int i;
+		ft::Tree<int> Tree;
+		ft::Tree<int>::iterator first;
+		ft::Tree<int>::iterator last;
+		(void)i;
+		(void)Tree;
+		(void)first;
+		(void)last;
+		std::cout << RED << "inserted: " << *Tree.insert(10).first << RESET << std::endl;
+		// Tree.print2D();
+		std::cout << RED << "inserted: " << *Tree.insert(9).first << RESET << std::endl;
+		// Tree.print2D();
+		std::cout << RED << "inserted: " << *Tree.insert(8).first << RESET << std::endl;
+		// Tree.print2D();
+		std::cout << RED << "inserted: " << *Tree.insert(7).first << RESET << std::endl;
+		// Tree.print2D();
+		std::cout << RED << "inserted: " << *Tree.insert(6).first << RESET << std::endl;
+		// Tree.print2D();
+		std::cout << RED << "inserted: " << *Tree.insert(5).first << RESET << std::endl;
+		// Tree.print2D();
+		std::cout << RED << "inserted: " << *Tree.insert(4).first << RESET << std::endl;
+		// Tree.print2D();
+		std::cout << RED << "inserted: " << *Tree.insert(3).first << RESET << std::endl;
+		// Tree.print2D();
+		std::cout << RED << "inserted: " << *Tree.insert(2).first << RESET << std::endl;
+		// Tree.print2D();
+		std::cout << RED << "inserted: " << *Tree.insert(1).first << RESET << std::endl;
+		Tree.print2D();
+		std::cout << RED << "inserted: " << *Tree.insert(0).first << RESET << std::endl;
+		Tree.print2D();
+		// i = 5;
+		// Tree.erase(i);
+		// std::cout << RED << "erased: " << i << RESET << std::endl;
+		// Tree.print2D();
+		first = Tree.find(5);
+		last = Tree.find(9);
+		std::cout << RED << "erase: " << *first << " to ";
+		if (last == Tree.end())
+		std::cout << "end" << RESET << std::endl;
+		else
+		std::cout << *last << RESET << std::endl;
+		Tree.erase(first, last);
+		Tree.print2D();
+
+		first = Tree.begin();
+		last = Tree.end();
+		std::cout << RED << "erase: " << *first << " to ";
+		if (last == Tree.end())
+		std::cout << "end" << RESET << std::endl;
+		else
+		std::cout << *last << RESET << std::endl;
+		Tree.erase(first, last);
+		Tree.print2D();
+		// i = 3;
+		// Tree.erase(i);
+		// std::cout << RED << "erased: " << i << RESET << std::endl;
+		// Tree.print2D();
+		// i = 10;
+		// Tree.erase(i);
+		// std::cout << RED << "erased: " << i << RESET << std::endl;
+
+		// Tree.print2D();
+	}
 }

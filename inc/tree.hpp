@@ -300,7 +300,7 @@ namespace ft
 
 			// }
 
-			node_type* remove_node_with_two_children(node_type* node)
+			size_type remove_node_with_two_children(node_type* node)
 			{
 				node_type old = *node;
 				// replace node's content with content of smallest node in right subtree
@@ -313,23 +313,32 @@ namespace ft
 				node->_left_child = old._left_child;
 				node->_right_child = old._right_child;
 				node->_height = old._height;
-				// node->_right_child = erase(tmp->_content, node->_right_child);
+				// return(erase(tmp->_content, node->_right_child));
 				// or
-				node->_left_child = erase(tmp->_content, node->_left_child);
-				// AE update height -> will be done in with one / without child
-				return (node);
+				// return (erase(tmp->_content, node->_left_child));
+				// this could fix range erase issues with rebalance
+				return (erase(tmp->_content, tmp));
 			}
 
-			node_type* remove_node_with_one_child(node_type* node, node_type* child)
+			size_type remove_node_with_one_child(node_type* node, node_type* child)
 			{
+				if (node->_parent != ft_nullptr)
+				{
+					if (node->_parent->_left_child == node)
+						node->_parent->_left_child = child;
+					else
+						node->_parent->_right_child = child;
+				}
+				else
+					_root = child;
 				child->_parent = node->_parent;
 				my_delete(node);
 				_size--;
 				update_height(child);
-				return (child);
+				return (1);
 			}
 
-			node_type* remove_node_without_children(node_type* node)
+			size_type remove_node_without_children(node_type* node)
 			{
 				// AE maybe implement update parent function, nullcheck ?
 				if (node->_parent->_left_child == node)
@@ -339,10 +348,10 @@ namespace ft
 				update_height(node->_parent);
 				my_delete(node);
 				_size--;
-				return (ft_nullptr);
+				return (1);
 			}
 
- 			node_type* remove_node(node_type* node)
+ 			size_type remove_node(node_type* node)
 			{
 				if (node->_left_child == ft_nullptr && node->_right_child == ft_nullptr)
 					return(remove_node_without_children(node));
@@ -354,18 +363,19 @@ namespace ft
 					return(remove_node_with_two_children(node));
 			}
 
-			node_type* erase (const content_type& val, node_type* node)
+			size_type erase (const content_type& val, node_type* node)
 			{
+				size_type ret = 0;
 				if (node == ft_nullptr)
-					return (ft_nullptr);
+					return (ret);
 				else if (first_is_less_than_second(val, node))
-					node->_left_child = erase(val, node->_left_child);
+					erase(val, node->_left_child);
 				else if (first_is_greater_than_second(val, node))
-					node->_right_child = erase(val, node->_right_child);
+					erase(val, node->_right_child);
 				else
-					node = remove_node(node);
+					ret = remove_node(node);
 				rebalance(node);
-				return (node);
+				return (ret);
 			}
 
 			void delete_from_node_downwards(node_type* node)
@@ -647,43 +657,85 @@ namespace ft
 
 			size_type erase (const content_type& val)
 			{
-				size_type ret = 0;
-				if (find(val) != ft_nullptr)
-					ret = 1;
-				erase(val, _root);
-				return (ret);
+				return (erase(val, _root));
 			}
 
 			void erase (iterator first, iterator last) // AE improve performance for benchmark
 			{
-				removeRange(_root, first.base(), last.base());
-				erase(first);
+				// // intent with val instead of pointer
+				// content_type low;
+				// content_type high;
+				// iterator terminator = end();
+				// if (first == terminator)
+				// 	return ;
+				// if (last == terminator)
+				// {
+				// 	--terminator;
+				// 	high = terminator.base()->_content;
+				// }
+				// else
+				// 	high = last.base()->_content;
+				// low = first.base()->_content;
+				// removeRange(_root, low, high);
+			
+				// // old version
+				// removeRange(_root, first.base(), last.base());
+				// // std::cout << GREEN;
+				// // print2D();
+				// // std::cout << RESET;
+				// // erase(first);
+
+				while (first != last)
+					erase(*first++);
 			}
 
-			node_type* removeRange(node_type* node, node_type* low, node_type* high)
-			{
+			// void removeRange(node_type* node, node_type* low, node_type* high)
+			// {
 
-				// Base case
-				if (node == ft_nullptr)
-					return ft_nullptr;
+			// 	// Base case
+			// 	if (node == ft_nullptr)
+			// 		return ;
+			// 		// return ft_nullptr;
 
-				// First fix the left and right subtrees of node
-				node->_left_child = removeRange(node->_left_child, low, high);
-				node->_right_child = removeRange(node->_right_child, low, high);
+			// 	// First fix the left and right subtrees of node
+			// 	removeRange(node->_left_child, low, high);
+			// 	// node->_left_child = removeRange(node->_left_child, low, high);
+			// 	removeRange(node->_right_child, low, high);
+			// 	// node->_right_child = removeRange(node->_right_child, low, high);
 
-				// Now fix the node.
-				// if given node is in Range then delete it
-				// if (node->data >= low && node->data <= high)
-				// if (!first_is_greater_than_second(low, node) && first_is_greater_than_second(high, node))
-				bool is_greater_than_low = lhs_node_is_greater_than_rhs_node(node, low);
-				bool is_less_than_high = lhs_node_is_less_than_rhs_node(node, high);
-				if (is_greater_than_low && is_less_than_high)
-				// if (!lhs_node_is_greater_than_rhs_node(low, node) && lhs_node_is_greater_than_rhs_node(high, node))
-					return remove_node(node);
+			// 	// Now fix the node.
+			// 	// if given node is in Range then delete it
+			// 	// if (node->data >= low && node->data <= high)
+			// 	// if (!first_is_greater_than_second(low, node) && first_is_greater_than_second(high, node))
+			// 	bool is_greater_than_low = lhs_node_is_greater_than_rhs_node(node, low);
+			// 	bool is_less_than_high = lhs_node_is_less_than_rhs_node(node, high);
+			// 	if (is_greater_than_low && is_less_than_high)
+			// 	// if (!lhs_node_is_greater_than_rhs_node(low, node) && lhs_node_is_greater_than_rhs_node(high, node))
+			// 		remove_node(node);
+			// 		// return remove_node(node);
 
-				// Root is out of range
-				return node;
-			}
+			// 	// Root is out of range
+			// 	// return node;
+			// }
+
+			// void removeRange(node_type* node, const content_type low, const content_type high)
+			// {
+
+			// 	// Base case
+			// 	if (node == ft_nullptr)
+			// 		return ;
+
+			// 	// First fix the left and right subtrees of node
+			// 	removeRange(node->_left_child, low, high);
+			// 	removeRange(node->_right_child, low, high);
+
+			// 	// Now fix the node.
+			// 	// if given node is in Range then delete it
+			// 	bool is_greater_or_equal_low = !first_is_greater_than_second(low, node);
+			// 	bool is_less_than_high = first_is_greater_than_second(high, node);
+			// 	if (is_greater_or_equal_low && is_less_than_high)
+			// 		remove_node(node);
+			// }
 
 			void clear(void)
 			{
