@@ -115,6 +115,14 @@ namespace ft
 				return (_compare(node->_content, val));
 			}
 
+			// void update_parent(node_type* old_child, node_type* new_child)
+			// {
+			// 	if (old_child->_parent->_left_child == old_child)
+			// 		old_child->_parent->_left_child = new_child;
+			// 	else
+			// 		old_child->_parent->_right_child = new_child;
+			// }
+
 			int check_balance(node_type* node)
 			{
 				if (node == ft_nullptr)
@@ -205,31 +213,29 @@ namespace ft
 
 			void rebalance(node_type* node)
 			{
+				const int MAX_DEVIATION = 1;
 				int balance_factor = check_balance(node);
-				// if (balance_factor <= 1 && balance_factor >= -1)
-				// 	return ;
 
-				// original long version
 				// node's left subtree is longer than node's right subtree
-				if (balance_factor > 1)
+				if (balance_factor > MAX_DEVIATION)
 				{
 					balance_factor = check_balance(node->_left_child); // AE
 					// child's left subtree is longer than child's right subtree
-					if (balance_factor > 0)
+					if (balance_factor >= 0)
 						rotate_right(node);
 					// child's right subtree is longer than child's left subtree
-					else// if (balance_factor < -1)
+					else
 					{
 						rotate_left(node->_left_child);
 						rotate_right(node);
 					}
 				}
 				// node's right subtree is longer than node's left subtree
-				else if (balance_factor < -1)
+				else if (balance_factor < -MAX_DEVIATION)
 				{
 					balance_factor = check_balance(node->_right_child);
 					// child's left subtree is longer than child's right subtree
-					if (balance_factor < 0)
+					if (balance_factor <= 0)
 						rotate_left(node);
 					// child's right subtree is longer than child's left subtree
 					else
@@ -271,32 +277,46 @@ namespace ft
 				return (tmp);
 			}
 
-			node_type* update_node_pointers(node_type* old_node, node_type* tmp_node)
-			{
-				// AE nullcheck
-				node_type* new_node = my_new(tmp_node->_content, old_node->_parent); // AE change to alloc
-				if (old_node->_parent->_left_child == old_node)
-					old_node->_parent->_left_child = new_node;
-				else
-					old_node->_parent->_right_child = new_node;
-				new_node->_left_child = old_node->_left_child;
-				new_node->_right_child = old_node->_right_child;
-				new_node->_left_child->_parent = new_node;
-				new_node->_right_child->_parent = new_node;
-				my_delete(old_node);
-				return (new_node);
-			}
+			// node_type* update_node_pointers(node_type* old_node, node_type* tmp_node)
+			// {
+			// 	// AE nullcheck
+			// 	node_type* new_node = my_new(tmp_node->_content, old_node->_parent); // AE change to alloc
+			// 	if (old_node->_parent->_left_child == old_node)
+			// 		old_node->_parent->_left_child = new_node;
+			// 	else
+			// 		old_node->_parent->_right_child = new_node;
+			// 	new_node->_left_child = old_node->_left_child;
+			// 	new_node->_right_child = old_node->_right_child;
+			// 	new_node->_left_child->_parent = new_node;
+			// 	new_node->_right_child->_parent = new_node;
+			// 	my_delete(old_node);
+			// 	return (new_node);
+			// }
+
+			// void swap_nodes(node_type* a, node_type* b)
+			// {
+			// 	node_type* tmp = a;
+
+
+			// }
 
 			node_type* remove_node_with_two_children(node_type* node)
 			{
 				node_type old = *node;
-				// node_type* tmp = get_successor_node(node);
-				node_type* tmp = get_leftmost_node(node->_right_child);
-				_allocator.destroy(node);
+				// replace node's content with content of smallest node in right subtree
+				// node_type* tmp = get_leftmost_node(node->_right_child);
+				// or
+				// replace node's content with content of greatest node in left subtree
+				node_type* tmp = get_rightmost_node(node->_left_child);
+				_allocator.destroy(node); // AE try to use swap_nodes instead
 				_allocator.construct(node, node_type(tmp->_content, old._parent));
 				node->_left_child = old._left_child;
 				node->_right_child = old._right_child;
-				node->_right_child = erase(tmp->_content, node->_right_child);
+				node->_height = old._height;
+				// node->_right_child = erase(tmp->_content, node->_right_child);
+				// or
+				node->_left_child = erase(tmp->_content, node->_left_child);
+				// AE update height -> will be done in with one / without child
 				return (node);
 			}
 
@@ -305,22 +325,24 @@ namespace ft
 				child->_parent = node->_parent;
 				my_delete(node);
 				_size--;
+				update_height(child);
 				return (child);
 			}
 
 			node_type* remove_node_without_children(node_type* node)
 			{
-				// AE maybe implement update parent function
+				// AE maybe implement update parent function, nullcheck ?
 				if (node->_parent->_left_child == node)
 					node->_parent->_left_child = ft_nullptr;
 				else
 					node->_parent->_right_child = ft_nullptr;
+				update_height(node->_parent);
 				my_delete(node);
 				_size--;
 				return (ft_nullptr);
 			}
 
-			node_type* remove_node(node_type* node)
+ 			node_type* remove_node(node_type* node)
 			{
 				if (node->_left_child == ft_nullptr && node->_right_child == ft_nullptr)
 					return(remove_node_without_children(node));
@@ -332,7 +354,7 @@ namespace ft
 					return(remove_node_with_two_children(node));
 			}
 
-			node_type* erase(const content_type& val, node_type* node)
+			node_type* erase (const content_type& val, node_type* node)
 			{
 				if (node == ft_nullptr)
 					return (ft_nullptr);
@@ -342,6 +364,7 @@ namespace ft
 					node->_right_child = erase(val, node->_right_child);
 				else
 					node = remove_node(node);
+				rebalance(node);
 				return (node);
 			}
 
@@ -394,7 +417,7 @@ namespace ft
 			// It does reverse inorder traversal
 			void print2DUtil(node_type* root, int space)
 			{
-				std::string root_name = "r";
+				std::string end_node_name = "E";
 
 				// Base case
 				if (root == ft_nullptr)
@@ -411,17 +434,19 @@ namespace ft
 				std::cout << std::endl;
 				for (int i = COUNT; i < space; i++)
 					std::cout << " ";
+				std::cout << "[";
 				if (root == _end_node)
-					std::cout << root_name;
+					std::cout << end_node_name;
 				else
 					std::cout << root->_content;
-				std::cout << ", h: " << root->_height << "(";
+				std::cout << "]";
+				std::cout << "(";
 				if (root->_parent != _end_node && root->_parent != ft_nullptr)
 					std::cout << root->_parent->_content;
 				else if (root->_parent == _end_node)
-					std::cout << root_name;
-
+					std::cout << end_node_name;
 				std::cout << ")";
+				std::cout << ":" << root->_height;
 			
 				// Process left child
 				print2DUtil(root->_left_child, space);
@@ -460,7 +485,7 @@ namespace ft
 			Tree (const Tree& other) : _size(other._size), _root(ft_nullptr), _end_node(ft_nullptr), _allocator(other._allocator)
 			{
 				init_tree();
-				_root->_left_child = copy_tree(other._root->_left_child, _root); // AE _end_node _root
+				_root->_left_child = copy_tree(other._root->_left_child, _root); // AE after change to AVL tree _end_node _root or _root->_left_child
 			}
 
 			Tree& operator=(const Tree& other)
@@ -468,7 +493,7 @@ namespace ft
 				if (this != &other)
 				{
 					clear();
-					_root->_left_child = copy_tree(other._root->_left_child, _root);
+					_root->_left_child = copy_tree(other._root->_left_child, _root); // AE after change to AVL tree _end_node _root or _root->_left_child
 					// _allocator = other._allocator;
 					_compare = other._compare;
 					_size = other._size;
@@ -538,6 +563,8 @@ namespace ft
 			{
 				(void)position;
 
+				////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+				// old version
 				iterator tmp = position;
 				iterator next = position;
 				++next;
@@ -559,27 +586,77 @@ namespace ft
 					// _root = insert(val, position.base(), position.base()->_parent);
 				// return (find(val));
 
+				////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+				// alternative ignore hint
 				// return (insert(val, _root, ft_nullptr).first);
+
+				/*
+				////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+				// from stl
+
+				
+				if (position == end()) // end()
+				{
+					if (size() > 0 && _M_impl._M_key_compare(_S_key(_M_rightmost()), __k))
+						return _Res(0, _M_rightmost());
+					else
+						return _M_get_insert_unique_pos(__k);
+				}
+				else if (_M_impl._M_key_compare(__k, _S_key(position._M_node)))
+				{
+					// First, try before...
+					iterator before = position;
+					if (position == begin()) // begin()
+						return _Res(_M_leftmost(), _M_leftmost());
+					else if (_M_impl._M_key_compare(_S_key((--before)._M_node), __k))
+					{
+						if (_S_right(before._M_node) == 0)
+							return _Res(0, before._M_node);
+						else
+							return _Res(position._M_node, position._M_node);
+					}
+					else
+						return _M_get_insert_unique_pos(__k);
+				}
+				else if (_M_impl._M_key_compare(_S_key(position._M_node), __k))
+				{
+					// ... then try after.
+					iterator after = position;
+					if (position._M_node == _M_rightmost())
+						return _Res(0, _M_rightmost());
+					else if (_M_impl._M_key_compare(__k, _S_key((++after)._M_node)))
+					{
+						if (_S_right(position._M_node) == 0)
+							return _Res(0, position._M_node);
+						else
+							return _Res(after._M_node, after._M_node);
+					}
+					else
+						return _M_get_insert_unique_pos(__k);
+				}
+				else // Equivalent keys.
+					return _Res(position._M_node, 0);
+				*/
 			}
 
-			void erase(iterator position)
+			void erase (iterator position)
 			{
 				if (position.base() != ft_nullptr && position != _end_node)
-					_root = erase(*position, _root);
+					erase(*position, _root);
 			}
 
-			size_type erase(const content_type& val)
+			size_type erase (const content_type& val)
 			{
 				size_type ret = 0;
 				if (find(val) != ft_nullptr)
 					ret = 1;
-				_root = erase(val, _root);
+				erase(val, _root);
 				return (ret);
 			}
 
-			void erase(iterator first, iterator last) // AE improve performance for benchmark
+			void erase (iterator first, iterator last) // AE improve performance for benchmark
 			{
-				_root = removeRange(_root, first.base(), last.base());
+				removeRange(_root, first.base(), last.base());
 				erase(first);
 			}
 
