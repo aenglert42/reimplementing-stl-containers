@@ -369,9 +369,9 @@ namespace ft
 				if (node == ft_nullptr)
 					return (ret);
 				else if (first_is_less_than_second(val, node))
-					erase(val, node->_left_child);
+					ret = erase(val, node->_left_child);
 				else if (first_is_greater_than_second(val, node))
-					erase(val, node->_right_child);
+					ret = erase(val, node->_right_child);
 				else
 					ret = remove_node(node);
 				rebalance(node);
