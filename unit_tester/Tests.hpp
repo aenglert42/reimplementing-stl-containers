@@ -497,49 +497,79 @@ void vector_operator_equal(TestContainer& container)
 
 void my_map_iterator(TestContainer& container)
 {
-	ft::map<std::string, int> myMap;
-	myMap.insert(ft::make_pair("5", 5));
-	myMap.insert(ft::make_pair("1", 1));
-	myMap.insert(ft::make_pair("8", 8));
+	#define NAMESPACE ft // AE make this for all
+	
+	NAMESPACE::map<std::string, int> myMap;
+	myMap.insert(NAMESPACE::make_pair("5", 5));
+	myMap.insert(NAMESPACE::make_pair("1", 1));
+	myMap.insert(NAMESPACE::make_pair("8", 8));
 
-	ft::map<std::string, int>::iterator it = myMap.begin();
-	it--;
-	it--;
+	NAMESPACE::map<std::string, int>::iterator it = myMap.begin();
 	std::cout << it->first << std::endl;
 	it = myMap.end();
-	it++;
-	it++;
 	it--;
 	std::cout << it->first << std::endl;
 	it--;
 	std::cout << it->first << std::endl;
+	it--;
+	std::cout << it->first << std::endl;
+	it++;
+	it++;
+	it++;
+	if (it == myMap.end())
+		std::cout << "equal" << std::endl;
 
 	// const_iterator
-	const ft::map<std::string, int> myConstMap (myMap);
-	ft::map<std::string, int>::const_iterator cit = myConstMap.begin();
-	cit--;
-	cit--;
+	const NAMESPACE::map<std::string, int> myConstMap (myMap);
+	NAMESPACE::map<std::string, int>::const_iterator cit = myConstMap.begin();
 	std::cout << cit->first << std::endl;
 	cit = myConstMap.end();
-	cit++;
-	cit++;
 	cit--;
 	std::cout << cit->first << std::endl;
 	cit--;
 	std::cout << cit->first << std::endl;
+	cit--;
+	std::cout << cit->first << std::endl;
+	cit++;
+	cit++;
+	cit++;
+	if (cit == myConstMap.end())
+		std::cout << "equal" << std::endl;
 
 	// reverse iterator
-	ft::map<std::string, int>::reverse_iterator rit = myMap.rend();
-	rit++;
+	NAMESPACE::map<std::string, int>::reverse_iterator rit = myMap.rbegin();
 	std::cout << rit->first << std::endl;
+	rit = myMap.rend();
+	rit--;
+	std::cout << rit->first << std::endl;
+	rit--;
+	std::cout << rit->first << std::endl;
+	rit--;
+	std::cout << rit->first << std::endl;
+	rit++;
+	rit++;
+	rit++;
+	if (rit == myMap.rend())
+		std::cout << "equal" << std::endl;
 
 	// reverse const_iterator
-	ft::map<std::string, int>::const_reverse_iterator crit = myConstMap.rend();
-	rit++;
+	NAMESPACE::map<std::string, int>::const_reverse_iterator crit = myConstMap.rbegin();
 	std::cout << crit->first << std::endl;
+	crit = myConstMap.rend();
+	crit--;
+	std::cout << crit->first << std::endl;
+	crit--;
+	std::cout << crit->first << std::endl;
+	crit--;
+	std::cout << crit->first << std::endl;
+	crit++;
+	crit++;
+	crit++;
+	if (crit == myConstMap.rend())
+		std::cout << "equal" << std::endl;
 
 //////////////////////////////////
-	EXPECTED_OUTPUT(1\n8\n5\n1\n8\n5\n1\n1\n);
+	EXPECTED_OUTPUT(1\n8\n5\n1\nequal\n1\n8\n5\n1\nequal\n8\n1\n5\n8\nequal\n8\n1\n5\n8\nequal\n);
 }
 
 void my_vector_iterator(TestContainer& container)
