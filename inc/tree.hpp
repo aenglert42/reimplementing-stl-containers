@@ -779,8 +779,8 @@ namespace ft
 			void erase (iterator first, iterator last) // AE improve performance for benchmark
 			{
 				// old version
-				// while (first != last)
-				// 	erase(*first++);
+				while (first != last)
+					erase(*first++);
 
 				// // new version too slow
 				// iterator it = begin();
