@@ -111,7 +111,7 @@ namespace ft
 			
 			// empty (1)	
 			explicit map (const key_compare& comp = key_compare(),
-				const allocator_type& alloc = allocator_type()) : _comp(comp), _alloc(alloc), _tree()
+				const allocator_type& alloc = allocator_type()) : _comp(comp), _alloc(alloc), _tree(comp)
 			{
 
 			}
