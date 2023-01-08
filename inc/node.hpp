@@ -31,14 +31,15 @@ namespace ft
 		node_type* _left_child;
 		node_type* _right_child;
 		size_type _height;
+		bool _is_terminator;
 
-		Node (const content_type& val, node_type* parent) : _content(val), _parent(parent), _left_child(ft_nullptr), _right_child(ft_nullptr), _height(1)
+		Node (const content_type& val, node_type* parent) : _content(val), _parent(parent), _left_child(ft_nullptr), _right_child(ft_nullptr), _height(1), _is_terminator(false)
 		{
 
 		}
 
-		// for _end_node
-		Node () : _parent(ft_nullptr), _left_child(ft_nullptr), _right_child(ft_nullptr), _height(1) //AE remove
+		// for _end_node and _rend_node
+		Node () : _parent(ft_nullptr), _left_child(ft_nullptr), _right_child(ft_nullptr), _height(1), _is_terminator(true) //AE remove
 		{
 
 		}
@@ -48,6 +49,25 @@ namespace ft
 			_parent = ft_nullptr;
 			_left_child = ft_nullptr;
 			_right_child = ft_nullptr;
+		}
+
+		// Node &operator=(const Node& other)
+		// {
+		// 	if (this != &other)
+		// 	{
+		// 		_content = other._content;
+		// 		_parent = other._parent;
+		// 		_left_child = other._left_child;
+		// 		_right_child = other._right_child;
+		// 		_height = other._height;
+		// 		_is_terminator = other._is_terminator; //AE make this const
+		// 	}
+		// 	return (*this);
+		// }
+
+		Node (const Node& other) : _content(other._content), _parent(other._parent), _left_child(other._left_child), _right_child(other._right_child), _height(other._height), _is_terminator(other._is_terminator)
+		{
+
 		}
 	};
 }

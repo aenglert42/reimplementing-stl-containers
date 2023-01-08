@@ -48,6 +48,7 @@ namespace ft
 			size_type _size;
 			node_type* _root;
 			node_type* _end_node;
+			node_type* _rend_node;
 			allocator_type _allocator;
 			value_compare _compare;
 
@@ -59,17 +60,21 @@ namespace ft
 					return (false);
 				else if (rhs == _end_node)
 					return (true);
+				else if (lhs == _rend_node)
+					return (true);
+				else if (rhs == _rend_node)
+					return (false);
 				return (_compare(lhs->_content, rhs->_content));
 			}
 
 			bool lhs_node_is_greater_than_rhs_node(node_type* lhs, node_type* rhs)
 			{
-				return (_compare(rhs->_content, lhs->_content));
+				return (lhs_node_is_less_than_rhs_node(rhs, lhs));
 			}
 
 			bool lhs_node_is_equal_to_rhs_node(node_type* lhs, node_type* rhs)
 			{
-				return (!_compare(lhs->_content, rhs->_content) && !_compare(rhs->_content, lhs->_content));
+				return (!lhs_node_is_less_than_rhs_node(lhs, rhs) && !lhs_node_is_less_than_rhs_node(rhs, lhs));
 			}
 
 			node_type* my_new(const content_type& val, node_type* parent)
@@ -91,6 +96,8 @@ namespace ft
 			{
 				if (node == _end_node)
 					return (true);
+				else if (node == _rend_node)
+					return (false);
 				return (_compare(val, node->_content));
 			}
 
@@ -99,7 +106,7 @@ namespace ft
 				bool less;
 				bool greater;
 
-				if (node == _end_node)
+				if (node == _end_node || node == _rend_node)
 					return (false);
 				less = _compare(val, node->_content);
 				greater = _compare(node->_content, val);
@@ -112,6 +119,8 @@ namespace ft
 			{
 				if (node == _end_node)
 					return (false);
+				else if (node == _rend_node)
+					return (true);
 				return (_compare(node->_content, val));
 			}
 
@@ -293,12 +302,77 @@ namespace ft
 			// 	return (new_node);
 			// }
 
-			// void swap_nodes(node_type* a, node_type* b)
-			// {
-			// 	node_type* tmp = a;
+			void swap_nodes(node_type* a, node_type* b)
+			{
+				if (a == ft_nullptr || b == ft_nullptr)
+					return ;
+				// else if (a->_parent == b)
+				// {
+				// 	rotate_parent_and_child(b, a);
+				// 	return ;
+				// }
+				// else if (b->_parent == a)
+				// {
+				// 	rotate_parent_and_child(a, b);
+				// 	return ;
+				// }
 
+				node_type tmp (*a);
 
-			// }
+				a->_parent = b->_parent;
+				if (a->_parent != ft_nullptr)
+				{
+					if (a->_parent->_left_child == b)
+						a->_parent->_left_child = a;
+					else
+						a->_parent->_right_child = a;
+				}
+				else
+				{
+					_root = a;
+				}
+
+				a->_left_child = b->_left_child;
+				if (a->_left_child == a)
+					a->_left_child = b;
+				if (a->_left_child != ft_nullptr)
+					a->_left_child->_parent = a;
+
+				a->_right_child = b->_right_child;
+				if (a->_right_child == a)
+					a->_right_child = b;
+				if (a->_right_child != ft_nullptr)
+					a->_right_child->_parent = a;
+				a->_height = b->_height;
+				a->_is_terminator = b->_is_terminator;
+
+				b->_parent = tmp._parent;
+				if (b->_parent != ft_nullptr)
+				{
+					if (b->_parent->_left_child == a)
+						b->_parent->_left_child = b;
+					else
+						b->_parent->_right_child = b;
+				}
+				else
+				{
+					_root = b;
+				}
+
+				b->_left_child = tmp._left_child;
+				if (b->_left_child == b)
+					b->_left_child = a;
+				if (b->_left_child != ft_nullptr)
+					b->_left_child->_parent = b;
+
+				b->_right_child = tmp._right_child;
+				if (b->_right_child == b)
+					b->_right_child = a;
+				if (b->_right_child != ft_nullptr)
+					b->_right_child->_parent = b;
+				b->_height = tmp._height;
+				b->_is_terminator = tmp._is_terminator;
+			}
 
 			size_type remove_node_with_two_children(node_type* node)
 			{
@@ -308,16 +382,20 @@ namespace ft
 				// or
 				// replace node's content with content of greatest node in left subtree
 				node_type* tmp = get_rightmost_node(node->_left_child);
-				_allocator.destroy(node); // AE try to use swap_nodes instead
-				_allocator.construct(node, node_type(tmp->_content, old._parent));
-				node->_left_child = old._left_child;
-				node->_right_child = old._right_child;
-				node->_height = old._height;
+
+				swap_nodes(node, tmp);
+
+
+						// _allocator.destroy(node); // AE try to use swap_nodes instead
+						// _allocator.construct(node, node_type(tmp->_content, old._parent));
+						// node->_left_child = old._left_child;
+						// node->_right_child = old._right_child;
+						// node->_height = old._height;
 				// return(erase(tmp->_content, node->_right_child));
 				// or
 				// return (erase(tmp->_content, node->_left_child));
 				// this could fix range erase issues with rebalance
-				return (erase(tmp->_content, tmp));
+				return (remove_node(node));
 			}
 
 			size_type remove_node_with_one_child(node_type* node, node_type* child)
@@ -428,6 +506,7 @@ namespace ft
 			void print2DUtil(node_type* root, int space)
 			{
 				std::string end_node_name = "E";
+				std::string rend_node_name = "RE";
 
 				// Base case
 				if (root == ft_nullptr)
@@ -447,14 +526,18 @@ namespace ft
 				std::cout << "[";
 				if (root == _end_node)
 					std::cout << end_node_name;
+				else if (root == _rend_node)
+					std::cout << rend_node_name;
 				else
 					std::cout << root->_content;
 				std::cout << "]";
 				std::cout << "(";
-				if (root->_parent != _end_node && root->_parent != ft_nullptr)
+				if (root->_parent != _end_node && root->_parent != _rend_node && root->_parent != ft_nullptr)
 					std::cout << root->_parent->_content;
 				else if (root->_parent == _end_node)
 					std::cout << end_node_name;
+				else if (root->_parent == _rend_node)
+					std::cout << rend_node_name;
 				std::cout << ")";
 				std::cout << ":" << root->_height;
 			
@@ -467,6 +550,11 @@ namespace ft
 				_end_node = _allocator.allocate(1);
 				_allocator.construct(_end_node, node_type());
 				_root = _end_node;
+				_rend_node = _allocator.allocate(1);
+				_allocator.construct(_rend_node, node_type());
+				_end_node->_left_child = _rend_node;
+				_rend_node->_parent = _end_node;
+				_end_node->_height = 2;
 			}
 
 			// node_type* copy_tree(node_type* node, node_type* parent)
@@ -481,18 +569,18 @@ namespace ft
 			// }
 
 		public:
-			Tree(const value_compare& comp = value_compare()) : _size(0), _root(ft_nullptr), _end_node(ft_nullptr), _allocator(), _compare(comp)
+			Tree(const value_compare& comp = value_compare()) : _size(0), _root(ft_nullptr), _end_node(ft_nullptr), _rend_node(ft_nullptr), _allocator(), _compare(comp)
 			{
 				init_tree();
 			}
 
-			Tree(const content_type& val) : _size(0), _root(ft_nullptr), _end_node(ft_nullptr), _allocator()
+			Tree(const content_type& val) : _size(0), _root(ft_nullptr), _end_node(ft_nullptr), _rend_node(ft_nullptr), _allocator()
 			{
 				init_tree();
 				insert(val, _root, ft_nullptr);
 			}
 
-			Tree (const Tree& other) : _size(0), _root(ft_nullptr), _end_node(ft_nullptr), _allocator(other._allocator)
+			Tree (const Tree& other) : _size(0), _root(ft_nullptr), _end_node(ft_nullptr), _rend_node(ft_nullptr), _allocator(other._allocator)
 			{
 				init_tree();
 				insert(other.begin(), other.end());
@@ -513,8 +601,10 @@ namespace ft
 			{
 				clear();
 				my_delete(_end_node);
+				my_delete(_rend_node);
 				_root = ft_nullptr;
 				_end_node = ft_nullptr;
+				_rend_node = ft_nullptr;
 			}
 
 			size_type size(void) const
@@ -524,12 +614,14 @@ namespace ft
 
 			iterator begin()
 			{
-				return(iterator(get_leftmost_node(_root)));
+				iterator tmp (_rend_node);
+				return(++tmp);
 			}
 
 			const_iterator begin() const
 			{
-				return(const_iterator(get_leftmost_node(_root)));
+				const_iterator tmp (_rend_node);
+				return(++tmp);
 			}
 
 			reverse_iterator rbegin()
@@ -544,12 +636,12 @@ namespace ft
 
 			iterator end()
 			{
-				return(iterator(get_rightmost_node(_root)));
+				return(iterator(_end_node));
 			}
 
 			const_iterator end() const
 			{
-				return(const_iterator(get_rightmost_node(_root)));
+				return(const_iterator(_end_node));
 			}
 
 			reverse_iterator rend()
@@ -656,8 +748,12 @@ namespace ft
 
 			void erase (iterator position)
 			{
-				if (position.base() != ft_nullptr && position != _end_node)
-					erase(*position, _root);
+				if (position.base() != ft_nullptr && position != _end_node && position != _rend_node) // AE change this to _is_terminator
+				{
+					content_type val = *position;
+					(void)val;
+					erase(val, _root);
+				}
 			}
 
 			size_type erase (const content_type& val)
