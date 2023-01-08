@@ -52,7 +52,7 @@ namespace ft
 			allocator_type _allocator;
 			value_compare _compare;
 
-			bool lhs_node_is_less_than_rhs_node(node_type* lhs, node_type* rhs)
+			bool lhs_node_is_less_than_rhs_node (node_type* lhs, node_type* rhs)
 			{
 				if (lhs == rhs)
 					return (false);
@@ -67,24 +67,24 @@ namespace ft
 				return (_compare(lhs->_content, rhs->_content));
 			}
 
-			bool lhs_node_is_greater_than_rhs_node(node_type* lhs, node_type* rhs)
+			bool lhs_node_is_greater_than_rhs_node (node_type* lhs, node_type* rhs)
 			{
 				return (lhs_node_is_less_than_rhs_node(rhs, lhs));
 			}
 
-			bool lhs_node_is_equal_to_rhs_node(node_type* lhs, node_type* rhs)
+			bool lhs_node_is_equal_to_rhs_node (node_type* lhs, node_type* rhs)
 			{
 				return (!lhs_node_is_less_than_rhs_node(lhs, rhs) && !lhs_node_is_less_than_rhs_node(rhs, lhs));
 			}
 
-			node_type* my_new(const content_type& val, node_type* parent)
+			node_type* my_new (const content_type& val, node_type* parent)
 			{
 				node_type* node = _allocator.allocate(1);
 				_allocator.construct(node, node_type(val, parent));
 				return (node);
 			}
 
-			void my_delete(node_type* node)
+			void my_delete (node_type* node)
 			{
 				if (node == ft_nullptr)
 					return ;
@@ -92,7 +92,7 @@ namespace ft
 				_allocator.deallocate(node, 1);
 			}
 
-			bool first_is_less_than_second(const content_type& val, node_type* node) const
+			bool first_is_less_than_second (const content_type& val, node_type* node) const
 			{
 				if (node == _end_node)
 					return (true);
@@ -101,7 +101,7 @@ namespace ft
 				return (_compare(val, node->_content));
 			}
 
-			bool first_equals_second(const content_type& val, node_type* node) const
+			bool first_equals_second (const content_type& val, node_type* node) const
 			{
 				bool less;
 				bool greater;
@@ -115,7 +115,7 @@ namespace ft
 				return (false);
 			}
 
-			bool first_is_greater_than_second(const content_type& val, node_type* node) const
+			bool first_is_greater_than_second (const content_type& val, node_type* node) const
 			{
 				if (node == _end_node)
 					return (false);
@@ -132,21 +132,21 @@ namespace ft
 			// 		old_child->_parent->_right_child = new_child;
 			// }
 
-			int check_balance(node_type* node)
+			int check_balance (node_type* node)
 			{
 				if (node == ft_nullptr)
 					return(0);
 				return (get_height(node->_left_child) - get_height(node->_right_child));
 			}
 
-			size_type get_height(node_type* node)
+			size_type get_height (node_type* node)
 			{
 				if (node == ft_nullptr)
 					return (0);
 				return (node->_height);
 			}
 
-			void update_height(node_type* node)
+			void update_height (node_type* node)
 			{
 				if (node == ft_nullptr)
 					return ;
@@ -154,7 +154,7 @@ namespace ft
 				update_height(node->_parent);
 			}
 
-			size_type calculate_height(node_type* node)
+			size_type calculate_height (node_type* node)
 			{
 				if (node == ft_nullptr)
 					return (0);
@@ -166,7 +166,7 @@ namespace ft
 				return (right_height + 1);
 			}
 
-			void rotate_left(node_type* grandparent)
+			void rotate_left (node_type* grandparent)
 			{
 				node_type* tmp = grandparent->_right_child;
 				grandparent->_right_child = tmp->_left_child;
@@ -193,7 +193,7 @@ namespace ft
 				update_height(grandparent);
 			}
 
-			void rotate_right(node_type* grandparent)
+			void rotate_right (node_type* grandparent)
 			{
 				node_type* tmp = grandparent->_left_child;
 				grandparent->_left_child = tmp->_right_child;
@@ -220,7 +220,7 @@ namespace ft
 				update_height(grandparent);
 			}
 
-			void rebalance_all(node_type* node)
+			void rebalance_all (node_type* node)
 			{
 				if (node == ft_nullptr)
 					return ;
@@ -228,7 +228,7 @@ namespace ft
 				rebalance_all(node->_parent);
 			}
 
-			void rebalance(node_type* node)
+			void rebalance (node_type* node)
 			{
 				const int MAX_DEVIATION = 1;
 				int balance_factor = check_balance(node);
@@ -263,7 +263,7 @@ namespace ft
 				}
 			}
 
-			ft::pair<node_type*, bool> insert(const content_type& val, node_type* node, node_type* parent)
+			ft::pair<node_type*, bool> insert (const content_type& val, node_type* node, node_type* parent)
 			{
 				ft::pair<node_type*, bool> tmp;
 				tmp.second = false;
@@ -310,7 +310,7 @@ namespace ft
 			// 	return (new_node);
 			// }
 
-			void swap_nodes(node_type* a, node_type* b)
+			void swap_nodes (node_type* a, node_type* b)
 			{
 				if (a == ft_nullptr || b == ft_nullptr)
 					return ;
@@ -382,7 +382,7 @@ namespace ft
 				b->_is_terminator = tmp._is_terminator;
 			}
 
-			size_type remove_node_with_two_children(node_type* node)
+			size_type remove_node_with_two_children (node_type* node)
 			{
 				node_type old = *node;
 				// replace node's content with content of smallest node in right subtree
@@ -406,7 +406,7 @@ namespace ft
 				return (remove_node(node)); // AE check if this is a problem cause not recursive -> problem if more nodes need to be removed?
 			}
 
-			size_type remove_node_with_one_child(node_type* node, node_type* child)
+			size_type remove_node_with_one_child (node_type* node, node_type* child)
 			{
 				if (node->_parent != ft_nullptr)
 				{
@@ -425,7 +425,7 @@ namespace ft
 				return (1);
 			}
 
-			size_type remove_node_without_children(node_type* node)
+			size_type remove_node_without_children (node_type* node)
 			{
 				// AE maybe implement update parent function, nullcheck ?
 				if (node->_parent->_left_child == node)
@@ -439,7 +439,7 @@ namespace ft
 				return (1);
 			}
 
- 			size_type remove_node(node_type* node)
+ 			size_type remove_node (node_type* node)
 			{
 				if (node->_left_child == ft_nullptr && node->_right_child == ft_nullptr)
 					return(remove_node_without_children(node));
@@ -484,7 +484,7 @@ namespace ft
 			// 	_size--;
 			// }
 
-			void print_preorder(node_type* node)
+			void print_preorder (node_type* node)
 			{
 				if (node == ft_nullptr)
 					return;
@@ -493,7 +493,7 @@ namespace ft
 				print_preorder(node->_right_child);
 			}
 
-			void print_inorder(node_type* node)
+			void print_inorder (node_type* node)
 			{
 				if (node == ft_nullptr)
 					return;
@@ -502,7 +502,7 @@ namespace ft
 				print_inorder(node->_right_child);
 			}
 
-			void print_postorder(node_type* node)
+			void print_postorder (node_type* node)
 			{
 				if (node == ft_nullptr)
 					return;
@@ -513,7 +513,7 @@ namespace ft
 
 			// Function to print binary tree in 2D
 			// It does reverse inorder traversal
-			void print2DUtil(node_type* root, int space)
+			void print2DUtil (node_type* root, int space)
 			{
 				std::string space_sign = "-";
 				std::string end_node_name = "E";
@@ -556,7 +556,7 @@ namespace ft
 				print2DUtil(root->_left_child, space);
 			}
 		
-			void init_tree(void)
+			void init_tree (void)
 			{
 				_end_node = _allocator.allocate(1);
 				_allocator.construct(_end_node, node_type());
@@ -580,12 +580,12 @@ namespace ft
 			// }
 
 		public:
-			Tree(const value_compare& comp = value_compare()) : _size(0), _root(ft_nullptr), _end_node(ft_nullptr), _rend_node(ft_nullptr), _allocator(), _compare(comp)
+			Tree (const value_compare& comp = value_compare()) : _size(0), _root(ft_nullptr), _end_node(ft_nullptr), _rend_node(ft_nullptr), _allocator(), _compare(comp)
 			{
 				init_tree();
 			}
 
-			Tree(const content_type& val) : _size(0), _root(ft_nullptr), _end_node(ft_nullptr), _rend_node(ft_nullptr), _allocator()
+			Tree (const content_type& val) : _size(0), _root(ft_nullptr), _end_node(ft_nullptr), _rend_node(ft_nullptr), _allocator()
 			{
 				init_tree();
 				insert(val, _root, ft_nullptr);
@@ -597,7 +597,7 @@ namespace ft
 				insert(other.begin(), other.end());
 			}
 
-			Tree& operator=(const Tree& other)
+			Tree& operator= (const Tree& other)
 			{
 				if (this != &other)
 				{
@@ -608,7 +608,7 @@ namespace ft
 				return (*this);
 			}
 
-			~Tree(void)
+			~Tree (void)
 			{
 				clear();
 				my_delete(_end_node);
@@ -618,59 +618,59 @@ namespace ft
 				_rend_node = ft_nullptr;
 			}
 
-			size_type size(void) const
+			size_type size (void) const
 			{
 				return (_size);
 			}
 
-			iterator begin()
+			iterator begin ()
 			{
 				iterator tmp (_rend_node);
 				return(++tmp);
 			}
 
-			const_iterator begin() const
+			const_iterator begin () const
 			{
 				const_iterator tmp (_rend_node);
 				return(++tmp);
 			}
 
-			reverse_iterator rbegin()
+			reverse_iterator rbegin ()
 			{
 				return (reverse_iterator(end()));
 			}
 
-			const_reverse_iterator rbegin() const
+			const_reverse_iterator rbegin () const
 			{
 				return (const_reverse_iterator(end()));
 			}
 
-			iterator end()
+			iterator end ()
 			{
 				return(iterator(_end_node));
 			}
 
-			const_iterator end() const
+			const_iterator end () const
 			{
 				return(const_iterator(_end_node));
 			}
 
-			reverse_iterator rend()
+			reverse_iterator rend ()
 			{
 				return (reverse_iterator(begin()));
 			}
 
-			const_reverse_iterator rend() const
+			const_reverse_iterator rend () const
 			{
 				return (const_reverse_iterator(begin()));
 			}
 
-			ft::pair<iterator,bool> insert(const content_type& val)
+			ft::pair<iterator,bool> insert (const content_type& val)
 			{
 				return (insert(val, _root, ft_nullptr));
 			}
 
-			iterator insert(iterator position, const content_type& val) // AE improve performance for benchmark (file stl_tree.h, function _M_get_insert_hint_unique_pos, line 2193)
+			iterator insert (iterator position, const content_type& val) // AE improve performance for benchmark (file stl_tree.h, function _M_get_insert_hint_unique_pos, line 2193)
 			{
 				(void)position;
 
@@ -751,7 +751,7 @@ namespace ft
 			}
 
 			template <class InputIterator>
-			void insert(InputIterator first, InputIterator last)
+			void insert (InputIterator first, InputIterator last)
 			{
 				while (first != last)
 					insert(*first++);
@@ -804,7 +804,7 @@ namespace ft
 			// 		remove_node(node);					
 			// }
 
-			void removeRange(node_type* node, node_type* low, node_type* high)
+			void removeRange (node_type* node, node_type* low, node_type* high)
 			{
 
 				// Base case
@@ -852,13 +852,13 @@ namespace ft
 			// 		remove_node(node);
 			// }
 
-			void clear(void)
+			void clear (void)
 			{
 				erase(begin(), end());
 				// delete_from_node_downwards(_root);
 			}
 
-			node_type* find(const content_type& val) const // AE look for key_type instead of content_type
+			node_type* find (const content_type& val) const // AE look for key_type instead of content_type
 			{
 				node_type* tmp = _root;
 				while (tmp != ft_nullptr && !first_equals_second(val, tmp))
@@ -871,7 +871,7 @@ namespace ft
 				return (tmp);
 			}
 
-			size_type count(const content_type& val) const // AE look for key_type instead of content_type
+			size_type count (const content_type& val) const // AE look for key_type instead of content_type
 			{
 				node_type* tmp = _root;
 				while (tmp != ft_nullptr && !first_equals_second(val, tmp))
@@ -886,7 +886,7 @@ namespace ft
 				return (1);
 			}
 
-			node_type* upper_bound(const content_type& val, node_type* node, node_type* parent) const
+			node_type* upper_bound (const content_type& val, node_type* node, node_type* parent) const
 			{
 				if (node == ft_nullptr)
 				{
@@ -908,14 +908,14 @@ namespace ft
 				return (node);
 			}
 
-			node_type* upper_bound(const content_type& val) const
+			node_type* upper_bound (const content_type& val) const
 			{
 				if (empty())
 					return (_end_node);
 				return (upper_bound(val, _root, ft_nullptr));
 			}
 
-			node_type* lower_bound(const content_type& val, node_type* node, node_type* parent) const
+			node_type* lower_bound (const content_type& val, node_type* node, node_type* parent) const
 			{
 				if (node == ft_nullptr)
 				{
@@ -935,21 +935,21 @@ namespace ft
 				return (node);
 			}
 
-			node_type* lower_bound(const content_type& val) const
+			node_type* lower_bound (const content_type& val) const
 			{
 				if (empty())
 					return (_end_node);
 				return (lower_bound(val, _root, ft_nullptr));
 			}
 
-			bool empty() const
+			bool empty () const
 			{
 				if (size() == 0)
 					return (true);
 				return (false);
 			}
 
-			void print_preorder(void)
+			void print_preorder (void)
 			{
 				std::cout << "Preorder:\n";
 				if (empty())
@@ -959,7 +959,7 @@ namespace ft
 				std::cout << std::endl;
 			}
 
-			void print_inorder(void)
+			void print_inorder (void)
 			{
 				std::cout << "Inorder:\n";
 				if (empty())
@@ -969,7 +969,7 @@ namespace ft
 				std::cout << std::endl;
 			}
 
-			void print_postorder(void)
+			void print_postorder (void)
 			{
 				std::cout << "Postorder:\n";
 				if (empty())
@@ -980,7 +980,7 @@ namespace ft
 			}
 
 			// Wrapper over print2DUtil()
-			void print2D(void)
+			void print2D (void)
 			{
 				std::cout << "Tree:\n";
 				if (empty())
