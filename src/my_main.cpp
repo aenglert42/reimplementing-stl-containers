@@ -997,22 +997,107 @@ int main(void)
 	// 	// Tree.print2D();
 	// }
 
-	// AVL test erase
+	// // AVL test erase
+	// {
+	// 	int i;
+	// 	ft::Tree<int> Tree;
+	// 	ft::Tree<int>::iterator first;
+	// 	ft::Tree<int>::iterator last;
+	// 	(void)i;
+	// 	(void)Tree;
+	// 	(void)first;
+	// 	(void)last;
+	// 	std::cout << RED << "inserted: " << *Tree.insert(4).first << RESET << std::endl;
+	// 	Tree.print2D();
+	// 	std::cout << RED << "inserted: " << *Tree.insert(6).first << RESET << std::endl;
+	// 	Tree.print2D();
+	// 	i = 4;
+	// 	std::cout << "erased: " << Tree.erase(i) << std::endl;
+	// 	std::cout << "erased: " << Tree.erase(i) << std::endl;
+	// }
+
+	// AVL deletion test
 	{
 		int i;
-		ft::Tree<int> Tree;
-		ft::Tree<int>::iterator first;
-		ft::Tree<int>::iterator last;
 		(void)i;
-		(void)Tree;
-		(void)first;
-		(void)last;
-		std::cout << RED << "inserted: " << *Tree.insert(4).first << RESET << std::endl;
+		ft::Tree<int> Tree;
+		std::cout << RED << "inserted: " << *Tree.insert(28).first << RESET << std::endl;
+		// Tree.print2D();
+		std::cout << RED << "inserted: " << *Tree.insert(76).first << RESET << std::endl;
+		// Tree.print2D();
+		std::cout << RED << "inserted: " << *Tree.insert(3).first << RESET << std::endl;
+		// Tree.print2D();
+		std::cout << RED << "inserted: " << *Tree.insert(93).first << RESET << std::endl;
+		// Tree.print2D();
+		std::cout << RED << "inserted: " << *Tree.insert(96).first << RESET << std::endl;
+		// Tree.print2D();
+		std::cout << RED << "inserted: " << *Tree.insert(30).first << RESET << std::endl;
+		// Tree.print2D();
+		std::cout << RED << "inserted: " << *Tree.insert(49).first << RESET << std::endl;
+		// Tree.print2D();
+		std::cout << RED << "inserted: " << *Tree.insert(29).first << RESET << std::endl;
+		// Tree.print2D();
+		std::cout << RED << "inserted: " << *Tree.insert(20).first << RESET << std::endl;
+		// Tree.print2D();
+		std::cout << RED << "inserted: " << *Tree.insert(21).first << RESET << std::endl;
+		// Tree.print2D();
+		std::cout << RED << "inserted: " << *Tree.insert(27).first << RESET << std::endl;
+		// Tree.print2D();
+		std::cout << RED << "inserted: " << *Tree.insert(7).first << RESET << std::endl;
+		// Tree.print2D();
+		std::cout << RED << "inserted: " << *Tree.insert(34).first << RESET << std::endl;
+		// Tree.print2D();
+		std::cout << RED << "inserted: " << *Tree.insert(82).first << RESET << std::endl;
+		// Tree.print2D();
+		std::cout << RED << "inserted: " << *Tree.insert(9).first << RESET << std::endl;
+		// Tree.print2D();
+		std::cout << RED << "inserted: " << *Tree.insert(24).first << RESET << std::endl;
+		// Tree.print2D();
+		std::cout << RED << "inserted: " << *Tree.insert(26).first << RESET << std::endl;
+		// Tree.print2D();
+		std::cout << RED << "inserted: " << *Tree.insert(31).first << RESET << std::endl;
+		// Tree.print2D();
+		std::cout << RED << "inserted: " << *Tree.insert(74).first << RESET << std::endl;
+		// Tree.print2D();
+		std::cout << RED << "inserted: " << *Tree.insert(39).first << RESET << std::endl;
+		// Tree.print2D();
+		std::cout << RED << "inserted: " << *Tree.insert(85).first << RESET << std::endl;
+		i = 3;
+		Tree.erase(Tree.find(i));
+		std::cout << RED << "erased: " << i << RESET << std::endl;
+		// Tree.print2D();
+		i = 9;
+		Tree.erase(Tree.find(i));
+		std::cout << RED << "erased: " << i << RESET << std::endl;
+		// Tree.print2D();
+		i = 93;
+		Tree.erase(Tree.find(i));
+		std::cout << RED << "erased: " << i << RESET << std::endl;
+		// Tree.print2D();
+		i = 28;
+		Tree.erase(Tree.find(i));
+		std::cout << RED << "erased: " << i << RESET << std::endl;
+		i = 28;
+		Tree.erase(Tree.find(i));
+		std::cout << RED << "erased: " << i << RESET << std::endl;
+		i = 49;
+		Tree.erase(Tree.find(i));
+		std::cout << RED << "erased: " << i << RESET << std::endl;
+		i = 39;
+		Tree.erase(Tree.find(i));
+		std::cout << RED << "erased: " << i << RESET << std::endl;
+		i = 96;
+		Tree.erase(Tree.find(i));
+		std::cout << RED << "erased: " << i << RESET << std::endl;
+		i = 21;
+		Tree.erase(Tree.find(i));
+		std::cout << RED << "erased: " << i << RESET << std::endl;
+		i = 20;
+		Tree.erase(Tree.find(i));
+		std::cout << RED << "erased: " << i << RESET << std::endl;
+		i = 24;
+		Tree.erase(Tree.find(i));
+		std::cout << RED << "erased: " << i << RESET << std::endl;
 		Tree.print2D();
-		std::cout << RED << "inserted: " << *Tree.insert(6).first << RESET << std::endl;
-		Tree.print2D();
-		i = 4;
-		std::cout << "erased: " << Tree.erase(i) << std::endl;
-		std::cout << "erased: " << Tree.erase(i) << std::endl;
 	}
 }

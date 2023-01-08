@@ -176,7 +176,7 @@ namespace ft
 				// (1)
 					TreeIterator& operator++()
 					{
-						if (has_successor_node(_ptr))
+						// if (has_successor_node(_ptr))
 							_ptr = get_successor_node(_ptr);
 						return *this;
 					}
@@ -185,7 +185,7 @@ namespace ft
 					TreeIterator operator++(int)
 					{
 						TreeIterator tmp(*this);
-						if (has_successor_node(_ptr))
+						// if (has_successor_node(_ptr))
 							_ptr = get_successor_node(_ptr);
 						return tmp;
 					}
@@ -194,7 +194,7 @@ namespace ft
 				// (1)
 					TreeIterator& operator--()
 					{
-						if (has_predecessor_node(_ptr))
+						// if (has_predecessor_node(_ptr))
 							_ptr = get_predecessor_node(_ptr);
 						return *this;
 					}
@@ -203,7 +203,7 @@ namespace ft
 					TreeIterator operator--(int)
 					{
 						TreeIterator tmp(*this);
-						if (has_predecessor_node(_ptr)) // AE is this correct? Or shoud I return something else?
+						// if (has_predecessor_node(_ptr)) // AE is this correct? Or shoud I return something else?
 							_ptr = get_predecessor_node(_ptr);
 						return tmp;
 					}

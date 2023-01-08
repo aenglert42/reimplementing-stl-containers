@@ -220,6 +220,14 @@ namespace ft
 				update_height(grandparent);
 			}
 
+			void rebalance_all(node_type* node)
+			{
+				if (node == ft_nullptr)
+					return ;
+				rebalance(node);
+				rebalance_all(node->_parent);
+			}
+
 			void rebalance(node_type* node)
 			{
 				const int MAX_DEVIATION = 1;
@@ -395,7 +403,7 @@ namespace ft
 				// or
 				// return (erase(tmp->_content, node->_left_child));
 				// this could fix range erase issues with rebalance
-				return (remove_node(node));
+				return (remove_node(node)); // AE check if this is a problem cause not recursive -> problem if more nodes need to be removed?
 			}
 
 			size_type remove_node_with_one_child(node_type* node, node_type* child)
@@ -413,6 +421,7 @@ namespace ft
 				my_delete(node);
 				_size--;
 				update_height(child);
+				rebalance_all(child);
 				return (1);
 			}
 
@@ -424,6 +433,7 @@ namespace ft
 				else
 					node->_parent->_right_child = ft_nullptr;
 				update_height(node->_parent);
+				rebalance_all(node->_parent);
 				my_delete(node);
 				_size--;
 				return (1);
@@ -452,7 +462,7 @@ namespace ft
 					ret = erase(val, node->_right_child);
 				else
 					ret = remove_node(node);
-				rebalance(node);
+				// rebalance(node);
 				return (ret);
 			}
 
@@ -505,6 +515,7 @@ namespace ft
 			// It does reverse inorder traversal
 			void print2DUtil(node_type* root, int space)
 			{
+				std::string space_sign = "-";
 				std::string end_node_name = "E";
 				std::string rend_node_name = "RE";
 
@@ -522,7 +533,7 @@ namespace ft
 				// count
 				std::cout << std::endl;
 				for (int i = COUNT; i < space; i++)
-					std::cout << " ";
+					std::cout << space_sign;
 				std::cout << "[";
 				if (root == _end_node)
 					std::cout << end_node_name;
@@ -750,9 +761,13 @@ namespace ft
 			{
 				if (position.base() != ft_nullptr && position != _end_node && position != _rend_node) // AE change this to _is_terminator
 				{
-					content_type val = *position;
-					(void)val;
-					erase(val, _root);
+					// // old version
+					// content_type val = *position;
+					// (void)val;
+					// erase(val, _root);
+
+					// alternative: but would need rebalance:
+					remove_node(position.base());
 				}
 			}
 
@@ -763,61 +778,60 @@ namespace ft
 
 			void erase (iterator first, iterator last) // AE improve performance for benchmark
 			{
-				// // intent with val instead of pointer
-				// content_type low;
-				// content_type high;
-				// iterator terminator = end();
-				// if (first == terminator)
-				// 	return ;
-				// if (last == terminator)
-				// {
-				// 	--terminator;
-				// 	high = terminator.base()->_content;
-				// }
-				// else
-				// 	high = last.base()->_content;
-				// low = first.base()->_content;
-				// removeRange(_root, low, high);
-			
-				// // old version
-				// removeRange(_root, first.base(), last.base());
-				// // std::cout << GREEN;
-				// // print2D();
-				// // std::cout << RESET;
-				// // erase(first);
+				// old version
+				// while (first != last)
+				// 	erase(*first++);
 
-				while (first != last)
-					erase(*first++);
+				// // new version too slow
+				// iterator it = begin();
+				// iterator tmp;
+				// while (it != end())
+				// {
+				// 	tmp = it;
+				// 	++tmp;
+				// 	my_remove_if_in_range(it.base(), first.base(), last.base());
+				// 	it = tmp;
+				// }
+				// erase(first);
+
 			}
 
-			// void removeRange(node_type* node, node_type* low, node_type* high)
+			// void my_remove_if_in_range(node_type* node, node_type* low, node_type* high)
 			// {
-
-			// 	// Base case
-			// 	if (node == ft_nullptr)
-			// 		return ;
-			// 		// return ft_nullptr;
-
-			// 	// First fix the left and right subtrees of node
-			// 	removeRange(node->_left_child, low, high);
-			// 	// node->_left_child = removeRange(node->_left_child, low, high);
-			// 	removeRange(node->_right_child, low, high);
-			// 	// node->_right_child = removeRange(node->_right_child, low, high);
-
-			// 	// Now fix the node.
-			// 	// if given node is in Range then delete it
-			// 	// if (node->data >= low && node->data <= high)
-			// 	// if (!first_is_greater_than_second(low, node) && first_is_greater_than_second(high, node))
 			// 	bool is_greater_than_low = lhs_node_is_greater_than_rhs_node(node, low);
 			// 	bool is_less_than_high = lhs_node_is_less_than_rhs_node(node, high);
 			// 	if (is_greater_than_low && is_less_than_high)
-			// 	// if (!lhs_node_is_greater_than_rhs_node(low, node) && lhs_node_is_greater_than_rhs_node(high, node))
-			// 		remove_node(node);
-			// 		// return remove_node(node);
-
-			// 	// Root is out of range
-			// 	// return node;
+			// 		remove_node(node);					
 			// }
+
+			void removeRange(node_type* node, node_type* low, node_type* high)
+			{
+
+				// Base case
+				if (node == ft_nullptr)
+					return ;
+					// return ft_nullptr;
+
+				// First fix the left and right subtrees of node
+				removeRange(node->_left_child, low, high);
+				// node->_left_child = removeRange(node->_left_child, low, high);
+				removeRange(node->_right_child, low, high);
+				// node->_right_child = removeRange(node->_right_child, low, high);
+
+				// Now fix the node.
+				// if given node is in Range then delete it
+				// if (node->data >= low && node->data <= high)
+				// if (!first_is_greater_than_second(low, node) && first_is_greater_than_second(high, node))
+				bool is_greater_than_low = lhs_node_is_greater_than_rhs_node(node, low);
+				bool is_less_than_high = lhs_node_is_less_than_rhs_node(node, high);
+				if (is_greater_than_low && is_less_than_high)
+				// if (!lhs_node_is_greater_than_rhs_node(low, node) && lhs_node_is_greater_than_rhs_node(high, node))
+					remove_node(node);
+					// return remove_node(node);
+
+				// Root is out of range
+				// return node;
+			}
 
 			// void removeRange(node_type* node, const content_type low, const content_type high)
 			// {

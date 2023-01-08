@@ -1755,3 +1755,147 @@ void map_lexicographical_compares(TestContainer& container)
 //////////////////////////////////
 	EXPECTED_OUTPUT(alice == bob returns false\nalice != bob returns true\nalice < bob returns true\nalice <= bob returns true\nalice > bob returns false\nalice >= bob returns false\n\nalice == eve returns true\nalice != eve returns false\nalice < eve returns false\nalice <= eve returns true\nalice > eve returns false\nalice >= eve returns true\n);
 }
+
+void avl_insert(TestContainer& container)
+{
+	int i;
+	(void)i;
+	ft::Tree<int> Tree;
+	Tree.insert(28).first;
+	// Tree.print2D();
+	Tree.insert(76).first;
+	// Tree.print2D();
+	Tree.insert(3).first;
+	// Tree.print2D();
+	Tree.insert(93).first;
+	// Tree.print2D();
+	Tree.insert(96).first;
+	// Tree.print2D();
+	Tree.insert(30).first;
+	// Tree.print2D();
+	Tree.insert(49).first;
+	// Tree.print2D();
+	Tree.insert(29).first;
+	// Tree.print2D();
+	Tree.insert(20).first;
+	// Tree.print2D();
+	Tree.insert(21).first;
+	// Tree.print2D();
+	Tree.insert(27).first;
+	// Tree.print2D();
+	Tree.insert(7).first;
+	// Tree.print2D();
+	Tree.insert(34).first;
+	// Tree.print2D();
+	Tree.insert(82).first;
+	// Tree.print2D();
+	Tree.insert(9).first;
+	// Tree.print2D();
+	Tree.insert(24).first;
+	// Tree.print2D();
+	Tree.insert(26).first;
+	// Tree.print2D();
+	Tree.insert(31).first;
+	// Tree.print2D();
+	Tree.insert(74).first;
+	// Tree.print2D();
+	Tree.insert(39).first;
+	// Tree.print2D();
+	Tree.insert(85).first;
+	// i = 10;
+	// Tree.erase(Tree.find(i));
+	// std::cout << RED << "erased: " << i << RESET << std::endl;
+	// Tree.print2D();
+	// i = 9;
+	// Tree.erase(Tree.find(i));
+	// std::cout << RED << "erased: " << i << RESET << std::endl;
+	// Tree.print2D();
+	// i = 3;
+	// Tree.erase(Tree.find(i));
+	// std::cout << RED << "erased: " << i << RESET << std::endl;
+	// Tree.print2D();
+	// i = 1;
+	// Tree.erase(Tree.find(i));
+	// std::cout << RED << "erased: " << i << RESET << std::endl;
+	Tree.print2D();
+
+//////////////////////////////////
+	EXPECTED_OUTPUT(Tree:\n\n---------[E](93):2\n------------[96](E):1\n------[93](49):4\n---------------[85](82):1\n------------[82](76):2\n---------[76](93):3\n------------[74](76):1\n---[49](28):5\n------------[39](34):1\n---------[34](30):2\n------------[31](34):1\n------[30](49):3\n---------[29](30):1\n[28]():6\n---------[27](24):2\n------------[26](27):1\n------[24](20):3\n---------[21](24):1\n---[20](28):4\n------------[9](7):1\n---------[7](3):2\n------[3](20):3\n---------[RE](3):1\n);
+}
+
+void avl_erase(TestContainer& container)
+{
+	int i;
+	(void)i;
+	ft::Tree<int> Tree;
+	Tree.insert(28).first;
+	// Tree.print2D();
+	Tree.insert(76).first;
+	// Tree.print2D();
+	Tree.insert(3).first;
+	// Tree.print2D();
+	Tree.insert(93).first;
+	// Tree.print2D();
+	Tree.insert(96).first;
+	// Tree.print2D();
+	Tree.insert(30).first;
+	// Tree.print2D();
+	Tree.insert(49).first;
+	// Tree.print2D();
+	Tree.insert(29).first;
+	// Tree.print2D();
+	Tree.insert(20).first;
+	// Tree.print2D();
+	Tree.insert(21).first;
+	// Tree.print2D();
+	Tree.insert(27).first;
+	// Tree.print2D();
+	Tree.insert(7).first;
+	// Tree.print2D();
+	Tree.insert(34).first;
+	// Tree.print2D();
+	Tree.insert(82).first;
+	// Tree.print2D();
+	Tree.insert(9).first;
+	// Tree.print2D();
+	Tree.insert(24).first;
+	// Tree.print2D();
+	Tree.insert(26).first;
+	// Tree.print2D();
+	Tree.insert(31).first;
+	// Tree.print2D();
+	Tree.insert(74).first;
+	// Tree.print2D();
+	Tree.insert(39).first;
+	// Tree.print2D();
+	Tree.insert(85).first;
+	i = 3;
+	Tree.erase(Tree.find(i));
+	// Tree.print2D();
+	i = 9;
+	Tree.erase(Tree.find(i));
+	// Tree.print2D();
+	i = 93;
+	Tree.erase(Tree.find(i));
+	// Tree.print2D();
+	i = 28;
+	Tree.erase(Tree.find(i));
+	i = 28;
+	Tree.erase(Tree.find(i));
+	i = 49;
+	Tree.erase(Tree.find(i));
+	i = 39;
+	Tree.erase(Tree.find(i));
+	i = 96;
+	Tree.erase(Tree.find(i));
+	i = 21;
+	Tree.erase(Tree.find(i));
+	i = 20;
+	Tree.erase(Tree.find(i));
+	i = 24;
+	Tree.erase(Tree.find(i));
+	Tree.print2D();
+
+//////////////////////////////////
+	EXPECTED_OUTPUT(Tree:\n\n------[E](85):1\n---[85](34):3\n---------[82](76):1\n------[76](85):2\n---------[74](76):1\n[34]():4\n---------[31](30):1\n------[30](27):2\n---------[29](30):1\n---[27](34):3\n---------[26](7):1\n------[7](27):2\n---------[RE](7):1\n);
+}

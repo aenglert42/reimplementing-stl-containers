@@ -76,6 +76,8 @@ map_lower_bound, \
 map_upper_bound, \
 map_equal_range, \
 map_lexicographical_compares, \
+avl_insert, \
+avl_erase, \
 vector_rational_operators/*
 
 */
