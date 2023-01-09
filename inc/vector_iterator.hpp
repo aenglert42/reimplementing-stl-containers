@@ -203,10 +203,10 @@ namespace ft
 				}
 
 			////operator-///////////////////////////////////////////////////////
-				template <class Iterator>
-				typename VectorIterator<Iterator>::difference_type operator-(
-					const VectorIterator<Iterator>& lhs,
-					const VectorIterator<Iterator>& rhs)
+				template <class Iterator1, class Iterator2>
+				typename VectorIterator<Iterator1>::difference_type operator-(
+					const VectorIterator<Iterator1>& lhs,
+					const VectorIterator<Iterator2>& rhs)
 				{
 					return (lhs.base() - rhs.base());
 				}
