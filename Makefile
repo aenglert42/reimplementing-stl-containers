@@ -40,9 +40,19 @@ unitre:
 test: all unit
 	./unit_test
 
+mil:
+	@cd $(HEADER_DIR)containers_test; \
+	./do.sh vector map; \
+	cd ../../../ft_containers;
+
 terminator:
 	@cd ft_containers-terminator; \
-	./test_containers.sh map; \
+	./test_containers.sh vector map; \
+	cd ../../ft_containers;
+
+benchmark:
+	@cd ft_containers-terminator; \
+	./benchmark_containers.sh vector map; \
 	cd ../../ft_containers;
 
 $(NAME): $(OBJ_DIR) $(OBJS) $(DEPS)
