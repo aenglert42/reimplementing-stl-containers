@@ -13,6 +13,8 @@
 //https://en.cppreference.com/w/cpp/preprocessor/replace checkout to abilitate use of ','
 #define EXPECTED_OUTPUT(TEXT) container.fill_container(__func__, __LINE__, container.stream.str(), #TEXT)
 
+#define NAMESPACE ft
+
 #include "../inc/algorithm.hpp"
 #include "../inc/iterator.hpp"
 #include "../inc/type_traits.hpp"
@@ -38,7 +40,7 @@ void algorithm_equal(TestContainer& container)
 	std::vector<int>myvector (myints,myints+5);     // myvector: 20 40 60 80 100
 
 	// using default comparison:
-	if ( ft::equal (myvector.begin(), myvector.end(), myints) )
+	if ( NAMESPACE::equal (myvector.begin(), myvector.end(), myints) )
 		std::cout << "The contents of both sequences are equal.\n";
 	else
 		std::cout << "The contents of both sequences differ.\n";
@@ -47,7 +49,7 @@ void algorithm_equal(TestContainer& container)
 	myvector[3]=81;                                 // myvector: 20 40 60 81 100
 
 	// using predicate comparison:
-	if ( ft::equal (myvector.begin(), myvector.end(), myints, mypredicate) )
+	if ( NAMESPACE::equal (myvector.begin(), myvector.end(), myints, mypredicate) )
 		std::cout << "The contents of both sequences are equal.\n";
 	else
 		std::cout << "The contents of both sequences differ.\n";
@@ -69,11 +71,11 @@ void algorithm_lexicographical_compare(TestContainer& container)
 	std::cout << "Comparing foo and bar lexicographically (foo<bar):\n";
 
 	std::cout << "Using default comparison (operator<): ";
-	std::cout << ft::lexicographical_compare(foo,foo+5,bar,bar+9);
+	std::cout << NAMESPACE::lexicographical_compare(foo,foo+5,bar,bar+9);
 	std::cout << '\n';
 
 	std::cout << "Using mycomp as comparison object: ";
-	std::cout << ft::lexicographical_compare(foo,foo+5,bar,bar+9,mycomp);
+	std::cout << NAMESPACE::lexicographical_compare(foo,foo+5,bar,bar+9,mycomp);
 	std::cout << '\n';
 
 //////////////////////////////////
@@ -81,9 +83,9 @@ void algorithm_lexicographical_compare(TestContainer& container)
 }
 
 template <class T>
-typename ft::enable_if<ft::is_integral<T>::value,bool>::type is_odd (T i) {return bool(i%2);}
+typename NAMESPACE::enable_if<NAMESPACE::is_integral<T>::value,bool>::type is_odd (T i) {return bool(i%2);}
 
-template < class T, class = typename ft::enable_if<ft::is_integral<T>::value>::type>
+template < class T, class = typename NAMESPACE::enable_if<NAMESPACE::is_integral<T>::value>::type>
 bool is_even (T i) {return !bool(i%2);}
 
 void enable_if(TestContainer& container)
@@ -102,10 +104,10 @@ void is_integral(TestContainer& container)
 {
 	std::cout << std::boolalpha;
 	std::cout << "is_integral:" << std::endl;
-	std::cout << "char: " << ft::is_integral<char>::value << std::endl;
-	std::cout << "int: " << ft::is_integral<int>::value << std::endl;
-	std::cout << "float: " << ft::is_integral<float>::value << std::endl;
-	std::cout << "double: " << ft::is_integral<double>::value << std::endl;
+	std::cout << "char: " << NAMESPACE::is_integral<char>::value << std::endl;
+	std::cout << "int: " << NAMESPACE::is_integral<int>::value << std::endl;
+	std::cout << "float: " << NAMESPACE::is_integral<float>::value << std::endl;
+	std::cout << "double: " << NAMESPACE::is_integral<double>::value << std::endl;
 
 //////////////////////////////////
 	EXPECTED_OUTPUT(is_integral:\nchar: true\nint: true\nfloat: false\ndouble: false\n);
@@ -113,8 +115,8 @@ void is_integral(TestContainer& container)
 
 void iterator_traits(TestContainer& container)
 {
-	typedef ft::iterator_traits<int*> traits;
-	if (typeid(traits::iterator_category)==typeid(ft::random_access_iterator_tag))
+	typedef NAMESPACE::iterator_traits<int*> traits;
+	if (typeid(traits::iterator_category)==typeid(NAMESPACE::random_access_iterator_tag))
 		std::cout << "int* is a random-access iterator\n";
 
 //////////////////////////////////
@@ -125,9 +127,9 @@ void less(TestContainer& container)
 {
 	int foo[]={10,20,5,15,25};
 	int bar[]={15,10,20};
-	std::sort (foo, foo+5, ft::less<int>());  // 5 10 15 20 25
-	std::sort (bar, bar+3, ft::less<int>());  //   10 15 20
-	if (std::includes (foo, foo+5, bar, bar+3, ft::less<int>()))
+	std::sort (foo, foo+5, NAMESPACE::less<int>());  // 5 10 15 20 25
+	std::sort (bar, bar+3, NAMESPACE::less<int>());  //   10 15 20
+	if (std::includes (foo, foo+5, bar, bar+3, NAMESPACE::less<int>()))
 		std::cout << "foo includes bar.\n";
 
 //////////////////////////////////
@@ -136,11 +138,11 @@ void less(TestContainer& container)
 
 void make_pair(TestContainer& container)
 {
-	ft::pair <int,int> foo;
-	ft::pair <int,int> bar;
+	NAMESPACE::pair <int,int> foo;
+	NAMESPACE::pair <int,int> bar;
 
-	foo = ft::make_pair (10,20);
-	bar = ft::make_pair (10.5,'A'); // ok: implicit conversion from pair<double,char>
+	foo = NAMESPACE::make_pair (10,20);
+	bar = NAMESPACE::make_pair (10.5,'A'); // ok: implicit conversion from pair<double,char>
 
 	std::cout << "foo: " << foo.first << " " << foo.second << '\n';
 	std::cout << "bar: " << bar.first << " " << bar.second << '\n';
@@ -151,18 +153,18 @@ void make_pair(TestContainer& container)
 
 void reverse_iterator(TestContainer& container)
 {
-	ft::vector<int> myvector;
+	NAMESPACE::vector<int> myvector;
 	for (int i=0; i<10; i++) myvector.push_back(i);
 
-	typedef ft::vector<int>::iterator iter_type;
+	typedef NAMESPACE::vector<int>::iterator iter_type;
 															// ? 0 1 2 3 4 5 6 7 8 9 ?
 	iter_type from (myvector.begin());                     //   ^
 															//         ------>
 	iter_type until (myvector.end());                      //                       ^
 															//
-	ft::reverse_iterator<iter_type> rev_until (from);     // ^
+	NAMESPACE::reverse_iterator<iter_type> rev_until (from);     // ^
 															//         <------
-	ft::reverse_iterator<iter_type> rev_from (until);     //                     ^
+	NAMESPACE::reverse_iterator<iter_type> rev_from (until);     //                     ^
 
 	std::cout << "myvector:";
 	while (rev_from != rev_until)
@@ -175,13 +177,13 @@ void reverse_iterator(TestContainer& container)
 
 void reverse_iterator_base(TestContainer& container)
 {
-	ft::vector<int> myvector;
+	NAMESPACE::vector<int> myvector;
 	for (int i=0; i<10; i++) myvector.push_back(i);
 
-	typedef ft::vector<int>::iterator iter_type;
+	typedef NAMESPACE::vector<int>::iterator iter_type;
 
-	ft::reverse_iterator<iter_type> rev_end (myvector.begin());
-	ft::reverse_iterator<iter_type> rev_begin (myvector.end());
+	NAMESPACE::reverse_iterator<iter_type> rev_end (myvector.begin());
+	NAMESPACE::reverse_iterator<iter_type> rev_begin (myvector.end());
 
 	std::cout << "myvector:";
 	for (iter_type it = rev_end.base(); it != rev_begin.base(); ++it)
@@ -194,8 +196,8 @@ void reverse_iterator_base(TestContainer& container)
 
 void reverse_iterator_traits(TestContainer& container)
 {
-	typedef ft::iterator_traits<int*> traits;
-	if (typeid(traits::iterator_category)==typeid(ft::random_access_iterator_tag))
+	typedef NAMESPACE::iterator_traits<int*> traits;
+	if (typeid(traits::iterator_category)==typeid(NAMESPACE::random_access_iterator_tag))
 		std::cout << "int* is a random-access iterator" << std::endl;
 
 //////////////////////////////////
@@ -204,12 +206,12 @@ void reverse_iterator_traits(TestContainer& container)
 
 void reverse_iterator_operator_access_element(TestContainer& container)
 {
-	ft::vector<int> myvector;
+	NAMESPACE::vector<int> myvector;
 	for (int i=0; i<10; i++) myvector.push_back(i);  // myvector: 0 1 2 3 4 5 6 7 8 9
 
-	typedef ft::vector<int>::iterator iter_type;
+	typedef NAMESPACE::vector<int>::iterator iter_type;
 
-	ft::reverse_iterator<iter_type> rev_iterator = myvector.rbegin();
+	NAMESPACE::reverse_iterator<iter_type> rev_iterator = myvector.rbegin();
 
 	std::cout << "The fourth element from the end is: " << rev_iterator[3] << '\n';
 
@@ -219,12 +221,12 @@ void reverse_iterator_operator_access_element(TestContainer& container)
 
 void reverse_iterator_operator_minus(TestContainer& container)
 {
-	ft::vector<int> myvector;
+	NAMESPACE::vector<int> myvector;
 	for (int i=0; i<10; i++) myvector.push_back(i);	// myvector: 0 1 2 3 4 5 6 7 8 9
 
-	typedef ft::vector<int>::iterator iter_type;
+	typedef NAMESPACE::vector<int>::iterator iter_type;
 
-	ft::reverse_iterator<iter_type> rev_iterator;
+	NAMESPACE::reverse_iterator<iter_type> rev_iterator;
 
 	rev_iterator = myvector.rend() - 3;
 
@@ -236,12 +238,12 @@ void reverse_iterator_operator_minus(TestContainer& container)
 
 void reverse_iterator_operator_minus_minus_1(TestContainer& container)
 {
-	ft::vector<int> myvector;
+	NAMESPACE::vector<int> myvector;
 	for (int i=0; i<10; i++) myvector.push_back(i);	// myvector: 0 1 2 3 4 5 6 7 8 9
 
-	typedef ft::vector<int>::iterator iter_type;
+	typedef NAMESPACE::vector<int>::iterator iter_type;
 
-	ft::reverse_iterator<iter_type> rev_iterator = myvector.rend();
+	NAMESPACE::reverse_iterator<iter_type> rev_iterator = myvector.rend();
 
 	rev_iterator -= 4;
 
@@ -253,15 +255,15 @@ void reverse_iterator_operator_minus_minus_1(TestContainer& container)
 
 void reverse_iterator_operator_minus_minus_2(TestContainer& container)
 {
-	ft::vector<int> myvector;
+	NAMESPACE::vector<int> myvector;
 	for (int i=0; i<10; i++) myvector.push_back(i);
 
-	typedef ft::vector<int>::iterator iter_type;
+	typedef NAMESPACE::vector<int>::iterator iter_type;
 
-	ft::reverse_iterator<iter_type> rev_begin (myvector.end());
-	ft::reverse_iterator<iter_type> rev_end (myvector.begin());
+	NAMESPACE::reverse_iterator<iter_type> rev_begin (myvector.end());
+	NAMESPACE::reverse_iterator<iter_type> rev_end (myvector.begin());
 
-	ft::reverse_iterator<iter_type> rev_iterator = rev_begin;
+	NAMESPACE::reverse_iterator<iter_type> rev_iterator = rev_begin;
 	while ( rev_iterator != rev_end )
 		std::cout << *rev_iterator++ << ' ';
 	std::cout << '\n';
@@ -276,12 +278,12 @@ void reverse_iterator_operator_minus_minus_2(TestContainer& container)
 
 void reverse_iterator_operator_plus(TestContainer& container)
 {
-	ft::vector<int> myvector;
+	NAMESPACE::vector<int> myvector;
 	for (int i=0; i<10; i++) myvector.push_back(i);	// myvector: 0 1 2 3 4 5 6 7 8 9
 
-	typedef ft::vector<int>::iterator iter_type;
+	typedef NAMESPACE::vector<int>::iterator iter_type;
 
-	ft::reverse_iterator<iter_type> rev_it;
+	NAMESPACE::reverse_iterator<iter_type> rev_it;
 
 	rev_it = myvector.rbegin() +3;
 
@@ -293,12 +295,12 @@ void reverse_iterator_operator_plus(TestContainer& container)
 
 void reverse_iterator_operator_plus_equal(TestContainer& container)
 {
-	ft::vector<int> myvector;
+	NAMESPACE::vector<int> myvector;
 	for (int i=0; i<10; i++) myvector.push_back(i);	// myvector: 0 1 2 3 4 5 6 7 8 9
 
-	typedef ft::vector<int>::iterator iter_type;
+	typedef NAMESPACE::vector<int>::iterator iter_type;
 
-	ft::reverse_iterator<iter_type> rev_iterator = myvector.rbegin();
+	NAMESPACE::reverse_iterator<iter_type> rev_iterator = myvector.rbegin();
 
 	rev_iterator += 2;
 
@@ -310,16 +312,16 @@ void reverse_iterator_operator_plus_equal(TestContainer& container)
 
 void reverse_iterator_operator_pointer(TestContainer& container)
 {
-	std::map<int,std::string> numbers;
-	numbers.insert (std::make_pair(1,"one")); // AE change to ft::make_pair
-	numbers.insert (std::make_pair(2,"two")); // AE change to ft::make_pair
-	numbers.insert (std::make_pair(3,"three")); // AE change to ft::make_pair
+	NAMESPACE::map<int,std::string> numbers;
+	numbers.insert (NAMESPACE::make_pair(1,"one"));
+	numbers.insert (NAMESPACE::make_pair(2,"two"));
+	numbers.insert (NAMESPACE::make_pair(3,"three"));
 
-	typedef std::map<int,std::string>::iterator map_iter;
+	typedef NAMESPACE::map<int,std::string>::iterator map_iter;
 
-	ft::reverse_iterator<map_iter> rev_end (numbers.begin());
+	NAMESPACE::reverse_iterator<map_iter> rev_end (numbers.begin());
 
-	ft::reverse_iterator<map_iter> rev_iterator (numbers.end());
+	NAMESPACE::reverse_iterator<map_iter> rev_iterator (numbers.end());
 
 	for ( ; rev_iterator != rev_end ; ++rev_iterator )
 		std::cout << rev_iterator->first << ' ' << rev_iterator->second << '\n';
@@ -330,11 +332,11 @@ void reverse_iterator_operator_pointer(TestContainer& container)
 
 void pair(TestContainer& container)
 {
-	ft::pair <std::string,double> product1;                     // default constructor
-	ft::pair <std::string,double> product2 ("tomatoes",2.30);   // value init
-	ft::pair <std::string,double> product3 (product2);          // copy constructor
+	NAMESPACE::pair <std::string,double> product1;                     // default constructor
+	NAMESPACE::pair <std::string,double> product2 ("tomatoes",2.30);   // value init
+	NAMESPACE::pair <std::string,double> product3 (product2);          // copy constructor
 
-	product1 = ft::make_pair(std::string("lightbulbs"),0.99);   // using make_pair (move)
+	product1 = NAMESPACE::make_pair(std::string("lightbulbs"),0.99);   // using make_pair (move)
 
 	product2.first = "shoes";                  // the type of first is string
 	product2.second = 39.90;                   // the type of second is double
@@ -352,11 +354,11 @@ void pair_delete_old_pointer(TestContainer& container)
 	int *one = new int(1);
 	int *two = new int(2);
 	int *three = new int(3);
-	ft::pair<char, int *>  paerle;
-	ft::pair<char, int *>  paerle2;
+	NAMESPACE::pair<char, int *>  paerle;
+	NAMESPACE::pair<char, int *>  paerle2;
 
-	paerle = ft::make_pair('a', one);
-	paerle2 = ft::make_pair('b', two);
+	paerle = NAMESPACE::make_pair('a', one);
+	paerle2 = NAMESPACE::make_pair('b', two);
 	std::cout << *(paerle.second) << std::endl;
 	std::cout << paerle.first << std::endl;
 
@@ -366,7 +368,7 @@ void pair_delete_old_pointer(TestContainer& container)
 	std::cout << paerle.first << std::endl;
 	std::cout << *one << std::endl;
 
-	paerle = ft::make_pair('c', three);
+	paerle = NAMESPACE::make_pair('c', three);
 	std::cout << *(paerle.second) << std::endl;
 	std::cout << paerle.first << std::endl;
 
@@ -380,9 +382,9 @@ void pair_delete_old_pointer(TestContainer& container)
 
 void pair_operator_equal(TestContainer& container)
 {
-	ft::pair <std::string,int> planet, homeplanet;
+	NAMESPACE::pair <std::string,int> planet, homeplanet;
 
-	planet = ft::make_pair("Earth",6371);
+	planet = NAMESPACE::make_pair("Earth",6371);
 
 	homeplanet = planet;
 
@@ -395,8 +397,8 @@ void pair_operator_equal(TestContainer& container)
 
 void pair_relational_operators(TestContainer& container)
 {
-	ft::pair<int,char> foo (10,'z');
-	ft::pair<int,char> bar (90,'a');
+	NAMESPACE::pair<int,char> foo (10,'z');
+	NAMESPACE::pair<int,char> bar (90,'a');
 
 	if (foo==bar) std::cout << "foo and bar are equal\n";
 	if (foo!=bar) std::cout << "foo and bar are not equal\n";
@@ -462,17 +464,17 @@ void sfinae(TestContainer& container)
 void vector_costructors(TestContainer& container)
 {
 	// constructors used in the same order as described above:
-	ft::vector<int> first;                                // empty vector of ints
-	ft::vector<int> second (4,100);                       // four ints with value 100
-	ft::vector<int> third (second.begin(),second.end());  // iterating through second
-	ft::vector<int> fourth (third);                       // a copy of third
+	NAMESPACE::vector<int> first;                                // empty vector of ints
+	NAMESPACE::vector<int> second (4,100);                       // four ints with value 100
+	NAMESPACE::vector<int> third (second.begin(),second.end());  // iterating through second
+	NAMESPACE::vector<int> fourth (third);                       // a copy of third
 
 	// the iterator constructor can also be used to construct from arrays:
 	int myints[] = {16,2,77,29};
-	ft::vector<int> fifth (myints, myints + sizeof(myints) / sizeof(int) );
+	NAMESPACE::vector<int> fifth (myints, myints + sizeof(myints) / sizeof(int) );
 
 	std::cout << "The contents of fifth are:";
-	for (ft::vector<int>::iterator it = fifth.begin(); it != fifth.end(); ++it)
+	for (NAMESPACE::vector<int>::iterator it = fifth.begin(); it != fifth.end(); ++it)
 		std::cout << ' ' << *it;
 	std::cout << '\n';
 
@@ -482,11 +484,11 @@ void vector_costructors(TestContainer& container)
 
 void vector_operator_equal(TestContainer& container)
 {
-	ft::vector<int> foo (3,0);
-	ft::vector<int> bar (5,0);
+	NAMESPACE::vector<int> foo (3,0);
+	NAMESPACE::vector<int> bar (5,0);
 
 	bar = foo;
-	foo = ft::vector<int>();
+	foo = NAMESPACE::vector<int>();
 
 	std::cout << "Size of foo: " << int(foo.size()) << '\n';
 	std::cout << "Size of bar: " << int(bar.size()) << '\n';
@@ -497,8 +499,6 @@ void vector_operator_equal(TestContainer& container)
 
 void my_map_iterator(TestContainer& container)
 {
-	#define NAMESPACE ft // AE make this for all
-	
 	NAMESPACE::map<std::string, int> myMap;
 	myMap.insert(NAMESPACE::make_pair("5", 5));
 	myMap.insert(NAMESPACE::make_pair("1", 1));
@@ -574,41 +574,60 @@ void my_map_iterator(TestContainer& container)
 
 void my_vector_iterator(TestContainer& container)
 {
-	ft::vector<int> v;
+	NAMESPACE::vector<int> v;
 	v.push_back(5);
 	v.push_back(5);
 	v.push_back(8);
 	v.push_back(4);
 
-	for (ft::vector<int>::iterator it = v.begin(); it != v.end(); ++it)
+	for (NAMESPACE::vector<int>::iterator it = v.begin(); it != v.end(); ++it)
 		std::cout << *it << std::endl;
 	std::cout << std::endl;
 
-	for (ft::vector<int>::reverse_iterator it = v.rbegin(); it != v.rend(); ++it)
-		std::cout << *it << std::endl;
+	for (NAMESPACE::vector<int>::const_iterator cit = v.begin(); cit != v.end(); ++cit)
+		std::cout << *cit << std::endl;
 	std::cout << std::endl;
 
-	// ft::vector<const int> vec; // AE https://stackoverflow.com/questions/47794223/getting-const-iterator-from-begin-instead-of-cbegin
-	// vec.push_back(5);
-	// vec.push_back(5);
-	// vec.push_back(8);
-	// vec.push_back(4);
+	for (NAMESPACE::vector<int>::reverse_iterator rit = v.rbegin(); rit != v.rend(); ++rit)
+		std::cout << *rit << std::endl;
+	std::cout << std::endl;
 
-	// for (ft::vector<const int>::const_iterator it = vec.begin(); it != vec.end(); ++it)
-	// 	std::cout << *it << std::endl;
-	// std::cout << std::endl;
+	for (NAMESPACE::vector<int>::const_reverse_iterator crit = v.rbegin(); crit != v.rend(); ++crit)
+		std::cout << *crit << std::endl;
+	std::cout << std::endl;
 
-	// for (ft::vector<const int>::const_reverse_iterator it = vec.rbegin(); it != vec.rend(); ++it)
-	// 	std::cout << *it << std::endl;
-	// std::cout << std::endl;
+	NAMESPACE::vector<int>::iterator it = v.begin() + 1;
+	NAMESPACE::vector<int>::const_iterator cit = v.begin();
+	NAMESPACE::vector<int>::reverse_iterator rit = v.rbegin() + 1;
+	NAMESPACE::vector<int>::const_reverse_iterator crit = v.rbegin();
+
+	std::cout << it - cit << cit - it << rit - crit << crit - rit << std::endl;
+
+	it += 3;
+	it -= 2;
+	it = it - 1;
+
+	cit += 3;
+	cit -= 2;
+	cit = cit - 1;
+
+	rit += 3;
+	rit -= 2;
+	rit = rit - 1;
+
+	crit += 3;
+	crit -= 2;
+	crit = crit - 1;
+
+	std::cout << *it << *cit << *rit << *crit << std::endl;
 
 //////////////////////////////////
-	EXPECTED_OUTPUT(5\n5\n8\n4\n\n4\n8\n5\n5\n\n);
+	EXPECTED_OUTPUT(5\n5\n8\n4\n\n5\n5\n8\n4\n\n4\n8\n5\n5\n\n4\n8\n5\n5\n\n1-11-1\n5584\n);
 }
 
 void vector_resize(TestContainer& container)
 {
-	ft::vector<int> myvector;
+	NAMESPACE::vector<int> myvector;
 
 	// set some initial content:
 	for (int i=1;i<10;i++) myvector.push_back(i);
@@ -628,9 +647,9 @@ void vector_resize(TestContainer& container)
 
 void vector_reserve(TestContainer& container)
 {
-	ft::vector<int>::size_type sz;
+	NAMESPACE::vector<int>::size_type sz;
 
-	ft::vector<int> foo;
+	NAMESPACE::vector<int> foo;
 	sz = foo.capacity();
 	std::cout << "making foo grow:\n";
 	for (int i=0; i<100; ++i) {
@@ -641,7 +660,7 @@ void vector_reserve(TestContainer& container)
 		}
 	}
 
-	ft::vector<int> bar;
+	NAMESPACE::vector<int> bar;
 	sz = bar.capacity();
 	bar.reserve(100);   // this is the only difference with foo above
 	std::cout << "making bar grow:\n";
@@ -659,11 +678,11 @@ void vector_reserve(TestContainer& container)
 
 void vector_begin(TestContainer& container)
 {
-	ft::vector<int> myvector;
+	NAMESPACE::vector<int> myvector;
 	for (int i=1; i<=5; i++) myvector.push_back(i);
 
 	std::cout << "myvector contains:";
-	for (ft::vector<int>::iterator it = myvector.begin() ; it != myvector.end(); ++it)
+	for (NAMESPACE::vector<int>::iterator it = myvector.begin() ; it != myvector.end(); ++it)
 		std::cout << ' ' << *it;
 	std::cout << '\n';
 
@@ -673,11 +692,11 @@ void vector_begin(TestContainer& container)
 
 void vector_end(TestContainer& container)
 {
-	ft::vector<int> myvector;
+	NAMESPACE::vector<int> myvector;
 	for (int i=1; i<=5; i++) myvector.push_back(i);
 
 	std::cout << "myvector contains:";
-	for (ft::vector<int>::iterator it = myvector.begin() ; it != myvector.end(); ++it)
+	for (NAMESPACE::vector<int>::iterator it = myvector.begin() ; it != myvector.end(); ++it)
 		std::cout << ' ' << *it;
 	std::cout << '\n';
 
@@ -687,16 +706,16 @@ void vector_end(TestContainer& container)
 
 void vector_rbegin(TestContainer& container)
 {
-	ft::vector<int> myvector (5);  // 5 default-constructed ints
+	NAMESPACE::vector<int> myvector (5);  // 5 default-constructed ints
 
 	int i=0;
 
-	ft::vector<int>::reverse_iterator rit = myvector.rbegin();
+	NAMESPACE::vector<int>::reverse_iterator rit = myvector.rbegin();
 	for (; rit!= myvector.rend(); ++rit)
 		*rit = ++i;
 
 	std::cout << "myvector contains:";
-	for (ft::vector<int>::iterator it = myvector.begin(); it != myvector.end(); ++it)
+	for (NAMESPACE::vector<int>::iterator it = myvector.begin(); it != myvector.end(); ++it)
 		std::cout << ' ' << *it;
 	std::cout << '\n';
 
@@ -706,16 +725,16 @@ void vector_rbegin(TestContainer& container)
 
 void vector_rend(TestContainer& container)
 {
-	ft::vector<int> myvector (5);  // 5 default-constructed ints
+	NAMESPACE::vector<int> myvector (5);  // 5 default-constructed ints
 
-	ft::vector<int>::reverse_iterator rit = myvector.rbegin();
+	NAMESPACE::vector<int>::reverse_iterator rit = myvector.rbegin();
 
 	int i=0;
 	for (rit = myvector.rbegin(); rit!= myvector.rend(); ++rit)
 		*rit = ++i;
 
 	std::cout << "myvector contains:";
-	for (ft::vector<int>::iterator it = myvector.begin(); it != myvector.end(); ++it)
+	for (NAMESPACE::vector<int>::iterator it = myvector.begin(); it != myvector.end(); ++it)
 		std::cout << ' ' << *it;
 	std::cout << '\n';
 
@@ -725,7 +744,7 @@ void vector_rend(TestContainer& container)
 
 void vector_size(TestContainer& container)
 {
-	ft::vector<int> myints;
+	NAMESPACE::vector<int> myints;
 	std::cout << "0. size: " << myints.size() << '\n';
 
 	for (int i=0; i<10; i++) myints.push_back(i);
@@ -743,8 +762,8 @@ void vector_size(TestContainer& container)
 
 void vector_insert(TestContainer& container)
 {
-	ft::vector<int> myvector (3,100);
-	ft::vector<int>::iterator it;
+	NAMESPACE::vector<int> myvector (3,100);
+	NAMESPACE::vector<int>::iterator it;
 
 // myvector.print();
 
@@ -758,7 +777,7 @@ void vector_insert(TestContainer& container)
 	// "it" no longer valid, get a new one:
 	it = myvector.begin();
 
-	ft::vector<int> anothervector (2,400);
+	NAMESPACE::vector<int> anothervector (2,400);
 // anothervector.print();
 	myvector.insert (it+2,anothervector.begin(),anothervector.end());
 // myvector.print();
@@ -778,8 +797,8 @@ void vector_insert(TestContainer& container)
 
 void vector_rational_operators(TestContainer& container)
 {
-	ft::vector<int> foo (3,100);   // three ints with a value of 100
-	ft::vector<int> bar (2,200);   // two ints with a value of 200
+	NAMESPACE::vector<int> foo (3,100);   // three ints with a value of 100
+	NAMESPACE::vector<int> bar (2,200);   // two ints with a value of 200
 
 	if (foo==bar) std::cout << "foo and bar are equal\n";
 	if (foo!=bar) std::cout << "foo and bar are not equal\n";
@@ -794,23 +813,21 @@ void vector_rational_operators(TestContainer& container)
 
 void vector_capacity(TestContainer& container)
 {
-	ft::vector<int> myvector;
+	NAMESPACE::vector<int> myvector;
 
 	// set some content in the vector:
 	for (int i=0; i<100; i++) myvector.push_back(i);
 
 	std::cout << "size: " << (int) myvector.size() << '\n';
 	std::cout << "capacity: " << (int) myvector.capacity() << '\n';
-	// std::cout << "max_size: " << (int) myvector.max_size() << '\n'; 
-	std::cout << "max_size: " << 1073741823 << '\n'; // AE this doesn't work
 
 //////////////////////////////////
-	EXPECTED_OUTPUT(size: 100\ncapacity: 128\nmax_size: 1073741823\n);
+	EXPECTED_OUTPUT(size: 100\ncapacity: 128\n);
 }
 
 void vector_empty(TestContainer& container)
 {
-	ft::vector<int> myvector;
+	NAMESPACE::vector<int> myvector;
 	int sum (0);
 
 	for (int i=1;i<=10;i++) myvector.push_back(i);
@@ -829,9 +846,9 @@ void vector_empty(TestContainer& container)
 
 void vector_operator_access_element(TestContainer& container)
 {
-	ft::vector<int> myvector (10);   // 10 zero-initialized elements
+	NAMESPACE::vector<int> myvector (10);   // 10 zero-initialized elements
 
-	ft::vector<int>::size_type sz = myvector.size();
+	NAMESPACE::vector<int>::size_type sz = myvector.size();
 
 	// assign some values:
 	for (unsigned i=0; i<sz; i++) myvector[i]=i;
@@ -856,7 +873,7 @@ void vector_operator_access_element(TestContainer& container)
 
 void vector_at(TestContainer& container)
 {
-	ft::vector<int> myvector (10);   // 10 zero-initialized ints
+	NAMESPACE::vector<int> myvector (10);   // 10 zero-initialized ints
 
 	// assign some values:
 	for (unsigned i=0; i<myvector.size(); i++)
@@ -873,7 +890,7 @@ void vector_at(TestContainer& container)
 
 void vector_front(TestContainer& container)
 {
-	ft::vector<int> myvector;
+	NAMESPACE::vector<int> myvector;
 
 	myvector.push_back(78);
 	myvector.push_back(16);
@@ -890,7 +907,7 @@ void vector_front(TestContainer& container)
 
 void vector_back(TestContainer& container)
 {
-	ft::vector<int> myvector;
+	NAMESPACE::vector<int> myvector;
 
 	myvector.push_back(10);
 
@@ -910,7 +927,7 @@ void vector_back(TestContainer& container)
 
 void vector_data(TestContainer& container)
 {
-	ft::vector<int> myvector (5);
+	NAMESPACE::vector<int> myvector (5);
 
 	int* p = myvector.data();
 
@@ -930,13 +947,13 @@ void vector_data(TestContainer& container)
 
 void vector_assign(TestContainer& container)
 {
-	ft::vector<int> first;
-	ft::vector<int> second;
-	ft::vector<int> third;
+	NAMESPACE::vector<int> first;
+	NAMESPACE::vector<int> second;
+	NAMESPACE::vector<int> third;
 
 	first.assign (7,100);             // 7 ints with a value of 100
 
-	ft::vector<int>::iterator it;
+	NAMESPACE::vector<int>::iterator it;
 	it=first.begin()+1;
 
 	second.assign (it,first.end()-1); // the 5 central values of first
@@ -954,7 +971,7 @@ void vector_assign(TestContainer& container)
 
 void vector_push_back(TestContainer& container)
 {
-	ft::vector<int> myvector;
+	NAMESPACE::vector<int> myvector;
 
 	myvector.push_back (5);
 	myvector.push_back (5);
@@ -970,7 +987,7 @@ void vector_push_back(TestContainer& container)
 
 void vector_pop_back(TestContainer& container)
 {
-	ft::vector<int> myvector;
+	NAMESPACE::vector<int> myvector;
 	int sum (0);
 	myvector.push_back (100);
 	myvector.push_back (200);
@@ -990,7 +1007,7 @@ void vector_pop_back(TestContainer& container)
 
 void vector_erase(TestContainer& container)
 {
-	ft::vector<int> myvector;
+	NAMESPACE::vector<int> myvector;
 
 	// set some values (from 1 to 10)
 	for (int i=1; i<=10; i++) myvector.push_back(i);
@@ -1012,8 +1029,8 @@ void vector_erase(TestContainer& container)
 
 void vector_swap(TestContainer& container)
 {
-	ft::vector<int> foo (3,100);   // three ints with a value of 100
-	ft::vector<int> bar (5,200);   // five ints with a value of 200
+	NAMESPACE::vector<int> foo (3,100);   // three ints with a value of 100
+	NAMESPACE::vector<int> bar (5,200);   // five ints with a value of 200
 
 	foo.swap(bar);
 
@@ -1033,18 +1050,18 @@ void vector_swap(TestContainer& container)
 
 void vector_no_member_swap(TestContainer& container)
 {
-	ft::vector<int> foo (3,100);   // three ints with a value of 100
-	ft::vector<int> bar (5,200);   // five ints with a value of 200
+	NAMESPACE::vector<int> foo (3,100);   // three ints with a value of 100
+	NAMESPACE::vector<int> bar (5,200);   // five ints with a value of 200
 
 	foo.swap(bar);
 
 	std::cout << "foo contains:";
-	for (ft::vector<int>::iterator it = foo.begin(); it!=foo.end(); ++it)
+	for (NAMESPACE::vector<int>::iterator it = foo.begin(); it!=foo.end(); ++it)
 		std::cout << ' ' << *it;
 	std::cout << '\n';
 
 	std::cout << "bar contains:";
-	for (ft::vector<int>::iterator it = bar.begin(); it!=bar.end(); ++it)
+	for (NAMESPACE::vector<int>::iterator it = bar.begin(); it!=bar.end(); ++it)
 		std::cout << ' ' << *it;
 	std::cout << '\n';
 
@@ -1054,7 +1071,7 @@ void vector_no_member_swap(TestContainer& container)
 
 void vector_clear(TestContainer& container)
 {
-	ft::vector<int> myvector;
+	NAMESPACE::vector<int> myvector;
 	myvector.push_back (100);
 	myvector.push_back (200);
 	myvector.push_back (300);
@@ -1079,7 +1096,7 @@ void vector_clear(TestContainer& container)
 
 void vector_get_allocator(TestContainer& container)
 {
-	ft::vector<int> myvector;
+	NAMESPACE::vector<int> myvector;
 	int * p;
 	unsigned int i;
 
@@ -1103,10 +1120,10 @@ void vector_get_allocator(TestContainer& container)
 
 void vector_my_assign(TestContainer& container)
 {
-	ft::vector<int> vct(7);
-	ft::vector<int> vct_two(4);
-	ft::vector<int> vct_three;
-	ft::vector<int> vct_four;
+	NAMESPACE::vector<int> vct(7);
+	NAMESPACE::vector<int> vct_two(4);
+	NAMESPACE::vector<int> vct_three;
+	NAMESPACE::vector<int> vct_four;
 
 	for (unsigned long int i = 0; i < vct.size(); ++i)
 		vct[i] = (vct.size() - i) * 3;
@@ -1142,8 +1159,8 @@ void vector_my_assign(TestContainer& container)
 	EXPECTED_OUTPUT(7\n4\n### After assign(): ###\n4\n2\n7\n4\n6\n### assign() on enough capacity and low size: ###\n5\n3\n);
 }
 
-static void	checkErase(ft::vector<std::string> const &vct,
-					ft::vector<std::string>::const_iterator const &it)
+static void	checkErase(NAMESPACE::vector<std::string> const &vct,
+					NAMESPACE::vector<std::string>::const_iterator const &it)
 {
 	static int i = 0;
 	std::cout << "[" << i++ << "] " << "erase: " << it - vct.begin() << std::endl;
@@ -1151,7 +1168,7 @@ static void	checkErase(ft::vector<std::string> const &vct,
 
 void vector_my_erase(TestContainer& container) // AE Problem is probably iterator + n
 {
-	ft::vector<std::string> vct(10);
+	NAMESPACE::vector<std::string> vct(10);
 
 	for (unsigned long int i = 0; i < vct.size(); ++i)
 		vct[i] = std::string((vct.size() - i), i + 65);
@@ -1189,38 +1206,38 @@ struct classcomp {
 
 void map_constructors(TestContainer& container)
 {
-	ft::map<char,int> first;
+	NAMESPACE::map<char,int> first;
 
 	first['a']=10;
 	first['b']=30;
 	first['c']=50;
 	first['d']=70;
 
-	ft::map<char,int> second (first.begin(),first.end());
+	NAMESPACE::map<char,int> second (first.begin(),first.end());
 
 	first['c']=500;
 	first['d']=700;
 
-	ft::map<char,int> third (second);
+	NAMESPACE::map<char,int> third (second);
 
 	second['a']=100;
 	second['b']=300;
 
-	ft::map<char,int,classcomp> fourth;                 // class as Compare
+	NAMESPACE::map<char,int,classcomp> fourth;                 // class as Compare
 
 	fourth['a']=10;
 	fourth['b']=30;
 	fourth['c']=50;
 
 	bool(*fn_pt)(char,char) = fncomp;
-	ft::map<char,int,bool(*)(char,char)> fifth (fn_pt); // function pointer as Compare
+	NAMESPACE::map<char,int,bool(*)(char,char)> fifth (fn_pt); // function pointer as Compare
 
-	fifth.insert(ft::make_pair('a', 10));
-	fifth.insert(ft::make_pair('b', 30));
-	fifth.insert(ft::make_pair('c', 50));
+	fifth.insert(NAMESPACE::make_pair('a', 10));
+	fifth.insert(NAMESPACE::make_pair('b', 30));
+	fifth.insert(NAMESPACE::make_pair('c', 50));
 
 
-	ft::map<char,int>::iterator it;
+	NAMESPACE::map<char,int>::iterator it;
 	for (it=first.begin(); it!=first.end(); ++it)
 		std::cout << it->first << " => " << it->second << '\n';
 
@@ -1242,17 +1259,17 @@ void map_constructors(TestContainer& container)
 
 void map_operator_equal(TestContainer& container)
 {
-	ft::map<char,int> first;
-	ft::map<char,int> second;
+	NAMESPACE::map<char,int> first;
+	NAMESPACE::map<char,int> second;
 
 	first['x']=8;
 	first['y']=16;
 	first['z']=32;
 
 	second=first;                // second now contains 3 ints
-	first=ft::map<char,int>();  // and first is now empty
+	first=NAMESPACE::map<char,int>();  // and first is now empty
 
-	ft::map<char,int>::iterator it;
+	NAMESPACE::map<char,int>::iterator it;
 	std::cout << "Size of first: " << first.size() << '\n';
 	for (it=first.begin(); it!=first.end(); ++it)
 		std::cout << it->first << " => " << it->second << '\n';
@@ -1267,14 +1284,14 @@ void map_operator_equal(TestContainer& container)
 
 void map_begin(TestContainer& container)
 {
-	ft::map<char,int> mymap;
+	NAMESPACE::map<char,int> mymap;
 
 	mymap['b'] = 100;
 	mymap['a'] = 200;
 	mymap['c'] = 300;
 
 	// show content:
-	for (ft::map<char,int>::iterator it=mymap.begin(); it!=mymap.end(); ++it)
+	for (NAMESPACE::map<char,int>::iterator it=mymap.begin(); it!=mymap.end(); ++it)
 		std::cout << it->first << " => " << it->second << '\n';
 
 //////////////////////////////////
@@ -1283,14 +1300,14 @@ void map_begin(TestContainer& container)
 
 void map_end(TestContainer& container)
 {
-	ft::map<char,int> mymap;
+	NAMESPACE::map<char,int> mymap;
 
 	mymap['b'] = 100;
 	mymap['a'] = 200;
 	mymap['c'] = 300;
 
 	// show content:
-	for (ft::map<char,int>::iterator it=mymap.begin(); it!=mymap.end(); ++it)
+	for (NAMESPACE::map<char,int>::iterator it=mymap.begin(); it!=mymap.end(); ++it)
 		std::cout << it->first << " => " << it->second << '\n';
 
 //////////////////////////////////
@@ -1299,14 +1316,14 @@ void map_end(TestContainer& container)
 
 void map_rbegin(TestContainer& container)
 {
-	ft::map<char,int> mymap;
+	NAMESPACE::map<char,int> mymap;
 
 	mymap['x'] = 100;
 	mymap['y'] = 200;
 	mymap['z'] = 300;
 
 	// show content:
-	ft::map<char,int>::reverse_iterator rit;
+	NAMESPACE::map<char,int>::reverse_iterator rit;
 	for (rit=mymap.rbegin(); rit!=mymap.rend(); ++rit)
 		std::cout << rit->first << " => " << rit->second << '\n';
 
@@ -1316,14 +1333,14 @@ void map_rbegin(TestContainer& container)
 
 void map_rend(TestContainer& container)
 {
-	ft::map<char,int> mymap;
+	NAMESPACE::map<char,int> mymap;
 
 	mymap['x'] = 100;
 	mymap['y'] = 200;
 	mymap['z'] = 300;
 
 	// show content:
-	ft::map<char,int>::reverse_iterator rit;
+	NAMESPACE::map<char,int>::reverse_iterator rit;
 	for (rit=mymap.rbegin(); rit!=mymap.rend(); ++rit)
 		std::cout << rit->first << " => " << rit->second << '\n';
 
@@ -1333,7 +1350,7 @@ void map_rend(TestContainer& container)
 
 void map_empty(TestContainer& container)
 {
-	ft::map<char,int> mymap;
+	NAMESPACE::map<char,int> mymap;
 
 	mymap['a']=10;
 	mymap['b']=20;
@@ -1351,7 +1368,7 @@ void map_empty(TestContainer& container)
 
 void map_size(TestContainer& container)
 {
-	ft::map<char,int> mymap;
+	NAMESPACE::map<char,int> mymap;
 	mymap['a']=101;
 	mymap['b']=202;
 	mymap['c']=302;
@@ -1365,7 +1382,7 @@ void map_size(TestContainer& container)
 void map_max_size(TestContainer& container)
 {
 	int i;
-	ft::map<int,int> mymap;
+	NAMESPACE::map<int,int> mymap;
 
 	if (mymap.max_size()>1000)
 	{
@@ -1380,7 +1397,7 @@ void map_max_size(TestContainer& container)
 
 void map_operator_access_element(TestContainer& container)
 {
-	ft::map<char,std::string> mymap;
+	NAMESPACE::map<char,std::string> mymap;
 
 	mymap['a']="an element";
 	mymap['b']="another element";
@@ -1399,7 +1416,7 @@ void map_operator_access_element(TestContainer& container)
 
 void map_at(TestContainer& container)
 {
-	// ft::map<std::string,int> mymap = {
+	// NAMESPACE::map<std::string,int> mymap = {
 	// 				{ "alpha", 0 },
 	// 				{ "beta", 0 },
 	// 				{ "gamma", 0 } };
@@ -1434,26 +1451,26 @@ void map_at(TestContainer& container)
 
 void map_insert(TestContainer& container)
 {
-	ft::map<char,int> mymap;
+	NAMESPACE::map<char,int> mymap;
 
 	// first insert function version (single parameter):
-	mymap.insert ( ft::pair<char,int>('a',100) );
-	mymap.insert ( ft::pair<char,int>('z',200) );
+	mymap.insert ( NAMESPACE::pair<char,int>('a',100) );
+	mymap.insert ( NAMESPACE::pair<char,int>('z',200) );
 
-	ft::pair<ft::map<char,int>::iterator,bool> ret;
-	ret = mymap.insert ( ft::pair<char,int>('z',500) );
+	NAMESPACE::pair<NAMESPACE::map<char,int>::iterator,bool> ret;
+	ret = mymap.insert ( NAMESPACE::pair<char,int>('z',500) );
 	if (ret.second==false) {
 		std::cout << "element 'z' already existed";
 		std::cout << " with a value of " << ret.first->second << '\n';
 	}
 
 	// second insert function version (with hint position):
-	ft::map<char,int>::iterator it = mymap.begin();
-	mymap.insert (it, ft::pair<char,int>('b',300));  // max efficiency inserting
-	mymap.insert (it, ft::pair<char,int>('c',400));  // no max efficiency inserting
+	NAMESPACE::map<char,int>::iterator it = mymap.begin();
+	mymap.insert (it, NAMESPACE::pair<char,int>('b',300));  // max efficiency inserting
+	mymap.insert (it, NAMESPACE::pair<char,int>('c',400));  // no max efficiency inserting
 
 	// third insert function version (range insertion):
-	ft::map<char,int> anothermap;
+	NAMESPACE::map<char,int> anothermap;
 	anothermap.insert(mymap.begin(), mymap.find('c'));
 
 	// showing contents:
@@ -1471,8 +1488,8 @@ void map_insert(TestContainer& container)
 
 void map_erase(TestContainer& container)
 {
-	ft::map<char,int> mymap;
-	ft::map<char,int>::iterator it;
+	NAMESPACE::map<char,int> mymap;
+	NAMESPACE::map<char,int>::iterator it;
 
 	// insert some values:
 	mymap['a']=10;
@@ -1481,12 +1498,12 @@ void map_erase(TestContainer& container)
 	mymap['d']=40;
 	mymap['e']=50;
 	mymap['f']=60;
-	// mymap.insert(ft::make_pair('a', 10));
-	// mymap.insert(ft::make_pair('b', 20));
-	// mymap.insert(ft::make_pair('c', 30));
-	// mymap.insert(ft::make_pair('d', 40));
-	// mymap.insert(ft::make_pair('e', 50));
-	// mymap.insert(ft::make_pair('f', 60));
+	// mymap.insert(NAMESPACE::make_pair('a', 10));
+	// mymap.insert(NAMESPACE::make_pair('b', 20));
+	// mymap.insert(NAMESPACE::make_pair('c', 30));
+	// mymap.insert(NAMESPACE::make_pair('d', 40));
+	// mymap.insert(NAMESPACE::make_pair('e', 50));
+	// mymap.insert(NAMESPACE::make_pair('f', 60));
 
 	it=mymap.find('b');
 	mymap.erase (it);                   // erasing by iterator
@@ -1506,7 +1523,7 @@ void map_erase(TestContainer& container)
 
 void map_swap(TestContainer& container)
 {
-	ft::map<char,int> foo,bar;
+	NAMESPACE::map<char,int> foo,bar;
 
 	foo['x']=100;
 	foo['y']=200;
@@ -1518,11 +1535,11 @@ void map_swap(TestContainer& container)
 	foo.swap(bar);
 
 	std::cout << "foo contains:\n";
-	for (ft::map<char,int>::iterator it=foo.begin(); it!=foo.end(); ++it)
+	for (NAMESPACE::map<char,int>::iterator it=foo.begin(); it!=foo.end(); ++it)
 		std::cout << it->first << " => " << it->second << '\n';
 
 	std::cout << "bar contains:\n";
-	for (ft::map<char,int>::iterator it=bar.begin(); it!=bar.end(); ++it)
+	for (NAMESPACE::map<char,int>::iterator it=bar.begin(); it!=bar.end(); ++it)
 		std::cout << it->first << " => " << it->second << '\n';
 
 //////////////////////////////////
@@ -1531,14 +1548,14 @@ void map_swap(TestContainer& container)
 
 void map_clear(TestContainer& container)
 {
-	ft::map<char,int> mymap;
+	NAMESPACE::map<char,int> mymap;
 
 	mymap['x']=100;
 	mymap['y']=200;
 	mymap['z']=300;
 
 	std::cout << "mymap contains:\n";
-	for (ft::map<char,int>::iterator it=mymap.begin(); it!=mymap.end(); ++it)
+	for (NAMESPACE::map<char,int>::iterator it=mymap.begin(); it!=mymap.end(); ++it)
 		std::cout << it->first << " => " << it->second << '\n';
 
 	mymap.clear();
@@ -1546,7 +1563,7 @@ void map_clear(TestContainer& container)
 	mymap['b']=2202;
 
 	std::cout << "mymap contains:\n";
-	for (ft::map<char,int>::iterator it=mymap.begin(); it!=mymap.end(); ++it)
+	for (NAMESPACE::map<char,int>::iterator it=mymap.begin(); it!=mymap.end(); ++it)
 		std::cout << it->first << " => " << it->second << '\n';
 
 //////////////////////////////////
@@ -1555,9 +1572,9 @@ void map_clear(TestContainer& container)
 
 void map_key_comp(TestContainer& container)
 {
-	ft::map<char,int> mymap;
+	NAMESPACE::map<char,int> mymap;
 
-	ft::map<char,int>::key_compare mycomp = mymap.key_comp();
+	NAMESPACE::map<char,int>::key_compare mycomp = mymap.key_comp();
 
 	mymap['a']=100;
 	mymap['b']=200;
@@ -1567,7 +1584,7 @@ void map_key_comp(TestContainer& container)
 
 	char highest = mymap.rbegin()->first;     // key value of last element
 
-	ft::map<char,int>::iterator it = mymap.begin();
+	NAMESPACE::map<char,int>::iterator it = mymap.begin();
 	do {
 		std::cout << it->first << " => " << it->second << '\n';
 	} while ( mycomp((*it++).first, highest) );
@@ -1580,7 +1597,7 @@ void map_key_comp(TestContainer& container)
 
 void map_value_comp(TestContainer& container)
 {
-	ft::map<char,int> mymap;
+	NAMESPACE::map<char,int> mymap;
 
 	mymap['x']=1001;
 	mymap['y']=2002;
@@ -1588,9 +1605,9 @@ void map_value_comp(TestContainer& container)
 
 	std::cout << "mymap contains:\n";
 
-	ft::pair<char,int> highest = *mymap.rbegin();          // last element
+	NAMESPACE::pair<char,int> highest = *mymap.rbegin();          // last element
 
-	ft::map<char,int>::iterator it = mymap.begin();
+	NAMESPACE::map<char,int>::iterator it = mymap.begin();
 	do {
 		std::cout << it->first << " => " << it->second << '\n';
 	} while ( mymap.value_comp()(*it++, highest) );
@@ -1601,8 +1618,8 @@ void map_value_comp(TestContainer& container)
 
 void map_find(TestContainer& container)
 {
-	ft::map<char,int> mymap;
-	ft::map<char,int>::iterator it;
+	NAMESPACE::map<char,int> mymap;
+	NAMESPACE::map<char,int>::iterator it;
 
 	mymap['a']=50;
 	mymap['b']=100;
@@ -1627,7 +1644,7 @@ void map_find(TestContainer& container)
 
 void map_count(TestContainer& container)
 {
-	ft::map<char,int> mymap;
+	NAMESPACE::map<char,int> mymap;
 	char c;
 
 	mymap ['a']=101;
@@ -1649,8 +1666,8 @@ void map_count(TestContainer& container)
 
 void map_lower_bound(TestContainer& container)
 {
-	ft::map<char,int> mymap;
-	ft::map<char,int>::iterator itlow,itup;
+	NAMESPACE::map<char,int> mymap;
+	NAMESPACE::map<char,int>::iterator itlow,itup;
 
 	mymap['a']=20;
 	mymap['b']=40;
@@ -1664,7 +1681,7 @@ void map_lower_bound(TestContainer& container)
 	mymap.erase(itlow,itup);        // erases [itlow,itup)
 
 	// print content:
-	for (ft::map<char,int>::iterator it=mymap.begin(); it!=mymap.end(); ++it)
+	for (NAMESPACE::map<char,int>::iterator it=mymap.begin(); it!=mymap.end(); ++it)
 		std::cout << it->first << " => " << it->second << '\n';
 
 //////////////////////////////////
@@ -1673,8 +1690,8 @@ void map_lower_bound(TestContainer& container)
 
 void map_upper_bound(TestContainer& container)
 {
-	ft::map<char,int> mymap;
-	ft::map<char,int>::iterator itlow,itup;
+	NAMESPACE::map<char,int> mymap;
+	NAMESPACE::map<char,int>::iterator itlow,itup;
 
 	mymap['a']=20;
 	mymap['b']=40;
@@ -1688,7 +1705,7 @@ void map_upper_bound(TestContainer& container)
 	mymap.erase(itlow,itup);        // erases [itlow,itup)
 
 	// print content:
-	for (ft::map<char,int>::iterator it=mymap.begin(); it!=mymap.end(); ++it)
+	for (NAMESPACE::map<char,int>::iterator it=mymap.begin(); it!=mymap.end(); ++it)
 		std::cout << it->first << " => " << it->second << '\n';
 
 //////////////////////////////////
@@ -1697,13 +1714,13 @@ void map_upper_bound(TestContainer& container)
 
 void map_equal_range(TestContainer& container)
 {
-	ft::map<char,int> mymap;
+	NAMESPACE::map<char,int> mymap;
 
 	mymap['a']=10;
 	mymap['b']=20;
 	mymap['c']=30;
 
-	ft::pair<ft::map<char,int>::iterator,ft::map<char,int>::iterator> ret;
+	NAMESPACE::pair<NAMESPACE::map<char,int>::iterator,NAMESPACE::map<char,int>::iterator> ret;
 	ret = mymap.equal_range('b');
 
 	std::cout << "lower bound points to: '";
@@ -1718,19 +1735,19 @@ void map_equal_range(TestContainer& container)
 
 void map_lexicographical_compares(TestContainer& container)
 {
-		ft::map<int, char> alice;
-		alice.insert(ft::make_pair(1, 'a'));
-		alice.insert(ft::make_pair(2, 'b'));
-		alice.insert(ft::make_pair(3, 'c'));
-		ft::map<int, char> bob;
-		bob.insert(ft::make_pair(7, 'Z'));
-		bob.insert(ft::make_pair(8, 'Y'));
-		bob.insert(ft::make_pair(9, 'X'));
-		bob.insert(ft::make_pair(10, 'W'));
-		ft::map<int, char> eve;
-		eve.insert(ft::make_pair(1, 'a'));
-		eve.insert(ft::make_pair(2, 'b'));
-		eve.insert(ft::make_pair(3, 'c'));
+		NAMESPACE::map<int, char> alice;
+		alice.insert(NAMESPACE::make_pair(1, 'a'));
+		alice.insert(NAMESPACE::make_pair(2, 'b'));
+		alice.insert(NAMESPACE::make_pair(3, 'c'));
+		NAMESPACE::map<int, char> bob;
+		bob.insert(NAMESPACE::make_pair(7, 'Z'));
+		bob.insert(NAMESPACE::make_pair(8, 'Y'));
+		bob.insert(NAMESPACE::make_pair(9, 'X'));
+		bob.insert(NAMESPACE::make_pair(10, 'W'));
+		NAMESPACE::map<int, char> eve;
+		eve.insert(NAMESPACE::make_pair(1, 'a'));
+		eve.insert(NAMESPACE::make_pair(2, 'b'));
+		eve.insert(NAMESPACE::make_pair(3, 'c'));
 	
 		std::cout << std::boolalpha;
 	
