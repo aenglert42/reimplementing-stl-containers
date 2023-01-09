@@ -53,7 +53,8 @@ getEmoji () {
 	case $1 in
 		0) emoji="${GREEN}✅";;
 		1) emoji="${RED}❌";;
-		2) emoji="${YELLOW}⚠️ ";;
+		2) emoji="${GREEN}✅";;
+		# 2) emoji="${YELLOW}⚠️ ";; // AE changed this from yellow to green as it occus when tree nodes have a different size than the ones from stl red-black-tree
 	esac
 	printf "${BOLD}${emoji}${EOC}"
 }
