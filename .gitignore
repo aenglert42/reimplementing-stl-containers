@@ -70,5 +70,8 @@ dkms.conf
 # ignore .log
 *.log
 
+# ignore .log
+*.diff
+
 # ignore testing directories
 # *testing_only*
