@@ -991,6 +991,27 @@ namespace ft
 				return (false);
 			}
 
+			void swap (Tree& other)
+			{
+				node_type* tmp_root = other._root;
+				node_type* tmp_end_node = other._end_node;
+				node_type* tmp_rend_node = other._rend_node;
+				size_type tmp_size = other._size;
+
+				// allocator_type _allocator;
+				// value_compare _compare;
+
+				other._root = _root;
+				other._end_node = _end_node;
+				other._rend_node = _rend_node;
+				other._size = _size;
+
+				_root = tmp_root;
+				_end_node = tmp_end_node;
+				_rend_node = tmp_rend_node;
+				_size = tmp_size;
+			}
+
 			void print_preorder (void)
 			{
 				std::cout << "Preorder:\n";

@@ -291,11 +291,9 @@ namespace ft
 			}
 
 		////swap///////////////////////////////////////////////////////
-			void swap (map& x) // AE this could be optimized by only swapping the tree content
+			void swap (map& x) // AE this should only swap the tree content
 			{
-				map tmp (x);
-				x = *this;
-				*this = tmp;
+				_tree.swap(x._tree);
 			}
 
 		////clear///////////////////////////////////////////////////////
