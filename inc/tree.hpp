@@ -1012,6 +1012,11 @@ namespace ft
 				_size = tmp_size;
 			}
 
+			size_type max_size () const
+			{
+				return (_allocator.max_size());
+			}
+
 			void print_preorder (void)
 			{
 				std::cout << "Preorder:\n";
