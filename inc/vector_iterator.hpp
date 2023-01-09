@@ -33,7 +33,7 @@ namespace ft
 
 				}
 
-				VectorIterator(const VectorIterator& other) : _ptr(other._ptr) // AE base()?
+				VectorIterator(const VectorIterator& other) : _ptr(other._ptr)
 				{
 
 				}
@@ -197,9 +197,9 @@ namespace ft
 				template <class Iterator>
 				VectorIterator<Iterator> operator+(
 					typename VectorIterator<Iterator>::difference_type n,
-					const VectorIterator<Iterator>& rev_it)
+					const VectorIterator<Iterator>& it)
 				{
-					return (VectorIterator<Iterator>(rev_it.base() + n));
+					return (VectorIterator<Iterator>(it.base() + n));
 				}
 
 			////operator-///////////////////////////////////////////////////////
@@ -208,6 +208,6 @@ namespace ft
 					const VectorIterator<Iterator>& lhs,
 					const VectorIterator<Iterator>& rhs)
 				{
-					return (lhs.base() + rhs.base());
+					return (lhs.base() - rhs.base());
 				}
 }
