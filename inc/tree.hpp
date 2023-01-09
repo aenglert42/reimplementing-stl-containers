@@ -278,16 +278,17 @@ namespace ft
 					else
 						parent->_right_child = node;
 					update_height(node);
+					rebalance_all(node);
 				}
 				else if (first_is_less_than_second(val, node))
 				{
 					tmp = insert(val, node->_left_child, node);
-					rebalance(node);
+					// rebalance(node);
 				}
 				else if (first_is_greater_than_second(val, node))
 				{
 					tmp = insert(val, node->_right_child, node);
-					rebalance(node);
+					// rebalance(node);
 				}
 				else
 					tmp.first = node;
@@ -676,14 +677,21 @@ namespace ft
 
 				// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 				// // old version
-				// iterator tmp = position;
-				// iterator next = position;
-				// ++next;
-				// if (first_is_greater_than_second(val, tmp.base()) && first_is_less_than_second(val, next.base()))
+				// iterator before = position;
+				// iterator after = position;
+				// --before;
+				// ++after;
+				// if (first_is_less_than_second(val, position.base()) && first_is_greater_than_second(val, before.base()))
 				// {
 				// 	// _root = insert(val, _root, ft_nullptr);
 				// 	// std::cout << YELLOW << "\nGOOD HINT!" << RESET << std::endl;
-				// 	return (insert(val, tmp.base(), tmp.base()->_parent).first);
+				// 	return (insert(val, position.base(), position.base()->_parent).first);
+				// }
+				// else if (first_is_greater_than_second(val, position.base()) && first_is_less_than_second(val, after.base()))
+				// {
+				// 	// _root = insert(val, _root, ft_nullptr);
+				// 	// std::cout << YELLOW << "\nGOOD HINT!" << RESET << std::endl;
+				// 	return (insert(val, position.base(), position.base()->_parent).first);
 				// }
 				// else
 				// {
@@ -698,8 +706,35 @@ namespace ft
 				// // return (find(val));
 
 				////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-				// alternative ignore hint
-				return (insert(val, _root, ft_nullptr).first);
+				// last try
+				node_type* current = position.base();
+				iterator before = position;
+				--before;
+				// if (first_is_less_than_second(val, current) && first_is_greater_than_second(val, before.base()) && current->_left_child == ft_nullptr)
+				if (first_is_less_than_second(val, current) && first_is_greater_than_second(val, before.base()))
+				{
+					// _root = insert(val, _root, ft_nullptr);
+					// std::cout << YELLOW << "\nGOOD HINT!" << RESET << std::endl;
+					return (insert(val, current, current->_parent).first);
+				}
+				iterator after = position;
+				++after;
+				// else if (first_is_greater_than_second(val, current) && first_is_less_than_second(val, after.base()) && current->_right_child == ft_nullptr)
+				if (first_is_greater_than_second(val, current) && first_is_less_than_second(val, after.base()))
+				{
+					// _root = insert(val, _root, ft_nullptr);
+					// std::cout << YELLOW << "\nGOOD HINT!" << RESET << std::endl;
+					return (insert(val, current, current->_parent).first);
+				}
+
+					// std::cout << YELLOW << "\nBAD HINT!" << RESET << std::endl;
+					return (insert(val, _root, ft_nullptr).first);
+
+			
+
+				// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+				// // alternative ignore hint
+				// return (insert(val, _root, ft_nullptr).first);
 
 				/*
 				////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -753,8 +788,13 @@ namespace ft
 			template <class InputIterator>
 			void insert (InputIterator first, InputIterator last)
 			{
+				// // old version
+				// while (first != last)
+				// 	insert(*first++);
+
+				iterator hint = iterator(_root);
 				while (first != last)
-					insert(*first++);
+					hint = insert(*first++).first;
 			}
 
 			void erase (iterator position)
@@ -854,7 +894,9 @@ namespace ft
 
 			void clear (void)
 			{
-				erase(begin(), end());
+				while (!empty())
+					erase(begin());
+				// erase(begin(), end());
 				// delete_from_node_downwards(_root);
 			}
 

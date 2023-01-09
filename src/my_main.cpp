@@ -81,6 +81,15 @@ void timer::reset()
     gettimeofday(&stamp, NULL);
 }
 
+template <typename ForwardIt, typename T>
+void iota(ForwardIt first, ForwardIt last, T value = T())
+{
+	while (first != last) {
+		*first++ = value;
+		++value;
+	}
+}
+
 void my_leaks(void)
 {
 	std::cerr << BLUE;
@@ -1016,88 +1025,139 @@ int main(void)
 	// 	std::cout << "erased: " << Tree.erase(i) << std::endl;
 	// }
 
-	// AVL deletion test
+	// // AVL deletion test
+	// {
+	// 	int i;
+	// 	(void)i;
+	// 	ft::Tree<int> Tree;
+	// 	ft::Tree<int>::iterator it;
+	// 	(void)it;
+	// 	std::cout << RED << "inserted: " << *Tree.insert(28).first << RESET << std::endl;
+	// 	// Tree.print2D();
+	// 	std::cout << RED << "inserted: " << *Tree.insert(76).first << RESET << std::endl;
+	// 	// Tree.print2D();
+	// 	std::cout << RED << "inserted: " << *Tree.insert(3).first << RESET << std::endl;
+	// 	// Tree.print2D();
+	// 	std::cout << RED << "inserted: " << *Tree.insert(93).first << RESET << std::endl;
+	// 	// Tree.print2D();
+	// 	std::cout << RED << "inserted: " << *Tree.insert(96).first << RESET << std::endl;
+	// 	// Tree.print2D();
+	// 	std::cout << RED << "inserted: " << *Tree.insert(30).first << RESET << std::endl;
+	// 	// Tree.print2D();
+	// 	std::cout << RED << "inserted: " << *Tree.insert(49).first << RESET << std::endl;
+	// 	// Tree.print2D();
+	// 	std::cout << RED << "inserted: " << *Tree.insert(29).first << RESET << std::endl;
+	// 	// Tree.print2D();
+	// 	std::cout << RED << "inserted: " << *Tree.insert(20).first << RESET << std::endl;
+	// 	// Tree.print2D();
+	// 	std::cout << RED << "inserted: " << *Tree.insert(21).first << RESET << std::endl;
+	// 	// Tree.print2D();
+	// 	std::cout << RED << "inserted: " << *Tree.insert(27).first << RESET << std::endl;
+	// 	// Tree.print2D();
+	// 	std::cout << RED << "inserted: " << *Tree.insert(7).first << RESET << std::endl;
+	// 	// Tree.print2D();
+	// 	std::cout << RED << "inserted: " << *Tree.insert(34).first << RESET << std::endl;
+	// 	// Tree.print2D();
+	// 	std::cout << RED << "inserted: " << *Tree.insert(82).first << RESET << std::endl;
+	// 	// Tree.print2D();
+	// 	std::cout << RED << "inserted: " << *Tree.insert(9).first << RESET << std::endl;
+	// 	// Tree.print2D();
+	// 	std::cout << RED << "inserted: " << *Tree.insert(24).first << RESET << std::endl;
+	// 	// Tree.print2D();
+	// 	std::cout << RED << "inserted: " << *Tree.insert(26).first << RESET << std::endl;
+	// 	// Tree.print2D();
+	// 	std::cout << RED << "inserted: " << *Tree.insert(31).first << RESET << std::endl;
+	// 	// Tree.print2D();
+	// 	std::cout << RED << "inserted: " << *Tree.insert(74).first << RESET << std::endl;
+	// 	// Tree.print2D();
+	// 	std::cout << RED << "inserted: " << *Tree.insert(39).first << RESET << std::endl;
+	// 	// Tree.print2D();
+	// 	std::cout << RED << "inserted: " << *Tree.insert(85).first << RESET << std::endl;
+	// 	// Tree.print2D();
+	// 	std::cout << RED << "inserted: " << *Tree.insert(Tree.find(49),55) << RESET << std::endl;
+	// 	// Tree.print2D();
+	// 	std::cout << RED << "inserted: " << *Tree.insert(Tree.end(),1000) << RESET << std::endl;
+	// 	// Tree.print2D();
+	// 	it = Tree.end();
+	// 	it--;
+	// 	std::cout << RED << "inserted: " << *Tree.insert(it,1001) << RESET << std::endl;
+	// 	// i = 3;
+	// 	// Tree.erase(Tree.find(i));
+	// 	// std::cout << RED << "erased: " << i << RESET << std::endl;
+	// 	// // Tree.print2D();
+	// 	// i = 9;
+	// 	// Tree.erase(Tree.find(i));
+	// 	// std::cout << RED << "erased: " << i << RESET << std::endl;
+	// 	// // Tree.print2D();
+	// 	// i = 93;
+	// 	// Tree.erase(Tree.find(i));
+	// 	// std::cout << RED << "erased: " << i << RESET << std::endl;
+	// 	// // Tree.print2D();
+	// 	// i = 28;
+	// 	// Tree.erase(Tree.find(i));
+	// 	// std::cout << RED << "erased: " << i << RESET << std::endl;
+	// 	// i = 28;
+	// 	// Tree.erase(Tree.find(i));
+	// 	// std::cout << RED << "erased: " << i << RESET << std::endl;
+	// 	// i = 49;
+	// 	// Tree.erase(Tree.find(i));
+	// 	// std::cout << RED << "erased: " << i << RESET << std::endl;
+	// 	// i = 39;
+	// 	// Tree.erase(Tree.find(i));
+	// 	// std::cout << RED << "erased: " << i << RESET << std::endl;
+	// 	// i = 96;
+	// 	// Tree.erase(Tree.find(i));
+	// 	// std::cout << RED << "erased: " << i << RESET << std::endl;
+	// 	// i = 21;
+	// 	// Tree.erase(Tree.find(i));
+	// 	// std::cout << RED << "erased: " << i << RESET << std::endl;
+	// 	// i = 20;
+	// 	// Tree.erase(Tree.find(i));
+	// 	// std::cout << RED << "erased: " << i << RESET << std::endl;
+	// 	// i = 24;
+	// 	// Tree.erase(Tree.find(i));
+	// 	// std::cout << RED << "erased: " << i << RESET << std::endl;
+	// 	Tree.print2D();
+	// }
+
+	// map insert with hint benchmark
 	{
-		int i;
-		(void)i;
-		ft::Tree<int> Tree;
-		std::cout << RED << "inserted: " << *Tree.insert(28).first << RESET << std::endl;
-		// Tree.print2D();
-		std::cout << RED << "inserted: " << *Tree.insert(76).first << RESET << std::endl;
-		// Tree.print2D();
-		std::cout << RED << "inserted: " << *Tree.insert(3).first << RESET << std::endl;
-		// Tree.print2D();
-		std::cout << RED << "inserted: " << *Tree.insert(93).first << RESET << std::endl;
-		// Tree.print2D();
-		std::cout << RED << "inserted: " << *Tree.insert(96).first << RESET << std::endl;
-		// Tree.print2D();
-		std::cout << RED << "inserted: " << *Tree.insert(30).first << RESET << std::endl;
-		// Tree.print2D();
-		std::cout << RED << "inserted: " << *Tree.insert(49).first << RESET << std::endl;
-		// Tree.print2D();
-		std::cout << RED << "inserted: " << *Tree.insert(29).first << RESET << std::endl;
-		// Tree.print2D();
-		std::cout << RED << "inserted: " << *Tree.insert(20).first << RESET << std::endl;
-		// Tree.print2D();
-		std::cout << RED << "inserted: " << *Tree.insert(21).first << RESET << std::endl;
-		// Tree.print2D();
-		std::cout << RED << "inserted: " << *Tree.insert(27).first << RESET << std::endl;
-		// Tree.print2D();
-		std::cout << RED << "inserted: " << *Tree.insert(7).first << RESET << std::endl;
-		// Tree.print2D();
-		std::cout << RED << "inserted: " << *Tree.insert(34).first << RESET << std::endl;
-		// Tree.print2D();
-		std::cout << RED << "inserted: " << *Tree.insert(82).first << RESET << std::endl;
-		// Tree.print2D();
-		std::cout << RED << "inserted: " << *Tree.insert(9).first << RESET << std::endl;
-		// Tree.print2D();
-		std::cout << RED << "inserted: " << *Tree.insert(24).first << RESET << std::endl;
-		// Tree.print2D();
-		std::cout << RED << "inserted: " << *Tree.insert(26).first << RESET << std::endl;
-		// Tree.print2D();
-		std::cout << RED << "inserted: " << *Tree.insert(31).first << RESET << std::endl;
-		// Tree.print2D();
-		std::cout << RED << "inserted: " << *Tree.insert(74).first << RESET << std::endl;
-		// Tree.print2D();
-		std::cout << RED << "inserted: " << *Tree.insert(39).first << RESET << std::endl;
-		// Tree.print2D();
-		std::cout << RED << "inserted: " << *Tree.insert(85).first << RESET << std::endl;
-		i = 3;
-		Tree.erase(Tree.find(i));
-		std::cout << RED << "erased: " << i << RESET << std::endl;
-		// Tree.print2D();
-		i = 9;
-		Tree.erase(Tree.find(i));
-		std::cout << RED << "erased: " << i << RESET << std::endl;
-		// Tree.print2D();
-		i = 93;
-		Tree.erase(Tree.find(i));
-		std::cout << RED << "erased: " << i << RESET << std::endl;
-		// Tree.print2D();
-		i = 28;
-		Tree.erase(Tree.find(i));
-		std::cout << RED << "erased: " << i << RESET << std::endl;
-		i = 28;
-		Tree.erase(Tree.find(i));
-		std::cout << RED << "erased: " << i << RESET << std::endl;
-		i = 49;
-		Tree.erase(Tree.find(i));
-		std::cout << RED << "erased: " << i << RESET << std::endl;
-		i = 39;
-		Tree.erase(Tree.find(i));
-		std::cout << RED << "erased: " << i << RESET << std::endl;
-		i = 96;
-		Tree.erase(Tree.find(i));
-		std::cout << RED << "erased: " << i << RESET << std::endl;
-		i = 21;
-		Tree.erase(Tree.find(i));
-		std::cout << RED << "erased: " << i << RESET << std::endl;
-		i = 20;
-		Tree.erase(Tree.find(i));
-		std::cout << RED << "erased: " << i << RESET << std::endl;
-		i = 24;
-		Tree.erase(Tree.find(i));
-		std::cout << RED << "erased: " << i << RESET << std::endl;
-		Tree.print2D();
+		#define NAMESPACE std
+
+		#define SIZE 8388607
+
+		SETUP;
+
+		NAMESPACE::vector<int> data(SIZE);
+
+		iota(data.begin(), data.end(), rand());
+
+		NAMESPACE::map<int, int> m;
+
+		timer t;
+
+		for (std::size_t i = 0; i < 5; ++i) {
+			t.reset();
+			for (std::size_t i = 0; i < SIZE / 4; ++i) {
+					m.insert(m.end(), NAMESPACE::make_pair(i, rand()));
+				}
+			sum += t.get_time();
+			// std::cout << m.size() << std::endl;
+			m.clear();
+		}
+
+		// for (std::size_t i = 0; i < 5; ++i) {
+		//     t.reset();
+		//     // for (NAMESPACE::vector<int>::iterator it = data.begin(); it != data.end(); ++it) {
+		// for (std::size_t i = 0; i < MAXSIZE / 4; ++i) {
+		//         m.insert(m.end(), NAMESPACE::make_pair(i, rand()));
+		//     }
+		//     sum += t.get_time();
+		//     m.clear();
+		// }
+		// }
+		
+
+		PRINT_SUM();
 	}
 }

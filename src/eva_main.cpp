@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 #include <deque>
-#if 1 //CREATE A REAL STL EXAMPLE
+#if 0 //CREATE A REAL STL EXAMPLE
 	#include <map>
 	#include <stack>
 	#include <vector>
@@ -25,6 +25,7 @@ struct Buffer
 
 #define COUNT (MAX_RAM / (int)sizeof(Buffer))
 
+/* AE
 template<typename T>
 class MutantStack : public ft::stack<T>
 {
@@ -43,6 +44,7 @@ public:
 	iterator begin() { return c.begin(); }
 	iterator end() { return c.end(); }
 };
+*/
 
 int main(int argc, char** argv) {
 	if (argc != 2)
@@ -104,6 +106,7 @@ int main(int argc, char** argv) {
 	{
 		ft::map<int, int> copy = map_int;
 	}
+	/* AE
 	MutantStack<char> iterable_stack;
 	for (char letter = 'a'; letter <= 'z'; letter++)
 		iterable_stack.push(letter);
@@ -111,6 +114,7 @@ int main(int argc, char** argv) {
 	{
 		std::cout << *it;
 	}
+	*/
 	std::cout << std::endl;
 	return (0);
 }
