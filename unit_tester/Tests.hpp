@@ -13,7 +13,8 @@
 //https://en.cppreference.com/w/cpp/preprocessor/replace checkout to abilitate use of ','
 #define EXPECTED_OUTPUT(TEXT) container.fill_container(__func__, __LINE__, container.stream.str(), #TEXT)
 
-#define NAMESPACE ft
+#define NAMESPACE std
+#define BENCHMARK_NUMBER 100000
 
 #include "../inc/algorithm.hpp"
 #include "../inc/iterator.hpp"
@@ -1915,4 +1916,156 @@ void avl_erase(TestContainer& container)
 
 //////////////////////////////////
 	EXPECTED_OUTPUT(Tree:\n\n------[E](85):1\n---[85](34):3\n---------[82](76):1\n------[76](85):2\n---------[74](76):1\n[34]():4\n---------[31](30):1\n------[30](27):2\n---------[29](30):1\n---[27](34):3\n---------[26](7):1\n------[7](27):2\n---------[RE](7):1\n);
+}
+
+void my_vector_test(TestContainer& container)
+{
+	NAMESPACE::vector<int> myvector;
+	if (myvector.end() == myvector.begin())
+		std::cout << "equal";
+	if (myvector.rend() == myvector.rbegin())
+		std::cout << "equal";
+	std::cout << myvector.size();
+	// std::cout << myvector.capacity();
+	std::cout << myvector.empty();
+	myvector.reserve(1);
+	// std::cout << myvector.capacity();
+	myvector.resize(0);
+	// std::cout << myvector.capacity();
+	myvector.clear();
+	if (myvector.end() == myvector.begin())
+		std::cout << "equal";
+	if (myvector.rend() == myvector.rbegin())
+		std::cout << "equal";
+	myvector.insert(myvector.begin(), 9);
+	std::cout << myvector[0];
+	myvector.erase(myvector.begin());
+	std::cout << myvector.size();
+	// std::cout << myvector.capacity();
+	std::cout << myvector.empty();
+	myvector.insert(myvector.end(), 7);
+	std::cout << myvector[0];
+	std::cout << myvector.size();
+	// std::cout << myvector.capacity();
+	std::cout << myvector.empty();
+	if (myvector.end() == myvector.begin() + 1)
+		std::cout << "equal";
+	myvector.pop_back();
+	myvector.clear();
+	std::cout << myvector.size();
+	// std::cout << myvector.capacity() << "-"; // 1 but is 0
+	std::cout << myvector.empty();
+	myvector.resize(5);
+	std::cout << myvector.size();
+	// std::cout << myvector.capacity() << "-"; // 5 but is 8
+	std::cout << myvector.empty();
+	myvector.clear();
+	std::cout << myvector.size();
+	// std::cout << myvector.capacity() << "-"; // 5 but is 0
+	std::cout << myvector.empty();
+	myvector.assign(0, 5);
+	std::cout << myvector.size();
+	// std::cout << myvector.capacity() << "-"; // 5 but is 0
+	std::cout << myvector.empty();
+	myvector.assign(1, 6);
+	std::cout << myvector.size();
+	// std::cout << myvector.capacity() << "-"; // 5 but is 1
+	std::cout << myvector.empty();
+	std::cout << *myvector.begin();
+	myvector.pop_back();
+	std::cout << myvector.size();
+	// std::cout << myvector.capacity() << "-"; // 5 but is 1
+	std::cout << myvector.empty();
+	myvector.push_back(3);
+	myvector.reserve(0);
+	std::cout << myvector.size();
+	// std::cout << myvector.capacity() << "-"; // 5 but is 1
+	std::cout << myvector.empty();
+	myvector.push_back(4);
+	std::cout << myvector.size();
+	// std::cout << myvector.capacity() << "-"; // 5 but is 2
+	std::cout << myvector.empty();
+	NAMESPACE::vector<int> myvector2;
+
+//////////////////////////////////
+	EXPECTED_OUTPUT(equalequal0trueequalequal90true71falseequal0true5false0true0true1false60true1false2false);
+}
+
+void my_map_test(TestContainer& container)
+{
+	NAMESPACE::map<int, int> map;
+	if (map.begin() == map.end())
+		std::cout << "equal";
+	if (map.rbegin() == map.rend())
+		std::cout << "equal";
+	std::cout << map.size();
+	std::cout << map.empty();
+	if (map.find(2) == map.end())
+		std::cout << "not found";
+	map.insert(NAMESPACE::make_pair(2, 2));
+	std::cout << map.find(2)->first;
+	map.erase(2);
+	if (map.begin() == map.end())
+		std::cout << "equal";
+	if (map.rbegin() == map.rend())
+		std::cout << "equal";
+	std::cout << map.size();
+	std::cout << map.empty();
+	map.insert(NAMESPACE::make_pair(2, 2));
+	map.erase(map.find(2));
+	if (map.begin() == map.end())
+		std::cout << "equal";
+	if (map.rbegin() == map.rend())
+		std::cout << "equal";
+	std::cout << map.size();
+	std::cout << map.empty();
+	map.clear();
+	if (map.begin() == map.end())
+		std::cout << "equal";
+	if (map.rbegin() == map.rend())
+		std::cout << "equal";
+	std::cout << map.size();
+	std::cout << map.empty();
+	NAMESPACE::map<int, int> map2 (map);
+	if (map2.begin() == map2.end())
+		std::cout << "equal";
+	if (map2.rbegin() == map2.rend())
+		std::cout << "equal";
+	std::cout << map2.size();
+	std::cout << map2.empty();
+	map2.insert(NAMESPACE::make_pair(2, 2));
+	map2.erase(map2.begin(), map2.end());
+	if (map2.begin() == map2.end())
+		std::cout << "equal";
+	if (map2.rbegin() == map2.rend())
+		std::cout << "equal";
+	std::cout << map2.size();
+	std::cout << map2.empty();
+
+	for(int i = 0; i < BENCHMARK_NUMBER; ++i)
+	{
+		map2.insert(NAMESPACE::make_pair(i, i));
+	}
+
+	while (map2.empty() == false)
+		map2.erase(map2.begin());
+
+	for(int i = 0; i < BENCHMARK_NUMBER; ++i)
+	{
+		map2.insert(NAMESPACE::make_pair(i, i));
+	}
+
+	NAMESPACE::map<int, int>::iterator it;
+	while (map2.size() > 1)
+	{
+		it = map2.end();
+		--it;
+		map2.erase(it);
+	}
+
+	NAMESPACE::map<int, int> map3;
+
+
+//////////////////////////////////
+	EXPECTED_OUTPUT(equalequal0truenot found2equalequal0trueequalequal0trueequalequal0trueequalequal0trueequalequal0true);
 }
