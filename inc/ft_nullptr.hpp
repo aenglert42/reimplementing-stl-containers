@@ -22,5 +22,5 @@ namespace ft
 	private:
 		void operator&() const;		/* Can't take address of nullptr */
 
-	} ft_nullptr = {};				/* and whose name is nullptr     */
+	} ft_nullptr = {};				/* and whose name is ft_nullptr     */
 }

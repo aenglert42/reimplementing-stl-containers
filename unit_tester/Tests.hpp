@@ -13,7 +13,7 @@
 //https://en.cppreference.com/w/cpp/preprocessor/replace checkout to abilitate use of ','
 #define EXPECTED_OUTPUT(TEXT) container.fill_container(__func__, __LINE__, container.stream.str(), #TEXT)
 
-#define NAMESPACE std
+#define NAMESPACE ft
 #define BENCHMARK_NUMBER 100000
 
 #include "../inc/algorithm.hpp"
@@ -1167,7 +1167,7 @@ static void	checkErase(NAMESPACE::vector<std::string> const &vct,
 	std::cout << "[" << i++ << "] " << "erase: " << it - vct.begin() << std::endl;
 }
 
-void vector_my_erase(TestContainer& container) // AE Problem is probably iterator + n
+void vector_my_erase(TestContainer& container)
 {
 	NAMESPACE::vector<std::string> vct(10);
 

@@ -1,7 +1,5 @@
 #pragma once
 
-#include <iostream> //remove
-
 namespace ft
 {
 	template <class T>

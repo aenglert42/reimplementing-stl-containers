@@ -1,7 +1,5 @@
 #pragma once
 
-#include <iostream> //remove
-
 namespace ft
 {
 // equal //////////// https://cplusplus.com/reference/algorithm/equal/

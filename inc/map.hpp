@@ -285,7 +285,7 @@ namespace ft
 			}
 
 		////swap///////////////////////////////////////////////////////
-			void swap (map& x) // AE this should only swap the tree content
+			void swap (map& x)
 			{
 				_tree.swap(x._tree);
 			}

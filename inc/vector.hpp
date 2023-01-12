@@ -276,53 +276,49 @@ namespace ft
 		////operator[]///////////////////////////////////////////////////////
 			reference operator[](size_type n)
 			{
-				// if n >= size
-				// errorhandling
-				return (_array[n]); // AE remove make function for that
+				return (_array[n]);
 			}
 
 			const_reference operator[](size_type n) const
 			{
-				// if n >= size
-				// errorhandling
-				return (_array[n]); // AE remove make function for that
+				return (_array[n]);
 			}
 
 		////at///////////////////////////////////////////////////////
 			reference at (size_type n)
 			{
 				if (_size == 0 || n > _size - 1)
-					throw std::out_of_range("Catch out_of_range exception!");  // AE remove make function for that
+					throw std::out_of_range("Catch out_of_range exception!");
 				return (_array[n]);
 			}
 
 			const_reference at (size_type n) const
 			{
 				if (_size == 0 || n > _size - 1)
-					throw std::out_of_range("Catch out_of_range exception!");  // AE remove make function for that
+					throw std::out_of_range("Catch out_of_range exception!");
 				return (_array[n]);
 			}
 
 		////front///////////////////////////////////////////////////////
 			reference front()
 			{
-				return (_array[0]); // AE remove make function for that
+				return (_array[0]);
 			}
 
 			const_reference front() const
 			{
-				return (_array[0]); // AE remove make function for that
+				return (_array[0]);
 			}
 
 		////back///////////////////////////////////////////////////////
 			reference back()
 			{
-				return (_array[_size - 1]); // AE remove make function for that
+				return (_array[_size - 1]);
 			}
 
 			const_reference back() const
 			{
-				return (_array[_size - 1]); // AE remove make function for that
+				return (_array[_size - 1]);
 			}
 
 		////data///////////////////////////////////////////////////////
@@ -400,13 +396,9 @@ namespace ft
 			{
 				size_type new_size = _size + n;
 				check_against_max_size(new_size);
-				// for (size_type i = 0; i < n; ++i)
-				// 	position = insert(position, val);
 
 				vector tmp (position, end());
 				erase(position, end());
-				// if (new_size >= _capacity)
-				// 	my_realloc(new_size);
 				for (size_type i = 0; i < n; ++i)
 					push_back(val);
 				range_push_back(tmp.begin(), tmp.end());
@@ -417,33 +409,6 @@ namespace ft
 			void insert (iterator position, InputIterator first, InputIterator last,
 				typename ft::enable_if< !ft::is_integral<InputIterator>::value, InputIterator >::type = InputIterator())
 			{
-				/*
-				// size_type n = last - first;
-				size_type n = ft::distance(first, last);
-				size_type old_size = _size;
-				difference_type offset = end() - position;
-
-				if (_size + n >= _capacity)
-					my_realloc(_size + n);
-				for (size_type i = 0; i < n; ++i)
-				{
-					_alloc.construct(&_array[_size], *(first)); // AE change this to something that doesnt need val
-					_size++;
-				}	
-				for (difference_type i = 0; i < offset; ++i)
-				{
-					_array[_size - 1 - i] = _array[old_size - 1 - i];
-				}
-				for (size_type i = 0; i < n; ++i)
-				{
-					_array[old_size - offset + i] = *(first++);
-				}
-
-				// difference_type offset = position - begin();
-				// _M_insert_dispatch(begin() + offset,
-				// 			first, last, __false_type());
-				// return (begin() + offset);
-				*/
 				vector tmp (position, end());
 				erase(position, end());
 				range_push_back(first, last);

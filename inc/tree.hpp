@@ -23,7 +23,7 @@
 
 namespace ft
 {
-	template <class content_type, // AE give key and map content_type to key
+	template <class content_type,
 	class key_type = content_type,
 	class Compare = ft::less<content_type> >
 	// class GetKey = ft::identity<content_type>, identity returns what it gets via argument
@@ -119,14 +119,6 @@ namespace ft
 					return (true);
 				return (_compare(node->_content, val));
 			}
-
-			// void update_parent(node_type* old_child, node_type* new_child)
-			// {
-			// 	if (old_child->_parent->_left_child == old_child)
-			// 		old_child->_parent->_left_child = new_child;
-			// 	else
-			// 		old_child->_parent->_right_child = new_child;
-			// }
 
 			int check_balance (node_type* node)
 			{
@@ -295,16 +287,6 @@ namespace ft
 			{
 				if (a == ft_nullptr || b == ft_nullptr)
 					return ;
-				// else if (a->_parent == b)
-				// {
-				// 	rotate_parent_and_child(b, a);
-				// 	return ;
-				// }
-				// else if (b->_parent == a)
-				// {
-				// 	rotate_parent_and_child(a, b);
-				// 	return ;
-				// }
 
 				node_type tmp (*a);
 
@@ -517,6 +499,66 @@ namespace ft
 				_end_node->_height = 2;
 			}
 
+			node_type* upper_bound (const content_type& val, node_type* node, node_type* parent) const
+			{
+				if (node == ft_nullptr)
+				{
+					if (first_is_greater_than_second(val, parent))
+						node = (get_successor_node(parent));
+					else
+						node = parent;
+				}
+				else if (first_equals_second(val, node))
+					node = (get_successor_node(node));
+				else if (first_is_less_than_second(val, node))
+				{
+					node = (upper_bound(val, node->_left_child, node));
+				}
+				else if (first_is_greater_than_second(val, node))
+				{
+					node = (upper_bound(val, node->_right_child, node));
+				}
+				return (node);
+			}
+
+			node_type* lower_bound (const content_type& val, node_type* node, node_type* parent) const
+			{
+				if (node == ft_nullptr)
+				{
+					if (first_is_greater_than_second(val, parent))
+						node = (get_successor_node(parent));
+					else
+						node = parent;
+				}
+				else if (first_is_less_than_second(val, node))
+				{
+					node = (lower_bound(val, node->_left_child, node));
+				}
+				else if (first_is_greater_than_second(val, node))
+				{
+					node = (lower_bound(val, node->_right_child, node));
+				}
+				return (node);
+			}
+
+			void remove_range (node_type* node, node_type* low, node_type* high)
+			{
+				// Base case
+				if (node == ft_nullptr)
+					return ;
+
+				// First fix the left and right subtrees of node
+				remove_range(node->_left_child, low, high);
+				remove_range(node->_right_child, low, high);
+
+				// Now fix the node.
+				// if given node is in Range then delete it
+				bool is_greater_than_low = lhs_node_is_greater_than_rhs_node(node, low);
+				bool is_less_than_high = lhs_node_is_less_than_rhs_node(node, high);
+				if (is_greater_than_low && is_less_than_high)
+					remove_node(node);
+			}
+
 			// node_type* copy_tree(node_type* node, node_type* parent)
 			// {
 			// 	if (node == ft_nullptr || node->_is_end_node == true)
@@ -619,7 +661,7 @@ namespace ft
 				return (insert(val, _root, ft_nullptr));
 			}
 
-			iterator insert (iterator position, const content_type& val) // AE improve performance for benchmark (file stl_tree.h, function _M_get_insert_hint_unique_pos, line 2193)
+			iterator insert (iterator position, const content_type& val)
 			{
 				node_type* current = position.base();
 				iterator before = position;
@@ -648,15 +690,8 @@ namespace ft
 
 			void erase (iterator position)
 			{
-				if (position.base() != ft_nullptr && position != _end_node && position != _rend_node) // AE change this to _is_terminator
-				{
-					// // old version
-					// content_type val = *position;
-					// (void)val;
-					// erase(val, _root);
-
+				if (position.base() != ft_nullptr && position != _end_node && position != _rend_node)
 					remove_node(position.base());
-				}
 			}
 
 			size_type erase (const content_type& val)
@@ -668,24 +703,6 @@ namespace ft
 			{
 				while (first != last)
 					erase(*first++);
-			}
-
-			void remove_range (node_type* node, node_type* low, node_type* high)
-			{
-				// Base case
-				if (node == ft_nullptr)
-					return ;
-
-				// First fix the left and right subtrees of node
-				remove_range(node->_left_child, low, high);
-				remove_range(node->_right_child, low, high);
-
-				// Now fix the node.
-				// if given node is in Range then delete it
-				bool is_greater_than_low = lhs_node_is_greater_than_rhs_node(node, low);
-				bool is_less_than_high = lhs_node_is_less_than_rhs_node(node, high);
-				if (is_greater_than_low && is_less_than_high)
-					remove_node(node);
 			}
 
 			void clear (void)
@@ -722,53 +739,11 @@ namespace ft
 				return (1);
 			}
 
-			node_type* upper_bound (const content_type& val, node_type* node, node_type* parent) const
-			{
-				if (node == ft_nullptr)
-				{
-					if (first_is_greater_than_second(val, parent))
-						node = (get_successor_node(parent));
-					else
-						node = parent;
-				}
-				else if (first_equals_second(val, node))
-					node = (get_successor_node(node));
-				else if (first_is_less_than_second(val, node))
-				{
-					node = (upper_bound(val, node->_left_child, node));
-				}
-				else if (first_is_greater_than_second(val, node))
-				{
-					node = (upper_bound(val, node->_right_child, node));
-				}
-				return (node);
-			}
-
 			node_type* upper_bound (const content_type& val) const
 			{
 				if (empty())
 					return (_end_node);
 				return (upper_bound(val, _root, ft_nullptr));
-			}
-
-			node_type* lower_bound (const content_type& val, node_type* node, node_type* parent) const
-			{
-				if (node == ft_nullptr)
-				{
-					if (first_is_greater_than_second(val, parent))
-						node = (get_successor_node(parent));
-					else
-						node = parent;
-				}
-				else if (first_is_less_than_second(val, node))
-				{
-					node = (lower_bound(val, node->_left_child, node));
-				}
-				else if (first_is_greater_than_second(val, node))
-				{
-					node = (lower_bound(val, node->_right_child, node));
-				}
-				return (node);
 			}
 
 			node_type* lower_bound (const content_type& val) const
@@ -791,9 +766,6 @@ namespace ft
 				node_type* tmp_end_node = other._end_node;
 				node_type* tmp_rend_node = other._rend_node;
 				size_type tmp_size = other._size;
-
-				// allocator_type _allocator;
-				// value_compare _compare;
 
 				other._root = _root;
 				other._end_node = _end_node;

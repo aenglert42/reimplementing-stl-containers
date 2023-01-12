@@ -48,20 +48,6 @@ namespace ft
 			_right_child = ft_nullptr;
 		}
 
-		// Node &operator=(const Node& other)
-		// {
-		// 	if (this != &other)
-		// 	{
-		// 		_content = other._content;
-		// 		_parent = other._parent;
-		// 		_left_child = other._left_child;
-		// 		_right_child = other._right_child;
-		// 		_height = other._height;
-		// 		_is_terminator = other._is_terminator; //AE make this const
-		// 	}
-		// 	return (*this);
-		// }
-
 		Node (const Node& other) : _content(other._content), _parent(other._parent), _left_child(other._left_child), _right_child(other._right_child), _height(other._height), _is_terminator(other._is_terminator)
 		{
 
