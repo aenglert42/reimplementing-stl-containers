@@ -38,6 +38,7 @@ vector_rend, \
 vector_size, \
 vector_capacity, \
 vector_empty, \
+vector_rational_operators, \
 vector_reserve, \
 vector_operator_access_element, \
 vector_at, \
@@ -53,6 +54,7 @@ vector_swap, \
 vector_clear, \
 vector_get_allocator, \
 vector_no_member_swap, \
+my_vector_test, \
 map_constructors, \
 map_operator_equal, \
 map_begin, \
@@ -76,9 +78,10 @@ map_lower_bound, \
 map_upper_bound, \
 map_equal_range, \
 map_lexicographical_compares, \
+my_map_test/*, \
 avl_insert, \
 avl_erase, \
-vector_rational_operators/*
+
 
 */
 
