@@ -119,12 +119,15 @@ namespace ft
 		public:
 	//PUBLIC MEMBER FUNCTIONS
 
-			void print(void) // AE remove
+		#ifdef DEBUG
+			void print(void)
 			{
 				std::cerr << "size: " << _size << std::endl;
 				for (size_type i = 0; i < _size; i++)
 					std::cerr << _array[i] << std::endl;
 			}
+		#endif
+
 		////constructor///////////////////////////////////////////////////////
 			// default (1)	
 			explicit vector (const allocator_type& alloc = allocator_type()) : _size(0), _capacity(0), _alloc(alloc), _array(ft_nullptr)

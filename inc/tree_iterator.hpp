@@ -143,7 +143,7 @@ namespace ft
 
 				}
 
-				TreeIterator(const TreeIterator& other) : _ptr(other._ptr) // AE base()?
+				TreeIterator(const TreeIterator& other) : _ptr(other._ptr)
 				{
 
 				}

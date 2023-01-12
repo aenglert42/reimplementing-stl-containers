@@ -103,10 +103,12 @@ namespace ft
 		return (pair<T1, T2>(x, y));
 	}
 
+	#ifdef DEBUG
 	template <class T1, class T2>
-	std::ostream& operator<<(std::ostream& out, const ft::pair<T1, T2>& pair) // AE remove
+	std::ostream& operator<<(std::ostream& out, const ft::pair<T1, T2>& pair)
 	{
 		out << pair.first;
 		return (out);
 	}
+	#endif
 }

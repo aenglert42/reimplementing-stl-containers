@@ -20,10 +20,7 @@ namespace ft
 	{
 		typedef Node<content_type>					node_type;
 		typedef Node<content_type>*					pointer;
-		typedef const Node<content_type>*					const_pointer;
-		// typedef typename content_type::first_type	key_type; // AE uncommenting this will make node<int> invalid
-		// typedef typename content_type::second_type	value_type; // AE uncommenting this will make node<int> invalid
-		// typedef std::allocator<node_type>			allocator_type;
+		typedef const Node<content_type>*			const_pointer;
 		typedef std::size_t							size_type;
 
 		content_type _content;
@@ -39,7 +36,7 @@ namespace ft
 		}
 
 		// for _end_node and _rend_node
-		Node () : _parent(ft_nullptr), _left_child(ft_nullptr), _right_child(ft_nullptr), _height(1), _is_terminator(true) //AE remove
+		Node () : _parent(ft_nullptr), _left_child(ft_nullptr), _right_child(ft_nullptr), _height(1), _is_terminator(true)
 		{
 
 		}

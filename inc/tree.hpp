@@ -25,24 +25,20 @@ namespace ft
 {
 	template <class content_type, // AE give key and map content_type to key
 	class key_type = content_type,
-	class Compare = ft::less<content_type> > // AE this will be sorted wrong for pair -> no, because will get overwritten by map
+	class Compare = ft::less<content_type> >
 	// class GetKey = ft::identity<content_type>, identity returns what it gets via argument
-	// class Alloc = typename std::allocator<content_type> > // AE build this in later
+
 	class Tree
 	{
 		public:
-			typedef Node<content_type>							node_type;
-			// typedef typename node_type::key_type				key_type; // AE uncommenting this will make node<int> invalid
-			// typedef typename node_type::value_type			value_type; // AE uncommenting this will make node<int> invalid
-			typedef std::allocator<node_type>					allocator_type;
-			typedef Compare										value_compare;
-			// typedef TreeIterator<content_type>					iterator;
+			typedef Node<content_type>								node_type;
+			typedef std::allocator<node_type>						allocator_type;
+			typedef Compare											value_compare;
 			typedef TreeIterator<content_type, node_type*>			iterator;
-			// typedef TreeIterator<const content_type>				const_iterator;
-			typedef TreeIterator<const content_type, node_type*>		const_iterator;
-			typedef ft::reverse_iterator<iterator>				reverse_iterator;
-			typedef ft::reverse_iterator<const_iterator>		const_reverse_iterator;
-			typedef std::size_t									size_type;
+			typedef TreeIterator<const content_type, node_type*>	const_iterator;
+			typedef ft::reverse_iterator<iterator>					reverse_iterator;
+			typedef ft::reverse_iterator<const_iterator>			const_reverse_iterator;
+			typedef std::size_t										size_type;
 
 		private:
 			size_type _size;
@@ -236,7 +232,7 @@ namespace ft
 				// node's left subtree is longer than node's right subtree
 				if (balance_factor > MAX_DEVIATION)
 				{
-					balance_factor = check_balance(node->_left_child); // AE
+					balance_factor = check_balance(node->_left_child);
 					// child's left subtree is longer than child's right subtree
 					if (balance_factor >= 0)
 						rotate_right(node);
@@ -294,22 +290,6 @@ namespace ft
 					tmp.first = node;
 				return (tmp);
 			}
-
-			// node_type* update_node_pointers(node_type* old_node, node_type* tmp_node)
-			// {
-			// 	// AE nullcheck
-			// 	node_type* new_node = my_new(tmp_node->_content, old_node->_parent); // AE change to alloc
-			// 	if (old_node->_parent->_left_child == old_node)
-			// 		old_node->_parent->_left_child = new_node;
-			// 	else
-			// 		old_node->_parent->_right_child = new_node;
-			// 	new_node->_left_child = old_node->_left_child;
-			// 	new_node->_right_child = old_node->_right_child;
-			// 	new_node->_left_child->_parent = new_node;
-			// 	new_node->_right_child->_parent = new_node;
-			// 	my_delete(old_node);
-			// 	return (new_node);
-			// }
 
 			void swap_nodes (node_type* a, node_type* b)
 			{
@@ -385,25 +365,11 @@ namespace ft
 
 			size_type remove_node_with_two_children (node_type* node)
 			{
-				node_type old = *node;
-				// replace node's content with content of smallest node in right subtree
-				// node_type* tmp = get_leftmost_node(node->_right_child);
+				// replace node with smallest node in right subtree
 				// or
-				// replace node's content with content of greatest node in left subtree
+				// replace node with greatest node in left subtree
 				node_type* tmp = get_rightmost_node(node->_left_child);
-
 				swap_nodes(node, tmp);
-
-
-						// _allocator.destroy(node); // AE try to use swap_nodes instead
-						// _allocator.construct(node, node_type(tmp->_content, old._parent));
-						// node->_left_child = old._left_child;
-						// node->_right_child = old._right_child;
-						// node->_height = old._height;
-				// return(erase(tmp->_content, node->_right_child));
-				// or
-				// return (erase(tmp->_content, node->_left_child));
-				// this could fix range erase issues with rebalance
 				return (remove_node(node)); // AE check if this is a problem cause not recursive -> problem if more nodes need to be removed?
 			}
 
@@ -428,7 +394,8 @@ namespace ft
 
 			size_type remove_node_without_children (node_type* node)
 			{
-				// AE maybe implement update parent function, nullcheck ?
+				if (node == ft_nullptr)
+					return (0);
 				if (node->_parent->_left_child == node)
 					node->_parent->_left_child = ft_nullptr;
 				else
@@ -463,27 +430,8 @@ namespace ft
 					ret = erase(val, node->_right_child);
 				else
 					ret = remove_node(node);
-				// rebalance(node);
 				return (ret);
 			}
-
-			// void delete_from_node_downwards(node_type* node)
-			// {
-			// 	if (node == ft_nullptr || node == _end_node)
-			// 		return ;
-			// 	if (node->_left_child != ft_nullptr)
-			// 		delete_from_node_downwards(node->_left_child);
-			// 	if (node->_right_child != ft_nullptr)
-			// 		delete_from_node_downwards(node->_right_child);
-
-			// 	// AE maybe implement update parent function
-			// 	if (node->_parent->_left_child == node)
-			// 		node->_parent->_left_child = ft_nullptr;
-			// 	else
-			// 		node->_parent->_right_child = ft_nullptr;
-			// 	my_delete(node);
-			// 	_size--;
-			// }
 
 			void print_preorder (node_type* node)
 			{
@@ -673,116 +621,17 @@ namespace ft
 
 			iterator insert (iterator position, const content_type& val) // AE improve performance for benchmark (file stl_tree.h, function _M_get_insert_hint_unique_pos, line 2193)
 			{
-				(void)position;
-
-				// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-				// // old version
-				// iterator before = position;
-				// iterator after = position;
-				// --before;
-				// ++after;
-				// if (first_is_less_than_second(val, position.base()) && first_is_greater_than_second(val, before.base()))
-				// {
-				// 	// _root = insert(val, _root, ft_nullptr);
-				// 	// std::cout << YELLOW << "\nGOOD HINT!" << RESET << std::endl;
-				// 	return (insert(val, position.base(), position.base()->_parent).first);
-				// }
-				// else if (first_is_greater_than_second(val, position.base()) && first_is_less_than_second(val, after.base()))
-				// {
-				// 	// _root = insert(val, _root, ft_nullptr);
-				// 	// std::cout << YELLOW << "\nGOOD HINT!" << RESET << std::endl;
-				// 	return (insert(val, position.base(), position.base()->_parent).first);
-				// }
-				// else
-				// {
-				// 	// std::cout << YELLOW << "\nBAD HINT!" << RESET << std::endl;
-				// 	return (insert(val, _root, ft_nullptr).first);
-				// }
-				// // if (first_is_greater_than_second(val, position.base())) // AE this needs tuning
-				// // 	insert(val, position.base(), position.base()->_parent); // AE what if this would be first node? What happens with root / parent?
-				// // else
-				// 	// _root = insert(val, _root, ft_nullptr);
-				// 	// _root = insert(val, position.base(), position.base()->_parent);
-				// // return (find(val));
-
-				////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-				// last try
 				node_type* current = position.base();
 				iterator before = position;
 				--before;
-				// if (first_is_less_than_second(val, current) && first_is_greater_than_second(val, before.base()) && current->_left_child == ft_nullptr)
 				if (first_is_less_than_second(val, current) && first_is_greater_than_second(val, before.base()))
-				{
-					// _root = insert(val, _root, ft_nullptr);
-					// std::cout << YELLOW << "\nGOOD HINT!" << RESET << std::endl;
 					return (insert(val, current, current->_parent).first);
-				}
 				iterator after = position;
 				++after;
-				// else if (first_is_greater_than_second(val, current) && first_is_less_than_second(val, after.base()) && current->_right_child == ft_nullptr)
 				if (first_is_greater_than_second(val, current) && first_is_less_than_second(val, after.base()))
-				{
-					// _root = insert(val, _root, ft_nullptr);
-					// std::cout << YELLOW << "\nGOOD HINT!" << RESET << std::endl;
 					return (insert(val, current, current->_parent).first);
-				}
 
-					// std::cout << YELLOW << "\nBAD HINT!" << RESET << std::endl;
-					return (insert(val, _root, ft_nullptr).first);
-
-			
-
-				// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-				// // alternative ignore hint
-				// return (insert(val, _root, ft_nullptr).first);
-
-				/*
-				////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-				// from stl
-
-				
-				if (position == end()) // end()
-				{
-					if (size() > 0 && _M_impl._M_key_compare(_S_key(_M_rightmost()), __k))
-						return _Res(0, _M_rightmost());
-					else
-						return _M_get_insert_unique_pos(__k);
-				}
-				else if (_M_impl._M_key_compare(__k, _S_key(position._M_node)))
-				{
-					// First, try before...
-					iterator before = position;
-					if (position == begin()) // begin()
-						return _Res(_M_leftmost(), _M_leftmost());
-					else if (_M_impl._M_key_compare(_S_key((--before)._M_node), __k))
-					{
-						if (_S_right(before._M_node) == 0)
-							return _Res(0, before._M_node);
-						else
-							return _Res(position._M_node, position._M_node);
-					}
-					else
-						return _M_get_insert_unique_pos(__k);
-				}
-				else if (_M_impl._M_key_compare(_S_key(position._M_node), __k))
-				{
-					// ... then try after.
-					iterator after = position;
-					if (position._M_node == _M_rightmost())
-						return _Res(0, _M_rightmost());
-					else if (_M_impl._M_key_compare(__k, _S_key((++after)._M_node)))
-					{
-						if (_S_right(position._M_node) == 0)
-							return _Res(0, position._M_node);
-						else
-							return _Res(after._M_node, after._M_node);
-					}
-					else
-						return _M_get_insert_unique_pos(__k);
-				}
-				else // Equivalent keys.
-					return _Res(position._M_node, 0);
-				*/
+				return (insert(val, _root, ft_nullptr).first);
 			}
 
 			template <class InputIterator>
@@ -806,7 +655,6 @@ namespace ft
 					// (void)val;
 					// erase(val, _root);
 
-					// alternative: but would need rebalance:
 					remove_node(position.base());
 				}
 			}
@@ -816,88 +664,34 @@ namespace ft
 				return (erase(val, _root));
 			}
 
-			void erase (iterator first, iterator last) // AE improve performance for benchmark
+			void erase (iterator first, iterator last)
 			{
-				// old version
 				while (first != last)
 					erase(*first++);
-
-				// // new version too slow
-				// iterator it = begin();
-				// iterator tmp;
-				// while (it != end())
-				// {
-				// 	tmp = it;
-				// 	++tmp;
-				// 	my_remove_if_in_range(it.base(), first.base(), last.base());
-				// 	it = tmp;
-				// }
-				// erase(first);
-
 			}
 
-			// void my_remove_if_in_range(node_type* node, node_type* low, node_type* high)
-			// {
-			// 	bool is_greater_than_low = lhs_node_is_greater_than_rhs_node(node, low);
-			// 	bool is_less_than_high = lhs_node_is_less_than_rhs_node(node, high);
-			// 	if (is_greater_than_low && is_less_than_high)
-			// 		remove_node(node);					
-			// }
-
-			void removeRange (node_type* node, node_type* low, node_type* high)
+			void remove_range (node_type* node, node_type* low, node_type* high)
 			{
-
 				// Base case
 				if (node == ft_nullptr)
 					return ;
-					// return ft_nullptr;
 
 				// First fix the left and right subtrees of node
-				removeRange(node->_left_child, low, high);
-				// node->_left_child = removeRange(node->_left_child, low, high);
-				removeRange(node->_right_child, low, high);
-				// node->_right_child = removeRange(node->_right_child, low, high);
+				remove_range(node->_left_child, low, high);
+				remove_range(node->_right_child, low, high);
 
 				// Now fix the node.
 				// if given node is in Range then delete it
-				// if (node->data >= low && node->data <= high)
-				// if (!first_is_greater_than_second(low, node) && first_is_greater_than_second(high, node))
 				bool is_greater_than_low = lhs_node_is_greater_than_rhs_node(node, low);
 				bool is_less_than_high = lhs_node_is_less_than_rhs_node(node, high);
 				if (is_greater_than_low && is_less_than_high)
-				// if (!lhs_node_is_greater_than_rhs_node(low, node) && lhs_node_is_greater_than_rhs_node(high, node))
 					remove_node(node);
-					// return remove_node(node);
-
-				// Root is out of range
-				// return node;
 			}
-
-			// void removeRange(node_type* node, const content_type low, const content_type high)
-			// {
-
-			// 	// Base case
-			// 	if (node == ft_nullptr)
-			// 		return ;
-
-			// 	// First fix the left and right subtrees of node
-			// 	removeRange(node->_left_child, low, high);
-			// 	removeRange(node->_right_child, low, high);
-
-			// 	// Now fix the node.
-			// 	// if given node is in Range then delete it
-			// 	bool is_greater_or_equal_low = !first_is_greater_than_second(low, node);
-			// 	bool is_less_than_high = first_is_greater_than_second(high, node);
-			// 	if (is_greater_or_equal_low && is_less_than_high)
-			// 		remove_node(node);
-			// }
 
 			void clear (void)
 			{
 				while (!empty())
 					erase(begin());
-				// erase(begin(), end());
-				// delete_from_node_downwards(_root);
 			}
 
 			node_type* find (const content_type& val) const // AE look for key_type instead of content_type

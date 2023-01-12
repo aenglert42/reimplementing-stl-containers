@@ -97,16 +97,18 @@ namespace ft
 
 		public:
 	//PUBLIC MEMBER FUNCTIONS
-
-			void print (void) // AE remove
+		#ifdef DEBUG
+			void print (void)
 			{
 				_tree.print();
 			}
 
-			void print2D (void) // AE remove
+			void print2D (void)
 			{
 				_tree.print2D();
 			}
+		#endif
+
 		////constructor///////////////////////////////////////////////////////
 			
 			// empty (1)	
@@ -257,7 +259,7 @@ namespace ft
 
 			// range (3)
 			template <class InputIterator>
-			void insert (InputIterator first, InputIterator last) // AE use tree insert function
+			void insert (InputIterator first, InputIterator last)
 			{
 				return (_tree.insert(first, last));
 			}
@@ -280,14 +282,6 @@ namespace ft
 			void erase (iterator first, iterator last)
 			{
 				_tree.erase(first, last);
-				// while (last != first) // AE fix endless loop (test erase_range, random)
-				// {
-				// 	iterator tmp = first;
-				// 	++first;
-				// 	erase(tmp);
-				// }
-				// // (void)first;
-				// // (void)last;
 			}
 
 		////swap///////////////////////////////////////////////////////
