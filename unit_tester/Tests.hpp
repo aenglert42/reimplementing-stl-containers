@@ -2064,8 +2064,12 @@ void my_map_test(TestContainer& container)
 	}
 
 	NAMESPACE::map<int, int> map3;
+	if (map3.upper_bound(5) == map3.end())
+		std::cout << "not found";
+	if (map3.lower_bound(5) == map3.end())
+		std::cout << "not found";
 
 
 //////////////////////////////////
-	EXPECTED_OUTPUT(equalequal0truenot found2equalequal0trueequalequal0trueequalequal0trueequalequal0trueequalequal0true);
+	EXPECTED_OUTPUT(equalequal0truenot found2equalequal0trueequalequal0trueequalequal0trueequalequal0trueequalequal0truenot foundnot found);
 }

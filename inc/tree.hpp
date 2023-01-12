@@ -251,7 +251,7 @@ namespace ft
 				}
 			}
 
-			ft::pair<node_type*, bool> insert (const content_type& val, node_type* node, node_type* parent)
+			ft::pair<node_type*, bool> insert_util (const content_type& val, node_type* node, node_type* parent)
 			{
 				ft::pair<node_type*, bool> tmp;
 				tmp.second = false;
@@ -270,16 +270,29 @@ namespace ft
 				}
 				else if (first_is_less_than_second(val, node))
 				{
-					tmp = insert(val, node->_left_child, node);
+					tmp = insert_util(val, node->_left_child, node);
 					// rebalance(node);
 				}
 				else if (first_is_greater_than_second(val, node))
 				{
-					tmp = insert(val, node->_right_child, node);
+					tmp = insert_util(val, node->_right_child, node);
 					// rebalance(node);
 				}
 				else
 					tmp.first = node;
+				return (tmp);
+			}
+
+			node_type* find_util (const content_type& val) const // AE look for key_type instead of content_type
+			{
+				node_type* tmp = _root;
+				while (tmp != ft_nullptr && !first_equals_second(val, tmp))
+				{
+					if (first_is_less_than_second(val, tmp))
+						tmp = tmp->_left_child;
+					else
+						tmp = tmp->_right_child;
+				}
 				return (tmp);
 			}
 
@@ -444,7 +457,7 @@ namespace ft
 
 			// Function to print binary tree in 2D
 			// It does reverse inorder traversal
-			void print2DUtil (node_type* root, int space)
+			void print2D_util (node_type* root, int space)
 			{
 				std::string space_sign = "-";
 				std::string end_node_name = "E";
@@ -458,7 +471,7 @@ namespace ft
 				space += COUNT;
 			
 				// Process right child first
-				print2DUtil(root->_right_child, space);
+				print2D_util(root->_right_child, space);
 			
 				// Print current node after space
 				// count
@@ -484,7 +497,7 @@ namespace ft
 				std::cout << ":" << root->_height;
 			
 				// Process left child
-				print2DUtil(root->_left_child, space);
+				print2D_util(root->_left_child, space);
 			}
 		
 			void init_tree (void)
@@ -499,7 +512,7 @@ namespace ft
 				_end_node->_height = 2;
 			}
 
-			node_type* upper_bound (const content_type& val, node_type* node, node_type* parent) const
+			node_type* upper_bound_util (const content_type& val, node_type* node, node_type* parent) const
 			{
 				if (node == ft_nullptr)
 				{
@@ -512,16 +525,16 @@ namespace ft
 					node = (get_successor_node(node));
 				else if (first_is_less_than_second(val, node))
 				{
-					node = (upper_bound(val, node->_left_child, node));
+					node = (upper_bound_util(val, node->_left_child, node));
 				}
 				else if (first_is_greater_than_second(val, node))
 				{
-					node = (upper_bound(val, node->_right_child, node));
+					node = (upper_bound_util(val, node->_right_child, node));
 				}
 				return (node);
 			}
 
-			node_type* lower_bound (const content_type& val, node_type* node, node_type* parent) const
+			node_type* lower_bound_util (const content_type& val, node_type* node, node_type* parent) const
 			{
 				if (node == ft_nullptr)
 				{
@@ -532,11 +545,11 @@ namespace ft
 				}
 				else if (first_is_less_than_second(val, node))
 				{
-					node = (lower_bound(val, node->_left_child, node));
+					node = (lower_bound_util(val, node->_left_child, node));
 				}
 				else if (first_is_greater_than_second(val, node))
 				{
-					node = (lower_bound(val, node->_right_child, node));
+					node = (lower_bound_util(val, node->_right_child, node));
 				}
 				return (node);
 			}
@@ -559,17 +572,6 @@ namespace ft
 					remove_node(node);
 			}
 
-			// node_type* copy_tree(node_type* node, node_type* parent)
-			// {
-			// 	if (node == ft_nullptr || node->_is_end_node == true)
-			// 		return (ft_nullptr);
-				
-			// 	node_type* ret = my_new(node->_content, parent);
-			// 	ret->_right_child = copy_tree(node->_right_child, ret);
-			// 	ret->_left_child = copy_tree(node->_left_child, ret);
-			// 	return ret;
-			// }
-
 		public:
 			Tree (const value_compare& comp = value_compare()) : _size(0), _root(ft_nullptr), _end_node(ft_nullptr), _rend_node(ft_nullptr), _allocator(), _compare(comp)
 			{
@@ -579,7 +581,7 @@ namespace ft
 			Tree (const content_type& val) : _size(0), _root(ft_nullptr), _end_node(ft_nullptr), _rend_node(ft_nullptr), _allocator()
 			{
 				init_tree();
-				insert(val, _root, ft_nullptr);
+				insert_util(val, _root, ft_nullptr);
 			}
 
 			Tree (const Tree& other) : _size(0), _root(ft_nullptr), _end_node(ft_nullptr), _rend_node(ft_nullptr), _allocator(other._allocator)
@@ -658,7 +660,7 @@ namespace ft
 
 			ft::pair<iterator,bool> insert (const content_type& val)
 			{
-				return (insert(val, _root, ft_nullptr));
+				return (insert_util(val, _root, ft_nullptr));
 			}
 
 			iterator insert (iterator position, const content_type& val)
@@ -667,13 +669,13 @@ namespace ft
 				iterator before = position;
 				--before;
 				if (first_is_less_than_second(val, current) && first_is_greater_than_second(val, before.base()))
-					return (insert(val, current, current->_parent).first);
+					return (insert_util(val, current, current->_parent).first);
 				iterator after = position;
 				++after;
 				if (first_is_greater_than_second(val, current) && first_is_less_than_second(val, after.base()))
-					return (insert(val, current, current->_parent).first);
+					return (insert_util(val, current, current->_parent).first);
 
-				return (insert(val, _root, ft_nullptr).first);
+				return (insert_util(val, _root, ft_nullptr).first);
 			}
 
 			template <class InputIterator>
@@ -711,17 +713,22 @@ namespace ft
 					erase(begin());
 			}
 
-			node_type* find (const content_type& val) const // AE look for key_type instead of content_type
+			iterator find (const content_type& val) // AE look for key_type instead of content_type
 			{
-				node_type* tmp = _root;
-				while (tmp != ft_nullptr && !first_equals_second(val, tmp))
-				{
-					if (first_is_less_than_second(val, tmp))
-						tmp = tmp->_left_child;
-					else
-						tmp = tmp->_right_child;
-				}
-				return (tmp);
+				node_type* ret = find_util(val);
+
+				if (ret == ft_nullptr)
+					return (_end_node);
+				return (ret);
+			}
+
+			const_iterator find (const content_type& val) const // AE look for key_type instead of content_type
+			{
+				node_type* ret = find_util(val);
+
+				if (ret == ft_nullptr)
+					return (_end_node);
+				return (ret);
 			}
 
 			size_type count (const content_type& val) const // AE look for key_type instead of content_type
@@ -739,18 +746,37 @@ namespace ft
 				return (1);
 			}
 
-			node_type* upper_bound (const content_type& val) const
+			iterator upper_bound (const content_type& val)
 			{
-				if (empty())
+				node_type* ret = upper_bound_util(val, _root, ft_nullptr);
+				if (ret == ft_nullptr)
 					return (_end_node);
-				return (upper_bound(val, _root, ft_nullptr));
+				return (ret);
 			}
 
-			node_type* lower_bound (const content_type& val) const
+			const_iterator upper_bound (const content_type& val) const
 			{
-				if (empty())
+				node_type* ret = upper_bound_util(val, _root, ft_nullptr);
+				if (ret == ft_nullptr)
 					return (_end_node);
-				return (lower_bound(val, _root, ft_nullptr));
+				return (ret);
+			}
+
+
+			iterator lower_bound (const content_type& val)
+			{
+				node_type* ret = lower_bound_util(val, _root, ft_nullptr);
+				if (ret == ft_nullptr)
+					return (_end_node);
+				return (ret);
+			}
+
+			const_iterator lower_bound (const content_type& val) const
+			{
+				node_type* ret = lower_bound_util(val, _root, ft_nullptr);
+				if (ret == ft_nullptr)
+					return (_end_node);
+				return (ret);
 			}
 
 			bool empty () const
@@ -813,14 +839,14 @@ namespace ft
 				std::cout << std::endl;
 			}
 
-			// Wrapper over print2DUtil()
+			// Wrapper over print2D_util()
 			void print2D (void)
 			{
 				std::cout << "Tree:\n";
 				if (empty())
 					std::cout << "(empty)";
 				else
-					print2DUtil(_root, 0);
+					print2D_util(_root, 0);
 				std::cout << std::endl;
 			}
 	};
