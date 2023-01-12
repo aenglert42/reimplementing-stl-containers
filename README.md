@@ -76,5 +76,5 @@ https://www.educative.io/answers/how-to-balance-an-avl-tree</br>
 
 ## Notes
 ###### <p align="right">Previous: [Resources](#resources)&emsp;&emsp;[[Contents](#table-of-contents)]</p>
-"Text for Notes"
+The STL map uses a red-black tree as it's underlying data structure. For my implementation I am using an AVL tree.
 </br></br></br>
