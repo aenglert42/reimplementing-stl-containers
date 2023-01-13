@@ -212,6 +212,7 @@ namespace ft
 					return (&_ptr->_content);
 				}
 
+			////relational operators///////////////////////////////////////////////////////
 				friend bool operator==(const TreeIterator& lhs,
 								const TreeIterator& rhs)
 				{
