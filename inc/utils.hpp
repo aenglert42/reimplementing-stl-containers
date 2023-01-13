@@ -13,11 +13,6 @@ namespace ft
 			typedef T2 						second_type;
 
 		private:
-			// typedef std::allocator<first_type> allocator_first;
-			// typedef std::allocator<second_type> allocator_second;
-
-			// allocator_first alloc_first;
-			// allocator_second alloc_second;
 	//MEMBER VARIABLES
 		public:
 			first_type	first;

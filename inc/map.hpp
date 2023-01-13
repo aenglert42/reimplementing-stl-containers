@@ -31,7 +31,7 @@ namespace ft
 	//MEMBER TYPES
 			typedef Key											key_type; //The first template parameter (Key)	
 			typedef T											mapped_type; //The second template parameter (T)
-			typedef pair<const key_type,mapped_type>			value_type;
+			typedef ft::pair<const key_type,mapped_type>		value_type;
 			typedef Compare										key_compare; //The third template parameter (Compare)
 			typedef Alloc										allocator_type; //The fourth template parameter (Alloc) defaults to: allocator<value_type>
 			typedef typename allocator_type::reference			reference; //allocator_type::reference	for the default allocator: value_type&
