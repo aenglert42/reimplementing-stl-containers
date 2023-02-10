@@ -1,4 +1,4 @@
-# WORK IN PROGRESS
+# Reeimplementation of STL containers
 This project is about reimplementing some container types of the C++ standard template library to practice generic programming with templates. Inspired by the "42 Coding School" exercise "ft_containers" (November 2022).
 </br>
 
@@ -40,12 +40,16 @@ In the future I might describe my approach in this chapter.
 
 ## Prerequisites
 ###### <p align="right">Next: [How to use](#how-to-use)&emsp;Previous: [Approach](#approach)&emsp;&emsp;[[Contents](#table-of-contents)]</p>
-"Text for Prerequisites"
+Only needed for the unit test:</br>
+* g++ (```sudo apt-get install g++```)
+* make (```sudo apt-get install make```)
 </br></br></br>
 
 ## How to use
 ###### <p align="right">Next: [Resources](#resources)&emsp;Previous: [Prerequisites](#prerequisites)&emsp;&emsp;[[Contents](#table-of-contents)]</p>
-"Text for How to use"
+```ft::vector``` and ```ft::map``` could be used by including the headerfiles from the ```/inc/``` directory into a ```.cpp``` file. This can be done by including them with their path (e.g. ```#include "/path/to/vector.hpp"```) or by specifying the path using the ```-I``` compile flag and therefore including them without a path (e.g. ```#include "map.hpp"```).</br>
+</br>
+To run the unit test use ```make test```.
 </br></br></br>
 
 ## Resources
