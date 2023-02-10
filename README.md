@@ -35,7 +35,7 @@ Reimplement the following:
 
 ## Approach
 ###### <p align="right">Next: [Prerequisites](#prerequisites)&emsp;Previous: [Introduction](#introduction)&emsp;&emsp;[[Contents](#table-of-contents)]</p>
-"Text for Approach"
+In the future I might describe my approach in this chapter.
 </br></br></br>
 
 ## Prerequisites
